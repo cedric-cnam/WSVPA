@@ -1,4 +1,4 @@
-# Performance-score distances
+# Performance-Score representations and distances
 proposition of word-distances for measuring performance-score distance.
 
 - following principles of [DTW](DTW.md)
