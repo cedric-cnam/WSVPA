@@ -8,34 +8,56 @@ over an infinite alphabet $`\Omega`$ of timestamped symbols.
 **definition**
 
 Let $`s, t \in \Omega^*`$ of lengths resp. $`n`$, $`m`$.
-An By computation of optimal alignment (*match* $`M \in 1..n \times 1..m`$) between the sequences, such that:
+We consider alignments (*match* $`M \in 1..n \times 1..m`$) between the 2 sequences, such that:
 
 - Every index from $`s`$ sequence must be matched with one or more indices from $`t`$, and vice versa.
-$$`\forall i \in 1..n\, \exists j \in 1..m \, M(i, j)$, $\forall j \in 1..m\, \exists i \in 1..n \, M(i, j)`$$
+
+  $`\forall i \in 1..n\, \exists j \in 1..m \, M(i, j),\, \forall j \in 1..m\, \exists i \in 1..n \, M(i, j)`$
   
 - The first index from $s$ must be matched with the first index from $`t`$ (but it does not have to be its only match).
-$$`M(1,1)`$$
+  
+  $`M(1,1)`$
 
 - The last index from $s$ must be matched with the last index from $`t`$ (but it does not have to be its only match).
-$$`M(n,m)`$$
+
+  $`M(n,m)`$
 
 - The mapping of the indices from $`s`$ to indices from $t$ must be monotonically increasing, and vice versa, 
-  i.e. if $`i < j`$ are indices from $`s`$, then there must not be two indices $`\ell > k`$ in the other sequence $`t`$, such that index $`i`$ is matched with index $`\ell`$ and index $`j`$ is matched with index $`k`$, and vice versa.
+  
+   i.e. if $`i < j`$ are indices from $`s`$, then there must not be two indices $`\ell > k`$ in the other sequence $`t`$, such that index $`i`$ is matched with index $`\ell`$ and index $`j`$ is matched with index $`k`$, and vice versa.
+  
   for $`1 \leq i < j \leq n`$, $`1 \leq \ell < k \leq m`$ with $`M(i, \ell)`$ then $`\neg M(j, k)`$.
 
 - [opt] *locality constraint*
   if $`i`$ from $`s`$ is matched with $`j`$ from $`t`$, then $`|i - j| \leq \omega`$ (window parameter).
   
+Using the alignements, a similarity measure is defined with value in a semiring $`S = ( K, \oplus, \otimes, 0, 1)`$
+where
+- $`K`$ is the domain of $`S`$
+- $`0`$ is the neutral element for $`\oplus`$
+- $`1`$ is the neutral element for $`\otimes`$
 
-Based on a distance between symbols, 
-typically $`\delta(a, b) = |time(a) - time(b)|`$ for $`a, b \in \Omega`$.
+ex: minplus semiring where 
+- $`K = \R^+ \cup \{ +\infty \}`$, 
+- $`\oplus`$ is min, 
+- $`0`$ is  $`+\infty`$
+- $`\otimes`$ is +, 
+- $`1`$ is 0 (in $`\R^+`$). 
+
+
+The measure is based on a distance between symbols:
+- $`\delta: \Omega^2 \to S`$, 
+- $`\delta(a, b) = |time(a) - time(b)|`$ for $`a, b \in \Omega`$.
 
 Let $`s = s_1... s_n`$ and $`t = t_1 ... t_m`$.
-The cost of an alignment $`M`$ is $`\bigotimes_{(i, j) \in M} \delta(s_i, t_j)`$.
-The measure is the value of an optimal alignment:
-$$`d(s, t) = \bigoplus_M \bigotimes_{(i, j) \in M} \delta(s_i, t_j)`$$
 
-ATTENTION: triangle inequality does not always hold.
+The cost of an alignment $`M`$ in $`S`$ is $`\bigotimes_{(i, j) \in M} \delta(s_i, t_j)`$.
+
+The measure is the value of an optimal alignment:
+
+$`d(s, t) = \bigoplus_M \bigotimes_{(i, j) \in M} \delta(s_i, t_j)`$
+
+ATTENTION: triangle inequality does not always hold!
 
 
 ---
@@ -56,11 +78,17 @@ $`D[i, j]`$ is the distance between $`s_1... s_i`$ and $`t_1 ... t_j`$.
 ---
 **complexity** DTW
 
-- classical TIME and SPACE $`O(|s| . |t|)`$ i.e. $`O(n^2)`$ if $`|s| = n \geq m = |t|`$.
-- subquadratic TIME and SPACE $`O(\frac{n^2}{\log \log n})`$ [Gold and Sharir 2018 JACM]
-  https://doi.org/10.1145/3230734
-- SPACE $`O(|s| + |t|)`$ [Tralie and Dempsey 2020 ISMIR]
-  https://arxiv.org/abs/2008.02734
+- classical: TIME and SPACE $`O(|s| . |t|)`$ 
+
+  i.e. $`O(n^2)`$ if $`|s| = n \geq m = |t|`$.
+
+- subquadratic TIME and SPACE $`O(\frac{n^2}{\log \log n})`$ 
+
+  [Gold and Sharir 2018 JACM] https://doi.org/10.1145/3230734
+
+- SPACE $`O(|s| + |t|)`$ 
+
+  [Tralie and Dempsey 2020 ISMIR] https://arxiv.org/abs/2008.02734
 
 
 ---
