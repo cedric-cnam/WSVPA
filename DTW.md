@@ -11,19 +11,13 @@ Let $`s, t \in \Omega^*`$ of lengths resp. $`n`$, $`m`$.
 An By computation of optimal alignment (*match* $`M \in 1..n \times 1..m`$) between the sequences, such that:
 
 - Every index from $s$ sequence must be matched with one or more indices from $t$, and vice versa.
-```math
-\forall i \in 1..n\, \exists j \in 1..m \, M(i, j)$, $\forall j \in 1..m\, \exists i \in 1..n \, M(i, j)
-```
+$$\forall i \in 1..n\, \exists j \in 1..m \, M(i, j)$, $\forall j \in 1..m\, \exists i \in 1..n \, M(i, j)$$
   
 - The first index from $s$ must be matched with the first index from $`t`$ (but it does not have to be its only match).
-```math
-M(1,1)
-```
+$$M(1,1)$$
 
 - The last index from $s$ must be matched with the last index from $`t`$ (but it does not have to be its only match).
-```math
-M(n,m)
-```
+$$M(n,m)$$
 
 - The mapping of the indices from $`s`$ to indices from $t$ must be monotonically increasing, and vice versa, 
   i.e. if $`i < j`$ are indices from $`s`$, then there must not be two indices $`\ell > k`$ in the other sequence $`t`$, such that index $`i`$ is matched with index $`\ell`$ and index $`j`$ is matched with index $`k`$, and vice versa.
