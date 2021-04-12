@@ -37,6 +37,8 @@ nested word = sequence of quantified events + markups
 - parentheses for time divisions : tuples, bars...
   labels (tuple number, beaming policy...)
 
+
+
 see [rhythm-nested-words](rhythm-nested-words) for concrete examples of structured words.
 
 

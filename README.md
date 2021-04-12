@@ -4,13 +4,14 @@ study of the application of approach of Mohri et al. to the computation of (stri
 
 the study covers:
 - sequential representations (strings over finite and infinite alphabet) of
+  
   - symbolic performances = MIDI-like sequences of timed events
-  - music scores = structured strings ~ [nested words](https://www.cis.upenn.edu/~alur/nw.html)
-
-  definition of similarity measures between these representations
-
-  see [distance-performance-score.md](distance-performance-score.md).
-
+- music scores = structured strings ~ [nested words](https://www.cis.upenn.edu/~alur/nw.html) (see [rhythm-nested-words.md](rhythm-nested-words.md))
+  
+definition of similarity measures between these representations
+  
+summary in [distance-performance-score.md](distance-performance-score.md)
+  
 - [DTW.md](DTW.md) : generalities on Dynamic Time Warping 
 
   in the context of the above similarity measure definition and computation.
