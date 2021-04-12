@@ -50,7 +50,9 @@ The measure is based on a distance between symbols:
 - $`\delta(a, b) = |time(a) - time(b)|`$ for $`a, b \in \Omega`$.
 
 Let $`s = s_1... s_n`$ and $`t = t_1 ... t_m`$.
+
 The cost of an alignment $`M`$ in $`S`$ is $`\bigotimes_{(i, j) \in M} \delta(s_i, t_j)`$.
+
 The measure is the value of an optimal alignment:
 
 $`d(s, t) = \bigoplus_M \bigotimes_{(i, j) \in M} \delta(s_i, t_j)`$
