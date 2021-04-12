@@ -5,7 +5,7 @@ mappings tree to word (linearization)
 ## yield
 tree $`t \mapsto`$ sequence of leaves of $`t`$ in d.f.traversal.
 
-regular tree language $\to$ CF word language.
+regular tree language $`\to`$ CF word language.
 
 ## linearization
 
