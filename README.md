@@ -1,14 +1,23 @@
 #Weighted-Transducers-based Music Transcription
 
+study of the application of  approach of Mohri et al. to the computation of (string) edit-distances between (string) languages.
 
+the approach a la Mohri is based on weighted-transducers
 
-study of the application to MIDI2score transcription of the weighted-transducer-based approach of Mohri et al. to the computation of (string) edit-distances between (string) languages.
+the study covers:
+- sequential representations of music scores and symbolic performances (strings over finite and infinite alphabet)
 
+  definition of similarity measures between these representations
 
+  see [distance-performance-score.md](distance-performance-score.md).
 
-- [transcription.md](transcription.md) : the general picture.
-- [distance-performance-score.md](distance-performance-score.md) : note on the sequential representations of symbolic performances and scores, and the computation of similarity measure between these representations.
--  [DTW.md](DTW.md) : generalities on Dynamic Time Warping, in the context of the above similarity measure comp.
+- [DTW.md](DTW.md) : generalities on Dynamic Time Warping 
+
+  in the context of the above similarity measure definition and computation.
+
+- application to MIDI2score transcription: 
+  see [transcription.md](transcription.md) for a general picture
+
 
 - [distance-languages.md](distance-languages.md) : 
 
