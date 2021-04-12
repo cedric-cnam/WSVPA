@@ -1,7 +1,7 @@
 # test LaTeX redering
 
-distance $d$:
-- defined over $\Sigma^*$ 
+distance $`d`$:
+- defined over $`\Sigma^*`$ 
 - into a semiring  $S = ( K, \oplus, \otimes, 0, 1)$
 
 ```math
