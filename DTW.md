@@ -1,4 +1,3 @@
-
 # Dynamic Time Warping
 
 measure of similarity between 2 temporal (timestamped) sequences 
@@ -7,6 +6,13 @@ over an infinite alphabet $\Omega$ of timestamped symbols.
 
 ---
 **definition**
+
+```math
+test $s$ $t$ in block 
+$\forall i \in 1..n\, \exists j \in 1..m \, M(i, j)$, $\forall j \in 1..m\, \exists i \in 1..n \, M(i, j)$.
+and display
+$$\forall i \in 1..n\, \exists j \in 1..m \, M(i, j)$, $\forall j \in 1..m\, \exists i \in 1..n \, M(i, j)$$
+```
 
 Let $s, t \in \Omega^*$ of lengths resp. $n$, $m$.
 An By computation of optimal alignment (*match* $M \in 1..n \times 1..m$) between the sequences, such that:
