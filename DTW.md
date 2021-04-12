@@ -30,7 +30,7 @@ M(n,m)
   for $`1 \leq i < j \leq n`$, $`1 \leq \ell < k \leq m`$ with $`M(i, \ell)`$ then $`\neg M(j, k)`$.
 
 - [opt] *locality constraint*
-  if $`i`$ from $`s`$ is matched with $`j`$ from $t$, then $`|i - j| \leq \omega`$ (window parameter).
+  if $`i`$ from $`s`$ is matched with $`j`$ from $`t`$, then $`|i - j| \leq \omega`$ (window parameter).
   
 
 Based on a distance between symbols, 
