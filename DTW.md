@@ -11,22 +11,39 @@ Let $`s, t \in \Omega^*`$ of lengths resp. $`n`$, $`m`$.
 We consider alignments (*match* $`M \in 1..n \times 1..m`$) between the 2 sequences, such that:
 
 - Every index from $`s`$ sequence must be matched with one or more indices from $`t`$, and vice versa.
-$$`\forall i \in 1..n\, \exists j \in 1..m \, M(i, j),\, \forall j \in 1..m\, \exists i \in 1..n \, M(i, j)`$$
+
+  $`\forall i \in 1..n\, \exists j \in 1..m \, M(i, j),\, \forall j \in 1..m\, \exists i \in 1..n \, M(i, j)`$
   
 - The first index from $s$ must be matched with the first index from $`t`$ (but it does not have to be its only match).
-$$`M(1,1)`$$
+  
+  $`M(1,1)`$
 
 - The last index from $s$ must be matched with the last index from $`t`$ (but it does not have to be its only match).
-$$`M(n,m)`$$
+
+  $`M(n,m)`$
 
 - The mapping of the indices from $`s`$ to indices from $t$ must be monotonically increasing, and vice versa, 
-  i.e. if $`i < j`$ are indices from $`s`$, then there must not be two indices $`\ell > k`$ in the other sequence $`t`$, such that index $`i`$ is matched with index $`\ell`$ and index $`j`$ is matched with index $`k`$, and vice versa.
+  
+   i.e. if $`i < j`$ are indices from $`s`$, then there must not be two indices $`\ell > k`$ in the other sequence $`t`$, such that index $`i`$ is matched with index $`\ell`$ and index $`j`$ is matched with index $`k`$, and vice versa.
   
   for $`1 \leq i < j \leq n`$, $`1 \leq \ell < k \leq m`$ with $`M(i, \ell)`$ then $`\neg M(j, k)`$.
 
 - [opt] *locality constraint*
   if $`i`$ from $`s`$ is matched with $`j`$ from $`t`$, then $`|i - j| \leq \omega`$ (window parameter).
   
+Using the alignements, a similarity measure is defined with value in a semiring $`S = ( K, \oplus, \otimes, 0, 1)`$
+where
+- $`K`$ is the domain of $`S`$
+- $`0`$ is the neutral element for $`\oplus`$
+- $`1`$ is the neutral element for $`\otimes`$
+
+ex: minplus semiring where 
+- $`K = \R^+ \cup \{ +\infty }`$, 
+- $`\oplus`$ is min, 
+- $`0`$ is  $`+\infty`$
+- $`\otimes`$ is +, 
+- $`1`$ is 0 (in $`\R^+`$). 
+
 
 Based on a distance between symbols, 
 typically $`\delta(a, b) = |time(a) - time(b)|`$ for $`a, b \in \Omega`$.
