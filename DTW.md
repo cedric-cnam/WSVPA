@@ -38,7 +38,7 @@ where
 - $`1`$ is the neutral element for $`\otimes`$
 
 ex: minplus semiring where 
-- $`K = R^+ \cup \{ +\infty }`$, 
+- $`K = \R^+ \cup \{ +\infty \}`$, 
 - $`\oplus`$ is min, 
 - $`0`$ is  $`+\infty`$
 - $`\otimes`$ is +, 
