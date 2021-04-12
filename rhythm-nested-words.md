@@ -10,21 +10,21 @@ push attributes values to the stack
 ---
 **Nested Words**
 
-- sequence in $[1..n]$ and
-- matching relation $⇢$ in $\{ -\infty, 1,...,n \} \times \{ 1,...,n, +\infty \}$
+- sequence in $`[1..n]`$ and
+- matching relation $`\to`$ in $`\{ -\infty, 1,...,n \} \times \{ 1,...,n, +\infty \}`$
 
 such that:
 - match always forward: 
-  if  $i ⇢ j$  then $i < j$
+  if  $`i ⇢ j`$  then $`i < j`$
 - match do not share position: 
-  $|\{ i \mid i ⇢ j \}| \leq 1$ and $|\{ j \mid i ⇢ j\} | \leq 1$ 
+  $`|\{ i \mid i ⇢ j \}| \leq 1`$ and $`|\{ j \mid i ⇢ j\} | \leq 1`$ 
 - match do not cross: 
-  no $i ⇢ j$ and $i' ⇢ j'$ and $i < i' \leq j < j'$
+  no $`i ⇢ j`$ and $`i' ⇢ j'`$ and $`i < i' \leq j < j'`$
 
 ALT
 Gurevitch, Blass definition (see [Motley-word automata](:/2a025f6bf11a406785ee5f1c3bb1ce10)) drops second condition:
-- if $i ⇢ j$ and $i' ⇢ j'$  and $i \leq  i'$
-  then either $i < j < i' < j'$  or $i < i' < j' < j$
+- if $`i ⇢ j`$ and $`i' ⇢ j'`$  and $`i \leq  i'`$
+  then either $`i < j < i' < j'`$  or $`i < i' < j' < j`$
 
 ![](nw1.png)
 
@@ -35,7 +35,7 @@ Gurevitch, Blass definition (see [Motley-word automata](:/2a025f6bf11a406785ee5f
   matchs =  *calls* and *returns*
 
 ![](nw3.png)
-*program execution. en = new scope = call, ex = exit scope = return, rd = read, wr = write, sk = other.* 
+*program execution. `en` = new scope = call, `ex` = exit scope = return, `rd` = read, `wr` = write, `sk` = other.* 
 
 - XML docs:
   matchs = *open-* and *close- tags*
