@@ -27,7 +27,7 @@ M(n,m)
 
 - The mapping of the indices from $`s`$ to indices from $t$ must be monotonically increasing, and vice versa, 
   i.e. if $`i < j`$ are indices from $`s`$, then there must not be two indices $`\ell > k`$ in the other sequence $`t`$, such that index $`i`$ is matched with index $`\ell`$ and index $`j`$ is matched with index $`k`$, and vice versa.
-  for $1 \leq i < j \leq n$, $1 \leq \ell < k \leq m$ with $M(i, \ell)$ then $\neg M(j, k)$
+  for $`1 \leq i < j \leq n`$, $`1 \leq \ell < k \leq m`$ with $`M(i, \ell)`$ then $`\neg M(j, k)`$.
 
 - [opt] *locality constraint*
   if $`i`$ from $`s`$ is matched with $`j`$ from $t$, then $`|i - j| \leq \omega`$ (window parameter).
@@ -51,7 +51,7 @@ ATTENTION: triangle inequality does not always hold.
 
 fill a $n+1 \times m+1$ matrix $D$
 - $`D[0, 0] = 1`$ (minimum) and for all $`(i, j) \neq (0, 0)`$, $`D[i, j] = 0`$ (maximum)
-- for all $1 \leq i \leq n$ and $1 \leq j \leq m$
+- for all $`1 \leq i \leq n`$ and $`1 \leq j \leq m`$
   $`D[i, j] = \delta(s_i, t_j) \otimes \min (D[i-1, j], D[i, j-1], D[i-1, j-1])`$.
 
 $`D[i, j]`$ is the distance between $`s_1... s_i`$ and $`t_1 ... t_j`$.
