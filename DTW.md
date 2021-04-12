@@ -49,7 +49,7 @@ ATTENTION: triangle inequality does not always hold.
 ---
 **computation** (classical)
 
-fill a $n+1 \times m+1$ matrix $D$
+fill a $`n+1 \times m+1`$ matrix $`D`$
 - $`D[0, 0] = 1`$ (minimum) and for all $`(i, j) \neq (0, 0)`$, $`D[i, j] = 0`$ (maximum)
 - for all $`1 \leq i \leq n`$ and $`1 \leq j \leq m`$
   $`D[i, j] = \delta(s_i, t_j) \otimes \min (D[i-1, j], D[i, j-1], D[i-1, j-1])`$.
