@@ -78,11 +78,17 @@ $`D[i, j]`$ is the distance between $`s_1... s_i`$ and $`t_1 ... t_j`$.
 ---
 **complexity** DTW
 
-- classical TIME and SPACE $`O(|s| . |t|)`$ i.e. $`O(n^2)`$ if $`|s| = n \geq m = |t|`$.
-- subquadratic TIME and SPACE $`O(\frac{n^2}{\log \log n})`$ [Gold and Sharir 2018 JACM]
-  https://doi.org/10.1145/3230734
-- SPACE $`O(|s| + |t|)`$ [Tralie and Dempsey 2020 ISMIR]
-  https://arxiv.org/abs/2008.02734
+- classical: TIME and SPACE $`O(|s| . |t|)`$ 
+
+  i.e. $`O(n^2)`$ if $`|s| = n \geq m = |t|`$.
+
+- subquadratic TIME and SPACE $`O(\frac{n^2}{\log \log n})`$ 
+
+  [Gold and Sharir 2018 JACM] https://doi.org/10.1145/3230734
+
+- SPACE $`O(|s| + |t|)`$ 
+
+  [Tralie and Dempsey 2020 ISMIR] https://arxiv.org/abs/2008.02734
 
 
 ---
