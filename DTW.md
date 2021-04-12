@@ -1,14 +1,14 @@
 # Dynamic Time Warping
 
 measure of similarity between 2 temporal (timestamped) sequences 
-over an infinite alphabet $\Omega$ of timestamped symbols.
+over an infinite alphabet $`\Omega`$ of timestamped symbols.
 
 
 ---
 **definition**
 
-Let $s, t \in \Omega^*$ of lengths resp. $n$, $m$.
-An By computation of optimal alignment (*match* $M \in 1..n \times 1..m$) between the sequences, such that:
+Let $`s, t \in \Omega^*`$ of lengths resp. $`n`$, $`m`$.
+An By computation of optimal alignment (*match* $`M \in 1..n \times 1..m`$) between the sequences, such that:
 
 - Every index from $s$ sequence must be matched with one or more indices from $t$, and vice versa.
   $\forall i \in 1..n\, \exists j \in 1..m \, M(i, j)$, $\forall j \in 1..m\, \exists i \in 1..n \, M(i, j)$.
