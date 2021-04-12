@@ -38,6 +38,12 @@ nested word = sequence of quantified events + markups
   labels (tuple number, beaming policy...)
 
 
+
+see [rhythm-nested-words](rhythm-nested-words) for concrete examples of structured words.
+
+
+
+
 ---
 ## score : polyphonic
 several voices for one part (polyphonic instrument)
