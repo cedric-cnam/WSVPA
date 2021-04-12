@@ -8,7 +8,7 @@ push attributes values to the stack
 
 
 ---
-**Nested Words**
+## Nested Words
 
 - sequence in $`[1..n]`$ and
 - matching relation $`\to`$ in $`\{ -\infty, 1,...,n \} \times \{ 1,...,n, +\infty \}`$
@@ -35,6 +35,7 @@ Gurevitch, Blass definition (see [Motley-word automata](:/2a025f6bf11a406785ee5f
   matchs =  *calls* and *returns*
 
 ![](nw3.png)
+
 *program execution. `en` = new scope = call, `ex` = exit scope = return, `rd` = read, `wr` = write, `sk` = other.* 
 
 - XML docs:
@@ -45,6 +46,7 @@ Gurevitch, Blass definition (see [Motley-word automata](:/2a025f6bf11a406785ee5f
   sentences (linear order) + anotation (hierarchical structure)
 
 ![](nw4.png)
+
 *parsed sentence as nested word: I saw the old man with a dog today.* 
 
 ---
@@ -57,8 +59,6 @@ Gurevitch, Blass definition (see [Motley-word automata](:/2a025f6bf11a406785ee5f
 ---
 ## Example 1
 from paper MCM'19
-
-see [example MCM'19](:/6d3f9d44c06c4b0eaee6ea0140a5ffa6)
 
 ![](MCM19-1.png)
 
