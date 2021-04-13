@@ -2,34 +2,34 @@
 
 
 ## Distance between words over finite alphabet
-We consider an alphabet $\Sigma$ = fixed finite set of symbols.
+We consider an alphabet $`\Sigma`$ = fixed finite set of symbols.
 
-distance $d$:
-- defined over $\Sigma^*$ 
-- into a semiring  $S = ( K, \oplus, \otimes, 0, 1)$
+distance $`d`$:
+- defined over $`\Sigma^*`$ 
+- into a semiring  $`S = ( K, \oplus, \otimes, 0, 1)`$
 
 **Levenstein E.D.** 
-based on a cost function $\delta$:
-$$\delta: (\Sigma \cup \{ \epsilon \}) \times (\Sigma \cup \{ \epsilon \}) 
-          \setminus \{ (\epsilon, \epsilon) \} \to S$$
+based on a cost function $`\delta`$:
 
-Complexity for $d(w_1, w_2)$ computation:
-  - classical : $O(|w_1| . |w_2|)$ [Wagner, Fisher 1974]
-    assuming $\Sigma$ fixed and finite.
-  - improved $O(|w_1| + |w_2| + d^2)$ [Ukonnen 1985]
-  - subquadratic 
+$`\delta: (\Sigma \cup \{ \epsilon \}) \times (\Sigma \cup \{ \epsilon \}) 
+          \setminus \{ (\epsilon, \epsilon) \} \to S`$
 
+Complexity for computation of $`d(w_1, w_2)`$:
+  - classical : $`O(|w_1| . |w_2|)`$ [Wagner, Fisher 1974]
+    assuming $`\Sigma`$ fixed and finite.
+  - improved $`O(|w_1| + |w_2| + d^2)`$ [Ukonnen 1985]
+  - subquadratic
 
 
 ## Distance between word languages
-also for alphabet $\Sigma$,
-for $L_1, L_2 \subseteq \Sigma^*$, 
-$$ d(L_1, L_2) = \bigoplus_{w_1 \in L_1, w_2 \in L_2} d(w_1, w_2) $$ 
+also for alphabet $`\Sigma`$,
+for $`L_1, L_2 \subseteq \Sigma^*`$, 
+$`d(L_1, L_2) = \bigoplus_{w_1 \in L_1, w_2 \in L_2} d(w_1, w_2)`$. 
 
-rem: we need to define infinite sums with $\oplus$.
+rem: we need to define infinite sums with $`\oplus`$.
 
 Results:
-- $d(L_1, L_2)$ computable in TIME $O(| A_1| . | A_2 |)$ (resp. sizes of automata) for $L_1, L_2$ regular
+- $`d(L_1, L_2)`$ computable in TIME $`O(| A_1| . | A_2 |)`$ (resp. sizes of automata) for $`L_1, L_2`$ regular.
 
 > Mehryar Mohri , Fernando Pereira, and Michael Riley
 > The design principles of a weighted finite-state transducer library
@@ -42,7 +42,7 @@ https://www.sciencedirect.com/science/article/pii/S0304397599000146
 https://doi.org/10.1007/978-3-540-76336-9_3
 
 
-- $d(L_1, L_2)$ computable in linear space for $L_1$ singleton, $L_2$ regular
+- $`d(L_1, L_2)`$ computable in linear space for $`L_1`$ singleton, $`L_2`$ regular.
 
 > Cyril Allauzen, Mehryar Mohri
 > Linear-space computation of the edit-distance between a string and a finite automaton
@@ -58,38 +58,40 @@ https://doi.org/10.1142/S0129054117400093Cited by:2
 
 
 
-- $d(L_1, L_2)$ not computable for $L_1, L_2$ CF
+- $`d(L_1, L_2)`$ not computable for $`L_1, L_2`$ CF.
 
 reduction of non-emptiness of the intersection of 2 CF languages.
 
-- $d(L_1, L_2)$ computable for $L_1$ regular and $L_2$ CF
+- $`d(L_1, L_2)`$ computable for $`L_1`$ regular and $`L_2`$ CF
   - PTIME algorithm based on unary homomorphisms
-  - optimal alignment in worst case exponential in size of grammar automaton
+  - optimal alignment in worst case exponential in size of grammar automaton.
 
 > Han, Yo-Sub, Sang-Ki Ko, and Kai Salomaa
 > The edit-distance between a regular language and a context-free language
 > International Journal of Foundations of Computer Science 24.07 (2013): 1067-1082.
 https://doi.org/10.1142/S0129054113400315
 
-- $d(L_1, L_2)$ computable for $L_1, L_2$ VPA ?
+- $`d(L_1, L_2)`$ computable for $`L_1, L_2`$ VPA ?
   (ref. ?) 
 
 
 ## Distance between weighted word languages (power series)
-for $A_1, A_2 : \Sigma^*  \to S$ (power series),
-$$ d(A_1, A_2) = \bigoplus_{w_1, w_2 \in \Sigma^*} 
-  A_1(w_1) \otimes d(w_1, w_2) \otimes A_2(w_2)$$ 
+for $`A_1, A_2 : \Sigma^*  \to S`$ (power series),
+$`d(A_1, A_2) = \bigoplus_{w_1, w_2 \in \Sigma^*} 
+  A_1(w_1) \otimes d(w_1, w_2) \otimes A_2(w_2)`$ 
 
-rem: the unweighted definition is a particular case of Boolean semiring ($A_1$, $A_2$ compute the characteristic functions of $L_1$ and $L_2$).
+rem: the unweighted definition is a particular case of Boolean semiring ($`A_1`$, $`A_2`$ compute the characteristic functions of $`L_1`$ and $`L_2`$).
 
 
-for $\Sigma$ finite:
-- for $A_1, A_2$ defined by weighted automata, computation $d(A_1, A_2)$ is presented in following paper:
-  - composition and $\epsilon$-removal of Weighted Transducers
+for $`∑`$ finite:
+- for $`A_1`$,  $`A_2`$ defined by weighted automata, $`d(A_1, A_2)`$ is computated by the weighted transducer $`A_2 \circ T \circ A_1`$  where $`T`$ computed the distance $`d`$ between words, by
+  - composition and $`\epsilon`$-removal of Weighted Transducers
   - determinizartion of WA
   - synchronization of Weighted Transducers w. bounded delays
   - for general E.D. that can be represented by finite weighted transducers
   - on-the-fly transducer's composition & pruning.
+
+it is presented in following paper:
 
 > Mehryar Mohri 
 > Edit-distance of weighted automata: General definitions and algorithms
@@ -98,11 +100,11 @@ for $\Sigma$ finite:
 
 
 ## Infinite Alphabet
-infinite set of symbols $\Omega$
+infinite set of symbols $`\Omega`$
 
 **ex.**  [alphabet]
 timestamped events (onsets, offsets), 
-$\Omega$ finite but huge for sampled dates (or IOI values), or infinite (rational values).
+$`\Omega`$ finite but huge for sampled dates (or IOI values), or infinite (rational values).
 
 **ex.** [sequences] see [distance-performance-score](distance-performance-score.md).
 
@@ -113,7 +115,7 @@ $\Omega$ finite but huge for sampled dates (or IOI values), or infinite (rationa
 
 ## Distance between words over infinite alphabet
 
-for infinte alphabet $\Omega$ 
+for infinte alphabet $`\Omega`$ 
 **DTW** (for temporal sequences) see [DTW](DTW.md).
 
 **ex.** distance between a performance and a score, using the above representations.
@@ -149,7 +151,7 @@ Symbolic Automata framework (unweighted)
 
 Questions:
 
-- $d(L_1, L_2)$ computable for $L_1, L_2$ Symbolic Automata (SA) languages?
+- $`d(L_1, L_2)`$ computable for $`L_1, L_2`$ Symbolic Automata (SA) languages?
   (ref.?)
   
 - and for Symbolic Visibly Pushdown Automata ?
@@ -159,16 +161,16 @@ Questions:
 > International Conference on Computer Aided Verification. Springer, 2014.  
 https://doi.org/10.1007/978-3-319-08867-9_14
 
-definition of $L(A_1, A_2)$ must take care of relationship between the label theory (Boolean closed) for SA and the cost function for E.D. / DTW ?
-
+definition of $`L(A_1, A_2)`$ must take care of relationship between the label theory (Boolean closed) for SA and the cost function for E.D. / DTW ?
 
 **ex.** 
-- $A_1$ is an automaton for prior score language. 
-  The value in $S$ returned by is a measure of notational complexity of a score.
-  Note that for markups, the language is not regular ($A_1$ is a VPA then).
-- $A_2$ is a singleton automaton for a performance given $w_2$.
-- the distance is then $\bigoplus_{w_1 \in \Omega^*} A_1(w_1) \otimes d(w_1, w_2)$, i.e. the combination of 2 criteria to optimise. 
-  The best $w_1$ is a music score infered for $w_2$ (transcription of $w_2$).
+
+- $`A_1`$ is an automaton for prior score language. 
+  The value in $`S`$ returned by is a measure of notational complexity of a score.
+  Note that for markups, the language is not regular ($`A_1`$ is a VPA then).
+- $`A_2`$ is a singleton automaton for a performance given $`w_2`$.
+- the distance is then $`\bigoplus_{w_1 \in \Omega^*} A_1(w_1) \otimes d(w_1, w_2)`$, i.e. the combination of 2 criteria to optimise. 
+  The best $`w_1`$ is a music score inferred for $`w_2`$ (transcription of $`w_2`$).
 
 
 

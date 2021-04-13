@@ -13,18 +13,17 @@ see also https://www.cis.upenn.edu/~alur/nw.html
 ## Nested-Word Automata
 
 simple definition Blass and Alur
-$(Q, Q_{in}, Q_f, \delta)$ over $\Sigma$ where $\delta = (\delta_c, \delta_i, \delta_r)$, 
+$`(Q, Q_{in}, Q_f, \delta)`$ over $`∑`$ where $`\delta = (\delta_c, \delta_i, \delta_r)`$, 
 
-- $\delta_c \subseteq Q \times \Sigma \times Q$, 
-- $\delta_i \subseteq Q \times \Sigma \times Q$, 
-- $\delta_r \subseteq Q \times Q \times \Sigma \times Q$. 
+- $`\delta_c \subseteq Q \times \Sigma \times Q`$, 
+- $`\delta_i \subseteq Q \times \Sigma \times Q`$, 
+- $`\delta_r \subseteq Q \times Q \times \Sigma \times Q`$. 
 
-run over nested word $(a_1\ldots a_k, ⇢)$ = sequence $q_0, \ldots, q_k$ such that
-- $q_0 \in Q_{in}$
-- for all $i$ call position of $⇢$, $(q_{i-1}, a_i, q_i) \in \delta_c$, 
-- for all $i$ internal position of $⇢$, $(q_{i-1}, a_i, q_i) \in \delta_i$, 
-- for all $i$ return position of $⇢$,  with $j⇢i$,
-  $(q_{i-1}, q_{j-1}, a_i, q_i) \in \delta_r$.
+run over nested word $`(a_1\ldots a_k, ⇢)`$ = sequence $`q_0, \ldots, q_k`$ such that
+- $`q_0 \in Q_{in}`$
+- for all $`i`$ call position of $`⇢`$, $`(q_{i-1}, a_i, q_i) \in \delta_c`$, 
+- for all $`i`$ internal position of $`⇢`$, $`(q_{i-1}, a_i, q_i) \in \delta_i`$, 
+- for all $`i`$ return position of $`⇢`$,  with $`j⇢i`$, $`(q_{i-1}, q_{j-1}, a_i, q_i) \in \delta_r`$.
 
 it means that at call position, the current state is pushed to the stack, and it is popped at return positions.
 
@@ -142,7 +141,7 @@ in particular for WA learning:
 
 **extension to semirings**
 
-theorem of finite rank (square) works for $\R$ and $\mathbb{C}$, not general semirings,
+theorem of finite rank (square) works for $`\R`$ and $`\mathbb{C}`$, not general semirings,
 because it uses the singular value decomposition (SVD) theorem.
 
 extension to tropical semirings?

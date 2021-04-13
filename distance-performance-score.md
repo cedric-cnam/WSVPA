@@ -24,18 +24,24 @@ nested word = sequence of quantified events + markups
 
 **events** 
 (infinite alphabet of internal symbols) made of 
-- duration in MTU (ratio)
-  can be 0 for grace note (simult. event ordered)
-  finite bound on the number of ratio ?
+
 - tag (in finite (large) set), on of:
   - continuation (0) : tie or dot
-  - pitch (note, grace note) or pitch+ (chord)
+  - note, grace note (pitch) or chord (pitch+)
   - rest
+  - ...
 
 **markups** for linearization of rhythm trees 
 (finite alphabet of call and return symbols) :
-- parentheses for time divisions : tuples, bars...
+
+- parentheses for time divisions : tuplets, bars...
   labels (tuple number, beaming policy...)
+
+The date or duration of events, in MTU (rational),  is computed with the markups and tags (e.g. grace note has duration 0).
+
+There are simultaneous events, since grace notes has duration 0. They are ordered.
+
+Finite bound on the number of duration ratio. ?
 
 
 
@@ -67,16 +73,16 @@ question:
 
 
 ---
-## distance score-performance (mono)
+## performance-score distance (mono)
 
 alignement (like [DTW](DTW.md)) between 
 the performance events and
 the internal score events.
-the score markups are not aligned to performance.
+the score markups are not aligned to performance. their purpose is to compute the MTU date of internal score events.
 
-ex: one 4/4 bar
+**ex.** one 4/4 bar
 
-![](ex44-mono.png)
+![](pictures/ex44-mono.png)
 
 score internal events (there is a 4-uple markup on top of them):
 1. eight note1 (pitch p1)
@@ -120,3 +126,48 @@ cases:
   dotted rest = one single event. there are no tied rests.
   dotted note = 2 events
   
+
+---
+
+## computation of distance
+
+while reading left-to-right a score word representation, one can maintain a current MTU duration
+
+- initially it is 1 (1 bar)
+- when reading a open-markup of $`t`$-uplet, we divide by $`t`$
+- when reading a open-markup of $`t`$-uplet, we multiply by $`t`$
+- the MTU duration of an internal symbol read is the current duration
+  except grace-notes/chords which have duration 0.
+
+**ex.** The word representation of the above 4/4 measure is :
+
+```
+[4 [2 N N 2] _ R G C 4]
+```
+
+the two first N have duration 1/8
+
+the next elements have duration 1/4, except the G (duration 0).
+
+
+
+- if the depth (of markups) is bounded, the number of possible durations is finite.
+- for a pushdown automaton, the duration may be pushed onto the stack 
+  the stack alphabet is infinite for Symbolic Visibly Pushdown Automata
+
+
+
+The relationship between the MTU durations and RTU durations (performance word) is defined by the tempo.
+
+For a constant fixed tempo, we can built a Weighted Symbolic Visibly Pushdown Transducer computing the performance-score distance.
+
+Using a tempo model like the one of [Large](tempo-Large.md), we can maintain and update a current tempo value enabling the MTU-RTU conversion.
+
+
+
+
+
+
+
+
+

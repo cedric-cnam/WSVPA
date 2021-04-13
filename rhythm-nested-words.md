@@ -26,7 +26,7 @@ Gurevitch, Blass definition (see [Motley-word automata](:/2a025f6bf11a406785ee5f
 - if $`i ⇢ j`$ and $`i' ⇢ j'`$  and $`i \leq  i'`$
   then either $`i < j < i' < j'`$  or $`i < i' < j' < j`$
 
-![](nw1.png)
+![](pictures/nw1.png)
 
 ---
 **applications**:
@@ -34,7 +34,7 @@ Gurevitch, Blass definition (see [Motley-word automata](:/2a025f6bf11a406785ee5f
 - Executions of sequential structured programs: 
   matchs =  *calls* and *returns*
 
-![](nw3.png)
+![](pictures/nw3.png)
 
 *program execution. `en` = new scope = call, `ex` = exit scope = return, `rd` = read, `wr` = write, `sk` = other.* 
 
@@ -45,7 +45,7 @@ Gurevitch, Blass definition (see [Motley-word automata](:/2a025f6bf11a406785ee5f
   tree bank = repository (corpora) with 
   sentences (linear order) + anotation (hierarchical structure)
 
-![](nw4.png)
+![](pictures/nw4.png)
 
 *parsed sentence as nested word: I saw the old man with a dog today.* 
 
@@ -60,7 +60,7 @@ Gurevitch, Blass definition (see [Motley-word automata](:/2a025f6bf11a406785ee5f
 ## Example 1
 from paper MCM'19
 
-![](MCM19-1.png)
+![](pictures/MCM19-1.png)
 
 MTU timestamps: 0 3/4 7/8 | 1 4/3 5/3
 
@@ -144,7 +144,7 @@ e1   d   e1   e1   e1   e1   e1
 
 also from paper MCM'19
 
-![](MCM-19-2.png)
+![](pictures/MCM-19-2.png)
 
 MTU timestamps: 0 3/4 | 1 1 4/3 5/3
 
