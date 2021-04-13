@@ -80,7 +80,7 @@ In the next equation (called *phase attractive circle map*) , a coupling term is
 \phi_{n+1} = \phi_n + \frac{t_{n+1} - t_n}{p} - \eta_\phi . \frac{1}{2\pi} \sin(2\pi\phi_n) \qquad (\mod_{-\frac{1}{2},\frac{1}{2}}1) \qquad (3)
 ```
 
-where the parameter $\eta_\phi$ is a coupling strength ($`0 < \eta_\phi \leq 2`$).
+where the parameter $`\eta_\phi`$ is a coupling strength ($`0 < \eta_\phi \leq 2`$).
 
 The period is also adjusted at each event:
 
@@ -88,9 +88,9 @@ The period is also adjusted at each event:
 p_{n+1} = p_n \bigl(1 + \eta_p . \frac{1}{2\pi} \sin(2\pi\phi_n)\bigr) \qquad (4)
 ```
 
-Introduction of a new state variable $\kappa$ which represents *attentional focus* : the bigger $\kappa$ is, the narrower is the listener's temporal expectation, and small $\kappa$ reflects greater uncertainty about external happenings. 
+Introduction of a new state variable $`\kappa`$ which represents *attentional focus* : the bigger $`\kappa`$ is, the narrower is the listener's temporal expectation, and small $\kappa$ reflects greater uncertainty about external happenings. 
 
-It is used in the following equation which models of a pulse of attentional energy, replacing the above parameter $\eta_\phi$:
+It is used in the following equation which models of a pulse of attentional energy, replacing the above parameter $`\eta_\phi`$:
 
 ```math
 f(\phi, \kappa) = \frac{1}{I_0(\kappa)} . \exp(\kappa . \cos(2 \pi . \phi))  \qquad (5)
