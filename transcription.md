@@ -2,17 +2,20 @@
 
 
 
-```
+```    
+                               rhythmic 
                               quantization
   .---------------------.  <------------------   .----------------------.
   | Symbolic Quantified |                        | Symbolic Performance |
   .---------------------.  ------------------>   .----------------------.
-           ^  |                 alignment                 |  ^
-           |  |                   DTW                     |  |
-projection |  | structuring                       MIDI    |  | A2M transcription
-           |  |                                 synthesis |  |
+           ^  |              alignment/DTW                |  ^
+           |  |             artificial perf.              |  |
            |  |                                           |  |
-           |  v               performance                 v  |
+projection |  | structuring                       MIDI    |  | A2M transcription:
+           |  |                                 synthesis |  | pitch quantization
+           |  |                                           |  | onset/offset detection
+           |  |                                           |  |
+           |  v            human performance              v  |
         .-------.  --------------------------------->  .-------.
         | Score |                                      | Audio |
         .-------.  <---------------------------------  .-------.
@@ -29,10 +32,12 @@ In the setting of [distance-performance-score](distance-performance-score.md),
 
 The projection/structuring between `Score` and `Symbolic Quantified` correspond resp. to the deletion and insertion of markups.
 
-Our objective is the diagonal `Symbolic Performance` - `Score` : 
+Our objective is the diagonal `Symbolic Performance` - `Score` = MIDI2score transcription
 - def. of alignement - dist. (DTW) between `Score` and a `Symbolic Performance`
   see [distance-performance-score](distance-performance-score.md), 
 - an algo. for computing the distance between 
   - one `Symbolic Performance`
   - one language of `Score` s.
   see [distance-languages](distance-languages.md). 
+
+
