@@ -2,29 +2,52 @@
 
 
 ## Distance between words over finite alphabet
-We consider an alphabet $`\Sigma`$ = fixed finite set of symbols.
+We consider an alphabet $`\Sigma`$ = fixed set of symbols (finite or not).
 
-distance $`d`$:
-- defined over $`\Sigma^*`$ 
-- into a semiring  $`S = ( K, \oplus, \otimes, 0, 1)`$
+edit-distance $`d`$:
+- defined over $`∑^* \times ∑^*`$ 
+- into a semiring  $`S = ( K, \oplus, \otimes, 0, 1)`$ 
+  $`K`$ is the domain
+  $`0`$ is the neutral element for $`\oplus`$, absorbing for $`\otimes`$
+  $`1`$ is the neutral element for $.`\otimes`$.
 
-**Levenstein E.D.** 
-based on a cost function $`\delta`$:
+algebraic definition of edit-distance of Mohri, in 
 
-$`\delta: (\Sigma \cup \{ \epsilon \}) \times (\Sigma \cup \{ \epsilon \}) 
-          \setminus \{ (\epsilon, \epsilon) \} \to S`$
+> Mehryar Mohri 
+> Edit-distance of weighted automata: General definitions and algorithms
+> International Journal of Foundations of Computer Science 14.06 (2003): 957-982.
 
-Complexity for computation of $`d(w_1, w_2)`$:
-  - classical : $`O(|w_1| . |w_2|)`$ [Wagner, Fisher 1974]
+
+
+Let $`\Omega = ∑ ⋃ \{ \epsilon \} \times ∑ ⋃ \{ \epsilon \} \setminus \{ (\epsilon, \epsilon) \}`$ 
+
+and let $`h`$ be the morphism from $`\Omega^*`$ into $`∑^* \times ∑^*`$  defined over the concatenation of strings of $`∑^*`$ (that removes the $`\epsilon`$'s).
+
+An *alignment* between 2 strings  $`s, t ∈ \Sigma^*`$ is an element $`\omega ∈ \Omega^*`$ such that $`h(\omega) = (s, t)`$.
+
+
+
+We assume a base cost function $`\Omega`$ : $`\delta: \Omega \to S`$, extended to $`\Omega^*`$ by  $`\delta(\omega) = \bigotimes_{0 ≤ i < |\omega|} \delta(\omega_i)`$  for $`\omega ∈ \Omega^*`$.
+
+
+
+Then for  $`s, t ∈ \Sigma^*`$, the edit-distance between $`s`$ and $`t`$ is  $`d(s, t) = \bigoplus_{\omega ∈ \Omega^*, h(\omega) = (s, t)} \delta(\omega)`$.
+
+e.g. Levenstein edit-distance: $`S`$ is min-plus and $`\delta(a, b) = 1`$ for all $`(a, b) ∈ \Omega`$.
+
+
+
+Complexity for computation of $`d(s, t)`$:
+  - classical : $`O(|s| . |t|)`$ [Wagner, Fisher 1974]
     assuming $`\Sigma`$ fixed and finite.
-  - improved $`O(|w_1| + |w_2| + d^2)`$ [Ukonnen 1985]
+  - improved $`O(|s| + |t| + d^2)`$ [Ukonnen 1985]
   - subquadratic
 
 
 ## Distance between word languages
-also for alphabet $`\Sigma`$,
+for alphabet $`\Sigma`$,
 for $`L_1, L_2 \subseteq \Sigma^*`$, 
-$`d(L_1, L_2) = \bigoplus_{w_1 \in L_1, w_2 \in L_2} d(w_1, w_2)`$. 
+$`d(L_1, L_2) = \bigoplus_{s_1 \in L_1, s_2 \in L_2} d(s_1, s_2)`$. 
 
 rem: we need to define infinite sums with $`\oplus`$.
 
@@ -77,8 +100,8 @@ https://doi.org/10.1142/S0129054113400315
 
 ## Distance between weighted word languages (power series)
 for $`A_1, A_2 : \Sigma^*  \to S`$ (power series),
-$`d(A_1, A_2) = \bigoplus_{w_1, w_2 \in \Sigma^*} 
-  A_1(w_1) \otimes d(w_1, w_2) \otimes A_2(w_2)`$ 
+$`d(A_1, A_2) = \bigoplus_{s_1, s_2 \in \Sigma^*} 
+  A_1(s_1) \otimes d(s_1, s_2) \otimes A_2(s_2)`$ 
 
 rem: the unweighted definition is a particular case of Boolean semiring ($`A_1`$, $`A_2`$ compute the characteristic functions of $`L_1`$ and $`L_2`$).
 
@@ -91,7 +114,7 @@ for $`∑`$ finite:
   - for general E.D. that can be represented by finite weighted transducers
   - on-the-fly transducer's composition & pruning.
 
-it is presented in following paper:
+it is presented in the following paper:
 
 > Mehryar Mohri 
 > Edit-distance of weighted automata: General definitions and algorithms
@@ -100,11 +123,11 @@ it is presented in following paper:
 
 
 ## Infinite Alphabet
-infinite set of symbols $`\Omega`$
+infinite set of symbols $`\Sigma`$
 
 **ex.**  [alphabet]
 timestamped events (onsets, offsets), 
-$`\Omega`$ finite but huge for sampled dates (or IOI values), or infinite (rational values).
+$`\Sigma`$ finite but huge for sampled dates (or IOI values), or infinite (rational values).
 
 **ex.** [sequences] see [distance-performance-score](distance-performance-score.md).
 
@@ -115,7 +138,7 @@ $`\Omega`$ finite but huge for sampled dates (or IOI values), or infinite (ratio
 
 ## Distance between words over infinite alphabet
 
-for infinte alphabet $`\Omega`$ 
+for infinte alphabet $`\Sigma`$ 
 **DTW** (for temporal sequences) see [DTW](DTW.md).
 
 **ex.** distance between a performance and a score, using the above representations.
@@ -168,10 +191,7 @@ definition of $`L(A_1, A_2)`$ must take care of relationship between the label t
 - $`A_1`$ is an automaton for prior score language. 
   The value in $`S`$ returned by is a measure of notational complexity of a score.
   Note that for markups, the language is not regular ($`A_1`$ is a VPA then).
-- $`A_2`$ is a singleton automaton for a performance given $`w_2`$.
-- the distance is then $`\bigoplus_{w_1 \in \Omega^*} A_1(w_1) \otimes d(w_1, w_2)`$, i.e. the combination of 2 criteria to optimise. 
-  The best $`w_1`$ is a music score inferred for $`w_2`$ (transcription of $`w_2`$).
-
-
-
+- $`A_2`$ is a singleton automaton for a performance given $`s_2`$.
+- the distance is then $`\bigoplus_{s ∈ \Sigma^*} A_1(s_1) \otimes d(s_1, s_2)`$, i.e. the combination of 2 criteria to optimise. 
+  The best $`s_1`$ is a music score inferred for $`s_2`$ (transcription of $`s_2`$).
 
