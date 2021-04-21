@@ -57,7 +57,7 @@ This model generalizes Symbolic VPA from Boolean semirings to arbitrary semiring
 > Loris D’Antoni and Rajeev Alur
 > Symbolic Visibly Pushdown Automata
 > CAV 2014
-> https://link.springer.com/content/pdf/10.1007/978-3-319-08867-9_14.pdf
+https://link.springer.com/content/pdf/10.1007/978-3-319-08867-9_14.pdf
 
 The weight of transitions act as guard: a transition is activated for a symbol $`a`$ iff its weight $`\phi(a) \neq 0`$ (or $`\psi(a, b) \neq 0`$), the absorbing element.
 
@@ -68,7 +68,8 @@ The weight of transitions act as guard: a transition is activated for a symbol $
 we follow a definition of weighted automata with functions updating weight, like
 > Liang Huang, David Chiang
 > Better k-best Parsing
-> Proceedings of the 9th International Workshop on Parsing Technologies, 2005.
+> Proceedings of the 9th International Workshop on Parsing Technologies, 2005. 
+https://www.aclweb.org/anthology/W05-1506/
 
 - $`\Phi_n`$ ($`n \geq 0`$) recursively enumerable set of functions from $`W \times ∑^n`$ into $`S`$, 
   closed under $`\oplus`$ and $`\otimes`$.
