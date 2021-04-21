@@ -157,17 +157,13 @@ the next elements have duration 1/4, except the G (duration 0).
 
 
 
-The relationship between the MTU durations and RTU durations (performance word) is defined by the tempo.
+## tempo
+
+Following the definition of [edit-distances](distance-languages.md) and [DTW](DTW.md), we need the same alphabet for performances and scores. This requires converting the MTU timestamps in scores into RTU timestamps like in performance symbols. The relationship between the MTU durations and RTU durations (performance word) is defined by a tempo curve.
 
 For a constant fixed tempo, we can built a Weighted Symbolic Visibly Pushdown Transducer computing the performance-score distance.
 
-Using a tempo model like the one of [Large](tempo-Large.md), we can maintain and update a current tempo value enabling the MTU-RTU conversion.
-
-
-
-
-
-
+Using a tempo model like the one of [Large](tempo-Large.md), we can maintain and update a current tempo value (i.e. build a stepwise-constant tempo curve on-the-fly, left-to-right) enabling the MTU-RTU conversion.
 
 
 
