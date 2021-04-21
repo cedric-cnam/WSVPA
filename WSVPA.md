@@ -82,7 +82,7 @@ every **configuration** $`(w, q, c) \in W \times Q \times (P\times \Sigma)^*`$ w
 weighted **computation steps**: read $`{\Sigma}^*`$ and update the current configuration $`(w, q, c) \in W \times Q \times (P\times \Sigma)^*`$ into $`(w', q', c')`$ as follows:
 - for $`(q, \phi(x), q') \in \delta_i`$, reading $`a \in \Sigma_i`$, 
   - $`c' = c`$,
-  - $`w' = w \otimes `\phi(a)`$,
+  - $`w' = w \otimes \phi(a)`$,
 - for $`(q, \phi(x), q', p) \in \delta_c`$, reading $`(_a \in \Sigma_c`$, 
   - $`c' = c . (p, a)`$,
   - $`w' = w \otimes \phi(a)`$,
