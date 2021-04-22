@@ -15,11 +15,8 @@ to the computation of (string) edit-distances between (string) languages
 **content on distances and models**
 
 - [distance-languages.md](distance-languages.md) : 
-
   - definition of edit-distance between string and string languages.
-
   - results (essentially Mohri et al.) on the computation of edit-distances between unweighted and weighted languages over finite alphabet 
-
   - comments on the generalisation to infinite alphabets
 
     it needs appropriate generalisation of transducers 
@@ -28,10 +25,8 @@ to the computation of (string) edit-distances between (string) languages
   
 - [DTW.md](DTW.md) : generalities on Dynamic Time Warping 
   in the context of the above similarity measure definition and computation.
-
 - [NWA.md](NWA.md) references for various extended models of automata
-
-- [WSVPA.md](WSVPA.md) proposal of automaton for dealing with the performance/ score representations below.
+- [WSVPA.md](WSVPA.md) proposal of automaton for dealing with the performance / score representations below.
 
 
 ##  Application
