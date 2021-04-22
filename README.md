@@ -1,4 +1,4 @@
-#Weighted-Transducers-based Music Transcription
+# Weighted-Transducers-based framework of Mohri et al. and Music Transcription
 
 
 ## Approach of Mohri et al.
