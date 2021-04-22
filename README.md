@@ -25,8 +25,8 @@ to the computation of (string) edit-distances between (string) languages
   
 - [DTW.md](DTW.md) : generalities on Dynamic Time Warping 
   in the context of the above similarity measure definition and computation.
-- [NWA.md](NWA.md) references for various extended models of automata
-- [WSVPA.md](WSVPA.md) proposal of automaton for dealing with the performance / score representations below.
+- [NWA.md](NWA.md) references for various extended models of automata (to be completed)
+- [WSVPA.md](WSVPA.md) proposal of automaton for dealing with the performance / score representations below (preliminary).
 
 
 ##  Application
