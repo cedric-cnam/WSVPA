@@ -23,9 +23,8 @@ to the computation of (string) edit-distances between (string) languages
   - comments on the generalisation to infinite alphabets
 
     it needs appropriate generalisation of transducers 
-
     - to nested words (for scores) : Visibly Pushdown Transducers [Alur, Madhusudan]
-  - to infinite alphabets : Symbolic Visibly Pushdown Transducers [Alur, d'Antoni]
+    - to infinite alphabets : Symbolic Visibly Pushdown Transducers [Alur, d'Antoni]
   
 - [DTW.md](DTW.md) : generalities on Dynamic Time Warping 
   in the context of the above similarity measure definition and computation.
