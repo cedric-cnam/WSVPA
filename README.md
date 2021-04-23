@@ -1,5 +1,10 @@
 # WSVPA
 notes on a model of Weighted Symbolic Visibly Pushdown Automata for Music Notation Processing (Zettelkasten)
+at
+
+markdown math code is not rendered in github
+please see the copy at
+https://gitlab.inria.fr/qparse/paper-wtt
 
 ## Approach of Mohri et al.
 to the computation of (string) edit-distances between (string) languages
