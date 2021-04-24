@@ -27,10 +27,9 @@ and let $`h`$ be the morphism from $`\Omega^*`$ into $`∑^* \times ∑^*`$  def
 
 An *alignment* between 2 strings  $`s, t ∈ \Sigma^*`$ is an element $`\omega ∈ \Omega^*`$ such that $`h(\omega) = (s, t)`$.
 
-We assume a base cost function $`\Omega`$ : $`\delta: \Omega \to S`$, extended to $`\Omega^*`$ by  
+We assume a base cost function $`\Omega`$ : $`\delta: \Omega \to S`$, extended to $`\Omega^*`$ by (for $`\omega ∈ \Omega^*`$): 
 ```math
 \delta(\omega) = \bigotimes_{0 \leq i < |\omega|} \delta(\omega_i)  
-for $`\omega ∈ \Omega^*
 ```
 
 Then for $`s, t ∈ \Sigma^*`$, the edit-distance between $`s`$ and $`t`$ is  
