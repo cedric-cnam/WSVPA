@@ -52,7 +52,7 @@ Complexity for computation of $`d(s, t)`$:
 for alphabet $`\Sigma`$,
 for $`L_1, L_2 \subseteq \Sigma^*`$, 
 ```math
-d(L_1, L_2) = \bigoplus_{s_1 \in L_1, s_2 \in L_2} d(s_1, s_2)
+d(L_1, L_2) = \bigoplus_{s_1 \in L_1\, s_2 \in L_2} d(s_1, s_2)
 ```
 
 rem: we need to define infinite sums with $`\oplus`$.
