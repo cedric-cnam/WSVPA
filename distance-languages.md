@@ -9,7 +9,7 @@ edit-distance $`d`$:
 - into a semiring  $`S = ( K, \oplus, \otimes, 0, 1)`$ 
   $`K`$ is the domain
   $`0`$ is the neutral element for $`\oplus`$, absorbing for $`\otimes`$
-  $`1`$ is the neutral element for $.`\otimes`$.
+  $`1`$ is the neutral element for $`\otimes`$.
 
 algebraic definition of edit-distance of Mohri, in 
 
@@ -19,7 +19,10 @@ algebraic definition of edit-distance of Mohri, in
 
 
 
-Let $`\Omega = ∑ ⋃ \{ \epsilon \} \times ∑ ⋃ \{ \epsilon \} \setminus \{ (\epsilon, \epsilon) \}`$ 
+Let 
+```math
+\Omega = ∑ ⋃ \{ \epsilon \} \times ∑ ⋃ \{ \epsilon \} \setminus \{ (\epsilon, \epsilon) \}
+``` 
 
 and let $`h`$ be the morphism from $`\Omega^*`$ into $`∑^* \times ∑^*`$  defined over the concatenation of strings of $`∑^*`$ (that removes the $`\epsilon`$'s).
 
