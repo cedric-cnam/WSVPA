@@ -18,7 +18,6 @@ algebraic definition of edit-distance of Mohri, in
 > International Journal of Foundations of Computer Science 14.06 (2003): 957-982.
 
 
-
 Let 
 ```math
 \Omega = ∑ ⋃ \{ \epsilon \} \times ∑ ⋃ \{ \epsilon \} \setminus \{ (\epsilon, \epsilon) \}
@@ -30,7 +29,8 @@ An *alignment* between 2 strings  $`s, t ∈ \Sigma^*`$ is an element $`\omega �
 
 We assume a base cost function $`\Omega`$ : $`\delta: \Omega \to S`$, extended to $`\Omega^*`$ by  
 ```math
-\delta(\omega) = \bigotimes_{0 ≤ i < |\omega|} \delta(\omega_i)`$  for $`\omega ∈ \Omega^*
+\delta(\omega) = \bigotimes_{0 \leq i < |\omega|} \delta(\omega_i)  
+for $`\omega ∈ \Omega^*
 ```
 
 Then for $`s, t ∈ \Sigma^*`$, the edit-distance between $`s`$ and $`t`$ is  
