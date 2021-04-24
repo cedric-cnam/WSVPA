@@ -28,13 +28,12 @@ and let $`h`$ be the morphism from $`\Omega^*`$ into $`∑^* \times ∑^*`$  def
 
 An *alignment* between 2 strings  $`s, t ∈ \Sigma^*`$ is an element $`\omega ∈ \Omega^*`$ such that $`h(\omega) = (s, t)`$.
 
+We assume a base cost function $`\Omega`$ : $`\delta: \Omega \to S`$, extended to $`\Omega^*`$ by  
+```math
+\delta(\omega) = \bigotimes_{0 ≤ i < |\omega|} \delta(\omega_i)`$  for $`\omega ∈ \Omega^*
+```
 
-
-We assume a base cost function $`\Omega`$ : $`\delta: \Omega \to S`$, extended to $`\Omega^*`$ by  $`\delta(\omega) = \bigotimes_{0 ≤ i < |\omega|} \delta(\omega_i)`$  for $`\omega ∈ \Omega^*`$.
-
-
-
-Then for  $`s, t ∈ \Sigma^*`$, the edit-distance between $`s`$ and $`t`$ is  $`d(s, t) = \bigoplus_{\omega ∈ \Omega^*, h(\omega) = (s, t)} \delta(\omega)`$.
+Then for $`s, t ∈ \Sigma^*`$, the edit-distance between $`s`$ and $`t`$ is  d(s, t) = \bigoplus_{\omega ∈ \Omega^*, h(\omega) = (s, t)} \delta(\omega)`$.
 
 e.g. Levenstein edit-distance: $`S`$ is min-plus and $`\delta(a, b) = 1`$ for all $`(a, b) ∈ \Omega`$.
 
