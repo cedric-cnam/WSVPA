@@ -143,9 +143,9 @@ $`\Sigma`$ finite but huge for sampled dates (or IOI values), or infinite (ratio
   - structured with additional markups (parentheses): XML (MEI etc)
 
 ## Distance between words over infinite alphabet
+for infinte alphabet $`\Sigma`$.
 
-for infinte alphabet $`\Sigma`$ 
-**DTW** (for temporal sequences) see [DTW](DTW.md).
+Dynamic Time Warping (for temporal sequences) see [DTW](DTW.md).
 
 **ex.** distance between a performance and a score, using the above representations.
 with the possibility of missing notes (?)
