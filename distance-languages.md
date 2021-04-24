@@ -33,7 +33,10 @@ We assume a base cost function $`\Omega`$ : $`\delta: \Omega \to S`$, extended t
 \delta(\omega) = \bigotimes_{0 ≤ i < |\omega|} \delta(\omega_i)`$  for $`\omega ∈ \Omega^*
 ```
 
-Then for $`s, t ∈ \Sigma^*`$, the edit-distance between $`s`$ and $`t`$ is  d(s, t) = \bigoplus_{\omega ∈ \Omega^*, h(\omega) = (s, t)} \delta(\omega)`$.
+Then for $`s, t ∈ \Sigma^*`$, the edit-distance between $`s`$ and $`t`$ is  
+```math
+d(s, t) = \bigoplus_{\omega ∈ \Omega^*, h(\omega) = (s, t)} \delta(\omega)
+```
 
 e.g. Levenstein edit-distance: $`S`$ is min-plus and $`\delta(a, b) = 1`$ for all $`(a, b) ∈ \Omega`$.
 
