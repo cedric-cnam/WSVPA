@@ -34,7 +34,7 @@ We assume a base cost function $`\Omega`$ : $`\delta: \Omega \to S`$, extended t
 
 Then for $`s, t ∈ \Sigma^*`$, the edit-distance between $`s`$ and $`t`$ is  
 ```math
-d(s, t) = \bigoplus_{\omega ∈ \Omega^*, h(\omega) = (s, t)} \delta(\omega)
+d(s, t) = \bigoplus_{\omega ∈ \Omega^*\, h(\omega) = (s, t)} \delta(\omega)
 ```
 
 e.g. Levenstein edit-distance: $`S`$ is min-plus and $`\delta(a, b) = 1`$ for all $`(a, b) ∈ \Omega`$.
