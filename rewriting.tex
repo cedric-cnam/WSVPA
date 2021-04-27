@@ -1,0 +1,120 @@
+
+%% Extensible arrows from amsmath
+%\newcommand{\lrstep}[2]{\xrightarrow{#1}{#2}}    %\mathrel ? 
+%\newcommand{\rlstep}[2]{\xleftarrow{#1}{#2}}
+%\newcommand{\eqstep}[2]{\xleftrightarrow{#1}{#2}}
+%\newcommand{\mapstep}[2]{\mathop{\xmapsto[\scriptstyle #2]{\scriptstyle #1}}}
+\makeatletter
+\newcommand{\xleftrightarrow}[2][]{\ext@arrow 3359\leftrightarrowfill@{#1}{#2}}
+\newcommand{\xdashrightarrow}[2][]{\ext@arrow 0359\rightarrowfill@@{#1}{#2}}
+\newcommand{\xdashleftarrow}[2][]{\ext@arrow 3095\leftarrowfill@@{#1}{#2}}
+\newcommand{\xdashleftrightarrow}[2][]{\ext@arrow 3359\leftrightarrowfill@@{#1}{#2}}
+\def\rightarrowfill@@{\arrowfill@@\relax\relbar\rightarrow}
+\def\leftarrowfill@@{\arrowfill@@\leftarrow\relbar\relax}
+\def\leftrightarrowfill@@{\arrowfill@@\leftarrow\relbar\rightarrow}
+\def\arrowfill@@#1#2#3#4{%
+  $\m@th\thickmuskip0mu\medmuskip\thickmuskip\thinmuskip\thickmuskip
+   \relax#4#1
+   \xleaders\hbox{$#4#2$}\hfill
+   #3$%
+}
+\makeatother
+
+
+%% Extensible arrows from pgf/tikz
+\usetikzlibrary{arrows}
+\usetikzlibrary{cd}
+\makeatletter
+\newbox\xrat@below
+\newbox\xrat@above
+\newcommand{\yrightarrowhook}[2][]{%
+  \setbox\xrat@below=\hbox{\ensuremath{\scriptstyle #1}}%
+  \setbox\xrat@above=\hbox{\ensuremath{\scriptstyle #2}}%
+  \pgfmathsetlengthmacro{\xrat@len}{max(\wd\xrat@below,\wd\xrat@above)+.7em}%
+  \mathrel{\tikz [right hook->,baseline=-.75ex]
+                 \draw (0,0) -- node[below=-1.5pt] {\box\xrat@below}
+                                node[above=-1.5pt] {\box\xrat@above}
+                       (\xrat@len,0) ;}}
+\newcommand{\yrightarrow}[2][]{%
+  \setbox\xrat@below=\hbox{\ensuremath{\scriptstyle #1}}%
+  \setbox\xrat@above=\hbox{\ensuremath{\scriptstyle #2}}%
+  \pgfmathsetlengthmacro{\xrat@len}{max(\wd\xrat@below,\wd\xrat@above)+.7em}%
+  \mathrel{\tikz [->,baseline=-.75ex]
+                 \draw (0,0) -- node[below=-1.5pt] {\box\xrat@below}
+                                node[above=-1.5pt] {\box\xrat@above}
+                       (\xrat@len,0) ;}}
+\makeatother
+
+
+%% Arrows
+\def\Reduction#1#2#3#4{%
+\mathrel{\raise1.0ex\hbox{%
+\vtop{\ialign{##\crcr%
+\raise0.0ex\hbox{$\hfil\scriptstyle{\ #1\ }\hfil$}\crcr%
+\noalign{\nointerlineskip}%
+\rightarrowfill\crcr%
+\noalign{\nointerlineskip}%
+\raise0.0ex\hbox{$\hfil\scriptstyle{\ #2\ }\hfil$}\crcr}}}{}^{#3}_{#4}}}
+%
+\def\Leduction#1#2#3#4{%
+\mathrel{\raise1.0ex\hbox{%
+\vtop{\ialign{##\crcr%
+\raise0.0ex\hbox{$\hfil\scriptstyle{\ #1\ }\hfil$}\crcr%
+\noalign{\nointerlineskip}%
+\leftarrowfill\crcr%
+\noalign{\nointerlineskip}%
+$\hfil\scriptstyle{\ #2\ }\hfil$\crcr}}}{}^{#3}_{#4}}}
+%
+%\def\hookxrightarrow[#1]#2{{\lhook\hspace{-0.20em}\xrightarrow[#1]{#2}}}
+\def\hookReduction#1#2#3#4{%
+%\lhook\joinrel\hspace{-0.35em}
+\mathrel{\raise1.2ex\hbox{%
+\vtop{\ialign{##\crcr%
+\raise0.0ex\hbox{$\hfil\scriptstyle{\ #1\ }\hfil$}\crcr%
+\noalign{\nointerlineskip}%
+$\lhook\joinrel$\hspace{-0.35em}
+\rightarrowfill\crcr%
+\noalign{\nointerlineskip}%
+$\hfil\scriptstyle{\ #2\ }\hfil$\crcr}}}{}^{#3}_{#4}}}
+%
+\def\hoookReduction#1#2#3#4{%
+\lhook\joinrel\hspace{-0.50em}
+\raise0.85ex\hbox{%
+\vtop{\ialign{##\crcr%
+\raise0.4ex\hbox{$\hfil\scriptstyle{\ #1\ }\hfil$}\crcr%
+\noalign{\nointerlineskip}%
+\rightarrowfill\crcr%
+\noalign{\nointerlineskip}%
+$\hfil\scriptstyle{\ #2\ }\hfil$\crcr}}}{}^{#3}_{#4}}
+
+%\def\reach#1#2{\mathop{#1}[#2]}
+
+%% rewrite steps
+%% \frew#1#2#3#4#5#6#7#8
+\def\frew#1#2#3#4#5#6#7#8{
+\setbox0=\hbox{$#6 #7 #1 #8$}%
+\setbox1=\hbox{$#6 #7 #2 #8$}%
+\ifdim \wd0>\wd1 \rlap{\rlap{\hbox to \wd0{#5}}%
+                            {\hbox to\wd0{\hfil\lower #3\box1\relax\hfil}}}{\raise #4\box0}%
+\else \rlap{\rlap{\hbox to \wd1{#5}}{\hbox to\wd1{\hfil\raise #4\box0\relax\hfil}}}{\lower #3\box1}%
+\fi
+}
+%% \fstep
+\def\fstep#1#2#3#4#5{\mathchoice{\frew{#1}{#2}{1.10ex}{1.20ex}{#5}{\scriptstyle}{#3}{#4}}%
+                                {\frew{#1}{#2}{0.82ex}{1.20ex}{#5}{\scriptstyle}{#3}{#4}}%
+                                {\frew{#1}{#2}{0.51ex}{0.82ex}{#5}{\scriptscriptstyle}{#3}{#4}}%
+                                {\frew{#1}{#2}{0.51ex}{0.69ex}{#5}{\scriptscriptstyle}{#3}{#4}}}
+%% \lrstep, \rlstep, \eqstep
+% #1 top label
+% #2 bottom_right label
+\newcommand{\lrstep}[2]{\mathrel{\fstep{#1}{#2}{\;\>}{\>\>\;}{\rightarrowfill}}}
+\newcommand{\lrsteptc}[2]{\mathrel{\fstep{#1\ }{#2\ }{\;\>}{\>\>\;}{\rightarrowfill$^*$}}}
+\newcommand{\rlstep}[2]{\mathrel{\fstep{#1}{#2}{\;\>\>}{\;\>}{\leftarrowfill}}}
+\newcommand{\eqstep}[2]{\mathrel{\fstep{#1}{#2}{\;\>}{\>\;}{\rlap{\leftarrowfill}{\rightarrowfill}}}}
+
+%% \fstepd   ad hoc.... to avoid hidden overline
+\def\fstepd#1#2#3#4#5{\mathchoice{\frew{#1}{#2}{1.10ex}{1.20ex}{#5}{\scriptstyle}{#3}{#4}}%
+                                {\frew{#1}{#2}{1.12ex}{1.20ex}{#5}{\scriptstyle}{#3}{#4}}%
+                                {\frew{#1}{#2}{0.51ex}{0.82ex}{#5}{\scriptscriptstyle}{#3}{#4}}%
+                                {\frew{#1}{#2}{0.51ex}{0.69ex}{#5}{\scriptscriptstyle}{#3}{#4}}}
+\newcommand{\lrstepd}[2]{\mathrel{\fstepd{#1}{#2}{\;\>}{\>\>\;}{\rightarrowfill}}}

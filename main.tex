@@ -1,0 +1,372 @@
+\documentclass[a4paper,11pt]{article}
+%\setcounter{page}{1}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\usepackage{hyperref}
+%\usepackage[bookmarks,bookmarksnumbered,naturalnames,plainpages=false]{hyperref}
+%usepackage{url}
+
+% for footnote ref
+\usepackage{refcount} 
+
+% symbols
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{amsbsy}
+\usepackage{bbold}
+\usepackage{latexsym}
+%\usepackage{amsfonts}
+\usepackage{stmaryrd}
+%\usepackage{mathabx}
+%\usepackage{MnSymbol}
+\usepackage{harmony} % simple music fonts
+\usepackage{mathtools} % for arrows
+%\usepackage{mathptmx}
+
+%% theorem envs
+\usepackage{theorem}
+\newtheorem{theorem}{Theorem} %[section]
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newenvironment{proof}{\vspace{-2ex}{\it Proof. }}{\hspace*{\fill} $\Box$\smallskip }
+\theorembodyfont{\slshape}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+
+% extension of enumerate env. (style for displaying counters)
+% \usepackage{enumerate} 
+
+
+%% pictures
+% \usepackage{graphicx} 
+% \DeclareGraphicsExtensions{.pdf,.png,.jpg}
+% \graphicspath{fig/}
+
+%% PGF, Tikz
+%% \usepackage{pgfplots}
+%% \usepgfplotslibrary{dateplot}
+%% \usepackage{pgf,pgfarrows,pgfnodes, pgfautomata}
+% \usepackage{tikz}
+%% \usetikzlibrary{arrows}
+%% \usetikzlibrary{calc}
+%% \usetikzlibrary{snakes}
+%% \usetikzlibrary{backgrounds}
+% \usetikzlibrary{trees}
+%% \usetikzlibrary{automata}
+%% \usetikzlibrary{positioning}
+%% \usetikzlibrary{matrix}
+%% \usetikzlibrary{patterns}
+%% \usetikzlibrary{shapes}
+
+%% for new macros
+\usepackage{xspace}
+
+%% arrows etc
+%\input{rewriting}
+
+%% Misc macros
+
+\def\ie{\textit{i.e.}\xspace}
+\def\eg{\textit{e.g.}\xspace}
+\def\wrt{\textit{wrt}\xspace}
+%\def\wlog{\textit{wlog}\xspace}
+\def\etc{\textit{etc}\xspace}
+
+\def\<#1>{\langle #1 \rangle}
+\newcommand{\pair}[2]{\langle{#1}, {#2}\rangle}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\D}{\mathbb{D}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\W}{\mathbb{W}}
+
+\newcommand{\Semiring}{\mathbb{S}}
+\newcommand{\zero}{\mathbb{0}}
+\newcommand{\one}{\mathbb{1}}
+\newcommand{\dom}{\ensuremath{\mathit{dom}}}
+
+\newcommand{\weight}{\mathsf{weight}}
+\newcommand{\init}{\mathsf{in}}
+\newcommand{\final}{\mathsf{out}}
+
+
+%\sloppy
+
+\title{Weighted Visibly Pushdown Automata and Automated Music Transcription}
+%\author{Florent Jacquemard}
+%\institute{INRIA \& CNAM, Paris, France\\
+%\email{florent.jacquemard@inria.fr}}
+
+%\titlerunning{WVPA \& AMT}
+%\authorrunning{Florent Jacquemard}
+
+\date{\today}
+ 
+\begin{document}
+\thispagestyle{empty}
+\maketitle
+\abstract{\ldots}
+
+
+Symbolic Weighted (SW) extension of symbolic automata where...
+
+
+
+\paragraph{Semirings.}
+We shall consider semiring domains for weight values.
+%
+A \emph{semiring} $\< \Semiring, \oplus, \zero, \otimes, \one>$ 
+is a structure with a domain~$\Semiring$,
+equipped with two associative
+binary operators~$\oplus$ and $\otimes$
+with respective neutral elements $\zero$ and $\one$ and such that:
+%$\< \mathbb{S}, \oplus, \zero>$ is a commutative monoid
+%$\< \mathbb{S}, \otimes, \one>$ is a monoid
+$\oplus$ is commutative, 
+$\otimes$ distributes over~$\oplus$:  $\forall x, y, z \in \mathbb{S}$,
+$x \otimes (y \oplus z) = (x \otimes y) \oplus (x \otimes z)$, 
+%  and $(x \oplus y) \otimes z = (x \otimes z) \oplus (y \otimes z)$;
+and $\zero$ is absorbing for~$\otimes$: 
+$\forall x\in \mathbb{S}$, $\zero \otimes x = x \otimes \zero = \zero$.
+%Components of a semiring~$\Semiring$ may be subscripted by~$\Semiring$ when needed.
+%We simply write $x \in \Semiring$ to mean $x \in \mathbb{S}$.
+%
+In the application presented in this paper, intuitively,
+$\oplus$ selects an optimal value amongst two values and 
+$\otimes$ combines two values into a single value.
+
+%\noindent %properties:
+A semiring $\Semiring$ is \emph{commutative} if $\otimes$ is commutative.
+%\francesco{How we deal with that since it is non commutative?}
+It \emph{bounded}~\cite{Mohri02semiring} if $\forall x \in \dom(\Semiring), \one \oplus x = \one$,
+and \emph{idempotent} if for all $x \in \Semiring$, $x \oplus x = x$.
+%We restrict in the following of \emph{idempotent} semirings.
+Note that every bounded semiring is idempotent:
+by boundedness, 
+$\one \oplus \one = \one$, and idempotency follows by multiplying
+both sides by $x$ and distributing. %
+
+
+%\noindent
+A semiring $\Semiring$ 
+is \emph{monotonic} \wrt a partial ordering~$\leq$ 
+iff for all $x, y, z  \in \Semiring$,  $x \leq y$ implies
+$x \oplus z \leq y \oplus z$,
+$x \otimes z \leq y \otimes z$
+and $z \otimes x \leq z \otimes y$,
+%
+and it is \emph{superior} %\wrt a partial ordering~$\leq$
+\wrt~$\leq$ iff for all $x, y \in \Semiring$,  
+$x \leq x \otimes y$ and 
+$y \leq x \otimes y$~\cite{Huang08advanceddynamic}.
+The latter property corresponds to the 
+\emph{non-negative weights} condition in shortest-path algorithms~\cite{Dijkstra59anote}.
+Intuitively, it means that combining elements always increase their weight. 
+% always get worse in term of weight
+Note that when $\Semiring$ is superior \wrt~$\leq$, then $\one \leq \zero$
+and moreover, for all $x \in \Semiring$, $\one \leq x \leq \zero$.
+
+Every idempotent semiring~$\Semiring$ induces 
+a partial ordering~$\leq_\Semiring$ 
+called the \emph{natural ordering} of~$\Semiring$
+and defined by: 
+%implicitly defined by the semiring $\Semiring$ 
+for all $x$ and $y$,
+$x \leq_\Semiring y \;\mbox{iff}\; x \oplus y = x$.
+This ordering is sometimes defined in the opposite direction~\cite{DrosteKuich09semirings};
+The above definition follows \cite{Mohri02semiring}, 
+and coincides than the usual ordering on the Tropical semiring (\emph{min-plus}).
+%
+It holds that $\Semiring$ is {monotonic} \wrt~$\leq_\Semiring$.
+An idempotent Semiring $\Semiring$~is called \emph{total} if
+it~$\leq_\Semiring$ is total
+\ie when for all $x, y \in \Semiring$, either $x \oplus y = x$ or $x \oplus y = y$.
+
+We shall consider below infinite sums with~$\oplus$.
+A semiring~$\Semiring$ is called \emph{complete} 
+if for every family
+$(x_i)_{i \in I}$ %$\{ x_i \mid i \in I \}$
+of elements of $\dom(\Semiring)$ over an index set $I \subset \mathbb{N}$,
+the infinite sum $\bigoplus_{i \in I} x_i$
+is well-defined and in $\dom(\Semiring)$,
+and the following properties hold:
+\begin{description}
+\item[$i.$]
+\emph{infinite sums extend finite sums:}
+$\displaystyle\bigoplus_{i \in \emptyset} x_i = \zero$,\quad 
+      $\forall j\in \mathbb{N}, \displaystyle\bigoplus_{i \in \{ j \}} x_i = x_j$,\quad
+      $\forall j, k\in \mathbb{N}, j\neq k, 
+      \displaystyle\bigoplus_{i \in \{ j, k \}} x_i = x_j \oplus x_k$,
+%
+\item[$ii.$]
+\emph{associativity and commutativity:}
+for all $I \subseteq \mathbb{N}$
+and all partition $(I_{j})_{j \in J}$ of $I$, %\subseteq \mathbb{N}$, 
+\(
+\displaystyle
+\bigoplus_{j \in J}\bigoplus_{i \in I_j} x_i = 
+\bigoplus_{i \in I} x_i
+\),
+%
+\item[$iii.$] 
+\emph{distributivity of product over infinite sum:}\\
+for all $I \subseteq \mathbb{N}$,
+\(
+\displaystyle
+\bigoplus_{i \in I} (x \otimes y_i) = x \otimes \bigoplus_{i\in I} y_i\), and
+\(
+\displaystyle
+\bigoplus_{i \in I} (x_i \otimes y) = (\bigoplus_{i \in I} x_i ) \otimes y\).
+\end{description}
+
+
+
+\section{SW Visibly Pushdown Automata}
+We follow the approach of~\cite{Mohri03EDWA} for the computation of distances...
+
+
+\subsection{SW Automata and Transducers}
+The following definition of weighted transducers over infinite alphabets 
+generalizes weighted transducers over finite alphabets, see  e.g.~\cite{Mohri03EDWA}, 
+by considering weight functions generalizing the guards of symbolic automata
+
+Let $\Sigma$ and $\Delta$ be respectively an input and output \emph{alphabets}, 
+which are finite or infinite sets of symbols, and let $\Semiring$ be a semiring.
+%
+A \emph{label theory} 
+is a 4-uplet of recursively enumerable sets:
+%$\Phi_0$, \Phi_\Sigma \uplus \Phi_\Delta \uplus \Phi_{\Sigma, \Delta}$ 
+$\Phi_0$ containing constant functions valued in $\Semiring$, 
+$\Phi_\Sigma$ and $\Phi_\Delta$, 
+containing unary functions in $\Sigma \to \Semiring$, resp. $\Delta \to \Semiring$, 
+and $\Phi_{\Sigma, \Delta}$  containing binary functions in $\Sigma \times \Delta \to \Semiring$.
+Moreover, we assume that each of these sets is closed under $\oplus$ and $\otimes$, 
+and all partial applications of functions $\Phi_{\Sigma, \Delta}$, 
+resp. 
+$f_a: y \mapsto f(a, y)$ for $a \in \Sigma$ and $y \in \Delta$
+and 
+$f_b: x \mapsto f(x, b)$ for $b \in \Delta$ and $x \in \Sigma$, 
+belong resp. to $\Phi_\Sigma$ and $\Phi_\Delta$.
+
+
+\begin{definition}
+A weighted transducer $T$ over the input and output alphabet $\Sigma$ and $\Delta$ 
+and the semiring $\Semiring$ is a tuple
+$T = \< Q, \init, \weight, \final >$,
+where $Q$ is a finite set of states, 
+$\mathsf{in} : Q \to \Semiring$, 
+respectively $\mathsf{out} : Q \to \Semiring,$
+is a function defining the weight for entering, 
+respectively leaving, a state, 
+and $\weight$ is a transition %weight 
+function of $Q \times Q$ into %$\Phi$.
+$\< \Phi_0, \Phi_\Sigma, \Phi_\Delta, \Phi_{\Sigma, \Delta}>$.
+\end{definition}
+We extend the above transition function into a function from
+$Q \times (\Sigma \cup \{ \epsilon \}) \times (\Delta \cup \{ \epsilon \}) \times Q$
+into $\Semiring$, also called $\weight$ for simplicity, such that 
+for all $q, q' \in Q$, $a \in \Sigma$, $b \in \Delta$, 
+and with 
+$\< \phi_\epsilon, \phi_\Sigma, \phi_\Delta, \phi_{\Sigma, \Delta}> = \weight(q, q')$, 
+\[
+\begin{array}{rcl}
+\weight(q, \epsilon, \epsilon, q') & = & \phi_\epsilon\\
+\weight(q, a, \epsilon, q') & = & \phi_\Sigma(a)\\
+\weight(q, \epsilon, b, q') & = & \phi_\Delta(b)\\
+\weight(q, a, b, q') & = & \phi_{\Sigma, \Delta}(a, b)
+\end{array}      
+\]
+%More precisely, $Q \times Q$, 
+%resp. $Q \times \Sigma \times Q$,
+%$Q \times \Delta \times Q$,
+%$Q \times \Sigma \times \Delta \times Q$,
+%into resp. $\Phi_0$, $\Phi_\Sigma$, $\Phi_\Delta$ $\Phi_{\Sigma, \Delta}$.
+
+These functions $\phi$ act as guards for the transducer's transitions, 
+preventing a transition when they return the absorbing $\zero$ of $\Semiring$.
+
+
+
+\subsection{Distance between words or languages}
+distance $d$:
+defined over $\Sigma^* \times \Sigma^*$ 
+into a semiring  $\Semiring = ( \Semiring, \oplus, \zero, \otimes, \one)$.
+
+
+
+
+\paragraph{Edit-Distance.}
+...algebraic definition of edit-distance of Mohri, in \cite{Mohri03EDWA}
+% Mehryar Mohri 
+% Edit-distance of weighted automata: General definitions and algorithms
+% International Journal of Foundations of Computer Science 14.06 (2003): 957-982.
+%
+\noindent
+Let $\Omega = \Sigma \cup \{ \epsilon \} \times \Sigma \cup \{ \epsilon \} \setminus \{ (\epsilon, \epsilon) \}$,
+and let $h$ be the morphism from $\Omega^*$ into $\Sigma^* \times \Sigma^*$  
+defined over the concatenation of strings of $\Sigma^*$ (that removes the $\epsilon$'s).
+%
+\noindent
+An \emph{alignment} between 2 strings  $s, t \in \Sigma^*$ is an element $\omega \in \Omega^*$ 
+such that $h(\omega) = (s, t)$.
+%
+\noindent
+We assume a base cost function $\Omega$ : $\delta: \Omega \to S$, extended to $\Omega^*$ as follows  
+(for $\omega \in \Omega^*$): 
+\(
+\displaystyle\delta(\omega) = \bigotimes_{0 \leq i < |\omega|} \delta(\omega_i)
+\).
+
+\noindent
+\begin{definition}
+For  $s, t \in \Sigma^*$, the edit-distance between $s$ and $t$ is  
+\( 
+d(s, t) = \displaystyle\bigoplus_{\omega \in \Omega^*\, h(\omega) = (s, t)} \delta(\omega)
+\).
+\end{definition}
+
+e.g. Levenstein edit-distance: $S$ is min-plus and $\delta(a, b) = 1$ for all $(a, b) \in \Omega$.
+
+
+%\paragraph{Distance between a word and a regular language}
+
+
+
+\subsection{SW Visibly Pushdown Automata}
+
+
+
+
+
+\section{Application}
+Symbolic Automated Music Transcription
+
+
+\subsection{Representations}
+
+\paragraph{Performance.}
+
+\paragraph{Score.}
+
+
+\subsection{Transducer for Distance Computation}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BIBLIO                                                                     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\bibliographystyle{plain}
+%\bibliographystyle{plainurl} 
+\bibliographystyle{abbrv}
+%\bibliographystyle{splncs04}
+\bibliography{references}
+
+\end{document}
+
