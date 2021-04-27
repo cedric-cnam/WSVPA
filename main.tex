@@ -256,7 +256,7 @@ belong resp. to $\Phi_\Sigma$ and $\Phi_\Delta$.
 
 
 \begin{definition}
-A weighted transducer $T$ over the input and output alphabet $\Sigma$ and $\Delta$ 
+A \emph{weighted transducer} $T$ over the input and output alphabet $\Sigma$ and $\Delta$ 
 and the semiring $\Semiring$ is a tuple
 $T = \< Q, \init, \weight, \final >$,
 where $Q$ is a finite set of states, 
@@ -291,6 +291,51 @@ $\< \phi_\epsilon, \phi_\Sigma, \phi_\Delta, \phi_{\Sigma, \Delta}> = \weight(q,
 These functions $\phi$ act as guards for the transducer's transitions, 
 preventing a transition when they return the absorbing $\zero$ of $\Semiring$.
 
+The weighted transducer $T$ defines a mapping 
+from the pairs of strings of $\Sigma^* \times \Delta^*$ 
+into the weights of~$\Semiring$,
+based on the following intermediate function $\weight_\A$
+defined recursively for every $q, q' \in Q$, 
+%$a \in \Sigma$, $b \in \Delta$ 
+for every strings of $s \in \Sigma^*$, $t \in \Delta^*$:
+\[
+\begin{array}{rccl}
+\weight_\A(q, s, t, q') & = & & \weight(q, \epsilon, \epsilon, q')\\
+ & & \oplus \displaystyle\bigoplus_{\begin{array}{c}
+                                      \scriptstyle q'' \in Q\\[-2pt]
+                                      \scriptstyle s = au, a \in \Sigma
+                                      \end{array}} &
+     \weight(q, a, \epsilon, q'') \otimes \weight_\A(q'', u, t, q')\\
+ & & \oplus \displaystyle\bigoplus_{\begin{array}{c}
+                                    \scriptstyle q'' \in Q\\[-2pt]
+                                    \scriptstyle t = bv, b \in \Delta
+                                    \end{array}} &
+      \weight(q, \epsilon, b, q'') \otimes \weight_\A(q'', s, v, q')\\ 
+      & & \oplus \displaystyle\bigoplus_{\begin{array}{c}
+                                         \scriptstyle q'' \in Q\\[-2pt]
+                                         \scriptstyle s = au, a \in \Sigma\\[-2pt]
+                                         \scriptstyle t = bv, b \in \Delta
+                                         \end{array}} &
+      \weight(q, a, b, q'') \otimes \weight_\A(q'', u, v, q')\\ 
+\end{array}
+\]
+Recall that by convention, an empty sum with $\oplus$ is $\zero$. 
+
+\noindent
+The weight associated by $T$ to  $\< s, t> \in \Sigma^* \times \Delta^*$
+is then defined as follows: 
+\[
+T(s, t)  = 
+\displaystyle\bigoplus_{q, q' \in Q} \mathsf{in}(q) 
+\mathop{\otimes} \weight_\A(q, s, t, q') \mathop{\otimes} \mathsf{out}(q').
+\]
+
+A \emph{weighted automata} $T = \< Q, \init, \weight, \final >$
+over $\Sigma$ and $\Semiring$ 
+is defined in a similar way by simply omitting the output symbols,
+\ie $\weight$ is a function of~$Q \times Q$ into %$\Phi$.
+$\< \Phi_0, \Phi_\Sigma >$, 
+or equivalently from~$Q \times (\Sigma \cup \{ \epsilon \}) \times Q$ into~$\Semiring$.
 
 
 \subsection{Distance between words or languages}
