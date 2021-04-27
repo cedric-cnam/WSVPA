@@ -9,7 +9,7 @@ edit-distance $`d`$:
 - into a semiring  $`S = ( K, \oplus, \otimes, 0, 1)`$ 
   $`K`$ is the domain
   $`0`$ is the neutral element for $`\oplus`$, absorbing for $`\otimes`$
-  $`1`$ is the neutral element for $.`\otimes`$.
+  $`1`$ is the neutral element for $`\otimes`$.
 
 algebraic definition of edit-distance of Mohri, in 
 
@@ -18,20 +18,24 @@ algebraic definition of edit-distance of Mohri, in
 > International Journal of Foundations of Computer Science 14.06 (2003): 957-982.
 
 
-
-Let $`\Omega = ∑ ⋃ \{ \epsilon \} \times ∑ ⋃ \{ \epsilon \} \setminus \{ (\epsilon, \epsilon) \}`$ 
+Let 
+```math
+\Omega = ∑ ⋃ \{ \epsilon \} \times ∑ ⋃ \{ \epsilon \} \setminus \{ (\epsilon, \epsilon) \}
+``` 
 
 and let $`h`$ be the morphism from $`\Omega^*`$ into $`∑^* \times ∑^*`$  defined over the concatenation of strings of $`∑^*`$ (that removes the $`\epsilon`$'s).
 
 An *alignment* between 2 strings  $`s, t ∈ \Sigma^*`$ is an element $`\omega ∈ \Omega^*`$ such that $`h(\omega) = (s, t)`$.
 
+We assume a base cost function $`\Omega`$ : $`\delta: \Omega \to S`$, extended to $`\Omega^*`$ by (for $`\omega ∈ \Omega^*`$): 
+```math
+\delta(\omega) = \bigotimes_{0 \leq i < |\omega|} \delta(\omega_i)  
+```
 
-
-We assume a base cost function $`\Omega`$ : $`\delta: \Omega \to S`$, extended to $`\Omega^*`$ by  $`\delta(\omega) = \bigotimes_{0 ≤ i < |\omega|} \delta(\omega_i)`$  for $`\omega ∈ \Omega^*`$.
-
-
-
-Then for  $`s, t ∈ \Sigma^*`$, the edit-distance between $`s`$ and $`t`$ is  $`d(s, t) = \bigoplus_{\omega ∈ \Omega^*, h(\omega) = (s, t)} \delta(\omega)`$.
+Then for $`s, t ∈ \Sigma^*`$, the edit-distance between $`s`$ and $`t`$ is  
+```math
+d(s, t) = \bigoplus_{\omega ∈ \Omega^*\, h(\omega) = (s, t)} \delta(\omega)
+```
 
 e.g. Levenstein edit-distance: $`S`$ is min-plus and $`\delta(a, b) = 1`$ for all $`(a, b) ∈ \Omega`$.
 
@@ -47,7 +51,9 @@ Complexity for computation of $`d(s, t)`$:
 ## Distance between word languages
 for alphabet $`\Sigma`$,
 for $`L_1, L_2 \subseteq \Sigma^*`$, 
-$`d(L_1, L_2) = \bigoplus_{s_1 \in L_1, s_2 \in L_2} d(s_1, s_2)`$. 
+```math
+d(L_1, L_2) = \bigoplus_{s_1 \in L_1\, s_2 \in L_2} d(s_1, s_2)
+```
 
 rem: we need to define infinite sums with $`\oplus`$.
 
@@ -100,11 +106,11 @@ https://doi.org/10.1142/S0129054113400315
 
 ## Distance between weighted word languages (power series)
 for $`A_1, A_2 : \Sigma^*  \to S`$ (power series),
-$`d(A_1, A_2) = \bigoplus_{s_1, s_2 \in \Sigma^*} 
-  A_1(s_1) \otimes d(s_1, s_2) \otimes A_2(s_2)`$ 
+```math
+d(A_1, A_2) = \bigoplus_{s_1, s_2 \in \Sigma^*} A_1(s_1) \otimes d(s_1, s_2) \otimes A_2(s_2)
+```  
 
 rem: the unweighted definition is a particular case of Boolean semiring ($`A_1`$, $`A_2`$ compute the characteristic functions of $`L_1`$ and $`L_2`$).
-
 
 for $`∑`$ finite:
 - for $`A_1`$,  $`A_2`$ defined by weighted automata, $`d(A_1, A_2)`$ is computated by the weighted transducer $`A_2 \circ T \circ A_1`$  where $`T`$ computed the distance $`d`$ between words, by
@@ -137,9 +143,9 @@ $`\Sigma`$ finite but huge for sampled dates (or IOI values), or infinite (ratio
   - structured with additional markups (parentheses): XML (MEI etc)
 
 ## Distance between words over infinite alphabet
+for infinte alphabet $`\Sigma`$.
 
-for infinte alphabet $`\Sigma`$ 
-**DTW** (for temporal sequences) see [DTW](DTW.md).
+Dynamic Time Warping (for temporal sequences) see [DTW](DTW.md).
 
 **ex.** distance between a performance and a score, using the above representations.
 with the possibility of missing notes (?)
