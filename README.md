@@ -1,7 +1,15 @@
 # Weighted-Transducers-based framework of Mohri et al. and Music Transcription
 
+Theoretical framework for automated music transcription and performance analysis.
+
+More conventional than in the paper MCM'19 : based on small extensions of standard tools : 
+
+
+
+
 
 ## Approach of Mohri et al.
+
 to the computation of (string) edit-distances between (string) languages
 
 **principle:**
