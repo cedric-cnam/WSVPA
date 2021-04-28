@@ -91,10 +91,27 @@
 \newcommand{\one}{\mathbb{1}}
 \newcommand{\dom}{\ensuremath{\mathit{dom}}}
 
-\newcommand{\weight}{\mathsf{weight}}
-\newcommand{\init}{\mathsf{in}}
-\newcommand{\final}{\mathsf{out}}
-
+\def\SWT{\textsf{SWT}\xspace}
+\def\SWA{\textsf{SWA}\xspace}
+\def\SWVPA{\textsf{SWVPA}\xspace}
+\def\weight{\mathsf{weight}}
+\def\wei{\mathsf{w}}
+\def\init{\mathsf{in}}
+\def\final{\mathsf{out}}
+\newcommand{\call}[1]{\ensuremath \langle_{#1}}
+\newcommand{\return}[1]{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
+\def\Sigmai{{\Sigma_\mathsf{i}}}
+\def\Sigmac{{\Sigma_\mathsf{c}}}
+\def\Sigmar{{\Sigma_\mathsf{r}}}
+\def\Phii{{\Phi_\mathsf{i}}}
+\def\Phic{{\Phi_\mathsf{c}}}
+\def\Phir{{\Phi_\mathsf{r}}}
+\def\Phicr{{\Phi_\mathsf{cr}}}
+\def\weii{{\wei_\mathsf{i}}}
+\def\weic{{\wei_\mathsf{c}}}
+\def\weir{{\wei_\mathsf{r}}}
+\def\weie{{\wei_\mathsf{e}}}
+\newcommand{\config}[2]{\ensuremath \genfrac{[}{]}{0pt}{}{#1}{#2}} 
 
 %\sloppy
 
@@ -141,16 +158,7 @@ In the application presented in this paper, intuitively,
 $\oplus$ selects an optimal value amongst two values and 
 $\otimes$ combines two values into a single value.
 
-%\noindent %properties:
-A semiring $\Semiring$ is \emph{commutative} if $\otimes$ is commutative.
-%\francesco{How we deal with that since it is non commutative?}
-It \emph{bounded}~\cite{Mohri02semiring} if $\forall x \in \dom(\Semiring), \one \oplus x = \one$,
-and \emph{idempotent} if for all $x \in \Semiring$, $x \oplus x = x$.
-%We restrict in the following of \emph{idempotent} semirings.
-Note that every bounded semiring is idempotent:
-by boundedness, 
-$\one \oplus \one = \one$, and idempotency follows by multiplying
-both sides by $x$ and distributing. %
+and let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a {semiring}, 
 
 
 %\noindent
@@ -227,11 +235,12 @@ for all $I \subseteq \mathbb{N}$,
 
 
 
-\section{SW Visibly Pushdown Automata}
-We follow the approach of~\cite{Mohri03EDWA} for the computation of distances...
+\section{SW Automata and Transducers}
+\label{section:transducer}
+We follow the approach of~\cite{Mohri03EDWA} for the computation of distances
+between words with transducers.
 
 
-\subsection{SW Automata and Transducers}
 The following definition of weighted transducers over infinite alphabets 
 generalizes weighted transducers over finite alphabets, see  e.g.~\cite{Mohri03EDWA}, 
 by considering weight functions generalizing the guards of symbolic automata
@@ -254,32 +263,33 @@ and
 $f_b: x \mapsto f(x, b)$ for $b \in \Delta$ and $x \in \Sigma$, 
 belong resp. to $\Phi_\Sigma$ and $\Phi_\Delta$.
 
-
+%(SWT)
 \begin{definition}
-A \emph{weighted transducer} $T$ over the input and output alphabet $\Sigma$ and $\Delta$ 
+A \emph{symbolic-weighted transducer} $T$ over the input and output alphabet $\Sigma$ and $\Delta$ 
 and the semiring $\Semiring$ is a tuple
-$T = \< Q, \init, \weight, \final >$,
+$T = \< Q, \init, \wei, \final >$,
 where $Q$ is a finite set of states, 
 $\mathsf{in} : Q \to \Semiring$, 
 respectively $\mathsf{out} : Q \to \Semiring,$
-is a function defining the weight for entering, 
+are functions defining the weight for entering, 
 respectively leaving, a state, 
-and $\weight$ is a transition %weight 
-function of $Q \times Q$ into %$\Phi$.
+and $\wei$ is a transition %weight 
+function from $Q \times Q$ into %$\Phi$.
 $\< \Phi_0, \Phi_\Sigma, \Phi_\Delta, \Phi_{\Sigma, \Delta}>$.
 \end{definition}
+%
 We extend the above transition function into a function from
 $Q \times (\Sigma \cup \{ \epsilon \}) \times (\Delta \cup \{ \epsilon \}) \times Q$
-into $\Semiring$, also called $\weight$ for simplicity, such that 
+into $\Semiring$, also called $\wei$ for simplicity, such that 
 for all $q, q' \in Q$, $a \in \Sigma$, $b \in \Delta$, 
 and with 
-$\< \phi_\epsilon, \phi_\Sigma, \phi_\Delta, \phi_{\Sigma, \Delta}> = \weight(q, q')$, 
+$\< \phi_\epsilon, \phi_\Sigma, \phi_\Delta, \phi_{\Sigma, \Delta}> = \wei(q, q')$, 
 \[
 \begin{array}{rcl}
-\weight(q, \epsilon, \epsilon, q') & = & \phi_\epsilon\\
-\weight(q, a, \epsilon, q') & = & \phi_\Sigma(a)\\
-\weight(q, \epsilon, b, q') & = & \phi_\Delta(b)\\
-\weight(q, a, b, q') & = & \phi_{\Sigma, \Delta}(a, b)
+\wei(q, \epsilon, \epsilon, q') & = & \phi_\epsilon\\
+\wei(q, a, \epsilon, q') & = & \phi_\Sigma(a)\\
+\wei(q, \epsilon, b, q') & = & \phi_\Delta(b)\\
+\wei(q, a, b, q') & = & \phi_{\Sigma, \Delta}(a, b)
 \end{array}      
 \]
 %More precisely, $Q \times Q$, 
@@ -291,68 +301,241 @@ $\< \phi_\epsilon, \phi_\Sigma, \phi_\Delta, \phi_{\Sigma, \Delta}> = \weight(q,
 These functions $\phi$ act as guards for the transducer's transitions, 
 preventing a transition when they return the absorbing $\zero$ of $\Semiring$.
 
-The weighted transducer $T$ defines a mapping 
+The symbolic-weighted transducer $T$ defines a mapping 
 from the pairs of strings of $\Sigma^* \times \Delta^*$ 
 into the weights of~$\Semiring$,
-based on the following intermediate function $\weight_\A$
+based on the following intermediate function $\weight_T$
 defined recursively for every $q, q' \in Q$, 
 %$a \in \Sigma$, $b \in \Delta$ 
 for every strings of $s \in \Sigma^*$, $t \in \Delta^*$:
 \[
 \begin{array}{rccl}
-\weight_\A(q, s, t, q') & = & & \weight(q, \epsilon, \epsilon, q')\\
+\weight_T(q, s, t, q') & = & & \wei(q, \epsilon, \epsilon, q')\\
  & & \oplus \displaystyle\bigoplus_{\begin{array}{c}
                                       \scriptstyle q'' \in Q\\[-2pt]
                                       \scriptstyle s = au, a \in \Sigma
                                       \end{array}} &
-     \weight(q, a, \epsilon, q'') \otimes \weight_\A(q'', u, t, q')\\
+     \wei(q, a, \epsilon, q'') \otimes \weight_T(q'', u, t, q')\\
  & & \oplus \displaystyle\bigoplus_{\begin{array}{c}
                                     \scriptstyle q'' \in Q\\[-2pt]
                                     \scriptstyle t = bv, b \in \Delta
                                     \end{array}} &
-      \weight(q, \epsilon, b, q'') \otimes \weight_\A(q'', s, v, q')\\ 
+      \wei(q, \epsilon, b, q'') \otimes \weight_T(q'', s, v, q')\\ 
       & & \oplus \displaystyle\bigoplus_{\begin{array}{c}
                                          \scriptstyle q'' \in Q\\[-2pt]
                                          \scriptstyle s = au, a \in \Sigma\\[-2pt]
                                          \scriptstyle t = bv, b \in \Delta
                                          \end{array}} &
-      \weight(q, a, b, q'') \otimes \weight_\A(q'', u, v, q')\\ 
+      \wei(q, a, b, q'') \otimes \weight_\A(q'', u, v, q')\\ 
 \end{array}
 \]
 Recall that by convention, an empty sum with $\oplus$ is $\zero$. 
-
+%
 \noindent
 The weight associated by $T$ to  $\< s, t> \in \Sigma^* \times \Delta^*$
 is then defined as follows: 
 \[
 T(s, t)  = 
 \displaystyle\bigoplus_{q, q' \in Q} \mathsf{in}(q) 
-\mathop{\otimes} \weight_\A(q, s, t, q') \mathop{\otimes} \mathsf{out}(q').
+\mathop{\otimes} \weight_T(q, s, t, q') \mathop{\otimes} \mathsf{out}(q').
 \]
 
-A \emph{weighted automata} $T = \< Q, \init, \weight, \final >$
+A \emph{symbolic weighted automata} (\SWA) $A = \< Q, \init, \weight, \final >$
 over $\Sigma$ and $\Semiring$ 
 is defined in a similar way by simply omitting the output symbols,
-\ie $\weight$ is a function of~$Q \times Q$ into %$\Phi$.
+\ie $\wei$ is a function of~$Q \times Q$ into %$\Phi$.
 $\< \Phi_0, \Phi_\Sigma >$, 
 or equivalently from~$Q \times (\Sigma \cup \{ \epsilon \}) \times Q$ into~$\Semiring$.
 
 
-\subsection{Distance between words or languages}
-distance $d$:
-defined over $\Sigma^* \times \Sigma^*$ 
-into a semiring  $\Semiring = ( \Semiring, \oplus, \zero, \otimes, \one)$.
+\begin{proposition}
+Given a \SWT $T$ 
+over $\Sigma$, $\Delta$ and $\Semiring$, 
+and a word $s \in \Sigma^*$, 
+one can construct a \SWA 
+$A_{s, T}$ such that for all $t \in \Delta^*$, 
+$A_{s, T}(t) = T(s, t)$.
+\end{proposition}
+The construction time and size of $A_{s, T}$ are $O(| s | . \| T \|)$.
+
+
+
+\section{SW Visibly Pushdown Automata}
+The following model generalizes Symbolic VPA~\cite{DAntonyAlur14SVPDA}
+from Boolean semirings to arbitrary semiring weight domains.
+
+Let $\Sigma$ be an input alphabet, finite (large) or infinite,
+that we assume partitioned into :
+\begin{itemize}
+\item a set $\Sigmai$ of \emph{internal symbols} denoted $a$,
+\item a set $\Sigmac$ of \emph{call symbols} denoted $\call{a}$,
+\item a set $\Sigmar$ of \emph{return symbols} denoted $\return{a}$.
+\end{itemize}
+In order to simplify notations, and following the definition of Section~\ref{section:transducer}, 
+we shall write respectively~$\Phii$, $\Phic$, $\Phir$ and~$\Phicr$
+for~$\Phi_\Sigmai$, $\Phi_\Sigmac$, $\Phi_\Sigmar$ and~$\Phi_{\Sigmac, \Sigmar}$, 
+
+\begin{definition}
+A \emph{Symbolic Weighted Visibly Pushdown Automata} (\SWVPA) $A$ 
+over the input $\Sigma = \Sigmai \uplus \Sigmac \uplus \Sigmar$
+and the semiring $\Semiring$ is a tuple
+$T = \< Q, P, \init, \weii, \weic, \weir, \weie, \final >$,
+where $Q$ is a finite set of states, 
+$P$ is a finite set of stack symbols, 
+$\mathsf{in} : Q \to \Semiring$, 
+respectively $\mathsf{out} : Q \to \Semiring,$
+are functions defining the weight for entering, 
+respectively leaving, a state, 
+and 
+$\weii : Q \times Q \to \Phii$,  
+$\weic : Q \times Q \times P \to \Phic$,  
+$\weir : Q \times P \times Q \to \Phicr$,  
+$\weie : Q \times Q \to \Phir$,  
+are transition functions.
+\end{definition}
+%
+Similarly as in Section~\ref{section:transducer}, 
+we extend the above transition functions as follows
+for all $q, q' \in Q$, $p \in P$, 
+$a \in \Sigmai$, 
+$\call{c} \in \Sigmac$, 
+$\return{r} \in \Sigmar$, 
+overloading the names for simplicity:
+\[
+\begin{array}{lll}
+\weii: Q \times \Sigmai \times Q \to \Semiring & 
+\weii(q, a, q') = \phi_\mathsf{i}(a) & 
+\mathrm{where~} \phi_\mathsf{i} = \weii(q, q')\\
+%
+\weic: Q \times \Sigmac \times Q \times P \to \Semiring & 
+\weic(q, \call{c}, q', p) = \phi_\mathsf{c}(\call{c}) & 
+\mathrm{where~} \phi_\mathsf{c} = \weic(q, q', p)\\
+%
+\weir: Q \times \Sigmac \times P \times \Sigmar \times Q \to \Semiring & 
+\weir(q, {\call{c}},  p, {\return{r}}, q') = \phi_\mathsf{r}({\call{c}},  {\return{r}}) & 
+\mathrm{where~} \phi_\mathsf{r} = \weir(q, p, q')\\
+%
+\weie: Q \times \Sigmar \times Q \to \Semiring & 
+\weie(q, {\return{r}}, q') = \phi_\mathsf{e}({\return{r}}) &
+\mathrm{where~} \phi_\mathsf{e} = \weie(q, q')\\
+\end{array}      
+\]
+
+\noindent
+The intuition is the following for the above transitions.
+\begin{description}
+\item $\weii$ : read the input internal symbol $a$, change state to $q'$.
+\item $\weic$ : read the input symbol $\call{c}$, push it to the stack along with $p$, change state to $q'$.
+\item $\weir$ : when the stack is not empty, 
+      read and pop from stack a pair made of $\call{c}$ and $p$, 
+      read the input symbol $\return{r}$, change state to $q'$.
+      In this case, the weight function $\phi_\mathsf{r}$ checks a matching between the call and return symbols.
+\item $\weie$ : when the stack is empty, 
+      read the input symbol $\call{r}$, change state to $q'$.
+\end{description}
+
+We give now a formal definition of these transitions of the automaton $A$
+in term of a weight value
+computed by an intermediate function $\weight_A$.
+In the case of a pushdown automaton, a configuration is composed 
+of a state $q \in Q$ and a stack content $\theta \in \Theta^*$, where $\Theta = \Sigmac \times P$.
+Therefore, $\weight_A$ is a function from 
+$Q \times \Theta^* \times \Sigma^* \times Q \times \Theta^*$ into $\Semiring$.
+\[
+\begin{array}{rcl}
+\weight_A\bigl(\config{q}{\theta}, a u, \config{q'}{\theta'}\bigr) & = & 
+ {\displaystyle\bigoplus_{q'' \in Q}} \weii(q, a, q'') 
+ \otimes \weight_A\bigl(\config{q''}{\theta}, u, \config{q'}{\theta'}\bigr)\\
+%
+\weight_A\bigl(\config{q}{\theta}, {\call{c}} u, \config{q'}{\theta'}\bigr) & = & 
+ {\displaystyle\bigoplus_{\begin{array}{c}
+                          \scriptstyle q'' \in Q\\[-2pt]
+                          \scriptstyle p \in P
+                          \end{array}}}
+ \weic\bigl(q, {\call{c}}, q'', p\bigr) 
+ \otimes \weight_A\bigl(\config{q''}{{\call{c}}\, p\cdot \theta}, u, \config{q'}{\theta'}\bigr)\\[1mm]
+%
+\weight_A\bigl(\config{q}{{\call{c}}\, p\cdot \theta}, {\return{r}} u, \config{q'}{\theta'}\bigr) & = & 
+ {\displaystyle\bigoplus_{q'' \in Q}} 
+ \weir\bigl(q, {\call{c}}, p, {\return{r}}, q''\bigr) 
+ \otimes \weight_A\bigl(\config{q''}{\theta}, u, \config{q'}{\theta'}\bigr)\\
+%
+\weight_A\bigl(\config{q}{\bot}, {\return{r}} u, \config{q'}{\theta'}\bigr) & = & 
+ {\displaystyle\bigoplus_{q'' \in Q}} \weie(q, {\return{r}}, q'') 
+ \otimes \weight_A\bigl(\config{q''}{\bot}, u, \config{q'}{\theta'}\bigr)\\
+\end{array}
+\]
+where $\bot$ denotes the empty stack and ${\call{c}}\, p\cdot \theta$ 
+denotes a stack with the pair made of ${\call{c}}$ and $p$ on its top and $\theta$
+as the rest of stack.
+
+\noindent
+The weight associated by $A$ to $s \in \Sigma^*$
+is then defined as follows by empty stack computation: 
+\[
+A(s)  = 
+{\displaystyle\bigoplus_{q, q' \in Q}} \textstyle
+\mathsf{in}(q) \mathop{\otimes} 
+\weight_A\bigl(\config{q}{\bot}, s, \config{q'}{\bot}\bigr) 
+\mathop{\otimes} \mathsf{out}(q').
+\]
+
+
+
+% The weight of a transition acts as a guard: 
+% a transition is activated for a symbol $`a`$ iff its weight $`\phi(a) \neq 0`$ (or $`\psi(a, b) \neq 0`$), 
+% the absorbing element.
 
 
 
 
-\paragraph{Edit-Distance.}
+
+\section{Application}
+Symbolic Automated Music Transcription
+
+
+\subsection{Representations}
+
+\paragraph{Performance.}
+
+\paragraph{Score.}
+
+
+\subsection{Transducer for Distance Computation}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BIBLIO                                                                     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\bibliographystyle{plain}
+%\bibliographystyle{plainurl} 
+\bibliographystyle{abbrv}
+%\bibliographystyle{splncs04}
+\bibliography{references}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% APPENDIX                                                                   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\appendix 
+
+\section{Edit-Distance}
+
+%\subsection{Distance between words or languages}
 ...algebraic definition of edit-distance of Mohri, in \cite{Mohri03EDWA}
 % Mehryar Mohri 
 % Edit-distance of weighted automata: General definitions and algorithms
 % International Journal of Foundations of Computer Science 14.06 (2003): 957-982.
-%
-\noindent
+distance $d$ over $\Sigma^* \times \Sigma^*$ 
+into a semiring  $\Semiring = ( \Semiring, \oplus, \zero, \otimes, \one)$.
+
+%\noindent
 Let $\Omega = \Sigma \cup \{ \epsilon \} \times \Sigma \cup \{ \epsilon \} \setminus \{ (\epsilon, \epsilon) \}$,
 and let $h$ be the morphism from $\Omega^*$ into $\Sigma^* \times \Sigma^*$  
 defined over the concatenation of strings of $\Sigma^*$ (that removes the $\epsilon$'s).
@@ -381,37 +564,6 @@ e.g. Levenstein edit-distance: $S$ is min-plus and $\delta(a, b) = 1$ for all $(
 
 %\paragraph{Distance between a word and a regular language}
 
-
-
-\subsection{SW Visibly Pushdown Automata}
-
-
-
-
-
-\section{Application}
-Symbolic Automated Music Transcription
-
-
-\subsection{Representations}
-
-\paragraph{Performance.}
-
-\paragraph{Score.}
-
-
-\subsection{Transducer for Distance Computation}
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% BIBLIO                                                                     %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\bibliographystyle{plain}
-%\bibliographystyle{plainurl} 
-\bibliographystyle{abbrv}
-%\bibliographystyle{splncs04}
-\bibliography{references}
 
 \end{document}
 
