@@ -103,6 +103,9 @@
 \def\Sigmai{{\Sigma_\mathsf{i}}}
 \def\Sigmac{{\Sigma_\mathsf{c}}}
 \def\Sigmar{{\Sigma_\mathsf{r}}}
+\def\Deltai{{\Delta_\mathsf{i}}}
+\def\Deltac{{\Delta_\mathsf{c}}}
+\def\Deltar{{\Delta_\mathsf{r}}}
 \def\Phii{{\Phi_\mathsf{i}}}
 \def\Phic{{\Phi_\mathsf{c}}}
 \def\Phir{{\Phi_\mathsf{r}}}
@@ -361,6 +364,7 @@ The construction time and size of $A_{s, T}$ are $O(| s | . \| T \|)$.
 
 
 \section{SW Visibly Pushdown Automata}
+\label{section:SWVPA}
 The following model generalizes Symbolic VPA~\cite{DAntonyAlur14SVPDA}
 from Boolean semirings to arbitrary semiring weight domains.
 
@@ -492,17 +496,79 @@ A(s)  =
 
 \section{Application}
 Symbolic Automated Music Transcription
+and analysis of music performances
+
+\subsection{Time Scales}
+Real-Time Unit (RTU) = seconds
+
+\noindent 
+Musical-Time Unit (MTU) = number of measures
+
+\noindent 
+conversion via tempo value
+
+\subsection{Representation of Music Performances}
+A musical performance is represented symbolically as a finite sequence of timestamped events.
+similar to piano roll representation~\cite{Muller15fundamentals} chap.1 
+
+\noindent
+We consider an infinite alphabet $\Sigma$ of MIDI-like 
+events made of:
+\begin{itemize}
+\item a timestamp in RTU\\ %(real or int = nb samples ?)
+      or IOI in RTU
+\item a pitch value in 0..127
+\item ON | OFF flag
+\item a velocity value in 0..127
+\end{itemize}
 
 
-\subsection{Representations}
+\subsection{Representation of Music Scores}
+we consider here the case of monodies for the sake of simplificity.
 
-\paragraph{Performance.}
+A music score ris epresented as a structured word
+= sequence of quantified events + markups,
+see nested words~\cite{AlurMadhusudan09nested}.
 
-\paragraph{Score.}
+We consider an alphabet $\Delta$, every symbol of which is 
+composed of a tag, in a finite set $\Xi$, 
+and an IOI duration value.
+Moreover, $\Delta$ is partitioned into 
+$\Delta = \Deltai \uplus \Deltac \uplus \Deltar$, 
+like in Section~\ref{section:SWVPA}.
+
+\noindent
+The elements of $\Deltai$ represent events:
+% (infinite alphabet of internal symbols) made of:
+whose tags are one of:
+\begin{itemize}
+\item continuation (0) : tie or dot
+\item note, grace note (pitch) or chord (pitch+)
+\item rest
+\item ...
+\end{itemize}
+
+\noindent
+The elements of $\Deltac$ and $\Deltar$ are 
+markups for the representation of groups of events
+(linearization of rhythm trees \cite{jacquemard:hal-01138642}...)
+- parentheses for time divisions : tuplets, bars...
+tag %labels: 
+contain info such as tuple number, beaming policy...
+
+\noindent
+The date or duration of events, in MTU (rational), 
+can be computed with the markups and tags (e.g. grace note has duration 0).
+
+\noindent
+There are simultaneous events, since grace notes has duration 0. They are ordered.
+
+\noindent
+Finite bound on the number of duration ratio. ?
 
 
-\subsection{Transducer for Distance Computation}
-
+\subsection{Performance/Score Distance Computation}
+with a transducer
 
 
 
