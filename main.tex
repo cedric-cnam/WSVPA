@@ -119,10 +119,14 @@
 \def\weie{{\wei_\mathsf{e}}}
 \newcommand{\config}[2]{\ensuremath \genfrac{[}{]}{0pt}{}{#1}{#2}} 
 \newcommand{\opluseq}{\ensuremath\mathrel{\oplus}=}
+\newcommand{\ioi}[1]{\mathsf{ioi}({#1})}
 
 %\sloppy
 
-\title{Weighted Visibly Pushdown Automata and Automated Music Transcription}
+% Parsing over infinite alphabet as optimal alignment computation 
+% as edit-distance between string and language
+% Symbolic Parsing
+\title{Weighted Visibly Pushdown Automata\\ Application to Automated Music Transcription}
 \author{Florent Jacquemard}
 %\institute{INRIA \& CNAM, Paris, France\\
 %\email{florent.jacquemard@inria.fr}}
@@ -140,9 +144,27 @@
 %Symbolic Weighted (SW) extension of symbolic automata...
 %\end{abstract}
 
-weighted parsing
+problem
+quantitative parsing 
+or symbolic parsing
+parsing of words over infinite input alphabet.
 
-principle of quantitative parsing / parsing of words over infinite alphabet:
+generalizes weighted parsing: 
+finding the best derivation for a weighted grammar.
+
+model of weighted CFG over infinite set of terminal symbol
+(but finite set non-terminals and production rules).
+in production rules, terminal symbols appear as variables (parameters)
+and the weight associated to the production rule is a function of these variables.
+It is the approach of Symbolic Automata, except that the domain of weight values 
+is not restricted to be Boolean, like  for the guards in the rules of SA, 
+but can be an arbitrary commutative semiring (assuming some restrictions).
+
+wrt an edit distance
+
+we consider a strictly restricted model of weighted grammars : VPA 
+and general edit-distances that can be defined by a weighted word transducer
+
 
 
 
@@ -628,7 +650,8 @@ $d(q_1, \bot, q_2) = d(q_1, \top, q_2) = \zero$ otherwise.
 \textbf{while} $P$ is not empty
 
 \noindent
-\quad\textbf{extract} from $P$ $\< q_1, \sigma, q_2>$ with a minimal $d(q_1, \sigma, q_2)$ wrt $\leq_\oplus$.
+\quad\textbf{extract} $\< q_1, \sigma, q_2>$ from $P$ 
+ such that $d(q_1, \sigma, q_2)$ is minimal wrt $\leq_\oplus$.
 
 \noindent\quad \textbf{for all} $q_0, q_3 \in Q$ and $p \in P$ do
 
@@ -645,19 +668,28 @@ $d(q_1, \bot, q_2) = d(q_1, \top, q_2) = \zero$ otherwise.
 d(q_1, \sigma, q_2) \otimes
 %\displaystyle\bigoplus_{p \in P} 
 \displaystyle\bigoplus_{{\call{c}} \in \Sigmac} 
-\displaystyle\bigoplus_{{\return{r}} \in \Sigmar} \phi({\call{c}}, {\return{r}})\\
+\displaystyle\bigoplus_{{\return{r}} \in \Sigmar} \eta({\call{c}}, {\return{r}})\\
 \mathrm{and} &  d(q_0, \bot, q_3) & \opluseq &
 d(q_1, \sigma, q_2) \otimes
 %\displaystyle\bigoplus_{p \in P} 
 \displaystyle\bigoplus_{{\call{c}} \in \Sigmac} 
-\displaystyle\bigoplus_{{\return{r}} \in \Sigmar} \phi({\call{c}}, {\return{r}})\\
-& & & \mathrm{where~} \phi = \weic(q_0, q_1, p) \otimes \weir(q_2, p, q_3)\\
+\displaystyle\bigoplus_{{\return{r}} \in \Sigmar} \eta({\call{c}}, {\return{r}})\\
+& & & \mathrm{where~} \eta = \weic(q_0, q_1, p) \otimes \weir(q_2, p, q_3)\\
 %
 \mathrm{if~} \sigma = \bot & d(q_1, \bot, q_3) & \opluseq &
  d(q_1, \sigma, q_2) \otimes \displaystyle\bigoplus_{\return{r} \in \Sigmar} \weie(q_2, {\return{r}}, q_3)\\
 %
-%  & d(q_1, \sigma, q_3) & \opluseq &
-%  d(q_1, \sigma, q_2) \otimes d(q_2, \sigma, q_3)
+& d(q_0, \bot, q_2) & \opluseq & 
+d(q_0, \bot, q_1) \otimes d(q_1, \sigma, q_2), \mathrm{if~} \< q_0, \bot, q_1> \notin P \\
+%
+\mathrm{if~} \sigma = \top & d(q_0, \top, q_2) & \opluseq & 
+d(q_0, \top, q_1) \otimes d(q_1, \sigma, q_2), \mathrm{if~} \< q_0, \top, q_1> \notin P \\
+%
+& d(q_1, \bot, q_3) & \opluseq & 
+   d(q_1, \sigma, q_2) \otimes d(q_2, \bot, q_3), \mathrm{if~} \< q_2, \bot, q_3> \notin P \\
+%
+\mathrm{if~} \sigma = \top & d(q_1, \top, q_3) & \opluseq & 
+    d(q_1, \sigma, q_2) \otimes d(q_2, \top, q_3), \mathrm{if~} \< q_2, \top, q_3> \notin P \\
 \end{array}
 \) 
 \end{algo}
@@ -710,45 +742,46 @@ Musical-Time Unit (MTU) = number of measures
 conversion via tempo value
 
 \subsection{Representation of Music Performances}
-A musical performance is represented symbolically as a finite sequence of timestamped events.
-similar to piano roll representation~\cite{Muller15fundamentals} chap.1 
+We consider symbolic representation of musical performances, as finite sequences of events.
+It corresponds to the concrete case of a MIDI file~\cite{SMF} 
+recorded  from an electronic keyboard, 
+or the output of a transcription from audio files~\cite{Benetos18AMTsurvey}.
+%
+For the sake of simplicity, we shall only consider here the case of monophonic performances, 
+where at most one note is sounding at a time -- the approach however extends to the polyphonic case.
 
-\noindent
-We consider an infinite alphabet $\Sigma$ of MIDI-like 
-events made of:
-\begin{itemize}
-\item a timestamp in RTU\\ %(real or int = nb samples ?)
-      or IOI in RTU
-\item a pitch value in 0..127
-\item \textsf{on} | \textsf{off} flag
-\item a velocity value in 0..127
-\end{itemize}
+A music performance is a finite sequence of events in a set $\Sigma$.
+Every event $e \in \Sigma$ has attributes such from a finite domain, 
+like a number of key for a note 
+or a flag indicating that it is a rest 
+(\textsf{ON} and \textsf{OFF} messages in~\cite{SMF})
+and a velocity value (0..127 in~\cite{SMF})).
+%This representation is similar to the piano roll ~\cite{Muller15fundamentals} chap.1. 
+Moreover, it contains a RTU value $\ioi{e}$ (real number) 
+representing the time distance to the next event, or the to the end of performance 
+(also called \emph{inter-onset interval}).
 
 
 \subsection{Representation of Music Scores}
-we consider here the case of monodies for the sake of simplificity.
-
-A music score is represented as a structured word
-= sequence of quantified events + markups,
-see nested words~\cite{AlurMadhusudan09nested}.
+Music score are represented as structured words
+made of quantified events and parenthesized markups,
+akin of nested words~\cite{AlurMadhusudan09nested}.
 
 We consider an alphabet $\Delta$, every symbol of which is 
 composed of a tag, in a finite set $\Xi$, 
-and an IOI duration value.
-Moreover, $\Delta$ is partitioned into 
+and an MTU (rational) IOI duration value.
+The alphabet $\Delta$ is partitioned into 
 $\Delta = \Deltai \uplus \Deltac \uplus \Deltar$, 
 like in Section~\ref{section:SWVPA}.
-
+%
 \noindent
-The elements of $\Deltai$ represent events:
+The symbols of $\Deltai$ represent events:
 % (infinite alphabet of internal symbols) made of:
-whose tags are one of:
-\begin{itemize}
-\item continuation (0) : tie or dot
-\item note, grace note (pitch) or chord (pitch+)
-\item rest
-\item ...
-\end{itemize}
+with tags indicate a new note or grace-note (with null IOI), 
+a rest or the continuation of the previous note (tie or dot).
+The elements of $\Deltac \uplus \Deltar$ are matched
+and are the markups for describing the structure of the score.
+
 
 \noindent
 The elements of $\Deltac$ and $\Deltar$ are 
@@ -771,6 +804,18 @@ Finite bound on the number of duration ratio. ?
 
 \subsection{Performance/Score Distance Computation}
 with a transducer
+
+
+tempo value in a finite domain (e.g. 30..300 bpm)
+can be fixed 
+or recomputed by the transducer when reading each event, 
+according to a perceptive/cognitive model of tempo 
+such as~\cite{LargeJones99tempo}
+(also used in the context of score following~\cite{Cont10TPAMI}).
+% we wont detail here.
+
+
+
 
 
 
