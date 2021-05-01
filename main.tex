@@ -12,6 +12,30 @@
 % for footnote ref
 \usepackage{refcount} 
 
+% extension of enumerate env. (style for displaying counters)
+% \usepackage{enumerate} 
+
+%% pictures
+% \usepackage{graphicx} 
+% \DeclareGraphicsExtensions{.pdf,.png,.jpg}
+% \graphicspath{fig/}
+
+%% PGF, Tikz
+%% \usepackage{pgfplots}
+%% \usepgfplotslibrary{dateplot}
+%% \usepackage{pgf,pgfarrows,pgfnodes, pgfautomata}
+% \usepackage{tikz}
+%% \usetikzlibrary{arrows}
+%% \usetikzlibrary{calc}
+%% \usetikzlibrary{snakes}
+%% \usetikzlibrary{backgrounds}
+% \usetikzlibrary{trees}
+%% \usetikzlibrary{automata}
+%% \usetikzlibrary{positioning}
+%% \usetikzlibrary{matrix}
+%% \usetikzlibrary{patterns}
+%% \usetikzlibrary{shapes}
+
 % symbols
 \usepackage{amsmath} 
 \usepackage{amssymb} 
@@ -37,32 +61,11 @@
 \theorembodyfont{\slshape}
 \newtheorem{example}[theorem]{Example}
 \newtheorem{remark}[theorem]{Remark}
+{\theorembodyfont{\rmfamily} \theoremstyle{break} \newtheorem{algo}{Algorithm}}
 
-
-% extension of enumerate env. (style for displaying counters)
-% \usepackage{enumerate} 
-
-
-%% pictures
-% \usepackage{graphicx} 
-% \DeclareGraphicsExtensions{.pdf,.png,.jpg}
-% \graphicspath{fig/}
-
-%% PGF, Tikz
-%% \usepackage{pgfplots}
-%% \usepgfplotslibrary{dateplot}
-%% \usepackage{pgf,pgfarrows,pgfnodes, pgfautomata}
-% \usepackage{tikz}
-%% \usetikzlibrary{arrows}
-%% \usetikzlibrary{calc}
-%% \usetikzlibrary{snakes}
-%% \usetikzlibrary{backgrounds}
-% \usetikzlibrary{trees}
-%% \usetikzlibrary{automata}
-%% \usetikzlibrary{positioning}
-%% \usetikzlibrary{matrix}
-%% \usetikzlibrary{patterns}
-%% \usetikzlibrary{shapes}
+%% algorithms
+%\usepackage{algorithm} 
+%\usepackage{program} 
 
 %% for new macros
 \usepackage{xspace}
@@ -80,8 +83,8 @@
 
 \def\<#1>{\langle #1 \rangle}
 \newcommand{\pair}[2]{\langle{#1}, {#2}\rangle}
-\newcommand{\A}{\mathcal{A}}
-\newcommand{\B}{\mathcal{B}}
+%\newcommand{\A}{\mathcal{A}}
+%\newcommand{\B}{\mathcal{B}}
 \newcommand{\D}{\mathbb{D}}
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\W}{\mathbb{W}}
@@ -98,8 +101,8 @@
 \def\wei{\mathsf{w}}
 \def\init{\mathsf{in}}
 \def\final{\mathsf{out}}
-\newcommand{\call}[1]{\ensuremath \langle_{#1}}
-\newcommand{\return}[1]{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
+\newcommand{\call}[1]{\ensuremath #1} %{\ensuremath \langle_{#1}}
+\newcommand{\return}[1]{\ensuremath #1} %{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
 \def\Sigmai{{\Sigma_\mathsf{i}}}
 \def\Sigmac{{\Sigma_\mathsf{c}}}
 \def\Sigmar{{\Sigma_\mathsf{r}}}
@@ -115,6 +118,7 @@
 \def\weir{{\wei_\mathsf{r}}}
 \def\weie{{\wei_\mathsf{e}}}
 \newcommand{\config}[2]{\ensuremath \genfrac{[}{]}{0pt}{}{#1}{#2}} 
+\newcommand{\opluseq}{\ensuremath\mathrel{\oplus}=}
 
 %\sloppy
 
@@ -135,6 +139,12 @@
 %\begin{abstract}
 %Symbolic Weighted (SW) extension of symbolic automata...
 %\end{abstract}
+
+weighted parsing
+
+principle of quantitative parsing / parsing of words over infinite alphabet:
+
+
 
 
 \section{SW Automata and Transducers}
@@ -177,18 +187,6 @@ $\forall x\in \mathbb{S}$, $\zero \otimes x = x \otimes \zero = \zero$.
 % $\otimes$ combines two values into a single value.
 %and let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a {semiring}, 
 
-\noindent
-A semiring $\Semiring$ is \emph{commutative} if $\otimes$ is commutative.
-It is \emph{idempotent} if for each $x \in \dom(\Semiring)$, $x \oplus x = x$.
-%
-Following the terminology of~\cite{Mohri02semiring},
-when $\forall x \in \dom(\Semiring), \one \oplus x = \one$,
-the semiring $\Semiring$ is is called \emph{bounded}.
-Note that every bounded semiring is idempotent:
-by boundedness, 
-$\one \oplus \one = \one$, and idempotency follows by multiplying
-both sides by $x$ and distributing. 
-
 % \noindent
 A semiring $\Semiring$ 
 is \emph{monotonic} \wrt a partial ordering~$\leq$ 
@@ -208,20 +206,32 @@ Intuitively, it means that combining elements always increase their weight.
 Note that when $\Semiring$ is superior \wrt~$\leq$, then $\one \leq \zero$
 and moreover, for all $x \in \Semiring$, $\one \leq x \leq \zero$.
 
+%\noindent
+A semiring $\Semiring$ is \emph{commutative} if $\otimes$ is commutative.
+It is \emph{idempotent} if for each $x \in \dom(\Semiring)$, $x \oplus x = x$.
+%
+%Following the terminology of~\cite{Mohri02semiring},
+%when $\forall x \in \dom(\Semiring), \one \oplus x = \one$,
+%the semiring $\Semiring$ is is called \emph{bounded}.
+%Note that every bounded semiring is idempotent:
+%by boundedness, 
+%$\one \oplus \one = \one$, and idempotency follows by multiplying
+%both sides by $x$ and distributing. 
+%
 Every idempotent semiring~$\Semiring$ induces 
-a partial ordering~$\leq_\Semiring$ 
+a partial ordering~$\leq_\oplus$ 
 called the \emph{natural ordering} of~$\Semiring$
 and defined by: 
 %implicitly defined by the semiring $\Semiring$ 
 for all $x$ and $y$,
-$x \leq_\Semiring y \;\mbox{iff}\; x \oplus y = x$.
+$x \leq_\oplus y \;\mbox{iff}\; x \oplus y = x$.
 This ordering is sometimes defined in the opposite direction~\cite{DrosteKuich09semirings};
 The above definition follows \cite{Mohri02semiring}, 
 and coincides than the usual ordering on the Tropical semiring (\emph{min-plus}).
 %
-It holds that $\Semiring$ is {monotonic} \wrt~$\leq_\Semiring$.
+It holds that $\Semiring$ is {monotonic} \wrt~$\leq_\oplus$.
 An idempotent semiring $\Semiring$~is called \emph{total} if
-it~$\leq_\Semiring$ is total
+it~$\leq_\oplus$ is total
 \ie when for all $x, y \in \Semiring$, either $x \oplus y = x$ or $x \oplus y = y$.
 
 \medskip
@@ -264,6 +274,11 @@ for all $I \subseteq \mathbb{N}$,
 
 
 
+\begin{example}
+semirings      
+\end{example}
+      
+
 \subsection{Label Theory}
 \label{section:symbols}
 
@@ -272,7 +287,8 @@ which are countable (finite or infinite) sets of symbols,
 and let $\Semiring$ be a commutative semiring.
 
 \noindent 
-A \emph{label theory} is made of 4 recursively enumerable sets:
+A \emph{label theory} over $\Sigma$ and $\Delta$
+is made of 4 recursively enumerable sets:
 %$\Phi_0$, \Phi_\Sigma \uplus \Phi_\Delta \uplus \Phi_{\Sigma, \Delta}$ 
 $\Phi_\epsilon \subseteq \Semiring$, % containing constant functions valued in $\Semiring$, 
 $\Phi_\Sigma$ and $\Phi_\Delta$, 
@@ -293,7 +309,7 @@ and $\eta, \eta' \in \Phi_{\Sigma, \Delta}$, the function
 The same also holds for the binary sum operator $\oplus$.
 
 \noindent
-\marginpar{maybe not necessary}
+\marginpar{necessary?}
 Finally, it is assumed that the codomain of every function of $\Phi_\Sigma$ and $\Phi_\Delta$
 is a subset of $\Phi_\epsilon$.
 and all partial applications of functions $\Phi_{\Sigma, \Delta}$, 
@@ -301,6 +317,8 @@ resp.  $f_a: y \mapsto f(a, y)$ for $a \in \Sigma$ and $y \in \Delta$
 and  $f_b: x \mapsto f(x, b)$ for $b \in \Delta$ and $x \in \Sigma$, 
 belong resp. to $\Phi_\Sigma$ and $\Phi_\Delta$.
 
+
+\subsection{Definitions}
 %(SWT)
 \begin{definition}
 A \emph{symbolic-weighted transducer} $T$ over the input and output alphabet $\Sigma$ and $\Delta$ 
@@ -313,7 +331,7 @@ are functions defining the weight for entering,
 respectively leaving, a state, 
 and $\wei$ is a transition %weight 
 function from $Q \times Q$ into %$\Phi$.
-$\< \Phi_0, \Phi_\Sigma, \Phi_\Delta, \Phi_{\Sigma, \Delta}>$.
+$\< \Phi_\epsilon, \Phi_\Sigma, \Phi_\Delta, \Phi_{\Sigma, \Delta}>$.
 \end{definition}
 %
 We extend the above transition function into a function from
@@ -364,7 +382,7 @@ for every strings of $s \in \Sigma^*$, $t \in \Delta^*$:
                                          \scriptstyle s = au, a \in \Sigma\\[-2pt]
                                          \scriptstyle t = bv, b \in \Delta
                                          \end{array}} &
-      \wei(q, a, b, q'') \otimes \weight_\A(q'', u, v, q')\\ 
+      \wei(q, a, b, q'') \otimes \weight_T(q'', u, v, q')\\ 
 \end{array}
 \]
 Recall that by convention, an empty sum with $\oplus$ is $\zero$. 
@@ -378,13 +396,22 @@ T(s, t)  =
 \mathop{\otimes} \weight_T(q, s, t, q') \mathop{\otimes} \mathsf{out}(q').
 \]
 
+\begin{example}
+comparison of two sequences of timestamped events      
+\end{example}
+
+\noindent
 A \emph{symbolic weighted automata} (\SWA) $A = \< Q, \init, \weight, \final >$
 over $\Sigma$ and $\Semiring$ 
 is defined in a similar way by simply omitting the output symbols,
-\ie $\wei$ is a function of~$Q \times Q$ into %$\Phi$.
-$\< \Phi_0, \Phi_\Sigma >$, 
+\ie $\wei$ is a function from~$Q \times Q$ into %$\Phi$.
+$\< \Phi_\epsilon, \Phi_\Sigma >$, 
 or equivalently from~$Q \times (\Sigma \cup \{ \epsilon \}) \times Q$ into~$\Semiring$.
 
+      
+
+
+\subsection{Properties}
 
 \begin{proposition}
 Given a \SWT $T$ 
@@ -394,8 +421,15 @@ one can construct a \SWA
 $A_{s, T}$ such that for all $t \in \Delta^*$, 
 $A_{s, T}(t) = T(s, t)$.
 \end{proposition}
-The construction time and size of $A_{s, T}$ are $O(| s | . \| T \|)$.
+The construction time and size for $A_{s, T}$ are $O(| s | . \| T \|)$.
 
+
+
+\begin{proposition}
+      ...removal of $\epsilon$ transitions for \SWA...
+      \end{proposition}
+      
+      
 
 
 \section{SW Visibly Pushdown Automata}
@@ -403,14 +437,18 @@ The construction time and size of $A_{s, T}$ are $O(| s | . \| T \|)$.
 The following model generalizes Symbolic VPA~\cite{DAntonyAlur14SVPDA}
 from Boolean semirings to arbitrary semiring weight domains.
 
+\subsection{Definition}
 Let $\Sigma$ be a countable alphabet 
 %finite (large) or infinite,
-that we assume partitioned into :
-\begin{itemize}
-\item a set $\Sigmai$ of \emph{internal symbols} denoted $a$,
-\item a set $\Sigmac$ of \emph{call symbols} denoted $\call{a}$,
-\item a set $\Sigmar$ of \emph{return symbols} denoted $\return{a}$.
-\end{itemize}
+that we assume partitioned into three subsets 
+$\Sigmai \uplus \Sigmac \uplus \Sigmac$ 
+respectively called of \emph{internal}, \emph{call} and \emph{return}
+symbols.
+% \begin{itemize}
+% \item a set $\Sigmai$ of \emph{internal symbols} denoted $a$,
+% \item a set $\Sigmac$ of \emph{call symbols} denoted $\call{a}$,
+% \item a set $\Sigmar$ of \emph{return symbols} denoted $\return{a}$.
+% \end{itemize}
 Let $\Semiring$ be a commutative semiring and  
 let  $(\Phi_\epsilon, \Phic, \Phir, \Phicr)$ be a label theory over $\Semiring$
 %In order to simplify notations, %and following the definition of Section~\ref{section:transducer}, 
@@ -446,7 +484,7 @@ for all $q, q' \in Q$, $p \in P$,
 $a \in \Sigmai$, 
 $\call{c} \in \Sigmac$, 
 $\return{r} \in \Sigmar$, 
-overloading the names for simplicity:
+overloading their names: % for simplicity:
 \[
 \begin{array}{lll}
 \weii: Q \times \Sigmai \times Q \to \Semiring & 
@@ -476,8 +514,8 @@ The intuition is the following for the above transitions.
       read and pop from stack a pair made of $\call{c}$ and $p$, 
       read the input return symbol $\return{r}$, change state to $q'$.
       In this case, the weight function $\phi_\mathsf{r}$ 
-      computes the value of matching between the call and return symbols.
-      It might be $\zero$ to express that the symbols do not match.
+      computes a value of matching between the call and return symbols.
+      This value might be $\zero$ in order to express that the symbols do not match.
 \item $\weie$ : when the stack is empty, 
       read the input symbol $\call{r}$, change state to $q'$.
 \end{description}
@@ -491,11 +529,11 @@ Therefore, $\weight_A$ is a function from
 $Q \times \Theta^* \times \Sigma^* \times Q \times \Theta^*$ into $\Semiring$.
 \[
 \begin{array}{rcl}
-\weight_A\bigl(\config{q}{\theta}, a u, \config{q'}{\theta'}\bigr) & = & 
+\weight_A\bigl(\config{q}{\theta}, a\, u, \config{q'}{\theta'}\bigr) & = & 
  {\displaystyle\bigoplus_{q'' \in Q}} \weii(q, a, q'') 
  \otimes \weight_A\bigl(\config{q''}{\theta}, u, \config{q'}{\theta'}\bigr)\\
 %
-\weight_A\bigl(\config{q}{\theta}, {\call{c}} u, \config{q'}{\theta'}\bigr) & = & 
+\weight_A\bigl(\config{q}{\theta}, {\call{c}}\, u, \config{q'}{\theta'}\bigr) & = & 
  {\displaystyle\bigoplus_{\begin{array}{c}
                           \scriptstyle q'' \in Q\\[-2pt]
                           \scriptstyle p \in P
@@ -503,12 +541,12 @@ $Q \times \Theta^* \times \Sigma^* \times Q \times \Theta^*$ into $\Semiring$.
  \weic\bigl(q, {\call{c}}, q'', p\bigr) 
  \otimes \weight_A\bigl(\config{q''}{{\call{c}}\, p\cdot \theta}, u, \config{q'}{\theta'}\bigr)\\[1mm]
 %
-\weight_A\bigl(\config{q}{{\call{c}}\, p\cdot \theta}, {\return{r}} u, \config{q'}{\theta'}\bigr) & = & 
+\weight_A\bigl(\config{q}{{\call{c}}\, p\cdot \theta}, {\return{r}}\, u, \config{q'}{\theta'}\bigr) & = & 
  {\displaystyle\bigoplus_{q'' \in Q}} 
  \weir\bigl(q, {\call{c}}, p, {\return{r}}, q''\bigr) 
  \otimes \weight_A\bigl(\config{q''}{\theta}, u, \config{q'}{\theta'}\bigr)\\
 %
-\weight_A\bigl(\config{q}{\bot}, {\return{r}} u, \config{q'}{\theta'}\bigr) & = & 
+\weight_A\bigl(\config{q}{\bot}, {\return{r}}\, u, \config{q'}{\theta'}\bigr) & = & 
  {\displaystyle\bigoplus_{q'' \in Q}} \weie(q, {\return{r}}, q'') 
  \otimes \weight_A\bigl(\config{q''}{\bot}, u, \config{q'}{\theta'}\bigr)\\
 \end{array}
@@ -530,23 +568,129 @@ A(s)  =
 \]
 
 
+\begin{example}
+structured words...
+intro language of music notation ?
+\end{example}
+
+
+\subsection{Properties}
+SWVPA are closed under the binary operators of the underlying semiring.
+%
+\begin{proposition}
+Let $A_1$ and $A_2$ be two (\SWVPA)
+over the same $\Sigma$ and $\Semiring$.
+There exists two $\SWVPA$ $A_1 \oplus A_2$ and $A_1 \otimes A_2$, 
+effectively constructible, 
+such that for all $s \in \Sigma^*$, 
+$(A_1 \oplus A_2)(s) = A_1(s) \oplus A_2(s)$ and 
+$(A_1 \otimes A_2)(s) = A_1(s) \otimes A_2(s)$.
+\end{proposition}
+The construction is essentially the same 
+as the one of~\cite{DAntonyAlur14SVPDA}, in the case of the Boolean semiring.
+
 
 \subsection{1-best Computation}
+Assume that the semiring $\Semiring$ is commutative, idempotent, and complete.
+% total ? 
+% monotonic and superior writ natural ordering
+...
+%Regarding the infinite sum operator, note that
+%$\bigoplus_{x \in \Phi_\Sigma} \phi(x)$, 
+%$\bigoplus_{y \in \Phi_\Delta} \psi(y)$, and  
+%... exist and in $\Semiring$.
 
-Regarding the infinite sum operator, it must hold that
-$\bigoplus_{x \in \Phi_\Sigma} \phi(x)$, 
-$\bigoplus_{y \in \Phi_\Delta} \psi(y)$, and  
+We propose a Dijkstra algorithm computing the minimal weight, 
+by $A$ for a word in $\Semiring^*$.
+It runs by labeling iteratively all pair $\<q, q'>$ of states of $A$ 
+by weight values in $\Semiring$, 
+in order to converge to 
+$\bigoplus_{s \in \Sigma^*} \weight_A\bigl(\config{q}{\bot}, s, \config{q'}{\bot}\bigr)$.
+%
+More precisely, we compute a marking $d : Q \times \{ \bot, \top \} \times Q$
+such that eventually:
+$d(q, \sigma ,q') = \bigoplus_{s \in \Sigma^*} \weight_A\bigl(\config{q}{\sigma}, s, \config{q'}{\sigma}\bigr)$
+where $\sigma \in \{ \bot, \top \}$, and $\top$ is a fresh stack symbol which does not belong to $\Theta$.
+Note that having a stack reduced to such a symbol makes impossible the application of the 
+two last cases in the definition of $\weight_A$ (return symbol and empty stack). 
+However, it is possible to apply the two first cases 
+(internal symbol or call symbol, with a push on the top of $\top$).
+Algorithm~\ref{algo:Dijkstra} uses a priority queue $P$. 
+
+\begin{algo}[1-best for SWVPA] \label{algo:Dijkstra}
+\textbf{initially} $P$ contains all %triplets 
+$\< q_1, \bot, q_2>$ and $\<q_1, \top, q_2>$
+for $q_1, q_2 \in Q$, with 
+$d(q_1, \bot, q_2) = d(q_1, \top, q_2) = \one$ if $q_1 = q_2$ and
+$d(q_1, \bot, q_2) = d(q_1, \top, q_2) = \zero$ otherwise.
+
+\smallskip\noindent
+\textbf{while} $P$ is not empty
+
+\noindent
+\quad\textbf{extract} from $P$ $\< q_1, \sigma, q_2>$ with a minimal $d(q_1, \sigma, q_2)$ wrt $\leq_\oplus$.
+
+\noindent\quad \textbf{for all} $q_0, q_3 \in Q$ and $p \in P$ do
+
+\noindent
+\qquad
+\(\begin{array}{rrcl}
+ & d(q_1, \sigma, q_3) & \opluseq &
+   d(q_1, \sigma, q_2) \otimes \displaystyle\bigoplus_{a \in \Sigmai} \weii(q_2, a, q_3)\\
+%
+%  & d(q_0, \sigma, q_2) & \opluseq & 
+%    \displaystyle\bigoplus_{a \in \Sigmai} \weii(q_0, a, q_1) \otimes d(q_1, \sigma, q_2)\\
+%
+\mathrm{if~} \sigma = \top & d(q_0, \top, q_3) & \opluseq &
+d(q_1, \sigma, q_2) \otimes
+%\displaystyle\bigoplus_{p \in P} 
+\displaystyle\bigoplus_{{\call{c}} \in \Sigmac} 
+\displaystyle\bigoplus_{{\return{r}} \in \Sigmar} \phi({\call{c}}, {\return{r}})\\
+\mathrm{and} &  d(q_0, \bot, q_3) & \opluseq &
+d(q_1, \sigma, q_2) \otimes
+%\displaystyle\bigoplus_{p \in P} 
+\displaystyle\bigoplus_{{\call{c}} \in \Sigmac} 
+\displaystyle\bigoplus_{{\return{r}} \in \Sigmar} \phi({\call{c}}, {\return{r}})\\
+& & & \mathrm{where~} \phi = \weic(q_0, q_1, p) \otimes \weir(q_2, p, q_3)\\
+%
+\mathrm{if~} \sigma = \bot & d(q_1, \bot, q_3) & \opluseq &
+ d(q_1, \sigma, q_2) \otimes \displaystyle\bigoplus_{\return{r} \in \Sigmar} \weie(q_2, {\return{r}}, q_3)\\
+%
+%  & d(q_1, \sigma, q_3) & \opluseq &
+%  d(q_1, \sigma, q_2) \otimes d(q_2, \sigma, q_3)
+\end{array}
+\) 
+\end{algo}
+
+\noindent
+The infinite sums in the updates of $d$ in Algorithm~\ref{algo:Dijkstra} are well defined
+since~$\Semiring$ is complete.
 
 
+% \begin{algorithm}
+% \caption{<your caption for this algorithm>}
+% \label{<your label for references later in your document>}
+% \begin{program}
+% \seq{|line| := `` '', i := 1};
+% \WHILE i \neq n+1 \DO
+%       |line| := |item|[i] \concat `` '' \concat |number|[i]; 
+%       i := i+1; 
+%       \WHILE i \neq n+1 \AND |item|[i] = |item|[i-1] \DO 
+%       |line| := |line| \concat ``, '' \concat |number|[i]);
+%       i := i+1 \OD ; 
+%       |write|(|line|) \OD 
+% \end{program}
+% \end{algorithm}
 
 
 % The weight of a transition acts as a guard: 
 % a transition is activated for a symbol $`a`$ iff its weight $`\phi(a) \neq 0`$ (or $`\psi(a, b) \neq 0`$), 
 % the absorbing element.
 
-
+\medskip
+In order to obtain effectively a word of $\Semiring^*$ of minimal weight, 
+we require an additional 
 property of bounded convexity of weight functions:
-
 
 
 
@@ -576,7 +720,7 @@ events made of:
 \item a timestamp in RTU\\ %(real or int = nb samples ?)
       or IOI in RTU
 \item a pitch value in 0..127
-\item ON | OFF flag
+\item \textsf{on} | \textsf{off} flag
 \item a velocity value in 0..127
 \end{itemize}
 
@@ -584,7 +728,7 @@ events made of:
 \subsection{Representation of Music Scores}
 we consider here the case of monodies for the sake of simplificity.
 
-A music score ris epresented as a structured word
+A music score is represented as a structured word
 = sequence of quantified events + markups,
 see nested words~\cite{AlurMadhusudan09nested}.
 
