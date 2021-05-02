@@ -94,9 +94,9 @@
 \newcommand{\one}{\mathbb{1}}
 \newcommand{\dom}{\ensuremath{\mathit{dom}}}
 
-\def\SWT{\textsf{SWT}\xspace}
-\def\SWA{\textsf{SWA}\xspace}
-\def\SWVPA{\textsf{SWVPA}\xspace}
+\def\SWT{\textsf{swT}\xspace}
+\def\SWA{\textsf{swA}\xspace}
+\def\SWVPA{\textsf{sw-VPA}\xspace}
 \def\weight{\mathsf{weight}}
 \def\wei{\mathsf{w}}
 \def\init{\mathsf{in}}
@@ -144,28 +144,46 @@
 %Symbolic Weighted (SW) extension of symbolic automata...
 %\end{abstract}
 
-problem
-quantitative parsing 
-or symbolic parsing
-parsing of words over infinite input alphabet.
+the problem
+%quantitative parsing or symbolic parsing
+of parsing of words over infinite input alphabet.
 
-generalizes weighted parsing: 
-finding the best derivation for a weighted grammar.
+A weighted CFG associates a weight value to each of its derivation trees.
+There exists some specialized parsing algorithms~\cite{nbest} 
+to compute the $n$ best derivations of a given input word.
 
-model of weighted CFG over infinite set of terminal symbol
-(but finite set non-terminals and production rules).
-in production rules, terminal symbols appear as variables (parameters)
-and the weight associated to the production rule is a function of these variables.
-It is the approach of Symbolic Automata, except that the domain of weight values 
+Such models and algorithm only deal with finite input alphabets.
+Considering infinite alphabets can however be of practical interest, 
+for instance when dealing with sequences of timestamped events.
+...example of music transcription\dots
+
+%generalizes weighted parsing: 
+%finding the best derivation for a weighted grammar.
+
+We propose here models of weighted recognizers 
+model of weighted CFG over infinite input alphabets %sets of terminal symbol
+(but with finite sets of states and transitions rules). 
+% non-terminals and production rules).
+In the production rules, input symbols appear as variables (parameters)
+and the weight associated to the transition rule is a function of these variables.
+%
+It is the approach of Symbolic Automata~\cite{VeanesdAntoniJACM}, 
+except that the domain of weight values 
 is not restricted to be Boolean, like  for the guards in the rules of SA, 
 but can be an arbitrary commutative semiring (assuming some restrictions).
 
-wrt an edit distance
+models: automata, transducer and pushdown automata with visibly restriction.
+%wrt an edit distance
+The latter corresponds in expressiveness
+to a strict restricted model of weighted grammars. %VPA 
+That permits to define a general approach for parsing 
+over infinite input alphabets.
 
-we consider a strictly restricted model of weighted grammars : VPA 
-and general edit-distances that can be defined by a weighted word transducer
-
-
+First one general edit-distance is defined by a weighted word 
+transducer~\cite{Mohri}
+%Symbolic automata transducers are extended models~\cite{VeanesdAntoniJACM}
+%dealing with infinite set of input symbols...
+value in a semiring...
 
 
 
@@ -306,7 +324,7 @@ semirings
 
 Let $\Sigma$ and $\Delta$ be respectively an input and output \emph{alphabets}, 
 which are countable (finite or infinite) sets of symbols, 
-and let $\Semiring$ be a commutative semiring.
+and let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a commutative semiring.
 
 \noindent 
 A \emph{label theory} over $\Sigma$ and $\Delta$
@@ -343,7 +361,8 @@ belong resp. to $\Phi_\Sigma$ and $\Phi_\Delta$.
 \subsection{Definitions}
 %(SWT)
 \begin{definition}
-A \emph{symbolic-weighted transducer} $T$ over the input and output alphabet $\Sigma$ and $\Delta$ 
+A \emph{symbolic-weighted transducer} (\SWT) 
+$T$ over the input and output alphabet $\Sigma$ and $\Delta$ 
 and the semiring $\Semiring$ is a tuple
 $T = \< Q, \init, \wei, \final >$,
 where $Q$ is a finite set of states, 
@@ -412,11 +431,12 @@ Recall that by convention, an empty sum with $\oplus$ is $\zero$.
 \noindent
 The weight associated by $T$ to  $\< s, t> \in \Sigma^* \times \Delta^*$
 is then defined as follows: 
-\[
+\begin{equation}
 T(s, t)  = 
 \displaystyle\bigoplus_{q, q' \in Q} \mathsf{in}(q) 
 \mathop{\otimes} \weight_T(q, s, t, q') \mathop{\otimes} \mathsf{out}(q').
-\]
+\label{eq:weightT}
+\end{equation}
 
 \begin{example}
 comparison of two sequences of timestamped events      
@@ -471,7 +491,7 @@ symbols.
 % \item a set $\Sigmac$ of \emph{call symbols} denoted $\call{a}$,
 % \item a set $\Sigmar$ of \emph{return symbols} denoted $\return{a}$.
 % \end{itemize}
-Let $\Semiring$ be a commutative semiring and  
+Let~$\< \Semiring, \oplus, \zero, \otimes, \one>$ be a commutative semiring and  
 let  $(\Phi_\epsilon, \Phic, \Phir, \Phicr)$ be a label theory over $\Semiring$
 %In order to simplify notations, %and following the definition of Section~\ref{section:transducer}, 
 %we shall write respectively 
@@ -581,14 +601,14 @@ as the rest of stack.
 The weight associated by $A$ to $s \in \Sigma^*$
 is then defined as follows,
 following empty stack semantics: 
-\[
+\begin{equation}
 A(s)  = 
 {\displaystyle\bigoplus_{q, q' \in Q}} \textstyle
 \mathsf{in}(q) \mathop{\otimes} 
 \weight_A\bigl(\config{q}{\bot}, s, \config{q'}{\bot}\bigr) 
 \mathop{\otimes} \mathsf{out}(q').
-\]
-
+\label{eq:weightA}
+\end{equation}
 
 \begin{example}
 structured words...
@@ -597,7 +617,7 @@ intro language of music notation ?
 
 
 \subsection{Properties}
-SWVPA are closed under the binary operators of the underlying semiring.
+The class of \SWVPA is closed under the binary operators of the underlying semiring.
 %
 \begin{proposition}
 Let $A_1$ and $A_2$ be two (\SWVPA)
@@ -612,37 +632,64 @@ The construction is essentially the same
 as the one of~\cite{DAntonyAlur14SVPDA}, in the case of the Boolean semiring.
 
 
-\subsection{1-best Computation}
-Assume that the semiring $\Semiring$ is commutative, idempotent, and complete.
+\subsection{Best-first Search}
+Assume that the semiring $\Semiring$ is 
+commutative, idempotent, superior, total and complete.
 % total ? 
 % monotonic and superior writ natural ordering
-...
 %Regarding the infinite sum operator, note that
 %$\bigoplus_{x \in \Phi_\Sigma} \phi(x)$, 
 %$\bigoplus_{y \in \Phi_\Delta} \psi(y)$, and  
 %... exist and in $\Semiring$.
+We propose a Dijkstra algorithm computing the minimal weight by $A$, 
+\wrt $\leq_\oplus$, for a word in $\Semiring^*$.
 
-We propose a Dijkstra algorithm computing the minimal weight, 
-by $A$ for a word in $\Semiring^*$.
-It runs by labeling iteratively all pair $\<q, q'>$ of states of $A$ 
-by weight values in $\Semiring$, 
-in order to converge to 
-$\bigoplus_{s \in \Sigma^*} \weight_A\bigl(\config{q}{\bot}, s, \config{q'}{\bot}\bigr)$.
+\noindent
+More precisely, 
+let $\top$ be a fresh stack symbol which does not belong to $\Theta$,
+and for every two states $q, q' \in Q$ and $\sigma \in \{ \bot, \top \}$, 
+let 
+\[ 
+  d_0(q, \sigma, q') = \bigoplus_{s\in \Sigma^*} 
+  \textstyle
+  \weight_A\bigl(\config{q}{\sigma}, s, \config{q'}{\sigma}\bigr). 
+\]
+Since $\Semiring$ is complete, this infinite sum is well defined, 
+and since $\leq_\oplus$ is assumed total, it is the minimum in $\Sigma^*$
+of $s \mapsto \weight_A(\config{q}{\sigma}, s, \config{q'}{\sigma})$ \wrt this ordering.
 %
-More precisely, we compute a marking $d : Q \times \{ \bot, \top \} \times Q$
-such that eventually:
-$d(q, \sigma ,q') = \bigoplus_{s \in \Sigma^*} \weight_A\bigl(\config{q}{\sigma}, s, \config{q'}{\sigma}\bigr)$
-where $\sigma \in \{ \bot, \top \}$, and $\top$ is a fresh stack symbol which does not belong to $\Theta$.
-Note that having a stack reduced to such a symbol makes impossible the application of the 
-two last cases in the definition of $\weight_A$ (return symbol and empty stack). 
-However, it is possible to apply the two first cases 
-(internal symbol or call symbol, with a push on the top of $\top$).
-Algorithm~\ref{algo:Dijkstra} uses a priority queue $P$. 
+When $\sigma = \bot$, $d_0(q, \sigma, q')$ is the central 
+expression in a term of the definition (\ref{eq:weightA}) of $A(s_0)$ for the minimum $s_0$
+(for the above function).
+When $\sigma = \bot$, intuitively, it is the minimum weight of a computation of $A$
+starting in state $q$ with a stack $\theta \in \Theta^*$ (possibly empty), 
+and ending in state $q$ with the same stack $\theta$, such that moreover 
+the computation does not touch a symbol of $\theta$. 
+That means that during the computation, 
+$A$ may apply the first case of in the definition of $\weight_A$ (internal symbol),
+as well as the second case, to can push call symbols on the top of $\theta$, 
+and may pop these symbols with the third case (return symbol). 
+However, it cannot apply one of the two last cases (return symbol and empty stack)
+when the current stack is $\theta$.
+%pop symbols in $\theta$.
+% Note that having a stack reduced to such a symbol makes impossible the application of the 
+% two last cases in the definition of $\weight_A$ (return symbol and empty stack). 
+% However, it is possible to apply the two first cases 
+% (internal symbol or call symbol, with a push on the top of $\top$).
 
-\begin{algo}[1-best for SWVPA] \label{algo:Dijkstra}
-\textbf{initially} $P$ contains all %triplets 
-$\< q_1, \bot, q_2>$ and $\<q_1, \top, q_2>$
-for $q_1, q_2 \in Q$, with 
+The algorithm~\ref{algo:Dijkstra}
+constructs iteratively a a marking $d : Q \times \{ \bot, \top \} \times Q \to \Semiring$
+%of the triplets $\<q, \sigma, q'>$ 
+%of states of $A$ by weight values in $\Semiring$, 
+that converges eventually to $d_0(q, \sigma, q')$. 
+%It uses for that purpose a priority queue $P$ containing triplets of 
+%$Q \times \{ \bot, \top \} \times Q$.
+
+
+\begin{algo}[1-best for \SWVPA] \label{algo:Dijkstra}
+\textbf{initially} let $P = Q \times \{ \bot, \top \} \times Q$, %contains all %triplets 
+%$\< q_1, \bot, q_2>$ and $\<q_1, \top, q_2>$ for $q_1, q_2 \in Q$, with 
+and 
 $d(q_1, \bot, q_2) = d(q_1, \top, q_2) = \one$ if $q_1 = q_2$ and
 $d(q_1, \bot, q_2) = d(q_1, \top, q_2) = \zero$ otherwise.
 
@@ -677,13 +724,13 @@ d(q_1, \sigma, q_2) \otimes
 & & & \mathrm{where~} \eta = \weic(q_0, q_1, p) \otimes \weir(q_2, p, q_3)\\
 %
 \mathrm{if~} \sigma = \bot & d(q_1, \bot, q_3) & \opluseq &
- d(q_1, \sigma, q_2) \otimes \displaystyle\bigoplus_{\return{r} \in \Sigmar} \weie(q_2, {\return{r}}, q_3)\\
+  d(q_1, \sigma, q_2) \otimes \displaystyle\bigoplus_{\return{r} \in \Sigmar} \weie(q_2, {\return{r}}, q_3)\\
 %
-& d(q_0, \bot, q_2) & \opluseq & 
-d(q_0, \bot, q_1) \otimes d(q_1, \sigma, q_2), \mathrm{if~} \< q_0, \bot, q_1> \notin P \\
+%& d(q_0, \bot, q_2) & \opluseq & 
+%d(q_0, \bot, q_1) \otimes d(q_1, \sigma, q_2), \mathrm{if~} \< q_0, \bot, q_1> \notin P \\
 %
-\mathrm{if~} \sigma = \top & d(q_0, \top, q_2) & \opluseq & 
-d(q_0, \top, q_1) \otimes d(q_1, \sigma, q_2), \mathrm{if~} \< q_0, \top, q_1> \notin P \\
+%\mathrm{if~} \sigma = \top & d(q_0, \top, q_2) & \opluseq & 
+%d(q_0, \top, q_1) \otimes d(q_1, \sigma, q_2), \mathrm{if~} \< q_0, \top, q_1> \notin P \\
 %
 & d(q_1, \bot, q_3) & \opluseq & 
    d(q_1, \sigma, q_2) \otimes d(q_2, \bot, q_3), \mathrm{if~} \< q_2, \bot, q_3> \notin P \\
@@ -697,6 +744,20 @@ d(q_0, \top, q_1) \otimes d(q_1, \sigma, q_2), \mathrm{if~} \< q_0, \top, q_1> \
 \noindent
 The infinite sums in the updates of $d$ in Algorithm~\ref{algo:Dijkstra} are well defined
 since~$\Semiring$ is complete.
+The algorithm performs $2.|Q|^2$ iterations until $P$ is empty, 
+and each iteration has a time complexity $O(|Q|^2 . |P|)$.
+This gives a time complexity $O(|Q|^4 . |P|)$. 
+It can be reduced by implementing $P$ as a priority queue, 
+prioritized by the value returned by $d$
+***complete***. %$|Q|^3.\log(|Q|^2)$
+
+The correctness of Algorithm~\ref{algo:Dijkstra} 
+is ensured by the invariant expressed in the following lemma.
+\begin{lemma}
+For all $\< q_1, \sigma, q_2> \notin P$, $d(q_1, \sigma, q_2) =  d_0(q_1, \sigma, q_2)$.
+\end{lemma}
+The proof is by contradiction, 
+assuming a counter-example minimal in the length of the witness word.
 
 
 % \begin{algorithm}
@@ -714,16 +775,44 @@ since~$\Semiring$ is complete.
 % \end{program}
 % \end{algorithm}
 
-
 % The weight of a transition acts as a guard: 
 % a transition is activated for a symbol $`a`$ iff its weight $`\phi(a) \neq 0`$ (or $`\psi(a, b) \neq 0`$), 
 % the absorbing element.
 
-\medskip
-In order to obtain effectively a word of $\Semiring^*$ of minimal weight, 
-we require an additional 
-property of bounded convexity of weight functions:
+%\begin{lemma}
+\noindent
+For computing the minimal weight of a computation of $A$, we use the fact that,
+at the termination of Algorithm~\ref{algo:Dijkstra}, %it holds that,
+%There exist $q_1, q_2 \in Q$
+\[
+  {\displaystyle \bigoplus_{s \in \Sigma^*} A(s)} = 
+  {\displaystyle\bigoplus_{q, q' \in Q}} \textstyle
+  \mathsf{in}(q) \mathop{\otimes} d(q, \bot, q') \mathop{\otimes} \mathsf{out}(q').
+\]
+%\end{lemma}
 
+%\medskip
+\noindent
+In order to obtain effectively a witness 
+(word of $\Semiring^*$ with computation of $A$ of minimal weight), 
+we require an additional property the of weight functions.
+\begin{definition}
+Let $\Sigma$ be an alphabet and $\Semiring$ a complete semiring.
+A function $\phi$ from $\Sigma^n$ into $\Semiring$
+is called $k$-\emph{convex} for a natural number $k$ iff 
+$\mathit{card}\{ \mathbf{a} \in \Sigma^n \mid \phi(\mathbf{a}) = 
+                 \displaystyle\bigoplus_{\mathbf{p} \in \Sigma^n} \phi(\mathbf{p}) \} \leq k$.
+\end{definition}
+A label theory is $k$-convex if all its functions are $k$-convex.
+
+\begin{proposition}
+For a \SWVPA $A$ over a 
+commutative, idempotent, superior, total and complete semiring 
+and an alphabet $\Sigma$ with a $k$-convex label theory, 
+one can construct in PTIME a word $s \in \Sigma^*$ 
+such that $A(s)$ is minimal \wrt the natural ordering for $\Semiring$. 
+%$\leg_\oplus$.
+\end{proposition}
 
 
 
@@ -742,15 +831,17 @@ Musical-Time Unit (MTU) = number of measures
 conversion via tempo value
 
 \subsection{Representation of Music Performances}
-We consider symbolic representation of musical performances, as finite sequences of events.
+We consider symbolic representations of musical performances, as finite sequences of events.
 It corresponds to the concrete case of a MIDI file~\cite{SMF} 
 recorded  from an electronic keyboard, 
 or the output of a transcription from audio files~\cite{Benetos18AMTsurvey}.
 %
-For the sake of simplicity, we shall only consider here the case of monophonic performances, 
-where at most one note is sounding at a time -- the approach however extends to the polyphonic case.
+For the sake of simplicity, 
+we shall only consider here the case of monophonic performances, 
+where at most one note is sounding at a time. 
+The approach however extends to the polyphonic case.
 
-A music performance is a finite sequence of events in a set $\Sigma$.
+A music performance is a finite sequence of events in a set~$\Sigma$.
 Every event $e \in \Sigma$ has attributes such from a finite domain, 
 like a number of key for a note 
 or a flag indicating that it is a rest 
@@ -758,61 +849,75 @@ or a flag indicating that it is a rest
 and a velocity value (0..127 in~\cite{SMF})).
 %This representation is similar to the piano roll ~\cite{Muller15fundamentals} chap.1. 
 Moreover, it contains a RTU value $\ioi{e}$ (real number) 
-representing the time distance to the next event, or the to the end of performance 
-(also called \emph{inter-onset interval}).
+representing the time distance to the next event, 
+or to the end of performance for the last event,
+also called \emph{inter-onset interval}.
 
 
 \subsection{Representation of Music Scores}
 Music score are represented as structured words
-made of quantified events and parenthesized markups,
+made of timed %quantified 
+events and parenthesized markups,
 akin of nested words~\cite{AlurMadhusudan09nested}.
 
 We consider an alphabet $\Delta$, every symbol of which is 
 composed of a tag, in a finite set $\Xi$, 
 and an MTU (rational) IOI duration value.
-The alphabet $\Delta$ is partitioned into 
+%The alphabet $\Delta$ 
+It is partitioned into 
 $\Delta = \Deltai \uplus \Deltac \uplus \Deltar$, 
 like in Section~\ref{section:SWVPA}.
 %
 \noindent
 The symbols of $\Deltai$ represent events:
 % (infinite alphabet of internal symbols) made of:
-with tags indicate a new note or grace-note (with null IOI), 
+with tags indicating a new note or grace-note (with null IOI), 
 a rest or the continuation of the previous note (tie or dot).
+%
 The elements of $\Deltac \uplus \Deltar$ are matched
-and are the markups for describing the structure of the score.
-
-
-\noindent
-The elements of $\Deltac$ and $\Deltar$ are 
-markups for the representation of groups of events
-(linearization of rhythm trees \cite{jacquemard:hal-01138642}...)
-- parentheses for time divisions : tuplets, bars...
-tag %labels: 
-contain info such as tuple number, beaming policy...
+markups for describing the structure of the score, 
+\ie the hierarchical grouping of events, and also, 
+importantly the division of time in measures, tuplets...
+%- parentheses for time divisions : tuplets, bars...
+(linearization of rhythm trees \cite{jacquemard:hal-01138642}...).
+They contain additional info such as tuple number, beaming policy...
 
 \noindent
-The date or duration of events, in MTU (rational), 
-can be computed with the markups and tags (e.g. grace note has duration 0).
+The duration values of letters of $\Delta$, in MTU (rational), 
+can be computed with the markups and tags (\eg grace note has duration 0).
 
-\noindent
-There are simultaneous events, since grace notes has duration 0. They are ordered.
+%\noindent
+%There are simultaneous events, since grace notes has duration 0. They are ordered.
+%
+%\noindent
+%Finite bound on the number of duration ratio. ?
 
-\noindent
-Finite bound on the number of duration ratio. ?
-
+\begin{example}
+...      
+\end{example}
 
 \subsection{Performance/Score Distance Computation}
-with a transducer
+\label{app:distance}
+We define a distance between performance and score representations
+by a $\SWT$ $T = \< Q, \init, \wei, \final >$, over a semiring $\Semiring$.
+** detail the elements of $\Semiring$ ....**
+%are quadruplets of the form
+%$\< t, s, \delta_t, \delta_s>$
 
-
-tempo value in a finite domain (e.g. 30..300 bpm)
-can be fixed 
-or recomputed by the transducer when reading each event, 
+Every state of $Q$ contains a 
+tempo value in a finite domain (e.g. 30..300 bpm).
+This value can be fixed 
+or recomputed by the $T$ %transducer 
+after reading each event, 
 according to a perceptive/cognitive model of tempo 
 such as~\cite{LargeJones99tempo}
 (also used in the context of score following~\cite{Cont10TPAMI}).
 % we wont detail here.
+
+
+\subsection{Transcription by Best-first Search}
+We assume a score language defined by a \SWVPA over the semiring 
+$\Semiring$ of Section~\ref{app:distance}.
 
 
 

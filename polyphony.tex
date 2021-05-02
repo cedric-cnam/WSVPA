@@ -1,0 +1,29 @@
+
+
+\section{Application}
+Symbolic Automated Music Transcription
+and analysis of music performances
+
+\subsection{Time Scales}
+Real-Time Unit (RTU) = seconds
+
+\noindent 
+Musical-Time Unit (MTU) = number of measures
+
+\noindent 
+conversion via tempo value
+
+\subsection{Representation of Music Performances}
+A musical performance is represented symbolically as a finite sequence of timestamped events.
+This representation is similar to the piano roll ~\cite{Muller15fundamentals} chap.1. 
+
+\noindent
+We consider an infinite alphabet $\Sigma$ of MIDI-like 
+events made of:
+\begin{itemize}
+\item a timestamp in RTU\\ %(real or int = nb samples ?)
+      or IOI in RTU
+\item a pitch value in 0..127
+\item \textsf{on} | \textsf{off} flag
+\item a velocity value in 0..127
+\end{itemize}
