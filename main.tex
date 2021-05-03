@@ -169,23 +169,12 @@ additional algebraic properties of $\Semiring$.
 -- see \eg~\cite{Huang05kbest} for some NLP applications.
 %The extraction of $n$ best list is useful 
 
-** DEL ** 
-%Parsing produces an analyze of an input word in the form of a parse tree 
-%representing the derivation of a grammar.
-In case of ambiguity, several analyses, in general an exponential number, 
-are possible for the same input word. 
-Weighted CFG associate a weight value to each of its derivation trees, 
-based on weighted values associated to each production rules, 
-and are therefore useful for the compact representation and the ranking of large sets of parse trees.
-Moreover, there exist some efficient specialized parsing algorithms~\cite{Huang05kbest}
-to compute the $n$ best derivations of a given input word.
-
-The models and algorithms mentioned above deal with finite input alphabets.
-Considering infinite alphabets can however be of practical interest, 
-for instance when dealing with sequences of timestamped events.
-(approach of music transcription by parsing~\cite{MCM19})
-
-
+The various approaches to weighted parsing usually assume a finite input alphabet. %models and algorithms 
+Considering infinite or large alphabets can however be of practical interest, 
+for instance when processing strings in UTF encodings or for vulnerability detection in Web-applications 
+(see \eg~\cite{dAntoni21CACM}), for model checking, 
+or when dealing with sequences of timestamped events
+(like in the approach of~\cite{MCM19} of automated music transcription by parsing).
 %generalizes weighted parsing: 
 %finding the best derivation for a weighted grammar.
 
@@ -197,11 +186,11 @@ computing on words over infinite input alphabets %sets of terminal symbol
 In their transition rules, input symbols appear as variables (parameters)
 and the weight associated to the transition rule is a function of these variables.
 %
-This approach is close to the one of Symbolic Automata (SA)~\cite{VeanesdAntoniJACM}, 
-except that the domain of weight values 
-is not restricted to be Boolean, like for the guards in the rules of SA, 
+This approach is close to the case of Symbolic Automata (SA)~\cite{VeanesdAntoniJACM}, 
+except that the domain for weight values is not restricted to be Boolean, 
+like for the guards in the rules of SA, 
 but can be an arbitrary commutative semiring (assuming some restrictions).
-
+%
 The models defined here are finite automata, transducers and pushdown automata with visibly restriction.
 %wrt an edit distance
 The latter model of these automata computes on nested words~\cite{AlurMadhusudan09nested}, 
