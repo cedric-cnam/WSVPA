@@ -125,8 +125,9 @@
 
 % Parsing over infinite alphabet as optimal alignment computation 
 % as edit-distance between string and language
-% Symbolic Parsing
-\title{Weighted Visibly Pushdown Automata\\ Application to Automated Music Transcription}
+% 
+\title{Symbolic Parsing and\\ Automated Music Transcription}
+%\title{Weighted Visibly Pushdown Automata\\ Automated Music Transcription}
 \author{Florent Jacquemard}
 %\institute{INRIA \& CNAM, Paris, France\\
 %\email{florent.jacquemard@inria.fr}}
@@ -144,41 +145,73 @@
 %Symbolic Weighted (SW) extension of symbolic automata...
 %\end{abstract}
 
-the problem
-%quantitative parsing or symbolic parsing
-of parsing of words over infinite input alphabet.
+%the problem: quantitative parsing or symbolic parsing
+%of parsing of words over infinite input alphabet.
 
-A weighted CFG associates a weight value to each of its derivation trees.
-There exists some specialized parsing algorithms~\cite{nbest} 
+Weighted parsing~\cite{Goodman99SemiringParsing,Nederhof03weightedParsing,MorbitzVogler19weighted-parsing} 
+consists in analyzing a word in input \wrt a weighted language model, \eg a probabilistic context-free grammar (CFG).
+In such a model, a weight value is associated to each transition rule, % production rule
+and the rule's weights can be combined with a associative product operator $\otimes$ into 
+the weight of a derivation (or \emph{abstract syntax tree}, \ie the result of an analyze).
+A second operator $\oplus$, associative and commutative, 
+is used to handle ambiguity of the model, 
+by summing the weights of the possibly several (in general exponentially many) 
+syntax trees associated to a given input word.
+Intuitively, $\oplus$ aims at selecting, or ranking, the syntax trees.
+The weight domain, equipped with these two operators is assumed, at minima, 
+to form a \emph{semiring} $\Semiring$. %\cite{Eilenberg74automata}
+%by ranking 
+%making the weight domain a semiring.
+Some efficient specialized parsing algorithms~\cite{Huang05kbest} have been proposed in this context 
+in order to compute the $n$ best syntax trees of a given input word without having to enumerate them all.
+Generally based on dynamic programming, these algorithms rely on 
+additional algebraic properties of $\Semiring$.
+-- see \eg~\cite{Huang05kbest} for some NLP applications.
+%The extraction of $n$ best list is useful 
+
+** DEL ** 
+%Parsing produces an analyze of an input word in the form of a parse tree 
+%representing the derivation of a grammar.
+In case of ambiguity, several analyses, in general an exponential number, 
+are possible for the same input word. 
+Weighted CFG associate a weight value to each of its derivation trees, 
+based on weighted values associated to each production rules, 
+and are therefore useful for the compact representation and the ranking of large sets of parse trees.
+Moreover, there exist some efficient specialized parsing algorithms~\cite{Huang05kbest}
 to compute the $n$ best derivations of a given input word.
 
-Such models and algorithm only deal with finite input alphabets.
+The models and algorithms mentioned above deal with finite input alphabets.
 Considering infinite alphabets can however be of practical interest, 
 for instance when dealing with sequences of timestamped events.
-...example of music transcription\dots
+(approach of music transcription by parsing~\cite{MCM19})
+
 
 %generalizes weighted parsing: 
 %finding the best derivation for a weighted grammar.
 
-We propose here models of weighted recognizers 
-model of weighted CFG over infinite input alphabets %sets of terminal symbol
-(but with finite sets of states and transitions rules). 
+We propose here some models of weighted recognizers 
+%model of weighted CFG 
+computing on words over infinite input alphabets %sets of terminal symbol
+- but with finite sets of states and transitions rules. 
 % non-terminals and production rules).
-In the production rules, input symbols appear as variables (parameters)
+In their transition rules, input symbols appear as variables (parameters)
 and the weight associated to the transition rule is a function of these variables.
 %
-It is the approach of Symbolic Automata~\cite{VeanesdAntoniJACM}, 
+This approach is close to the one of Symbolic Automata (SA)~\cite{VeanesdAntoniJACM}, 
 except that the domain of weight values 
-is not restricted to be Boolean, like  for the guards in the rules of SA, 
+is not restricted to be Boolean, like for the guards in the rules of SA, 
 but can be an arbitrary commutative semiring (assuming some restrictions).
 
-models: automata, transducer and pushdown automata with visibly restriction.
+The models defined here are finite automata, transducers and pushdown automata with visibly restriction.
 %wrt an edit distance
-The latter corresponds in expressiveness
-to a strict restricted model of weighted grammars. %VPA 
-That permits to define a general approach for parsing 
-over infinite input alphabets.
+The latter model of these automata computes on nested words~\cite{AlurMadhusudan09nested}, 
+a structured format of words parenthesized with markup symbols, 
+which can correspond to a linearization of trees.
 
+The latter corresponds in expressiveness
+to a strict restricted model of weighted grammars
+and can be used in a general approach for parsing over infinite input alphabets.
+\dots
 First one general edit-distance is defined by a weighted word 
 transducer~\cite{Mohri}
 %Symbolic automata transducers are extended models~\cite{VeanesdAntoniJACM}
@@ -192,7 +225,7 @@ value in a semiring...
 
 We follow the approach of~\cite{Mohri03EDWA} for the computation of distances
 between words with weighted transducers, and propose models of weighted automata 
-and weighted transducers over infinite alphabets. 
+and weighted transducers handling infinite alphabets. 
 
 These models generalize weighted automata and transducers over finite alphabets, see  e.g.~\cite{Mohri03EDWA}, 
 by labeling each transition with a weight functions that takes the 
