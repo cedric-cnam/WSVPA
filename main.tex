@@ -126,7 +126,7 @@
 % Parsing over infinite alphabet as optimal alignment computation 
 % as edit-distance between string and language
 % 
-\title{Symbolic Parsing and\\ Automated Music Transcription}
+\title{Symbolic Weighted Parsing and\\ Automated Music Transcription}
 %\title{Weighted Visibly Pushdown Automata\\ Automated Music Transcription}
 \author{Florent Jacquemard}
 %\institute{INRIA \& CNAM, Paris, France\\
@@ -159,58 +159,88 @@ by summing the weights of the possibly several (in general exponentially many)
 syntax trees associated to a given input word.
 Intuitively, $\oplus$ aims at selecting, or ranking, the syntax trees.
 The weight domain, equipped with these two operators is assumed, at minima, 
-to form a \emph{semiring} $\Semiring$. %\cite{Eilenberg74automata}
+to form a \emph{semiring} $\Semiring$, %\cite{Eilenberg74automata}
+such as a min-plus algebra of domain $\mathbb{R} \cup \{ +\infty\}$, 
+where $\oplus$ is min and $\otimes$ is plus.
 %by ranking 
 %making the weight domain a semiring.
 Some efficient specialized parsing algorithms~\cite{Huang05kbest} have been proposed in this context 
 in order to compute the $n$ best syntax trees of a given input word without having to enumerate them all.
 Generally based on dynamic programming, these algorithms rely on 
-additional algebraic properties of $\Semiring$.
+additional algebraic properties of~$\Semiring$.
 -- see \eg~\cite{Huang05kbest} for some NLP applications.
 %The extraction of $n$ best list is useful 
 
 The various approaches to weighted parsing usually assume a finite input alphabet. %models and algorithms 
 Considering infinite or large alphabets can however be of practical interest, 
-for instance when processing strings in UTF encodings or for vulnerability detection in Web-applications 
-(see \eg~\cite{dAntoni21CACM}), for model checking, 
+for instance in the context of processing strings in UTF16 encodings, 
+for vulnerability detection in Web-applications 
+(see \eg~\cite{dAntoni21CACM}), 
+for the representation of execution traces in model checking, 
 or when dealing with sequences of timestamped events
-(like in the approach of~\cite{MCM19} of automated music transcription by parsing).
+-- we describe briefly at the end of the paper a parsing based approach to 
+of automated music transcription, that is the conversion of a symbolic 
+representation of a music performance into a structured music score.
+%\cite{MCM19} 
 %generalizes weighted parsing: 
 %finding the best derivation for a weighted grammar.
 
-We propose here some models of weighted recognizers 
+We present here some weighted language models
 %model of weighted CFG 
 computing on words over infinite input alphabets %sets of terminal symbol
 - but with finite sets of states and transitions rules. 
 % non-terminals and production rules).
-In their transition rules, input symbols appear as variables (parameters)
-and the weight associated to the transition rule is a function of these variables.
-%
-This approach is close to the case of Symbolic Automata (SA)~\cite{VeanesdAntoniJACM}, 
+In their transition rules, input symbols appear as variables %(parameters)
+and the weight associated to a transition rule is a function of these variables.
+% 
+This approach is close to the case of Symbolic Automata (SA)~\cite{dAntoni21CACM}, 
 except that the domain for weight values is not restricted to be Boolean, 
 like for the guards in the rules of SA, 
 but can be an arbitrary commutative semiring (assuming some restrictions).
 %
-The models defined here are finite automata, transducers and pushdown automata with visibly restriction.
+The models defined here are finite automata (\SWA), 
+transducers (\SWT) and pushdown automata
+with a visibly restriction~\cite{AlurMadhusudan09nested} (\SWVPA).
 %wrt an edit distance
-The latter model of these automata computes on nested words~\cite{AlurMadhusudan09nested}, 
-a structured format of words parenthesized with markup symbols, 
-which can correspond to a linearization of trees.
+The latter model of automata computes on \emph{nested words}~\cite{AlurMadhusudan09nested}, 
+a structured form of words parenthesized with markup symbols, 
+corresponding to a linearization of trees.
+In expressiveness, they correspond to a strict restriction
+of weighted CFG. 
+%and can be used in a general approach for parsing over infinite input alphabets.
+Let $A$ be a \SWVPA, associating $A(w) \in \Semiring$ 
+to a given a nested word $w$ (representing a parse tree),
+and let a \SWT compute a distance $d$, in $\Semiring$, 
+between 2 strings over respectively an infinite input alphabet and the 
+same (infinite) alphabet of $A$.
+Then, the problem of Symbolic Weighted Parsing is, 
+given an input string $s$, to find a nested word $w$ minimizing 
+(according to the ranking defined by $\oplus$)
+the distance $d(s, w) \otimes A(w)$ between $s$ and $A$, 
+as defined in~\cite{Mohri03EDWA}.
+%following 
 
-The latter corresponds in expressiveness
-to a strict restricted model of weighted grammars
-and can be used in a general approach for parsing over infinite input alphabets.
-\dots
-First one general edit-distance is defined by a weighted word 
-transducer~\cite{Mohri}
-%Symbolic automata transducers are extended models~\cite{VeanesdAntoniJACM}
-%dealing with infinite set of input symbols...
-value in a semiring...
+% First one general edit-distance is defined by a weighted word 
+% transducer~\cite{Mohri}
+% %Symbolic automata transducers are extended models~\cite{VeanesdAntoniJACM}
+% %dealing with infinite set of input symbols...
+% value in a semiring...
+
+In Section~\ref{section:SWA} we introduce \SWA and \SWT, 
+then \SWVPA are defined in Section~\ref{section:SWPDA}, 
+where a polynomial 1-best algorithm is described that can be use to solve
+Symbolic Weighted Parsing.
+Finally, \label{sec:transcription}, we present an application 
+of this approach to automated music transcription that has been implemented.
+
+
 
 
 
 \section{SW Automata and Transducers}
 \label{section:transducer}
+\label{section:SWA}
+\label{section:SWT}
 
 We follow the approach of~\cite{Mohri03EDWA} for the computation of distances
 between words with weighted transducers, and propose models of weighted automata 
@@ -497,7 +527,7 @@ The construction time and size for $A_{s, T}$ are $O(| s | . \| T \|)$.
 
 
 \section{SW Visibly Pushdown Automata}
-\label{section:SWVPA}
+\label{section:SWVPA}\label{sec:SWVPA}
 The following model generalizes Symbolic VPA~\cite{DAntonyAlur14SVPDA}
 from Boolean semirings to arbitrary semiring weight domains.
 
@@ -840,6 +870,7 @@ such that $A(s)$ is minimal \wrt the natural ordering for $\Semiring$.
 
 
 \section{Application}
+\label{sec:transcription}
 Symbolic Automated Music Transcription
 and analysis of music performances
 
