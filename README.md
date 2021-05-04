@@ -1,9 +1,10 @@
 # Weighted-Transducers-based framework of Mohri et al. and Music Transcription
 
+notes on a model of Weighted Symbolic Visibly Pushdown Automata for Music Notation Processing (Zettelkasten)
+
 Theoretical framework for automated music transcription and performance analysis.
 
 More conventional than in the paper MCM'19 : based on small extensions of standard tools : 
-
 
 
 
@@ -68,3 +69,4 @@ more details on the comparison between performances and score / score language :
   - definition of similarity measures between these representations
 
   
+
