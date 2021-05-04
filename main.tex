@@ -1,4 +1,5 @@
-\documentclass[a4paper,11pt]{article}
+\documentclass[runningheads]{llncs}
+%\documentclass[a4paper,11pt]{article}
 %\setcounter{page}{1}
 
 \usepackage[T1]{fontenc}
@@ -52,15 +53,15 @@
 
 %% theorem envs
 \usepackage{theorem}
-\newtheorem{theorem}{Theorem} %[section]
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{proposition}[theorem]{Proposition}
-\newenvironment{proof}{\vspace{-2ex}{\it Proof. }}{\hspace*{\fill} $\Box$\smallskip }
-\theorembodyfont{\slshape}
-\newtheorem{example}[theorem]{Example}
-\newtheorem{remark}[theorem]{Remark}
+% \newtheorem{theorem}{Theorem} %[section]
+% \newtheorem{definition}[theorem]{Definition}
+% \newtheorem{lemma}[theorem]{Lemma}
+% \newtheorem{corollary}[theorem]{Corollary}
+% \newtheorem{proposition}[theorem]{Proposition}
+% \newenvironment{proof}{\vspace{-2ex}{\it Proof. }}{\hspace*{\fill} $\Box$\smallskip }
+% \theorembodyfont{\slshape}
+% \newtheorem{example}[theorem]{Example}
+% \newtheorem{remark}[theorem]{Remark}
 {\theorembodyfont{\rmfamily} \theoremstyle{break} \newtheorem{algo}{Algorithm}}
 
 %% algorithms
@@ -126,13 +127,15 @@
 % Parsing over infinite alphabet as optimal alignment computation 
 % as edit-distance between string and language
 % 
-\title{Symbolic Weighted Parsing and\\ Automated Music Transcription}
+%\title{Symbolic Weighted Parsing and Automated Music Transcription}
+\title{Symbolic Weighted Language Models and Automated Music Transcription}
 %\title{Weighted Visibly Pushdown Automata\\ Automated Music Transcription}
 %\author{Florent Jacquemard}
 %\institute{INRIA \& CNAM, Paris, France\\
 %\email{florent.jacquemard@inria.fr}}
 
 %\titlerunning{WVPA \& AMT}
+\titlerunning{Symbolic Weighted Parsing and Automated Music Transcription}
 %\authorrunning{Florent Jacquemard}
 
 \date{\today}
@@ -141,20 +144,42 @@
 \thispagestyle{empty}
 \maketitle
 
-%\begin{abstract}
+\begin{abstract}
 %Symbolic Weighted (SW) extension of symbolic automata...
-%\end{abstract}
+
+We propose language models called Symbolic Weighted Automata (SWA) 
+at the joint %intersection 
+between Symbolic Automata (SA) and Weighted Automata (WA), 
+as well as Transducers (SWT) and Visibly Pushdown (SWPDA) variants.
+%
+Like SA, SWA deal with large or infinite input alphabets, 
+and like WA, they output a weight value in a semiring domain.
+The transitions of WA are labeled by functions from an infinite alphabet into the weight domain. 
+This is unlike WA whose transitions are guarded by boolean predicates 
+overs symbols in an infinite alphabet 
+and also unlike WA whose transitions are labeled by constant weight values, 
+and who deal only with finite automata.
+%
+We present some properties of WA, WT and SWPDA models, 
+and show how they can be used to define and solve a variant of parsing 
+over infinite alphabets.
+%
+We also briefly describe the application that motivated the introduction of these models: 
+an parse-based approach to automated music transcription.
+\end{abstract}
+
+
+
 
 %the problem: quantitative parsing or symbolic parsing
 %of parsing of words over infinite input alphabet.
-
 Weighted parsing~\cite{Goodman99SemiringParsing,Nederhof03weightedParsing,MorbitzVogler19weighted-parsing} 
 consists in analyzing a word in input \wrt a weighted language model, \eg a probabilistic context-free grammar (CFG).
-In such a model, a weight value is associated to each transition rule, % production rule
+In such models, a weight value is associated to each transition rule, % production rule
 and the rule's weights can be combined with a associative product operator $\otimes$ into 
 the weight of a derivation (or \emph{abstract syntax tree}, \ie the result of an analyze).
 A second operator $\oplus$, associative and commutative, 
-is used to handle ambiguity of the model, 
+is moreover used to handle ambiguity of the model, 
 by summing the weights of the possibly several (in general exponentially many) 
 syntax trees associated to a given input word.
 Intuitively, $\oplus$ aims at selecting, or ranking, the syntax trees.
@@ -193,12 +218,13 @@ computing on words over infinite input alphabets %sets of terminal symbol
 In their transition rules, input symbols appear as variables %(parameters)
 and the weight associated to a transition rule is a function of these variables.
 % 
-This approach is close to the case of Symbolic Automata (SA)~\cite{dAntoni21CACM}, 
+This approach is close to the case of 
+Symbolic Automata (SA)~\cite{dAntoniVeanes17CAV,dAntoni21CACM}, 
 except that the domain for weight values is not restricted to be Boolean, 
 like for the guards in the rules of SA, 
 but can be an arbitrary commutative semiring (assuming some restrictions).
 %
-The models defined here are finite automata (\SWA), 
+The models defined here are finite automata (\SWA),
 transducers (\SWT) and pushdown automata
 with a visibly restriction~\cite{AlurMadhusudan09nested} (\SWVPA).
 %wrt an edit distance
@@ -227,12 +253,11 @@ as defined in~\cite{Mohri03EDWA}.
 % value in a semiring...
 
 In Section~\ref{section:SWA} we introduce \SWA and \SWT, 
-then \SWVPA are defined in Section~\ref{section:SWPDA}, 
+then \SWVPA are defined in Section~\ref{sec:SWVPA}, 
 where a polynomial 1-best algorithm is described that can be use to solve
 Symbolic Weighted Parsing.
 Finally, \label{sec:transcription}, we present an application 
 of this approach to automated music transcription that has been implemented.
-
 
 
 
@@ -243,13 +268,15 @@ of this approach to automated music transcription that has been implemented.
 \label{section:SWT}
 
 We follow the approach of~\cite{Mohri03EDWA} for the computation of distances
-between words with weighted transducers, and propose models of weighted automata 
-and weighted transducers handling infinite alphabets. 
+between words and languages, with weighted transducers, 
+extending it to infinite alphabet with models of symbolic weighted automata 
+and transducers. % handling infinite alphabets. 
 
-These models generalize weighted automata and transducers over finite alphabets, see  e.g.~\cite{Mohri03EDWA}, 
+These models generalize weighted automata and transducers over finite alphabets, 
+see  e.g.~\cite{Mohri03EDWA}, 
 by labeling each transition with a weight functions that takes the 
 input and output symbols as parameters, instead of a simple weight value.
-These functions are similar to the guards of symbolic automata~\cite{Veanes13ciaa}, 
+These functions are similar to the guards of symbolic automata~\cite{dAntoniVeanes17CAV,dAntoni21CACM},
 but they can return values in an arbitrary semiring, 
 where the latter guards are restricted to the Boolean semiring.
 
@@ -528,7 +555,7 @@ The construction time and size for $A_{s, T}$ are $O(| s | . \| T \|)$.
 
 \section{SW Visibly Pushdown Automata}
 \label{section:SWVPA}\label{sec:SWVPA}
-The following model generalizes Symbolic VPA~\cite{DAntonyAlur14SVPDA}
+The following model generalizes Symbolic VPA~\cite{dAntonyAlur14SVPDA}
 from Boolean semirings to arbitrary semiring weight domains.
 
 \subsection{Definition}
@@ -681,7 +708,7 @@ $(A_1 \oplus A_2)(s) = A_1(s) \oplus A_2(s)$ and
 $(A_1 \otimes A_2)(s) = A_1(s) \otimes A_2(s)$.
 \end{proposition}
 The construction is essentially the same 
-as the one of~\cite{DAntonyAlur14SVPDA}, in the case of the Boolean semiring.
+as the one of~\cite{dAntonyAlur14SVPDA}, in the case of the Boolean semiring.
 
 
 \subsection{Best-first Search}
