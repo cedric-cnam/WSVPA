@@ -424,10 +424,14 @@ containing unary functions in $\Sigma \to \Semiring$, resp. $\Delta \to \Semirin
 and $\Phi_{\Sigma, \Delta}$  containing binary functions in $\Sigma \times \Delta \to \Semiring$.
 Moreover, these sets are required to be closed under the operators 
 $\oplus$ and $\otimes$ of~$\Semiring$.
-More precisely, for all $\phi, \phi' \in \Phi_\Sigma$ all 
-$\psi, \psi' \in \Phi_\Delta$, 
+More precisely, for all 
+$\alpha, \alpha' \in \Phi_\epsilon$,
+all $\phi, \phi' \in \Phi_\Sigma$,
+all $\psi, \psi' \in \Phi_\Delta$, 
 and $\eta, \eta' \in \Phi_{\Sigma, \Delta}$, the function
 \begin{description}
+\item $\phi \otimes \alpha : x \mapsto \phi(x) \otimes \alpha$, 
+      and $\alpha \otimes \phi' : x \mapsto \alpha \otimes \phi'(x)$ belong to $\Phi_\Sigma$, 
 \item $\phi \otimes \phi' : x \mapsto \phi(x) \otimes \phi'(x)$ belongs to $\Phi_\Sigma$, 
 \item $\psi \otimes \psi' : y \mapsto \psi(y) \otimes \psi'(y)$ belongs to $\Phi_\Delta$,
 \item $\phi \otimes \eta : x, y \mapsto \phi(x) \otimes \eta(x, y)$ belongs to $\Phi_{\Sigma, \Delta}$,
@@ -576,17 +580,17 @@ respectively $\mathsf{out} : Q \to \Semiring,$
 are functions defining the weight for entering, 
 respectively leaving, a state, 
 and $\vec{\wei}$ is a tuplet made of the 2 of transition functions 
-$\wei_\epsilon$, and $\wei_\Sigma$ from $Q \times Q$ into respectively
-$\Phi_\epsilon$, and $\Phi_\Sigma$.
+$\wei_\epsilon$ and $\wei_\Sigma$ from $Q \times Q$ into respectively
+$\Phi_\epsilon$ and $\Phi_\Sigma$.
 \end{definition}
       
 \noindent
-The 2 above transition functions are synthesized into 
-a function~$\wei$ 
+The above transition functions $\wei_\epsilon$ and $\wei_\Sigma$
+are synthesized into a function~$\wei$ 
 from~$Q \times (\Sigma \cup \{ \epsilon \}) \times Q$ into~$\Semiring$.
 %
 When $\wei_\epsilon(q, q') = \zero$ for all $q, q' \in Q$, 
-the automaton $A$ is called \emph{without $\epsilon$-transitions}.
+the automaton~$A$ is called \emph{without $\epsilon$-transitions}.
       
 
 
@@ -596,18 +600,43 @@ the automaton $A$ is called \emph{without $\epsilon$-transitions}.
 Given a \SWT $T$ 
 over $\Sigma$, $\Delta$ and $\Semiring$, 
 and a word $s \in \Sigma^*$, 
-one can construct a \SWA 
-$A_{s, T}$ such that for all $t \in \Delta^*$, 
-$A_{s, T}(t) = T(s, t)$.
+there exists a \SWA 
+$A_{T, s}$ such that for all $t \in \Delta^*$, 
+$A_{T, s}(t) = T(s, t)$.
 \end{proposition}
 The construction time and size for $A_{s, T}$ are $O(| s | . \| T \|)$.
 
 
-
+% gen. to transducers
 \begin{proposition}
-...removal of $\epsilon$ transitions for \SWA...
+Given a \SWA $A$ over $\Sigma$ and $\Semiring$, 
+there exists a \SWA $A'$ without $\epsilon$-transitions 
+such that for all $s \in \Sigma^*$, $A'(s) = A(s)$.
 \end{proposition}
-      
+%
+\begin{proof}     
+Let $A = \< Q, \init, \<\wei_\epsilon, \wei_\Sigma>, \final >$.
+The automaton $A'$ is $\< Q, \init, \<\wei'_\epsilon, \wei'_\Sigma>, \final >$,
+where, for all $q, q' \in Q$,
+$\wei'_\epsilon(q, q') = \zero$  
+and 
+% \[
+% \begin{array}{rcccl}
+% \wei'_\Sigma(q, q') & = &  & \displaystyle\bigoplus_{q_1 \in Q} &
+%                \wei_\Sigma(q, q_1) \otimes  \wei_\epsilon(q_1, q')\\
+%                     &   & \oplus  & \displaystyle\bigoplus_{q_2 \in Q} &
+%                \wei_\epsilon(q, q_2) \otimes \wei_\Sigma(q_2, q')\\
+% \end{array}
+% \]
+\[
+\wei'_\Sigma(q, q') = 
+\displaystyle\bigoplus_{q_1 \in Q} \wei_\Sigma(q, q_1) \otimes \wei_\epsilon(q_1, q')
+\oplus  \displaystyle\bigoplus_{q_2 \in Q} \wei_\epsilon(q, q_2) \otimes \wei_\Sigma(q_2, q')
+\]
+In the above definition of $\wei'_\Sigma$ we use the operators 
+$\oplus$ and $\otimes$ on $\Phi_\Sigma$ described in Section~\ref{section:symbols}.
+\qed
+\end{proof}     
       
 
 
