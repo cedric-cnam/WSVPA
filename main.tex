@@ -308,9 +308,11 @@ $\forall x\in \mathbb{S}$, $\zero \otimes x = x \otimes \zero = \zero$.
 %Components of a semiring~$\Semiring$ may be subscripted by~$\Semiring$ when needed.
 %We simply write $x \in \Semiring$ to mean $x \in \mathbb{S}$.
 %
-% In the application presented in this paper, intuitively,
-% $\oplus$ selects an optimal value amongst two values and 
-% $\otimes$ combines two values into a single value.
+Intuitively, in the models presented in this paper, 
+$\oplus$ selects an optimal value from two given values, 
+in order to handle non-determinism, 
+and $\otimes$ combines two values into a single value, 
+in order to describe the chaining of several transitions.
 %and let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a {semiring}, 
 
 % \noindent
@@ -436,18 +438,18 @@ The same also holds for the binary sum operator $\oplus$.
 
 \noindent
 \marginpar{necessary?}
-Finally, it is assumed that the codomain of every function of $\Phi_\Sigma$ and $\Phi_\Delta$
-is a subset of $\Phi_\epsilon$.
-and all partial applications of functions $\Phi_{\Sigma, \Delta}$, 
+Finally, it is also required that the codomain of every function of $\Phi_\Sigma$ and $\Phi_\Delta$
+is a subset of $\Phi_\epsilon$,
+and that all partial applications of functions $\Phi_{\Sigma, \Delta}$, 
 resp.  $f_a: y \mapsto f(a, y)$ for $a \in \Sigma$ and $y \in \Delta$
 and  $f_b: x \mapsto f(x, b)$ for $b \in \Delta$ and $x \in \Sigma$, 
 belong resp. to~$\Phi_\Sigma$ and~$\Phi_\Delta$.
 
-
 \subsection{Definitions}
 %(SWT)
 \begin{definition}
-A \emph{symbolic-weighted transducer} (\SWT)~$T$ 
+\label{def:transducer} \label{def:SWT}
+A \emph{symbolic-weighted transducer} (\SWT)
 over the input and output alphabets~$\Sigma$ and $\Delta$ 
 and the semiring $\Semiring$ is a tuple
 $T = \< Q, \init, \vec{\wei}, \final >$,
@@ -558,13 +560,33 @@ comparison of two sequences of timestamped events
 \end{example}
 
 \noindent
-A \emph{symbolic weighted automata} (\SWA) $A = \< Q, \init, \weight, \final >$
+The \emph{Symbolic Weighted Automata} %$A = \< Q, \init, \weight, \final >$
 over $\Sigma$ and $\Semiring$ 
-is defined in a similar way by simply omitting the output symbols,
-\ie $\wei$ is a function from~$Q \times Q$ into %$\Phi$.
-$\< \Phi_\epsilon, \Phi_\Sigma >$, 
-or equivalently from~$Q \times (\Sigma \cup \{ \epsilon \}) \times Q$ into~$\Semiring$.
-
+are defined similarly as the transducers of Definition~\ref{def:SWT}, 
+by simply omitting the output symbols.
+%
+\begin{definition}
+A \emph{symbolic-weighted automaton} (\SWA)
+over the input alphabet~$\Sigma$
+and the semiring $\Semiring$ is a tuple
+$A = \< Q, \init, \vec{\wei}, \final >$,
+where $Q$ is a finite set of states, 
+$\mathsf{in} : Q \to \Semiring$, 
+respectively $\mathsf{out} : Q \to \Semiring,$
+are functions defining the weight for entering, 
+respectively leaving, a state, 
+and $\vec{\wei}$ is a tuplet made of the 2 of transition functions 
+$\wei_\epsilon$, and $\wei_\Sigma$ from $Q \times Q$ into respectively
+$\Phi_\epsilon$, and $\Phi_\Sigma$.
+\end{definition}
+      
+\noindent
+The 2 above transition functions are synthesized into 
+a function~$\wei$ 
+from~$Q \times (\Sigma \cup \{ \epsilon \}) \times Q$ into~$\Semiring$.
+%
+When $\wei_\epsilon(q, q') = \zero$ for all $q, q' \in Q$, 
+the automaton $A$ is called \emph{without $\epsilon$-transitions}.
       
 
 
@@ -583,8 +605,8 @@ The construction time and size for $A_{s, T}$ are $O(| s | . \| T \|)$.
 
 
 \begin{proposition}
-      ...removal of $\epsilon$ transitions for \SWA...
-      \end{proposition}
+...removal of $\epsilon$ transitions for \SWA...
+\end{proposition}
       
       
 
