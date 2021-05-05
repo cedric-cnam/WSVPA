@@ -447,32 +447,37 @@ belong resp. to~$\Phi_\Sigma$ and~$\Phi_\Delta$.
 \subsection{Definitions}
 %(SWT)
 \begin{definition}
-A \emph{symbolic-weighted transducer} (\SWT) 
-$T$ over the input and output alphabet $\Sigma$ and $\Delta$ 
+A \emph{symbolic-weighted transducer} (\SWT)~$T$ 
+over the input and output alphabets~$\Sigma$ and $\Delta$ 
 and the semiring $\Semiring$ is a tuple
-$T = \< Q, \init, \wei, \final >$,
+$T = \< Q, \init, \vec{\wei}, \final >$,
 where $Q$ is a finite set of states, 
 $\mathsf{in} : Q \to \Semiring$, 
 respectively $\mathsf{out} : Q \to \Semiring,$
 are functions defining the weight for entering, 
 respectively leaving, a state, 
-and $\wei$ is a transition %weight 
-function from $Q \times Q$ into %$\Phi$.
-$\< \Phi_\epsilon, \Phi_\Sigma, \Phi_\Delta, \Phi_{\Sigma, \Delta}>$.
+and $\vec{\wei}$ is a tuplet made of the 4 of transition functions 
+$\wei_\epsilon$, $\wei_\Sigma$, $\wei_\Delta$, and $\wei_{\Sigma, \Delta}$
+from $Q \times Q$ into respectively
+$\Phi_\epsilon$, $\Phi_\Sigma$, $\Phi_\Delta$, and $\Phi_{\Sigma, \Delta}$.
 \end{definition}
 %
-We extend the above transition function into a function from
+We synthesize the above 4-uplet of transition functions into a unique 
+function~$\wei$ from
 $Q \times (\Sigma \cup \{ \epsilon \}) \times (\Delta \cup \{ \epsilon \}) \times Q$
-into $\Semiring$, also called $\wei$ for simplicity, such that 
-for all $q, q' \in Q$, $a \in \Sigma$, $b \in \Delta$, 
-and with 
-$\< \phi_\epsilon, \phi_\Sigma, \phi_\Delta, \phi_{\Sigma, \Delta}> = \wei(q, q')$, 
+into $\Semiring$, %also called $\wei$ for simplicity, 
+such that, for all $q, q' \in Q$, $a \in \Sigma$, and $b \in \Delta$, 
+%and with 
+%$\< \phi_\epsilon, \phi_\Sigma, \phi_\Delta, \phi_{\Sigma, \Delta}> = \wei(q, q')$, 
 \[
-\begin{array}{rcl}
-\wei(q, \epsilon, \epsilon, q') & = & \phi_\epsilon\\
-\wei(q, a, \epsilon, q') & = & \phi_\Sigma(a)\\
-\wei(q, \epsilon, b, q') & = & \phi_\Delta(b)\\
-\wei(q, a, b, q') & = & \phi_{\Sigma, \Delta}(a, b)
+\begin{array}{rcll}
+\wei(q, \epsilon, \epsilon, q') & = &  \wei_\epsilon(q, q'),\\ %\phi_\epsilon\\
+\wei(q, a, \epsilon, q') & = & \phi_\Sigma(a) & %\wei_\Sigma(q, q')(a)
+\quad\mathrm{where~} \phi_\Sigma = \wei_\Sigma(q, q'),\\
+\wei(q, \epsilon, b, q') & = & \phi_\Delta(b) & 
+\quad\mathrm{where~} \phi_\Delta = \wei_\Delta(q, q'),\\
+\wei(q, a, b, q') & = & \phi_{\Sigma, \Delta}(a, b) & 
+\quad\mathrm{where~} \phi_{\Sigma, \Delta} = \wei_{\Sigma, \Delta}(q, q').\\
 \end{array}      
 \]
 %More precisely, $Q \times Q$, 
@@ -480,9 +485,6 @@ $\< \phi_\epsilon, \phi_\Sigma, \phi_\Delta, \phi_{\Sigma, \Delta}> = \wei(q, q'
 %$Q \times \Delta \times Q$,
 %$Q \times \Sigma \times \Delta \times Q$,
 %into resp. $\Phi_0$, $\Phi_\Sigma$, $\Phi_\Delta$ $\Phi_{\Sigma, \Delta}$.
-
-These functions $\phi$ act as guards for the transducer's transitions, 
-preventing a transition when they return the absorbing $\zero$ of $\Semiring$.
 
 The symbolic-weighted transducer $T$ defines a mapping 
 from the pairs of strings of $\Sigma^* \times \Delta^*$ 
@@ -509,10 +511,20 @@ for every strings of $s \in \Sigma^*$, $t \in \Delta^*$:
                                          \scriptstyle s = au, a \in \Sigma\\[-2pt]
                                          \scriptstyle t = bv, b \in \Delta
                                          \end{array}} &
-      \wei(q, a, b, q'') \otimes \weight_T(q'', u, v, q')\\ 
+      \wei(q, a, b, q'') \otimes \weight_T(q'', u, v, q').\\ 
 \end{array}
 \]
-Recall that by convention, an empty sum with $\oplus$ is $\zero$. 
+We recall that, by convention, an empty sum with $\oplus$ is $\zero$. 
+%
+Since $\zero$ is absorbing for~$\otimes$ in~$\Semiring$,
+one term $\wei(q, a, b, q'')$ equal to $\zero$ in the above expression 
+will be ignored in the sum, meaning that there is no possible transition
+from state $q$ into state $q'$ while reading $a$ and writing $b$ 
+(including the case $a = \epsilon$ and $a = \epsilon$).
+%These functions $\phi$ act as guards for the transducer's transitions, 
+%preventing a transition when they return the absorbing $\zero$ of $\Semiring$.
+This is analogous to a transition's guard not satisfied by $\<a, b>$ in 
+the case of symbolic transducers.
 
 The above expression of $\weight_T$ can be seen as a stateful definition of 
 an edit-distance between a word $s \in \Sigma^*$ and a word $t \in \Delta^*$,
@@ -524,10 +536,10 @@ $\wei(q, \epsilon, b, q'')$, in the third line, is the cost
 of the deletion of insertion of  $b \in \Delta$ in $s$, 
 $\wei(q, a, b, q'')$, in the last line, is the cost 
 of the substitution of  $a \in \Sigma$ by $b \in \Delta$.
-The cost of a sequence of such operations transforming $s$ into $t$ is 
-the product with $\otimes$ of the costs of individual operations involved,
-and the distance between $s$ and $t$ is the sum with $\oplus$
-of all such cost products.
+The cost of a sequence of such operations transforming $s$ into $t$, 
+is the product, with $\otimes$, of the individual costs of the operations involved;
+And the distance between $s$ and $t$ is the sum, with $\oplus$,
+of all such product of costs.
 
 
 \medskip\noindent
@@ -539,6 +551,7 @@ T(s, t)  =
 \mathop{\otimes} \weight_T(q, s, t, q') \mathop{\otimes} \mathsf{out}(q').
 \label{eq:weightT}
 \end{equation}
+
 
 \begin{example}
 comparison of two sequences of timestamped events      
