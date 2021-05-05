@@ -128,8 +128,9 @@
 % as edit-distance between string and language
 % 
 %\title{Symbolic Weighted Parsing and Automated Music Transcription}
-\title{Symbolic Weighted Language Models and Automated Music Transcription}
-%\title{Weighted Visibly Pushdown Automata\\ Automated Music Transcription}
+%\title{Symbolic Weighted Language Models and Automated Music Transcription}
+\title{Symbolic Weighted Language Models and Parsing over Infinite Alphabets}
+%\title{Weighted Visibly Pushdown Automata and Automated Music Transcription}
 \author{Florent Jacquemard}
 \institute{INRIA \& CNAM, Paris, France\\
 \email{florent.jacquemard@inria.fr}}
@@ -161,7 +162,8 @@ and also unlike WA whose transitions are labeled by constant weight values,
 and who deal only with finite automata.
 %
 We present some properties of WA, WT and SWPDA models, 
-and show how they can be used to define and solve a variant of parsing 
+%and show how they can be used 
+that we use to define and solve a variant of parsing 
 over infinite alphabets.
 %
 We also briefly describe the application that motivated the introduction of these models: 
@@ -196,7 +198,7 @@ additional algebraic properties of~$\Semiring$.
 -- see \eg~\cite{Huang05kbest} for some NLP applications.
 %The extraction of $n$ best list is useful 
 
-The various approaches to weighted parsing usually assume a finite input alphabet. %models and algorithms 
+The approaches to weighted parsing usually assume a finite input alphabet. %models and algorithms 
 Considering infinite or large alphabets can however be of practical interest, 
 for instance in the context of processing strings in UTF16 encodings, 
 for vulnerability detection in Web-applications 
@@ -208,7 +210,7 @@ of automated music transcription, that is the conversion of a symbolic
 representation of a music performance into a structured music score.
 %\cite{MCM19} 
 %generalizes weighted parsing: 
-%finding the best derivation for a weighted grammar.
+%finding the best derivation for a weighted grammar. 
 
 We present here some weighted language models
 %model of weighted CFG 
@@ -269,12 +271,13 @@ of this approach to automated music transcription that has been implemented.
 
 We follow the approach of~\cite{Mohri03EDWA} for the computation of distances
 between words and languages, with weighted transducers, 
-extending it to infinite alphabet with models of symbolic weighted automata 
-and transducers. % handling infinite alphabets. 
-
-These models generalize weighted automata and transducers over finite alphabets, 
-see  e.g.~\cite{Mohri03EDWA}, 
-by labeling each transition with a weight functions that takes the 
+and extending it to infinite alphabets.
+% with models of symbolic weighted automata and transducers. 
+%
+The models introduced in this section generalize 
+weighted automata and transducers~\cite{Droste09handbook} 
+%over finite alphabets, see  e.g.~\cite{Mohri03EDWA}, 
+by labeling each transition with a weight function that takes the 
 input and output symbols as parameters, instead of a simple weight value.
 These functions are similar to the guards of symbolic automata~\cite{dAntoniVeanes17CAV,dAntoni21CACM},
 but they can return values in an arbitrary semiring, 
@@ -283,7 +286,7 @@ where the latter guards are restricted to the Boolean semiring.
 
 \subsection{Semirings}
 \label{section:semiring}
-We shall consider semiring domains for weight values.
+We shall consider semiring domains for the weight values of our language models.
 %
 A \emph{semiring} $\< \Semiring, \oplus, \zero, \otimes, \one>$ 
 is a structure with a domain~$\Semiring$,
@@ -292,12 +295,16 @@ binary operators~$\oplus$ and $\otimes$
 with respective neutral elements $\zero$ and $\one$ and such that:
 %$\< \mathbb{S}, \oplus, \zero>$ is a commutative monoid
 %$\< \mathbb{S}, \otimes, \one>$ is a monoid
-$\oplus$ is commutative, 
-$\otimes$ distributes over~$\oplus$:  $\forall x, y, z \in \mathbb{S}$,
+\begin{itemize}
+\item $\oplus$ is commutative 
+-- therefore $\< \Semiring, \oplus, \zero>$ is a commutative monoid 
+   and $\< \Semiring, \otimes, \one>$ is a monoid,
+\item $\otimes$ distributes over~$\oplus$:  $\forall x, y, z \in \mathbb{S}$,
 $x \otimes (y \oplus z) = (x \otimes y) \oplus (x \otimes z)$, 
 %  and $(x \oplus y) \otimes z = (x \otimes z) \oplus (y \otimes z)$;
-and $\zero$ is absorbing for~$\otimes$: 
+\item $\zero$ is absorbing for~$\otimes$: 
 $\forall x\in \mathbb{S}$, $\zero \otimes x = x \otimes \zero = \zero$.
+\end{itemize}
 %Components of a semiring~$\Semiring$ may be subscripted by~$\Semiring$ when needed.
 %We simply write $x \in \Semiring$ to mean $x \in \mathbb{S}$.
 %
@@ -400,9 +407,9 @@ semirings
 
 \subsection{Label Theory}
 \label{section:symbols}
-
-Let $\Sigma$ and $\Delta$ be respectively an input and output \emph{alphabets}, 
-which are countable (finite or infinite) sets of symbols, 
+ We shall define the functions labeling the transitions of Sw automata and transducers.
+Let $\Sigma$ and $\Delta$ be two countable sets of symbols
+called respectively input and output \emph{alphabets}, 
 and let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a commutative semiring.
 
 \noindent 
@@ -413,7 +420,7 @@ $\Phi_\epsilon \subseteq \Semiring$, % containing constant functions valued in $
 $\Phi_\Sigma$ and $\Phi_\Delta$, 
 containing unary functions in $\Sigma \to \Semiring$, resp. $\Delta \to \Semiring$, 
 and $\Phi_{\Sigma, \Delta}$  containing binary functions in $\Sigma \times \Delta \to \Semiring$.
-Moreover, we assume that these sets are closed under the operators 
+Moreover, these sets are required to be closed under the operators 
 $\oplus$ and $\otimes$ of~$\Semiring$.
 More precisely, for all $\phi, \phi' \in \Phi_\Sigma$ all 
 $\psi, \psi' \in \Phi_\Delta$, 
@@ -434,7 +441,7 @@ is a subset of $\Phi_\epsilon$.
 and all partial applications of functions $\Phi_{\Sigma, \Delta}$, 
 resp.  $f_a: y \mapsto f(a, y)$ for $a \in \Sigma$ and $y \in \Delta$
 and  $f_b: x \mapsto f(x, b)$ for $b \in \Delta$ and $x \in \Sigma$, 
-belong resp. to $\Phi_\Sigma$ and $\Phi_\Delta$.
+belong resp. to~$\Phi_\Sigma$ and~$\Phi_\Delta$.
 
 
 \subsection{Definitions}
@@ -506,8 +513,24 @@ for every strings of $s \in \Sigma^*$, $t \in \Delta^*$:
 \end{array}
 \]
 Recall that by convention, an empty sum with $\oplus$ is $\zero$. 
-%
-\noindent
+
+The above expression of $\weight_T$ can be seen as a stateful definition of 
+an edit-distance between a word $s \in \Sigma^*$ and a word $t \in \Delta^*$,
+see also~\cite{Mohri03ijfcs}.
+Intuitively, 
+$\wei(q, a, \epsilon, q'')$, in the second line, is the cost of 
+the deletion of a symbol $a \in \Sigma$ in $s$, 
+$\wei(q, \epsilon, b, q'')$, in the third line, is the cost 
+of the deletion of insertion of  $b \in \Delta$ in $s$, 
+$\wei(q, a, b, q'')$, in the last line, is the cost 
+of the substitution of  $a \in \Sigma$ by $b \in \Delta$.
+The cost of a sequence of such operations transforming $s$ into $t$ is 
+the product with $\otimes$ of the costs of individual operations involved,
+and the distance between $s$ and $t$ is the sum with $\oplus$
+of all such cost products.
+
+
+\medskip\noindent
 The weight associated by $T$ to  $\< s, t> \in \Sigma^* \times \Delta^*$
 is then defined as follows: 
 \begin{equation}
@@ -712,8 +735,8 @@ as the one of~\cite{dAntonyAlur14SVPDA}, in the case of the Boolean semiring.
 
 
 \subsection{Best-first Search}
-Assume that the semiring $\Semiring$ is 
-commutative, idempotent, superior, total and complete.
+Assume a semiring $\Semiring$
+commutative, complete, idempotent, superior, and total.
 % total ? 
 % monotonic and superior writ natural ordering
 %Regarding the infinite sum operator, note that
@@ -895,13 +918,16 @@ such that $A(s)$ is minimal \wrt the natural ordering for $\Semiring$.
 
 
 
+\section{Symbolic Weighted Parsing}
 
-\section{Application}
+
+
+\subsection{Application to Amtomated Music Transcription}
 \label{sec:transcription}
 Symbolic Automated Music Transcription
 and analysis of music performances
 
-\subsection{Time Scales}
+\subsubsection{Time Scales}
 Real-Time Unit (RTU) = seconds
 
 \noindent 
@@ -910,7 +936,7 @@ Musical-Time Unit (MTU) = number of measures
 \noindent 
 conversion via tempo value
 
-\subsection{Representation of Music Performances}
+\subsubsection{Representation of Music Performances}
 We consider symbolic representations of musical performances, as finite sequences of events.
 It corresponds to the concrete case of a MIDI file~\cite{SMF} 
 recorded  from an electronic keyboard, 
@@ -934,7 +960,7 @@ or to the end of performance for the last event,
 also called \emph{inter-onset interval}.
 
 
-\subsection{Representation of Music Scores}
+\subsubsection{Representation of Music Scores}
 Music score are represented as structured words
 made of timed %quantified 
 events and parenthesized markups,
@@ -976,7 +1002,7 @@ can be computed with the markups and tags (\eg grace note has duration 0).
 ...      
 \end{example}
 
-\subsection{Performance/Score Distance Computation}
+\subsubsection{Performance/Score Distance Computation}
 \label{app:distance}
 We define a distance between performance and score representations
 by a $\SWT$ $T = \< Q, \init, \wei, \final >$, over a semiring $\Semiring$.
