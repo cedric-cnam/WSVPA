@@ -301,7 +301,7 @@ with respective neutral elements $\zero$ and $\one$ and such that:
    and $\< \Semiring, \otimes, \one>$ is a monoid,
 \item $\otimes$ distributes over~$\oplus$:  $\forall x, y, z \in \mathbb{S}$,
 $x \otimes (y \oplus z) = (x \otimes y) \oplus (x \otimes z)$, 
-%  and $(x \oplus y) \otimes z = (x \otimes z) \oplus (y \otimes z)$;
+and $(x \oplus y) \otimes z = (x \otimes z) \oplus (y \otimes z)$,
 \item $\zero$ is absorbing for~$\otimes$: 
 $\forall x\in \mathbb{S}$, $\zero \otimes x = x \otimes \zero = \zero$.
 \end{itemize}
@@ -315,55 +315,112 @@ and $\otimes$ combines two values into a single value,
 in order to describe the chaining of several transitions.
 %and let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a {semiring}, 
 
-% \noindent
-A semiring $\Semiring$ 
-is \emph{monotonic} \wrt a partial ordering~$\leq$ 
-iff for all $x, y, z  \in \Semiring$,  $x \leq y$ implies
-$x \oplus z \leq y \oplus z$,
-$x \otimes z \leq y \otimes z$
-and $z \otimes x \leq z \otimes y$,
-%
-and it is \emph{superior} %\wrt a partial ordering~$\leq$
-\wrt~$\leq$ iff for all $x, y \in \Semiring$,  
-$x \leq x \otimes y$ and 
-$y \leq x \otimes y$~\cite{Huang08advanceddynamic}.
-The latter property corresponds to the 
-\emph{non-negative weights} condition in shortest-path algorithms~\cite{Dijkstra59anote}.
-Intuitively, it means that combining elements always increase their weight. 
-% always get worse in term of weight
-Note that when $\Semiring$ is superior \wrt~$\leq$, then $\one \leq \zero$
-and moreover, for all $x \in \Semiring$, $\one \leq x \leq \zero$.
-
-%\noindent
+\medskip%\noindent
 A semiring $\Semiring$ is \emph{commutative} if $\otimes$ is commutative.
 It is \emph{idempotent} if for each $x \in \dom(\Semiring)$, $x \oplus x = x$.
 %
-%Following the terminology of~\cite{Mohri02semiring},
-%when $\forall x \in \dom(\Semiring), \one \oplus x = \one$,
-%the semiring $\Semiring$ is is called \emph{bounded}.
-%Note that every bounded semiring is idempotent:
-%by boundedness, 
-%$\one \oplus \one = \one$, and idempotency follows by multiplying
-%both sides by $x$ and distributing. 
-%
 Every idempotent semiring~$\Semiring$ induces 
 a partial ordering~$\leq_\oplus$ 
-called the \emph{natural ordering} of~$\Semiring$
-and defined by: 
+called the \emph{natural ordering} of~$\Semiring$~\cite{Mohri02semiring} 
+and defined,  by: 
 %implicitly defined by the semiring $\Semiring$ 
 for all $x$ and $y$,
 $x \leq_\oplus y \;\mbox{iff}\; x \oplus y = x$.
-This ordering is sometimes defined in the opposite direction~\cite{DrosteKuich09semirings};
-The above definition follows \cite{Mohri02semiring}, 
-and coincides than the usual ordering on the Tropical semiring (\emph{min-plus}).
+%(see~\cite{Mohri02semiring} for the proof that it is an ordering).
 %
-It holds that $\Semiring$ is {monotonic} \wrt~$\leq_\oplus$.
+The natural ordering is sometimes defined in the opposite direction~\cite{DrosteKuich09semirings};
+We follow here the direction  %follows \cite{Mohri02semiring}, and 
+that coincides than the usual ordering on the Tropical semiring (\emph{min-plus}).
+
+\begin{lemma}[Monotony, \cite{Mohri02semiring}]
+Let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be an idempotent semiring.
+For all $x, y, z  \in \Semiring$,  
+if $x \leq_\oplus y$ then
+$x \oplus z \leq_\oplus y \oplus z$,
+$x \otimes z \leq_\oplus y \otimes z$
+and $z \otimes x \leq_\oplus z \otimes y$.
+\end{lemma}      
+We say in this case that $\Semiring$ is \emph{monotonic}. % \wrt $\leq_\oplus$.
+%A semiring $\Semiring$ 
+%is \emph{monotonic} \wrt a partial ordering~$\leq$ 
+%iff for all $x, y, z  \in \Semiring$,  $x \leq y$ implies
+%$x \oplus z \leq y \oplus z$,
+%$x \otimes z \leq y \otimes z$,
+%and $z \otimes x \leq z \otimes y$.
+%
+Another important semiring property in the context of optimization
+is {superiority}~\cite{Huang08advanceddynamic}, 
+which corresponds to the 
+\emph{non-negative weights} condition in shortest-path algorithms~\cite{Dijkstra59anote}.
+Intuitively, it means that combining elements with $\otimes$ always increase their weight. 
+Formally, it is defined as the property of the following lemma.
+
+\begin{lemma}[Superiority, Boundedness]
+\label{lem:superior}\label{lem:bounded}
+Let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be an idempotent semiring.
+The two following statements are equivalent:
+\begin{itemize}
+\item [$i.$] for all $x, y \in \Semiring$,  
+$x \leq_\oplus x \otimes y$ and 
+$y \leq_\oplus x \otimes y$
+\item[$ii.$] for all $x \in \Semiring$,  $\one \oplus x = \one$.
+\end{itemize}
+\end{lemma}
+%
+In~\cite{Huang08advanceddynamic}, the property~$i.$ is called 
+$\Semiring$ is \emph{superior} \wrt the ordering~$\leq_\oplus$.
+It implies that 
+%It holds that If $\Semiring$ is superior \wrt~$\leq$, then %$\one \leq \zero$
+for all $x \in \Semiring$, $\one \leq_\oplus x \leq_\oplus \zero$.
+Indeed, by the second inequality of $(i.)$ with $y = \one$, $\one \leq_\oplus \one \otimes x = x$, 
+and, by the first inequality of $(i.)$ with $y = \zero$,  
+$x \leq_\oplus x \otimes \zero = \zero$.
+%
+Intuitively, from an optimization point of view,
+it means that $\one$ is the best value, and $\zero$ the worst.
+%** superior implies $\Semiring$ bounded~\cite{Mohri02semiring} see **
+%
+In~\cite{Mohri02semiring}, the property of Lemma~\ref{lem:bounded}(in the form $ii.$) 
+is called \emph{boundedness} of $\Semiring$ -- we shall use this term in the rest of the paper. 
+% \emph{negative boundedness} 
+It implies that, when looking for a best path in a graph whose edges
+are weighted by values of $\Semiring$, the loops can be safely avoided.
+
+\begin{proof}(Lemma~\ref{lem:bounded})
+For $(ii.) \Rightarrow (i.)$ : 
+$x \oplus (x \otimes y) = x \otimes (\one \oplus y) = x$, 
+by distributivity of $\otimes$ over $\oplus$. 
+Hence $x \leq_\oplus x \otimes y$.
+Similarly, $y \oplus (x \otimes y) = (\one \oplus x) \otimes y = y$, 
+hence $y \leq_\oplus x \otimes y$.
+%
+For $(i.) \Rightarrow (ii.)$ : as we have seen, $(i.)$ implies that 
+$\one \leq_\oplus x$ for all $x \in \Semiring$, 
+\ie, by definition of $\leq_\oplus$, $\one \oplus x = \one$.
+\qed
+\end{proof}
+
+%Following the terminology of~\cite{Mohri02semiring},
+%when $\forall x \in \dom(\Semiring), \one \oplus x = \one$,
+%the semiring $\Semiring$ is is called \emph{bounded}.
+
+\begin{lemma}
+Every bounded semiring is idempotent.
+\end{lemma}
+\begin{proof}
+By boundedness, $\one \oplus \one = \one$, 
+and idempotency follows by multiplying
+both sides by $x$ and distributing. 
+\qed
+\end{proof}
+
+\noindent
 An idempotent semiring $\Semiring$~is called \emph{total} if
 it~$\leq_\oplus$ is total
 \ie when for all $x, y \in \Semiring$, either $x \oplus y = x$ or $x \oplus y = y$.
 
-\medskip
-We shall consider below infinite sums with~$\oplus$.
+%\medskip
+We shall need below infinite sums with~$\oplus$.
 A semiring~$\Semiring$ is called \emph{complete} 
 if for every family
 $(x_i)_{i \in I}$ %$\{ x_i \mid i \in I \}$
@@ -403,9 +460,10 @@ for all $I \subseteq \mathbb{N}$,
 
 
 \begin{example}
+** classical examples **
 semirings      
 \end{example}
-      
+            
 
 \subsection{Label Theory}
 \label{section:symbols}
@@ -416,35 +474,38 @@ and let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a commutative semiring.
 
 \noindent 
 A \emph{label theory} over $\Sigma$ and $\Delta$
-is made of 4 recursively enumerable sets:
-%$\Phi_0$, \Phi_\Sigma \uplus \Phi_\Delta \uplus \Phi_{\Sigma, \Delta}$ 
-$\Phi_\epsilon \subseteq \Semiring$, % containing constant functions valued in $\Semiring$, 
+is made of 3 recursively enumerable sets:
+%$\Phi_\epsilon \subseteq \Semiring$, % containing constant functions valued in $\Semiring$, 
 $\Phi_\Sigma$ and $\Phi_\Delta$, 
 containing unary functions in $\Sigma \to \Semiring$, resp. $\Delta \to \Semiring$, 
-and $\Phi_{\Sigma, \Delta}$  containing binary functions in $\Sigma \times \Delta \to \Semiring$.
-Moreover, these sets are required to be closed under the operators 
-$\oplus$ and $\otimes$ of~$\Semiring$.
-More precisely, for all 
-$\alpha, \alpha' \in \Phi_\epsilon$,
-all $\phi, \phi' \in \Phi_\Sigma$,
+and $\Phi_{\Sigma, \Delta}$  containing binary functions in $\Sigma \times \Delta \to \Semiring$, 
+such that 
+for all $\alpha \in \Semiring$, and $\phi \in \Phi_\Sigma$,
+$\alpha \otimes \phi : x \mapsto \alpha \otimes \phi(x)$, 
+and $\phi \otimes \alpha : x \mapsto \phi(x) \otimes \alpha$
+belong to $\Phi_\Sigma$, and similarly for $\oplus$ 
+and for $\Phi_\Delta$ and $\Phi_{\Sigma, \Delta}$.
+%
+Moreover, these sets are required to be closed under the following 
+operators~$\oplus$ and $\otimes$ of~$\Semiring$:
+for all $\phi, \phi' \in \Phi_\Sigma$,
 all $\psi, \psi' \in \Phi_\Delta$, 
 and $\eta, \eta' \in \Phi_{\Sigma, \Delta}$, the function
 \begin{description}
-\item $\phi \otimes \alpha : x \mapsto \phi(x) \otimes \alpha$, 
-      and $\alpha \otimes \phi' : x \mapsto \alpha \otimes \phi'(x)$ belong to $\Phi_\Sigma$, 
 \item $\phi \otimes \phi' : x \mapsto \phi(x) \otimes \phi'(x)$ belongs to $\Phi_\Sigma$, 
 \item $\psi \otimes \psi' : y \mapsto \psi(y) \otimes \psi'(y)$ belongs to $\Phi_\Delta$,
 \item $\phi \otimes \eta : x, y \mapsto \phi(x) \otimes \eta(x, y)$ belongs to $\Phi_{\Sigma, \Delta}$,
 \item $\eta \otimes \psi : x, y \mapsto \eta(x, y) \otimes \psi(y)$ belongs to $\Phi_{\Sigma, \Delta}$,
 \item $\eta \otimes \eta' : x, y \mapsto \eta(x, y) \otimes \eta'(x, y)$ belongs to $\Phi_{\Sigma, \Delta}$.
 \end{description}
-The same also holds for the binary sum operator $\oplus$.
+And the same also holds for the binary sum operator $\oplus$.
 
 \noindent
 \marginpar{necessary?}
-Finally, it is also required that the codomain of every function of $\Phi_\Sigma$ and $\Phi_\Delta$
-is a subset of $\Phi_\epsilon$,
-and that all partial applications of functions $\Phi_{\Sigma, \Delta}$, 
+Finally, it is also required 
+% that the codomain of every function of $\Phi_\Sigma$ and $\Phi_\Delta$ 
+% is a subset of $\Phi_\epsilon$, and
+that all partial applications of functions $\Phi_{\Sigma, \Delta}$, 
 resp.  $f_a: y \mapsto f(a, y)$ for $a \in \Sigma$ and $y \in \Delta$
 and  $f_b: x \mapsto f(x, b)$ for $b \in \Delta$ and $x \in \Sigma$, 
 belong resp. to~$\Phi_\Sigma$ and~$\Phi_\Delta$.
@@ -464,8 +525,8 @@ are functions defining the weight for entering,
 respectively leaving, a state, 
 and $\vec{\wei}$ is a tuplet made of the 4 of transition functions 
 $\wei_\epsilon$, $\wei_\Sigma$, $\wei_\Delta$, and $\wei_{\Sigma, \Delta}$
-from $Q \times Q$ into respectively
-$\Phi_\epsilon$, $\Phi_\Sigma$, $\Phi_\Delta$, and $\Phi_{\Sigma, \Delta}$.
+from $Q \times Q$ into respectively~$\Semiring$, %$\Phi_\epsilon$, 
+$\Phi_\Sigma$, $\Phi_\Delta$, and $\Phi_{\Sigma, \Delta}$.
 \end{definition}
 %
 We synthesize the above 4-uplet of transition functions into a unique 
@@ -501,23 +562,27 @@ defined recursively for every $q, q' \in Q$,
 for every strings of $s \in \Sigma^*$, $t \in \Delta^*$:
 \[
 \begin{array}{rccl}
-\weight_T(q, s, t, q') & = & & \wei(q, \epsilon, \epsilon, q')\\
- & & \oplus \displaystyle\bigoplus_{\begin{array}{c}
+\weight_T(q, s, t, q') & = & 
+   \displaystyle\bigoplus_{q'' \in Q} &
+   \wei(q, \epsilon, \epsilon, q'') \otimes \weight_T(q'', s, t, q')\\
+   & \oplus & \displaystyle\bigoplus_{q'' \in Q} &
+              \wei(q'', \epsilon, \epsilon, q') \otimes \weight_T(q, s, t, q'')\\
+ & \oplus & \displaystyle\bigoplus_{\begin{array}{c}
                                       \scriptstyle q'' \in Q\\[-2pt]
                                       \scriptstyle s = au, a \in \Sigma
                                       \end{array}} &
-     \wei(q, a, \epsilon, q'') \otimes \weight_T(q'', u, t, q')\\
- & & \oplus \displaystyle\bigoplus_{\begin{array}{c}
+   \wei(q, a, \epsilon, q'') \otimes \weight_T(q'', u, t, q')\\
+ & \oplus & \displaystyle\bigoplus_{\begin{array}{c}
                                     \scriptstyle q'' \in Q\\[-2pt]
                                     \scriptstyle t = bv, b \in \Delta
                                     \end{array}} &
-      \wei(q, \epsilon, b, q'') \otimes \weight_T(q'', s, v, q')\\ 
-      & & \oplus \displaystyle\bigoplus_{\begin{array}{c}
-                                         \scriptstyle q'' \in Q\\[-2pt]
-                                         \scriptstyle s = au, a \in \Sigma\\[-2pt]
-                                         \scriptstyle t = bv, b \in \Delta
-                                         \end{array}} &
-      \wei(q, a, b, q'') \otimes \weight_T(q'', u, v, q').\\ 
+    \wei(q, \epsilon, b, q'') \otimes \weight_T(q'', s, v, q')\\ 
+ & \oplus & \displaystyle\bigoplus_{\begin{array}{c}
+                                    \scriptstyle q'' \in Q\\[-2pt]
+                                    \scriptstyle s = au, a \in \Sigma\\[-2pt]
+                                    \scriptstyle t = bv, b \in \Delta
+                                    \end{array}} &
+   \wei(q, a, b, q'') \otimes \weight_T(q'', u, v, q').\\ 
 \end{array}
 \]
 We recall that, by convention, an empty sum with $\oplus$ is $\zero$. 
@@ -536,9 +601,9 @@ The above expression of $\weight_T$ can be seen as a stateful definition of
 an edit-distance between a word $s \in \Sigma^*$ and a word $t \in \Delta^*$,
 see also~\cite{Mohri03ijfcs}.
 Intuitively, 
-$\wei(q, a, \epsilon, q'')$, in the second line, is the cost of 
+$\wei(q, a, \epsilon, q'')$, in the third line, is the cost of 
 the deletion of a symbol $a \in \Sigma$ in $s$, 
-$\wei(q, \epsilon, b, q'')$, in the third line, is the cost 
+$\wei(q, \epsilon, b, q'')$, in the fourth line, is the cost 
 of the deletion of insertion of  $b \in \Delta$ in $s$, 
 $\wei(q, a, b, q'')$, in the last line, is the cost 
 of the substitution of  $a \in \Sigma$ by $b \in \Delta$.
@@ -580,8 +645,9 @@ respectively $\mathsf{out} : Q \to \Semiring,$
 are functions defining the weight for entering, 
 respectively leaving, a state, 
 and $\vec{\wei}$ is a tuplet made of the 2 of transition functions 
-$\wei_\epsilon$ and $\wei_\Sigma$ from $Q \times Q$ into respectively
-$\Phi_\epsilon$ and $\Phi_\Sigma$.
+$\wei_\epsilon$ and $\wei_\Sigma$ from $Q \times Q$ into 
+respectively $\Semiring$ %$\Phi_\epsilon$ 
+and $\Phi_\Sigma$.
 \end{definition}
       
 \noindent
@@ -598,23 +664,32 @@ the automaton~$A$ is called \emph{without $\epsilon$-transitions}.
 
 \begin{proposition}
 Given a \SWT $T$ 
-over $\Sigma$, $\Delta$ and $\Semiring$, 
-and a word $s \in \Sigma^*$, 
-there exists a \SWA 
+over alphabet $\Sigma$, $\Delta$ and a commutative semiring~$\Semiring$, 
+and $s \in \Sigma^*$, 
+there exists an effectively constructible \SWA 
 $A_{T, s}$ such that for all $t \in \Delta^*$, 
 $A_{T, s}(t) = T(s, t)$.
 \end{proposition}
+%
+\begin{proof}
+Let $T = \< Q, \init, \vec{\wei}, \final >$ and let $n = |s|$, the length of $s$.
+
+\qed
+\end{proof}
+
+
 The construction time and size for $A_{s, T}$ are $O(| s | . \| T \|)$.
 
 
 % gen. to transducers
 \begin{proposition}
-Given a \SWA $A$ over $\Sigma$ and $\Semiring$, 
-there exists a \SWA $A'$ without $\epsilon$-transitions 
+Given a \SWA $A$ over alphabet $\Sigma$ and a commutative and bounded semiring $\Semiring$, 
+there exists an effectively constructible \SWA $A'$ 
+without $\epsilon$-transitions 
 such that for all $s \in \Sigma^*$, $A'(s) = A(s)$.
 \end{proposition}
 %
-\begin{proof}     
+\begin{proof}  ** Tb revised **   
 Let $A = \< Q, \init, \<\wei_\epsilon, \wei_\Sigma>, \final >$.
 The automaton $A'$ is $\< Q, \init, \<\wei'_\epsilon, \wei'_\Sigma>, \final >$,
 where, for all $q, q' \in Q$,
@@ -630,11 +705,16 @@ and
 % \]
 \[
 \wei'_\Sigma(q, q') = 
-\displaystyle\bigoplus_{q_1 \in Q} \wei_\Sigma(q, q_1) \otimes \wei_\epsilon(q_1, q')
-\oplus  \displaystyle\bigoplus_{q_2 \in Q} \wei_\epsilon(q, q_2) \otimes \wei_\Sigma(q_2, q')
+\displaystyle\bigoplus_{q'' \in Q} \wei_\epsilon(q, q'') \otimes \wei_\Sigma(q'', q')
+\oplus \displaystyle\bigoplus_{q_1 \in Q} \wei_\Sigma(q, q'') \otimes \wei_\epsilon(q'', q')
 \]
-In the above definition of $\wei'_\Sigma$ we use the operators 
-$\oplus$ and $\otimes$ on $\Phi_\Sigma$ described in Section~\ref{section:symbols}.
+In the above definition of $\wei'_\Sigma$ we use the operator
+of product of function of $\Phi_\Sigma$ by $\Semiring$ 
+described in Section~\ref{section:symbols}.
+%
+By definition of $\weight_{A}$ and distributivity of $\otimes$ on $\oplus$, 
+** NO. TBC see \cite{Mohri02ijfcs} **
+it holds that $\weight_{A}(q, s, q') = \weight_{A'}(q, s, q')$.
 \qed
 \end{proof}     
       
