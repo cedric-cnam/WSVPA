@@ -277,9 +277,9 @@ of this approach to automated music transcription that has been implemented.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{SW Automata and Transducers}
-\label{section:transducer}
-\label{section:SWA}
-\label{section:SWT}
+\label{section:transducer}\label{sec:transducer}
+\label{section:SWA}\label{sec:SWA}
+\label{section:SWT}\label{sec:SWT}
 
 We follow the approach of~\cite{Mohri03EDWA} for the computation of distances
 between words and languages, with weighted transducers, 
@@ -893,38 +893,38 @@ The intuition is the following for the above transitions.
 
 We give now a formal definition of these transitions of the automaton $A$
 in term of a weight value
-computed by an intermediate function $\weight_A$.
+computed by an intermediate function $\weight_A$, like in Section~\ref{sec:SWT}.
 In the case of a pushdown automaton, a configuration is composed 
-of a state $q \in Q$ and a stack content $\theta \in \Theta^*$, where $\Theta = \Omegac \times P$.
+of a state $q \in Q$ and a stack content $\gamma \in \Gamma^*$, where $\Gamma = \Omegac \times P$.
 Therefore, $\weight_A$ is a function from 
-$Q \times \Theta^* \times \Omega^* \times Q \times \Theta^*$ into $\Semiring$.
+$Q \times \Gamma^* \times \Omega^* \times Q \times \Gamma^*$ into $\Semiring$.
 \[
 \begin{array}{rcl}
-\weight_A\bigl(\config{q}{\theta}, a\, u, \config{q'}{\theta'}\bigr) & = & 
+\weight_A\bigl(\config{q}{\gamma}, a\, u, \config{q'}{\gamma'}\bigr) & = & 
  {\displaystyle\bigoplus_{q'' \in Q}} \weii(q, a, q'') 
- \otimes \weight_A\bigl(\config{q''}{\theta}, u, \config{q'}{\theta'}\bigr)\\
+ \otimes \weight_A\bigl(\config{q''}{\gamma}, u, \config{q'}{\gamma'}\bigr)\\
 %
-\weight_A\bigl(\config{q}{\theta}, {\call{c}}\, u, \config{q'}{\theta'}\bigr) & = & 
+\weight_A\bigl(\config{q}{\gamma}, {\call{c}}\, u, \config{q'}{\gamma'}\bigr) & = & 
  {\displaystyle\bigoplus_{\begin{array}{c}
                           \scriptstyle q'' \in Q\\[-2pt]
                           \scriptstyle p \in P
                           \end{array}}}
  \weic\bigl(q, {\call{c}}, q'', p\bigr) 
- \otimes \weight_A\bigl(\config{q''}{{\call{c}}\, p\cdot \theta}, u, \config{q'}{\theta'}\bigr)\\[1mm]
+ \otimes \weight_A\bigl(\config{q''}{{\call{c}}\, p\cdot \gamma}, u, \config{q'}{\gamma'}\bigr)\\[1mm]
 %
-\weight_A\bigl(\config{q}{{\call{c}}\, p\cdot \theta}, {\return{r}}\, u, \config{q'}{\theta'}\bigr) & = & 
+\weight_A\bigl(\config{q}{{\call{c}}\, p\cdot \gamma}, {\return{r}}\, u, \config{q'}{\gamma'}\bigr) & = & 
  {\displaystyle\bigoplus_{q'' \in Q}} 
  \weir\bigl(q, {\call{c}}, p, {\return{r}}, q''\bigr) 
- \otimes \weight_A\bigl(\config{q''}{\theta}, u, \config{q'}{\theta'}\bigr)\\
+ \otimes \weight_A\bigl(\config{q''}{\gamma}, u, \config{q'}{\gamma'}\bigr)\\
 %
-\weight_A\bigl(\config{q}{\bot}, {\return{r}}\, u, \config{q'}{\theta'}\bigr) & = & 
+\weight_A\bigl(\config{q}{\bot}, {\return{r}}\, u, \config{q'}{\gamma'}\bigr) & = & 
  {\displaystyle\bigoplus_{q'' \in Q}} \weie(q, {\return{r}}, q'') 
- \otimes \weight_A\bigl(\config{q''}{\bot}, u, \config{q'}{\theta'}\bigr)\\
+ \otimes \weight_A\bigl(\config{q''}{\bot}, u, \config{q'}{\gamma'}\bigr)\\
 \end{array}
 \]
-where $\bot$ denotes the empty stack and ${\call{c}}\, p\cdot \theta$ 
-denotes a stack where the pair made of ${\call{c}}$ and $p$ is the top symbol and $\theta$
-is the rest of stack.
+where $\bot$ denotes the empty stack and ${\call{c}}\, p\cdot \gamma$ 
+denotes a stack where the pair made of ${\call{c}} \in \Omegac$ and $p \in P$ is the top symbol 
+and $\gamma$ is the rest of stack.
 
 \noindent
 The weight associated by $A$ to $s \in \Omega^*$
@@ -958,7 +958,7 @@ $(A_1 \oplus A_2)(s) = A_1(s) \oplus A_2(s)$ and
 $(A_1 \otimes A_2)(s) = A_1(s) \otimes A_2(s)$.
 \end{proposition}
 The construction is essentially the same 
-as the one of~\cite{dAntonyAlur14SVPDA}, in the case of the Boolean semiring.
+as in the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 
 
 \subsection{Best-first Search}
@@ -975,7 +975,7 @@ We propose a Dijkstra algorithm computing the minimal weight by $A$,
 
 \noindent
 More precisely, 
-let $\top$ be a fresh stack symbol which does not belong to $\Theta$,
+let $\top$ be a fresh stack symbol which does not belong to $\Gamma$,
 and for every two states $q, q' \in Q$ and $\sigma \in \{ \bot, \top \}$, 
 let 
 \[ 
@@ -991,16 +991,16 @@ When $\sigma = \bot$, $d_0(q, \sigma, q')$ is the central
 expression in a term of the definition (\ref{eq:weightA}) of $A(s_0)$ for the minimum $s_0$
 (for the above function).
 When $\sigma = \bot$, intuitively, it is the minimum weight of a computation of $A$
-starting in state $q$ with a stack $\theta \in \Theta^*$ (possibly empty), 
-and ending in state $q$ with the same stack $\theta$, such that moreover 
-the computation does not touch a symbol of $\theta$. 
+starting in state $q$ with a stack $\gamma \in \Gamma^*$ (possibly empty), 
+and ending in state $q$ with the same stack $\gamma$, such that moreover 
+the computation does not touch a symbol of $\gamma$. 
 That means that during the computation, 
 $A$ may apply the first case of in the definition of $\weight_A$ (internal symbol),
-as well as the second case, to can push call symbols on the top of $\theta$, 
+as well as the second case, to can push call symbols on the top of $\gamma$, 
 and may pop these symbols with the third case (return symbol). 
 However, it cannot apply one of the two last cases (return symbol and empty stack)
-when the current stack is $\theta$.
-%pop symbols in $\theta$.
+when the current stack is $\gamma$.
+%pop symbols in $\gamma$.
 % Note that having a stack reduced to such a symbol makes impossible the application of the 
 % two last cases in the definition of $\weight_A$ (return symbol and empty stack). 
 % However, it is possible to apply the two first cases 
