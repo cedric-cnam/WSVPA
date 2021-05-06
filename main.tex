@@ -13,6 +13,10 @@
 % for footnote ref
 \usepackage{refcount} 
 
+% array and tabular
+\usepackage{array}
+\newcolumntype{C}[1]{>{\centering\arraybackslash\hspace{0pt}}p{#1}}
+
 % extension of enumerate env. (style for displaying counters)
 % \usepackage{enumerate} 
 
@@ -460,14 +464,50 @@ for all $I \subseteq \mathbb{N}$,
 
 
 \begin{example}
-** classical examples **
-semirings      
+Figure~\ref{gif:semirings} presented examples of semirings interesting in practice 
+and enjoying the above properties.
 \end{example}
-            
+
+
+\begin{figure}[t]
+\begin{center}
+\begin{tabular}{|c|c|C{2em}|C{2em}|C{2em}|C{2em}|}
+\hline
+        & domain & $\oplus$ & $\otimes$ & $\zero$  & $\one$\\ %& nat. ordering\\
+\hline\hline
+Boolean & $\{\bot, \top\}$ & $\vee$ & $\wedge$ & $\bot$ & $\top$\\ %& $\top \leq_\oplus \bot$  \\
+\hline
+Counting & $\mathbb{N}$ & $+$ & $\times$ & 0 & 1 \\
+\hline
+Viterbi & $[0, 1] \subset \mathbb{R}$ & $\mathit{max}$ & $\times$ & 0 & 1\\ % & $x \leq_\oplus y \iff x \ge y$  \\
+\hline
+Tropical & $\mathbb{R}_+ \cup \{ +\infty\}$ & $\mathit{min}$ & $+$ & $+\infty$ & $0$\\ % & $x \leq_\oplus y \iff x \leq y$   \\
+\hline
+%MaxPlus & $\mathbb{Q} \cup \{ -\infty\}$ & $\mathsf{max}$ & $+$ & $-\infty$ & $0$ \\
+%\hline
+%Word lang. & $2^{\Sigma^*}$ & $\cup$ & $\cdot$ & $\emptyset$ & $\{ \varepsilon \}$ \\
+%\hline
+\end{tabular}
+\end{center}
+\vskip-1em
+\caption{Some commutative, bounded, total and complete semirings.}
+\label{fig:semirings}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
 
 \subsection{Label Theory}
 \label{section:symbols}
- We shall define the functions labeling the transitions of Sw automata and transducers.
+ We shall now define the functions labeling the transitions of SW-automata and -transducers.
 Let $\Sigma$ and $\Delta$ be two countable sets of symbols
 called respectively input and output \emph{alphabets}, 
 and let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a commutative semiring.
@@ -653,7 +693,8 @@ and $\Phi_\Sigma$.
 \noindent
 The above transition functions $\wei_\epsilon$ and $\wei_\Sigma$
 are synthesized into a function~$\wei$ 
-from~$Q \times (\Sigma \cup \{ \epsilon \}) \times Q$ into~$\Semiring$.
+from~$Q \times (\Sigma \cup \{ \epsilon \}) \times Q$ into~$\Semiring$ 
+as above.
 %
 When $\wei_\epsilon(q, q') = \zero$ for all $q, q' \in Q$, 
 the automaton~$A$ is called \emph{without $\epsilon$-transitions}.
@@ -661,6 +702,8 @@ the automaton~$A$ is called \emph{without $\epsilon$-transitions}.
 
 
 \subsection{Properties}
+The two following properties will be useful to our approach on 
+symbolic weighted parsing in Section~\ref{sec:parsing}.
 
 \begin{proposition}
 Given a \SWT $T$ 
@@ -672,13 +715,38 @@ $A_{T, s}(t) = T(s, t)$.
 \end{proposition}
 %
 \begin{proof}
-Let $T = \< Q, \init, \vec{\wei}, \final >$ and let $n = |s|$, the length of $s$.
+Let $T = \< Q, \init, \vec{\wei}, \final >$ 
+where $\vec{\wei} \< \wei_\epsilon, \wei_\Sigma, \wei_\Delta, \wei_{\Sigma, \Delta}>$
+has an associated synthesized form $\wei$, 
+and let $s = s_1 \ldots s_n$ with $s_1, \ldots, s_n \in \Sigma$.
+%$n = |s|$ be the length of $s$.
+%
+Let $Q' = [1..n] \times Q$ be the state set of $A_{T, s}$,
+and let, for all $q \in Q$, 
+$\init'(1, q) = \init(q)$ and $\init'(i, q) = \zero$ for all $1 < i \leq n$, 
+and $\final'(n, q) = \final(q)$ and $\final'(i, q) = \zero$ for all $1 \leq i <  n$. 
 
+\noindent
+We define the functions $\wei'_\epsilon$ and $\wei'_\Sigma$ for $A_{T, s}$
+in their synthesized form: for all $1 \leq i, j \leq n$, $q, q' \in Q$ and $a \in \Sigma$, 
+and $b \in \Delta$, 
+\[
+\begin{array}{lclcl}
+\wei'(\< i, q>, \epsilon, \< i, q'>)   & = & \wei(q, \epsilon, \epsilon, q'), & \quad & \\ 
+\wei'(\< i, q>, \epsilon, \< i+1, q'>) & = & \wei(q, s_i, \epsilon, q') & & \mathrm{if~} i < n,\\ 
+\wei'(\< i, q>, \epsilon, \< j, q'>)   & = & \zero & & \mathrm{if~} j \neq i, j \neq i+1,\\ 
+\wei'(\< i, q>, b, \< i, q'>)          & = & \wei(q, \epsilon, b, q'),\\ 
+\wei'(\< i, q>, b, \< i+1, q'>)        & = & \wei(q, s_i, b, q') & & \mathrm{if~} i < n,\\ 
+\wei'(\< i, q>, b, \< j, q'>)          & = & \zero & & \mathrm{if~} j \neq i, j \neq i+1. 
+\end{array}      
+\]
+Let $A_{T, s} = \< Q', \init', \vec{\wei'}, \final' >$.
 \qed
 \end{proof}
 
 
-The construction time and size for $A_{s, T}$ are $O(| s | . \| T \|)$.
+The construction time and size for $A_{T, s}$ are $O(\| T \| . | s |)$,
+where the size $\| T \|$ of $T$ is its number of states $|Q|$.
 
 
 % gen. to transducers
@@ -1063,7 +1131,7 @@ such that $A(s)$ is minimal \wrt the natural ordering for $\Semiring$.
 
 
 \section{Symbolic Weighted Parsing}
-
+\label{sec:parsing}
 
 
 \subsection{Application to Amtomated Music Transcription}
