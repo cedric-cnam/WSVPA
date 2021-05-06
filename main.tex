@@ -108,6 +108,9 @@
 \def\final{\mathsf{out}}
 \newcommand{\call}[1]{\ensuremath #1} %{\ensuremath \langle_{#1}}
 \newcommand{\return}[1]{\ensuremath #1} %{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
+\def\Omegai{{\Omega_\mathsf{i}}}
+\def\Omegac{{\Omega_\mathsf{c}}}
+\def\Omegar{{\Omega_\mathsf{r}}}
 \def\Sigmai{{\Sigma_\mathsf{i}}}
 \def\Sigmac{{\Sigma_\mathsf{c}}}
 \def\Sigmar{{\Sigma_\mathsf{r}}}
@@ -267,6 +270,11 @@ of this approach to automated music transcription that has been implemented.
 
 
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SWT & SWA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{SW Automata and Transducers}
 \label{section:transducer}
@@ -501,15 +509,11 @@ Tropical & $\mathbb{R}_+ \cup \{ +\infty\}$ & $\mathit{min}$ & $+$ & $+\infty$ &
 
 
 
-
-
-
-
 \subsection{Label Theory}
 \label{section:symbols}
- We shall now define the functions labeling the transitions of SW-automata and -transducers.
+We shall now define the functions labeling the transitions of SW-automata and -transducers.
 Let $\Sigma$ and $\Delta$ be two countable sets of symbols
-called respectively input and output \emph{alphabets}, 
+called respectively \emph{input} and \emph{output} \emph{alphabets}, 
 and let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a commutative semiring.
 
 \noindent 
@@ -541,7 +545,7 @@ and $\eta, \eta' \in \Phi_{\Sigma, \Delta}$, the function
 And the same also holds for the binary sum operator $\oplus$.
 
 \noindent
-\marginpar{necessary?}
+%\marginpar{necessary?}
 Finally, it is also required 
 % that the codomain of every function of $\Phi_\Sigma$ and $\Phi_\Delta$ 
 % is a subset of $\Phi_\epsilon$, and
@@ -625,6 +629,7 @@ for every strings of $s \in \Sigma^*$, $t \in \Delta^*$:
    \wei(q, a, b, q'') \otimes \weight_T(q'', u, v, q').\\ 
 \end{array}
 \]
+%** The application of $\oplus$ can be seen as a ND choice between transitions **
 We recall that, by convention, an empty sum with $\oplus$ is $\zero$. 
 %
 Since $\zero$ is absorbing for~$\otimes$ in~$\Semiring$,
@@ -642,11 +647,11 @@ an edit-distance between a word $s \in \Sigma^*$ and a word $t \in \Delta^*$,
 see also~\cite{Mohri03ijfcs}.
 Intuitively, 
 $\wei(q, a, \epsilon, q'')$, in the third line, is the cost of 
-the deletion of a symbol $a \in \Sigma$ in $s$, 
+the deletion of a symbol~$a \in \Sigma$ in~$s$, 
 $\wei(q, \epsilon, b, q'')$, in the fourth line, is the cost 
-of the deletion of insertion of  $b \in \Delta$ in $s$, 
-$\wei(q, a, b, q'')$, in the last line, is the cost 
-of the substitution of  $a \in \Sigma$ by $b \in \Delta$.
+of the deletion of insertion of~$b \in \Delta$ in~$s$, 
+and $\wei(q, a, b, q'')$, in the last line, is the cost 
+of the substitution of  $a \in \Sigma$ by~$b \in \Delta$.
 The cost of a sequence of such operations transforming $s$ into $t$, 
 is the product, with $\otimes$, of the individual costs of the operations involved;
 And the distance between $s$ and $t$ is the sum, with $\oplus$,
@@ -663,9 +668,12 @@ T(s, t)  =
 \label{eq:weightT}
 \end{equation}
 
-
 \begin{example}
-comparison of two sequences of timestamped events      
+DTW for sequences of timestamped events **     
+\end{example}
+      
+\begin{example}
+(simpler) poinwise distance between two sequences of timestamped events **
 \end{example}
 
 \noindent
@@ -699,8 +707,6 @@ as above.
 When $\wei_\epsilon(q, q') = \zero$ for all $q, q' \in Q$, 
 the automaton~$A$ is called \emph{without $\epsilon$-transitions}.
       
-
-
 \subsection{Properties}
 The two following properties will be useful to our approach on 
 symbolic weighted parsing in Section~\ref{sec:parsing}.
@@ -710,8 +716,8 @@ Given a \SWT $T$
 over alphabet $\Sigma$, $\Delta$ and a commutative semiring~$\Semiring$, 
 and $s \in \Sigma^*$, 
 there exists an effectively constructible \SWA 
-$A_{T, s}$ such that for all $t \in \Delta^*$, 
-$A_{T, s}(t) = T(s, t)$.
+$A_{T, s}$ over $\Delta$ and $\Semiring$ 
+such that for all $t \in \Delta^*$, $A_{T, s}(t) = T(s, t)$.
 \end{proposition}
 %
 \begin{proof}
@@ -740,7 +746,11 @@ and $b \in \Delta$,
 \wei'(\< i, q>, b, \< j, q'>)          & = & \zero & & \mathrm{if~} j \neq i, j \neq i+1. 
 \end{array}      
 \]
-Let $A_{T, s} = \< Q', \init', \vec{\wei'}, \final' >$.
+Note that the functions defined above belong to the set $\Phi_\Delta$ 
+of the underlying label theory, 
+by the hypothesis of closure under partial application.
+%
+The $\SWA$ wanted is $A_{T, s} = \< Q', \init', \vec{\wei'}, \final' >$.
 \qed
 \end{proof}
 
@@ -785,7 +795,12 @@ By definition of $\weight_{A}$ and distributivity of $\otimes$ on $\oplus$,
 it holds that $\weight_{A}(q, s, q') = \weight_{A'}(q, s, q')$.
 \qed
 \end{proof}     
-      
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SW-VPA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \section{SW Visibly Pushdown Automata}
@@ -794,31 +809,31 @@ The following model generalizes Symbolic VPA~\cite{dAntonyAlur14SVPDA}
 from Boolean semirings to arbitrary semiring weight domains.
 
 \subsection{Definition}
-Let $\Sigma$ be a countable alphabet 
+Let $\Omega$ be a countable alphabet 
 %finite (large) or infinite,
 that we assume partitioned into three subsets 
-$\Sigmai \uplus \Sigmac \uplus \Sigmac$ 
+$\Omegai$, $\Omegac$, $\Omegac$,
 respectively called of \emph{internal}, \emph{call} and \emph{return}
 symbols.
 % \begin{itemize}
-% \item a set $\Sigmai$ of \emph{internal symbols} denoted $a$,
-% \item a set $\Sigmac$ of \emph{call symbols} denoted $\call{a}$,
-% \item a set $\Sigmar$ of \emph{return symbols} denoted $\return{a}$.
+% \item a set $\Omegai$ of \emph{internal symbols} denoted $a$,
+% \item a set $\Omegac$ of \emph{call symbols} denoted $\call{a}$,
+% \item a set $\Omegar$ of \emph{return symbols} denoted $\return{a}$.
 % \end{itemize}
 Let~$\< \Semiring, \oplus, \zero, \otimes, \one>$ be a commutative semiring and  
 let  $(\Phi_\epsilon, \Phic, \Phir, \Phicr)$ be a label theory over $\Semiring$
 %In order to simplify notations, %and following the definition of Section~\ref{section:transducer}, 
 %we shall write respectively 
 where $\Phic$, $\Phir$ and~$\Phicr$ stand respectively 
-for~$\Phi_\Sigmac$, $\Phi_\Sigmar$ and~$\Phi_{\Sigmac, \Sigmar}$.
+for~$\Phi_\Omegac$, $\Phi_\Omegar$ and~$\Phi_{\Omegac, \Omegar}$.
 %
 Moreover, we extend this theory with a set $\Phii$ 
-of unary functions in $\Sigmai \to \Semiring$,
+of unary functions in $\Omegai \to \Semiring$,
 closed under $\oplus$ and $\otimes$.
 
 \begin{definition}
 A \emph{Symbolic Weighted Visibly Pushdown Automata} (\SWVPA)~$A$ 
-over  $\Sigma = \Sigmai \uplus \Sigmac \uplus \Sigmar$ and $\Semiring$ is a tuple
+over  $\Omega = \Omegai \uplus \Omegac \uplus \Omegar$ and $\Semiring$ is a tuple
 $T = \< Q, P, \init, \weii, \weic, \weir, \weie, \final >$,
 where $Q$ is a finite set of states, 
 $P$ is a finite set of stack symbols, 
@@ -837,25 +852,25 @@ are transition functions.
 Similarly as in Section~\ref{section:transducer}, 
 we extend the above transition functions as follows
 for all $q, q' \in Q$, $p \in P$, 
-$a \in \Sigmai$, 
-$\call{c} \in \Sigmac$, 
-$\return{r} \in \Sigmar$, 
+$a \in \Omegai$, 
+$\call{c} \in \Omegac$, 
+$\return{r} \in \Omegar$, 
 overloading their names: % for simplicity:
 \[
 \begin{array}{lll}
-\weii: Q \times \Sigmai \times Q \to \Semiring & 
+\weii: Q \times \Omegai \times Q \to \Semiring & 
 \weii(q, a, q') = \phi_\mathsf{i}(a) & 
 \mathrm{where~} \phi_\mathsf{i} = \weii(q, q'),\\
 %
-\weic: Q \times \Sigmac \times Q \times P \to \Semiring & 
+\weic: Q \times \Omegac \times Q \times P \to \Semiring & 
 \weic(q, \call{c}, q', p) = \phi_\mathsf{c}(\call{c}) & 
 \mathrm{where~} \phi_\mathsf{c} = \weic(q, q', p),\\
 %
-\weir: Q \times \Sigmac \times P \times \Sigmar \times Q \to \Semiring & 
+\weir: Q \times \Omegac \times P \times \Sigmar \times Q \to \Semiring & 
 \weir(q, {\call{c}},  p, {\return{r}}, q') = \phi_\mathsf{r}({\call{c}},  {\return{r}}) & 
 \mathrm{where~} \phi_\mathsf{r} = \weir(q, p, q'),\\
 %
-\weie: Q \times \Sigmar \times Q \to \Semiring & 
+\weie: Q \times \Omegar \times Q \to \Semiring & 
 \weie(q, {\return{r}}, q') = \phi_\mathsf{e}({\return{r}}) &
 \mathrm{where~} \phi_\mathsf{e} = \weie(q, q').\\
 \end{array}      
@@ -880,9 +895,9 @@ We give now a formal definition of these transitions of the automaton $A$
 in term of a weight value
 computed by an intermediate function $\weight_A$.
 In the case of a pushdown automaton, a configuration is composed 
-of a state $q \in Q$ and a stack content $\theta \in \Theta^*$, where $\Theta = \Sigmac \times P$.
+of a state $q \in Q$ and a stack content $\theta \in \Theta^*$, where $\Theta = \Omegac \times P$.
 Therefore, $\weight_A$ is a function from 
-$Q \times \Theta^* \times \Sigma^* \times Q \times \Theta^*$ into $\Semiring$.
+$Q \times \Theta^* \times \Omega^* \times Q \times \Theta^*$ into $\Semiring$.
 \[
 \begin{array}{rcl}
 \weight_A\bigl(\config{q}{\theta}, a\, u, \config{q'}{\theta'}\bigr) & = & 
@@ -908,11 +923,11 @@ $Q \times \Theta^* \times \Sigma^* \times Q \times \Theta^*$ into $\Semiring$.
 \end{array}
 \]
 where $\bot$ denotes the empty stack and ${\call{c}}\, p\cdot \theta$ 
-denotes a stack with the pair made of ${\call{c}}$ and $p$ on its top and $\theta$
-as the rest of stack.
+denotes a stack where the pair made of ${\call{c}}$ and $p$ is the top symbol and $\theta$
+is the rest of stack.
 
 \noindent
-The weight associated by $A$ to $s \in \Sigma^*$
+The weight associated by $A$ to $s \in \Omega^*$
 is then defined as follows,
 following empty stack semantics: 
 \begin{equation}
@@ -935,10 +950,10 @@ The class of \SWVPA is closed under the binary operators of the underlying semir
 %
 \begin{proposition}
 Let $A_1$ and $A_2$ be two (\SWVPA)
-over the same $\Sigma$ and $\Semiring$.
+over the same $\Omega$ and $\Semiring$.
 There exists two $\SWVPA$ $A_1 \oplus A_2$ and $A_1 \otimes A_2$, 
 effectively constructible, 
-such that for all $s \in \Sigma^*$, 
+such that for all $s \in \Omega^*$, 
 $(A_1 \oplus A_2)(s) = A_1(s) \oplus A_2(s)$ and 
 $(A_1 \otimes A_2)(s) = A_1(s) \otimes A_2(s)$.
 \end{proposition}
@@ -952,7 +967,7 @@ commutative, complete, idempotent, superior, and total.
 % total ? 
 % monotonic and superior writ natural ordering
 %Regarding the infinite sum operator, note that
-%$\bigoplus_{x \in \Phi_\Sigma} \phi(x)$, 
+%$\bigoplus_{x \in \Phi_\Omega} \phi(x)$, 
 %$\bigoplus_{y \in \Phi_\Delta} \psi(y)$, and  
 %... exist and in $\Semiring$.
 We propose a Dijkstra algorithm computing the minimal weight by $A$, 
@@ -964,12 +979,12 @@ let $\top$ be a fresh stack symbol which does not belong to $\Theta$,
 and for every two states $q, q' \in Q$ and $\sigma \in \{ \bot, \top \}$, 
 let 
 \[ 
-  d_0(q, \sigma, q') = \bigoplus_{s\in \Sigma^*} 
+  d_0(q, \sigma, q') = \bigoplus_{s\in \Omega^*} 
   \textstyle
   \weight_A\bigl(\config{q}{\sigma}, s, \config{q'}{\sigma}\bigr). 
 \]
 Since $\Semiring$ is complete, this infinite sum is well defined, 
-and since $\leq_\oplus$ is assumed total, it is the minimum in $\Sigma^*$
+and since $\leq_\oplus$ is assumed total, it is the minimum in $\Omega^*$
 of $s \mapsto \weight_A(\config{q}{\sigma}, s, \config{q'}{\sigma})$ \wrt this ordering.
 %
 When $\sigma = \bot$, $d_0(q, \sigma, q')$ is the central 
@@ -1020,25 +1035,25 @@ $d(q_1, \bot, q_2) = d(q_1, \top, q_2) = \zero$ otherwise.
 \qquad
 \(\begin{array}{rrcl}
  & d(q_1, \sigma, q_3) & \opluseq &
-   d(q_1, \sigma, q_2) \otimes \displaystyle\bigoplus_{a \in \Sigmai} \weii(q_2, a, q_3)\\
+   d(q_1, \sigma, q_2) \otimes \displaystyle\bigoplus_{a \in \Omegai} \weii(q_2, a, q_3)\\
 %
 %  & d(q_0, \sigma, q_2) & \opluseq & 
-%    \displaystyle\bigoplus_{a \in \Sigmai} \weii(q_0, a, q_1) \otimes d(q_1, \sigma, q_2)\\
+%    \displaystyle\bigoplus_{a \in \Omegai} \weii(q_0, a, q_1) \otimes d(q_1, \sigma, q_2)\\
 %
 \mathrm{if~} \sigma = \top & d(q_0, \top, q_3) & \opluseq &
 d(q_1, \sigma, q_2) \otimes
 %\displaystyle\bigoplus_{p \in P} 
-\displaystyle\bigoplus_{{\call{c}} \in \Sigmac} 
-\displaystyle\bigoplus_{{\return{r}} \in \Sigmar} \eta({\call{c}}, {\return{r}})\\
+\displaystyle\bigoplus_{{\call{c}} \in \Omegac} 
+\displaystyle\bigoplus_{{\return{r}} \in \Omegar} \eta({\call{c}}, {\return{r}})\\
 \mathrm{and} &  d(q_0, \bot, q_3) & \opluseq &
 d(q_1, \sigma, q_2) \otimes
 %\displaystyle\bigoplus_{p \in P} 
-\displaystyle\bigoplus_{{\call{c}} \in \Sigmac} 
-\displaystyle\bigoplus_{{\return{r}} \in \Sigmar} \eta({\call{c}}, {\return{r}})\\
+\displaystyle\bigoplus_{{\call{c}} \in \Omegac} 
+\displaystyle\bigoplus_{{\return{r}} \in \Omegar} \eta({\call{c}}, {\return{r}})\\
 & & & \mathrm{where~} \eta = \weic(q_0, q_1, p) \otimes \weir(q_2, p, q_3)\\
 %
 \mathrm{if~} \sigma = \bot & d(q_1, \bot, q_3) & \opluseq &
-  d(q_1, \sigma, q_2) \otimes \displaystyle\bigoplus_{\return{r} \in \Sigmar} \weie(q_2, {\return{r}}, q_3)\\
+  d(q_1, \sigma, q_2) \otimes \displaystyle\bigoplus_{\return{r} \in \Omegar} \weie(q_2, {\return{r}}, q_3)\\
 %
 %& d(q_0, \bot, q_2) & \opluseq & 
 %d(q_0, \bot, q_1) \otimes d(q_1, \sigma, q_2), \mathrm{if~} \< q_0, \bot, q_1> \notin P \\
@@ -1099,7 +1114,7 @@ For computing the minimal weight of a computation of $A$, we use the fact that,
 at the termination of Algorithm~\ref{algo:Dijkstra}, %it holds that,
 %There exist $q_1, q_2 \in Q$
 \[
-  {\displaystyle \bigoplus_{s \in \Sigma^*} A(s)} = 
+  {\displaystyle \bigoplus_{s \in \Omega^*} A(s)} = 
   {\displaystyle\bigoplus_{q, q' \in Q}} \textstyle
   \mathsf{in}(q) \mathop{\otimes} d(q, \bot, q') \mathop{\otimes} \mathsf{out}(q').
 \]
@@ -1111,19 +1126,19 @@ In order to obtain effectively a witness
 (word of $\Semiring^*$ with computation of $A$ of minimal weight), 
 we require an additional property the of weight functions.
 \begin{definition}
-Let $\Sigma$ be an alphabet and $\Semiring$ a complete semiring.
-A function $\phi$ from $\Sigma^n$ into $\Semiring$
+Let $\Omega$ be an alphabet and $\Semiring$ a complete semiring.
+A function $\phi$ from $\Omega^n$ into $\Semiring$
 is called $k$-\emph{convex} for a natural number $k$ iff 
-$\mathit{card}\{ \mathbf{a} \in \Sigma^n \mid \phi(\mathbf{a}) = 
-                 \displaystyle\bigoplus_{\mathbf{p} \in \Sigma^n} \phi(\mathbf{p}) \} \leq k$.
+$\mathit{card}\{ \mathbf{a} \in \Omega^n \mid \phi(\mathbf{a}) = 
+                 \displaystyle\bigoplus_{\mathbf{p} \in \Omega^n} \phi(\mathbf{p}) \} \leq k$.
 \end{definition}
 A label theory is $k$-convex if all its functions are $k$-convex.
 
 \begin{proposition}
 For a \SWVPA $A$ over a 
 commutative, idempotent, superior, total and complete semiring 
-and an alphabet $\Sigma$ with a $k$-convex label theory, 
-one can construct in PTIME a word $s \in \Sigma^*$ 
+and an alphabet $\Omega$ with a $k$-convex label theory, 
+one can construct in PTIME a word $s \in \Omega^*$ 
 such that $A(s)$ is minimal \wrt the natural ordering for $\Semiring$. 
 %$\leg_\oplus$.
 \end{proposition}
