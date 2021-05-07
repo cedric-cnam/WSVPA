@@ -26,10 +26,12 @@
 % \graphicspath{fig/}
 
 %% PGF, Tikz
+\usepackage{tikz-cd}
 %% \usepackage{pgfplots}
 %% \usepgfplotslibrary{dateplot}
 %% \usepackage{pgf,pgfarrows,pgfnodes, pgfautomata}
 % \usepackage{tikz}
+% \usetikzlibrary{cd}
 %% \usetikzlibrary{arrows}
 %% \usetikzlibrary{calc}
 %% \usetikzlibrary{snakes}
@@ -93,6 +95,7 @@
 \newcommand{\D}{\mathbb{D}}
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\W}{\mathbb{W}}
+\newcommand{\T}{\mathcal{T}}
 
 \newcommand{\Semiring}{\mathbb{S}}
 \newcommand{\zero}{\mathbb{0}}
@@ -101,6 +104,7 @@
 
 \def\SWT{\textsf{swT}\xspace}
 \def\SWA{\textsf{swA}\xspace}
+\def\SWTA{\textsf{swTA}\xspace}
 \def\SWVPA{\textsf{sw-VPA}\xspace}
 \def\weight{\mathsf{weight}}
 \def\wei{\mathsf{w}}
@@ -128,6 +132,8 @@
 \newcommand{\config}[2]{\ensuremath \genfrac{[}{]}{0pt}{}{#1}{#2}} 
 \newcommand{\opluseq}{\ensuremath\mathrel{\oplus}=}
 \newcommand{\ioi}[1]{\mathsf{ioi}({#1})}
+\newcommand{\rank}{\mathsf{rk}}
+\newcommand{\lin}{\mathsf{lin}}
 
 %\sloppy
 
@@ -219,6 +225,8 @@ representation of a music performance into a structured music score.
 %generalizes weighted parsing: 
 %finding the best derivation for a weighted grammar. 
 
+
+
 We present here some weighted language models
 %model of weighted CFG 
 computing on words over infinite input alphabets %sets of terminal symbol
@@ -255,17 +263,70 @@ the distance $d(s, w) \otimes A(w)$ between $s$ and $A$,
 as defined in~\cite{Mohri03EDWA}.
 %following 
 
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\node (NFA) at (0,4) {%
+  \(
+  \begin{array}{c} 
+  \mathsf{NFA} : \Sigma_{\mathsf{fin}}^* \to \mathbb{B}\\
+  q \xrightarrow{a} q' \quad  a \in \Sigma_\mathsf{fin}
+  \end{array} 
+  \)
+};
+%
+\node (WA) at (-2,2) {%
+  \(
+  \begin{array}{c} 
+  \mathsf{WA} : \Sigma_{\mathsf{fin}}^* \to \mathbb{S}\\
+  q \xrightarrow{a, w} q' \quad  a \in \Sigma_\mathsf{fin}, w \in \mathbb{S}
+  \end{array} 
+  \)
+};
+%
+\node (SA) at (2,2) {%
+  \(
+  \begin{array}{c} 
+  \mathsf{SA} : \Sigma_{\mathsf{inf}}^* \to \mathbb{B}\\
+  q \xrightarrow{\phi} q' \quad \phi : \Sigma_\mathsf{inf} \to \mathbb{B}
+  \end{array} 
+  \)
+};
+%
+\node (SWA) at (0,0) {%
+  \(
+  \begin{array}{c} 
+  \mathsf{SWA} : \Sigma_{\mathsf{inf}}^* \to \mathbb{S}\\
+  q \xrightarrow{\phi} q' \quad \phi : \Sigma_\mathsf{inf} \to \mathbb{S}
+  \end{array} 
+  \)
+};
+\draw[->] (NFA)--(WA);
+\draw[->] (NFA)--(SA);
+\draw[->] (WA)--(SWA);
+\draw[->] (SA)--(SWA);
+%\begin{array}{c} \mathsf{NFA} : \Sigma^* \to \mathbb{B} \end{array} 
+\end{tikzpicture}
+\caption{Classes of Symbolic/Weighted Automata. 
+$\Sigma_\mathsf{fin}$ is a finite alphabet, 
+$\Sigma_\mathsf{inf}$ is a countable alphabet,
+$\mathbb{B}$ is the Boolean algebra, 
+$\mathbb{S}$ is an arbitrary commutative semiring, 
+$q \xrightarrow{\dots} q'$ represents the form of a transition between states $q$ and $q'$.}
+\label{fig:hierarchy}  
+\end{figure}
+
 % First one general edit-distance is defined by a weighted word 
 % transducer~\cite{Mohri}
 % %Symbolic automata transducers are extended models~\cite{VeanesdAntoniJACM}
 % %dealing with infinite set of input symbols...
 % value in a semiring...
 
-In Section~\ref{section:SWA} we introduce \SWA and \SWT, 
-then \SWVPA are defined in Section~\ref{sec:SWVPA}, 
+In Section~\ref{section:SWA} we introduce \SWA and \SWT.
+Then \SWVPA are defined in Section~\ref{sec:SWVPA}, 
 where a polynomial 1-best algorithm is described that can be use to solve
-Symbolic Weighted Parsing.
-Finally, \label{sec:transcription}, we present an application 
+Symbolic Weighted Parsing, as described Section~\ref{sec:parsing}.
+Finally, in Section~\ref{sec:transcription}, we present an application 
 of this approach to automated music transcription that has been implemented.
 
 
@@ -554,20 +615,20 @@ resp.  $f_a: y \mapsto f(a, y)$ for $a \in \Sigma$ and $y \in \Delta$
 and  $f_b: x \mapsto f(x, b)$ for $b \in \Delta$ and $x \in \Sigma$, 
 belong resp. to~$\Phi_\Sigma$ and~$\Phi_\Delta$.
 
-\subsection{Definitions}
+\subsection{Definitions} \label{sec:SWTdef}\label{sec:SWAdef}
 %(SWT)
 \begin{definition}
 \label{def:transducer} \label{def:SWT}
 A \emph{symbolic-weighted transducer} (\SWT)
 over the input and output alphabets~$\Sigma$ and $\Delta$ 
 and the semiring $\Semiring$ is a tuple
-$T = \< Q, \init, \vec{\wei}, \final >$,
+$T = \< Q, \init, \bar{\wei}, \final >$,
 where $Q$ is a finite set of states, 
 $\mathsf{in} : Q \to \Semiring$, 
 respectively $\mathsf{out} : Q \to \Semiring,$
 are functions defining the weight for entering, 
 respectively leaving, a state, 
-and $\vec{\wei}$ is a tuplet made of the 4 of transition functions 
+and $\bar{\wei}$ is a tuplet made of the 4 of transition functions 
 $\wei_\epsilon$, $\wei_\Sigma$, $\wei_\Delta$, and $\wei_{\Sigma, \Delta}$
 from $Q \times Q$ into respectively~$\Semiring$, %$\Phi_\epsilon$, 
 $\Phi_\Sigma$, $\Phi_\Delta$, and $\Phi_{\Sigma, \Delta}$.
@@ -606,7 +667,7 @@ defined recursively for every $q, q' \in Q$,
 for every strings of $s \in \Sigma^*$, $t \in \Delta^*$:
 \[
 \begin{array}{rccl}
-\weight_T(q, s, t, q') & = & 
+xc(q, s, t, q') & = & 
    \displaystyle\bigoplus_{q'' \in Q} &
    \wei(q, \epsilon, \epsilon, q'') \otimes \weight_T(q'', s, t, q')\\
    & \oplus & \displaystyle\bigoplus_{q'' \in Q} &
@@ -629,6 +690,11 @@ for every strings of $s \in \Sigma^*$, $t \in \Delta^*$:
    \wei(q, a, b, q'') \otimes \weight_T(q'', u, v, q').\\ 
 \end{array}
 \]
+The sum above can be infinite because of the expression in the first line, 
+however, $\T(\Omega)$ is well defined since $\Semiring$ is complete.
+%
+As we shall see, epsilon-transitions can be removed and hence the sum made finite.
+%
 %** The application of $\oplus$ can be seen as a ND choice between transitions **
 We recall that, by convention, an empty sum with $\oplus$ is $\zero$. 
 %
@@ -682,17 +748,20 @@ over $\Sigma$ and $\Semiring$
 are defined similarly as the transducers of Definition~\ref{def:SWT}, 
 by simply omitting the output symbols.
 %
-\begin{definition}
+In this case, a label theory over $\Sigma$ is reduced to
+a set $\Phi_\Sigma$ closed under~$\oplus$ and~$\otimes$.
+%
+\begin{definition} \label{def:SWA}
 A \emph{symbolic-weighted automaton} (\SWA)
 over the input alphabet~$\Sigma$
-and the semiring $\Semiring$ is a tuple
-$A = \< Q, \init, \vec{\wei}, \final >$,
+and the commutative semiring $\Semiring$ is a tuple
+$A = \< Q, \init, \bar{\wei}, \final >$,
 where $Q$ is a finite set of states, 
 $\mathsf{in} : Q \to \Semiring$, 
 respectively $\mathsf{out} : Q \to \Semiring,$
 are functions defining the weight for entering, 
 respectively leaving, a state, 
-and $\vec{\wei}$ is a tuplet made of the 2 of transition functions 
+and $\bar{\wei}$ is a pair of transition functions 
 $\wei_\epsilon$ and $\wei_\Sigma$ from $Q \times Q$ into 
 respectively $\Semiring$ %$\Phi_\epsilon$ 
 and $\Phi_\Sigma$.
@@ -721,8 +790,8 @@ such that for all $t \in \Delta^*$, $A_{T, s}(t) = T(s, t)$.
 \end{proposition}
 %
 \begin{proof}
-Let $T = \< Q, \init, \vec{\wei}, \final >$ 
-where $\vec{\wei} \< \wei_\epsilon, \wei_\Sigma, \wei_\Delta, \wei_{\Sigma, \Delta}>$
+Let $T = \< Q, \init, \bar{\wei}, \final >$ 
+where $\bar{\wei} \< \wei_\epsilon, \wei_\Sigma, \wei_\Delta, \wei_{\Sigma, \Delta}>$
 has an associated synthesized form $\wei$, 
 and let $s = s_1 \ldots s_n$ with $s_1, \ldots, s_n \in \Sigma$.
 %$n = |s|$ be the length of $s$.
@@ -750,7 +819,7 @@ Note that the functions defined above belong to the set $\Phi_\Delta$
 of the underlying label theory, 
 by the hypothesis of closure under partial application.
 %
-The $\SWA$ wanted is $A_{T, s} = \< Q', \init', \vec{\wei'}, \final' >$.
+The $\SWA$ wanted is $A_{T, s} = \< Q', \init', \bar{\wei'}, \final' >$.
 \qed
 \end{proof}
 
@@ -761,7 +830,8 @@ where the size $\| T \|$ of $T$ is its number of states $|Q|$.
 
 % gen. to transducers
 \begin{proposition}
-Given a \SWA $A$ over alphabet $\Sigma$ and a commutative and bounded semiring $\Semiring$, 
+Given a \SWA $A$ over alphabet $\Sigma$ 
+and a commutative and bounded semiring $\Semiring$, 
 there exists an effectively constructible \SWA $A'$ 
 without $\epsilon$-transitions 
 such that for all $s \in \Sigma^*$, $A'(s) = A(s)$.
@@ -808,13 +878,15 @@ it holds that $\weight_{A}(q, s, q') = \weight_{A'}(q, s, q')$.
 The following model generalizes Symbolic VPA~\cite{dAntonyAlur14SVPDA}
 from Boolean semirings to arbitrary semiring weight domains.
 
+
+
 \subsection{Definition}
 Let $\Omega$ be a countable alphabet 
 %finite (large) or infinite,
 that we assume partitioned into three subsets 
 $\Omegai$, $\Omegac$, $\Omegac$,
-respectively called of \emph{internal}, \emph{call} and \emph{return}
-symbols.
+whose elements are respectively called 
+\emph{internal}, \emph{call} and \emph{return} symbols.
 % \begin{itemize}
 % \item a set $\Omegai$ of \emph{internal symbols} denoted $a$,
 % \item a set $\Omegac$ of \emph{call symbols} denoted $\call{a}$,
@@ -879,19 +951,19 @@ overloading their names: % for simplicity:
 \noindent
 The intuition is the following for the above transitions.
 \begin{description}
-\item $\weii$ : read the input internal symbol $a$, change state to $q'$.
+\item $\weii$ : read the input internal symbol $a$, change state to $q'$ (stack is untouched).
 \item $\weic$ : read the input call symbol $\call{c}$, push it to the stack along with $p$, change state to $q'$.
 \item $\weir$ : when the stack is not empty, 
       read and pop from stack a pair made of $\call{c}$ and $p$, 
       read the input return symbol $\return{r}$, change state to $q'$.
       In this case, the weight function $\phi_\mathsf{r}$ 
-      computes a value of matching between the call and return symbols.
-      This value might be $\zero$ in order to express that the symbols do not match.
+      computes a value of matching between the call and return symbols $c$ and $r$.
+      This value might be set to $\zero$ in order to express that the symbols do not match.
 \item $\weie$ : when the stack is empty, 
       read the input symbol $\call{r}$, change state to $q'$.
 \end{description}
 
-We give now a formal definition of these transitions of the automaton $A$
+We give now a formal definition of these transitions of the automaton~$A$
 in term of a weight value
 computed by an intermediate function $\weight_A$, like in Section~\ref{sec:SWT}.
 In the case of a pushdown automaton, a configuration is composed 
@@ -946,7 +1018,8 @@ intro language of music notation ?
 
 
 \subsection{Properties}
-The class of \SWVPA is closed under the binary operators of the underlying semiring.
+Like VPA and symbolic VPA, 
+the class of \SWVPA is closed under the binary operators of the underlying semiring.
 %
 \begin{proposition}
 Let $A_1$ and $A_2$ be two (\SWVPA)
@@ -962,8 +1035,8 @@ as in the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 
 
 \subsection{Best-first Search}
-Assume a semiring $\Semiring$
-commutative, complete, idempotent, superior, and total.
+Let us assume that the semiring $\Semiring$ is
+commutative, bounded, complete, and total.
 % total ? 
 % monotonic and superior writ natural ordering
 %Regarding the infinite sum operator, note that
@@ -1007,7 +1080,7 @@ when the current stack is $\gamma$.
 % (internal symbol or call symbol, with a push on the top of $\top$).
 
 The algorithm~\ref{algo:Dijkstra}
-constructs iteratively a a marking $d : Q \times \{ \bot, \top \} \times Q \to \Semiring$
+constructs iteratively a marking $d : Q \times \{ \bot, \top \} \times Q \to \Semiring$
 %of the triplets $\<q, \sigma, q'>$ 
 %of states of $A$ by weight values in $\Semiring$, 
 that converges eventually to $d_0(q, \sigma, q')$. 
@@ -1137,19 +1210,32 @@ A label theory is $k$-convex if all its functions are $k$-convex.
 \begin{proposition}
 For a \SWVPA $A$ over a 
 commutative, idempotent, superior, total and complete semiring 
-and an alphabet $\Omega$ with a $k$-convex label theory, 
+and an alphabet $\Omega$ with a $k$-convex label theory,
 one can construct in PTIME a word $s \in \Omega^*$ 
 such that $A(s)$ is minimal \wrt the natural ordering for $\Semiring$. 
 %$\leg_\oplus$.
-\end{proposition}
+\end{proposition} 
 
 
 
 \section{Symbolic Weighted Parsing}
 \label{sec:parsing}
+The models and results of the former sections allow us 
+to define formally and solve the problem of parsing over infinite alphabet.
 
 
-\subsection{Application to Amtomated Music Transcription}
+
+
+
+\subsection{Definition}
+
+
+
+\subsection{Results}
+
+
+
+\subsection{Application to Automated Music Transcription}
 \label{sec:transcription}
 Symbolic Automated Music Transcription
 and analysis of music performances
@@ -1275,6 +1361,131 @@ $\Semiring$ of Section~\ref{app:distance}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 \appendix 
+
+
+\section{Trees and Nested-Words}
+see also \cite{Caralp12VPAmult} for a discussion on the correspondence 
+between tree automata and VPA.
+
+Let $\Omega$ be a countable ranked alphabet, such that 
+every symbol $a \in \Omega$ has a rank 
+$\rank(a) \in [0..M]$ where $M$ is a fixed natural number.
+We write $\Omega_k$ the subset of all symbols $a$ of $\Omega$
+with $\rank(a) = k$, where $0 \leq k \leq M$.
+%$\cup_{i = 0}^{i = M} \Omega_i$ 
+%
+$\T(\Omega)$ denotes the free $\Omega$-algebra of finite, ordered, 
+$\Omega$-labeled trees, 
+which is the smallest set such that  $\Omega_0 \subset \T(\Omega)$
+and for all $1 \leq k \leq M$, all $a \in \Omega_k$, 
+and all $t_1, \ldots, t_k \in \T(\Omega)$, $a(t_1, \ldots, t_k) \in \T(\Omega)$.
+%
+% tree = single node (leave) labeled with a symbol of $a \in \Omegai$
+% (such a tree is simply denoted by $a$)
+% or the composition, denoted by $b(t_1,\ldots, t_n$) of a node labeled with $b$
+% and $n$ subtrees $t_1$,\ldots, $t_n$.
+
+\renewcommand{\call}[1]{\ensuremath \langle_{#1}}
+\renewcommand{\return}[1]{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
+
+Let $\hat\Omega$ be the countable (unranked) alphabet obtained from 
+$\Omega$ as follows: 
+$\hat\Omega = \< \Omegai, \Omegac, \Omegar >$, with
+$\Omegai = \Omega_0$, 
+$\Omegac = \{ \; \call{a} \mid a \in \Omega_{>0} \}$,
+$\Omegac = \{ \; \return{a} \mid a \in \Omega_{>0} \}$,
+where $\Omega_{>0}$ denotes $\bigcup_{k = 1}^{M} \Omega_k$.
+
+\noindent
+We define a linearization of trees of $\T(\Omega)$ into 
+words of $\hat{\Omega}^*$ as follows:
+\begin{description}
+\item $\lin(a) = a$ for all $a \in \Omega_0$, 
+\item $\lin\bigl( b(t_1, \ldots, t_k)\bigr) = 
+       \call{b} \; \lin(t_1) \ldots \lin(t_k) \; \return{b}$ 
+       when $b \in \Omega_k$, $1 \leq k \leq M$.
+\end{description}
+
+% A \emph{regular tree grammar} over $\Omega$ 
+% is a triplet $G = \< N, q_\mathsf{i}, R>$ where
+% $N$ is a finite set of non-terminal symbols denoted $q$..., 
+% $q_\mathsf{i} \in N$ is the starting non-terminal, 
+% $R$ is a finite set of production rules of the form
+% $q_0 \to a(q_1\ldots q_k)$ where 
+% $q_0, q_1, \ldots, q_k \in N$
+% $a \in \Omega_k$.
+% A tree $t \in \T(\Omega)$ is in the language of $G$ 
+% if it can be generated from $q_\mathsf{i}$ by 
+% non terminal replacement following the rules of $R$.
+
+Let us assume a label theory $\Phi_{\Omega_k}$ 
+for each $k \in [0..M]$.
+%
+\begin{definition}  \label{def:SWTA}
+A \emph{symbolic-weighted tree automaton} (\SWTA)
+over the ranked input alphabet~$\Omega$
+and the commutative semiring $\Semiring$ 
+is a triplet $A = \< Q, \init, \bar{\wei} >$ where
+$Q$ is a finite set of states, 
+$\mathsf{in} : Q \to \Semiring$ is the starting weight function, 
+and $\bar{\wei}$ is a $M+2$-uplet of transition functions made of:
+$\wei_\epsilon$ from $Q \times Q$ into $\Semiring$, and, 
+for each $k \in [0..M]$, $\wei_{\Omega, k}$
+from $Q \times Q^{k}$ into $\Phi_{\Omega_k}$.
+\end{definition}
+%
+Like in Section~\ref{sec:SWAdef}, we define a function~$\wei$ %from $\bar\wei$
+from 
+$Q \times (\Sigma \cup \{ \epsilon \}) \times \bigcup_{k=0}^{M} Q^k$
+into~$\Semiring$: %also called $\wei$ for simplicity, 
+%such that, for all $q, q' \in Q$, $a \in \Sigma$, and $b \in \Delta$, 
+\[
+\begin{array}{rcll}
+\wei(q_0, \epsilon, q_1) & = &  \wei_\epsilon(q_0, q_1),\\ %\phi_\epsilon\\
+\wei(q_0, a, q_1 \ldots q_k) & = & \phi_{\Omega, k}(a) &
+\quad\mathrm{where~} \phi_{\Omega, k} = \wei_{\Omega, k}(q_0, q_1\ldots q_k).\\
+\end{array}      
+\]
+Intuitively, $\wei(q_0, a, q_1 \ldots q_k)$ can be seen as
+the weight of a production $q_0 \to a(q_1, \ldots, q_k)$ 
+of a regular tree grammar~\cite{tata}, 
+that replaces the non-terminal symbol $q_0$, by $a(q_1, \ldots, q_k)$.
+
+\noindent
+The \SWTA of Definition~\ref{def:SWTA} defines a mapping 
+from trees of $\T(\Omega)$ into the weights of~$\Semiring$,
+based on the intermediate function $\weight_A$
+defined as follows for $q_0 \in Q$ and 
+$t = b(t_1,\ldots, t_k) \in \T(\Omega)$,
+åwith $0 \leq k \leq M$:
+\[
+\begin{array}{rccl}
+\weight_A(q_0, t) & = & 
+   \displaystyle\bigoplus_{q_1 \in Q} &
+   \wei(q, \epsilon, q_1) \otimes \weight_A(q_1, t)\\
+ & \oplus & \displaystyle\bigoplus_{q_1 \ldots q_k \in Q^k} &
+              \wei(q_0, b, q_1 \ldots q_k ) 
+   \otimes \displaystyle\bigotimes_{i=1}^{k}
+           \weight_A(q_i, t_i).\\
+\end{array}
+\]
+
+\medskip\noindent
+The weight associated by $A$ to  $t \in \T(\Omega)$ is then
+\begin{equation}
+A(t)  = 
+\displaystyle\bigoplus_{q \in Q} \mathsf{in}(q) \mathop{\otimes} \weight_A(q, t).
+\label{eq:weightTA}
+\end{equation}
+
+\begin{lemma}  \label{lem:SWTA}
+For all \SWTA $A$ over~$\Omega$ and $\Semiring$, 
+there exists an effectively constructible \SWVPA $A'$ 
+such that for all $t \in \T(\Omega)$, $A'\bigl(\lin(t)\bigr) = A(t)$.
+\end{lemma}  
+\begin{proof}
+\dots
+\qed\end{proof}
 
 \section{Edit-Distance}
 
