@@ -160,8 +160,9 @@
 
 \begin{abstract}
 %Symbolic Weighted (SW) extension of symbolic automata...
+We propose a framework for weighted parsing over infinite alphabets.
 
-We propose language models called Symbolic Weighted Automata (SWA) 
+It is based on language models called Symbolic Weighted Automata (SWA) 
 at the joint %intersection 
 between Symbolic Automata (SA) and Weighted Automata (WA), 
 as well as Transducers (SWT) and Visibly Pushdown (SWPDA) variants.
@@ -634,7 +635,7 @@ from $Q \times Q$ into respectively~$\Semiring$, %$\Phi_\epsilon$,
 $\Phi_\Sigma$, $\Phi_\Delta$, and $\Phi_{\Sigma, \Delta}$.
 \end{definition}
 %
-We synthesize the above 4-uplet of transition functions into a unique 
+We summerize the above 4-uplet of transition functions into a unique 
 function~$\wei$ from
 $Q \times (\Sigma \cup \{ \epsilon \}) \times (\Delta \cup \{ \epsilon \}) \times Q$
 into $\Semiring$, %also called $\wei$ for simplicity, 
@@ -904,9 +905,9 @@ of unary functions in $\Omegai \to \Semiring$,
 closed under $\oplus$ and $\otimes$.
 
 \begin{definition}
-A \emph{Symbolic Weighted Visibly Pushdown Automata} (\SWVPA)~$A$ 
+A \emph{Symbolic Weighted Visibly Pushdown Automata} (\SWVPA) 
 over  $\Omega = \Omegai \uplus \Omegac \uplus \Omegar$ and $\Semiring$ is a tuple
-$T = \< Q, P, \init, \weii, \weic, \weir, \weie, \final >$,
+$A = \< Q, P, \init, \weii, \weic, \weir, \weie, \final >$,
 where $Q$ is a finite set of states, 
 $P$ is a finite set of stack symbols, 
 $\mathsf{in} : Q \to \Semiring$, 
@@ -938,7 +939,7 @@ overloading their names: % for simplicity:
 \weic(q, \call{c}, q', p) = \phi_\mathsf{c}(\call{c}) & 
 \mathrm{where~} \phi_\mathsf{c} = \weic(q, q', p),\\
 %
-\weir: Q \times \Omegac \times P \times \Sigmar \times Q \to \Semiring & 
+\weir: Q \times \Omegac \times P \times \Omegar \times Q \to \Semiring & 
 \weir(q, {\call{c}},  p, {\return{r}}, q') = \phi_\mathsf{r}({\call{c}},  {\return{r}}) & 
 \mathrm{where~} \phi_\mathsf{r} = \weir(q, p, q'),\\
 %
@@ -1434,7 +1435,8 @@ for each $k \in [0..M]$, $\wei_{\Omega, k}$
 from $Q \times Q^{k}$ into $\Phi_{\Omega_k}$.
 \end{definition}
 %
-Like in Section~\ref{sec:SWAdef}, we define a function~$\wei$ %from $\bar\wei$
+Like in Section~\ref{sec:SWAdef}, we define from $\bar{\wei}$ 
+a transition function~$\wei$, %from $\bar\wei$
 from 
 $Q \times (\Sigma \cup \{ \epsilon \}) \times \bigcup_{k=0}^{M} Q^k$
 into~$\Semiring$: %also called $\wei$ for simplicity, 
@@ -1447,9 +1449,15 @@ into~$\Semiring$: %also called $\wei$ for simplicity,
 \end{array}      
 \]
 Intuitively, $\wei(q_0, a, q_1 \ldots q_k)$ can be seen as
-the weight of a production $q_0 \to a(q_1, \ldots, q_k)$ 
+the weight of a production rule $q_0 \to a(q_1, \ldots, q_k)$ 
 of a regular tree grammar~\cite{tata}, 
-that replaces the non-terminal symbol $q_0$, by $a(q_1, \ldots, q_k)$.
+that replaces the non-terminal symbol $q_0$, by $a(q_1, \ldots, q_k)$. 
+%in a step of tree building.
+%
+Such a grammar computes the weights of the derivation trees 
+of the Context-Free grammar obtained by forgetting the labeling symbols of $\Omega_{>0}$.
+
+
 
 \noindent
 The \SWTA of Definition~\ref{def:SWTA} defines a mapping 
@@ -1479,12 +1487,50 @@ A(t)  =
 \end{equation}
 
 \begin{lemma}  \label{lem:SWTA}
-For all \SWTA $A$ over~$\Omega$ and $\Semiring$, 
-there exists an effectively constructible \SWVPA $A'$ 
+For all \SWTA $A$ over~$\Omega$ and $\Semiring$, without $\epsilon$-transitions,
+there exists an effectively constructible \SWVPA $A'$ over 
+$\hat\Omega$ and $\Semiring$
 such that for all $t \in \T(\Omega)$, $A'\bigl(\lin(t)\bigr) = A(t)$.
-\end{lemma}  
+\end{lemma} 
+% 
 \begin{proof}
-\dots
+Let $A = \< Q, \init, \bar{\wei} >$ where $\bar{\wei}$ is summarized as above by a function
+$\wei: Q \times (\Sigma \cup \{ \epsilon \}) \times \bigcup_{k=0}^{M} Q^k \to \Semiring$. 
+
+We build 
+$A' = \< Q', P', \init', \weii, \weic, \weir, \weie, \final' >$,
+computing over $\hat\Omega = \< \Omegai, \Omegac, \Omegar >$,
+%
+%$\Omega = \Omegai \uplus \Omegac \uplus \Omegar$ and $\Semiring$ 
+where $Q' = \bigcup_{k=0}^{M} Q^k$ be  the set of sequences of state symbols of $A$, 
+of length at most $M$, including the empty sequence denoted by $\epsilon$, 
+and where $P' = Q'$.
+
+\[
+\begin{array}{ll}
+%\weii: Q \times \Omegai \times Q \to \Semiring & 
+\weii(\bar{q}, a, \bar{q} q') = \wei(q', a, \epsilon) & 
+\mathrm{for~all~} a \in \Omega_0,\\
+%
+%\weic: Q \times \Omegac \times Q \times P \to \Semiring & 
+\weic(\bar{q}, \call{b}, \epsilon, \bar{q}) = \one & %\wei(p', b, \bar{p}) & 
+\mathrm{for~all~} b \in \Omega_{>0},\\
+%
+%\weir: Q \times \Omegac \times P \times \Sigmar \times Q \to \Semiring & 
+\weir(\bar{q}, {\call{b}}, \bar{p}, {\return{b}}, \bar{p} q') = \wei(q', b, \bar{q}) & 
+\mathrm{for~all~}  b \in \Omega_{>0},\\
+%
+%\weie: Q \times \Omegar \times Q \to \Semiring & 
+\weie(\bar{p}, {\return{b}}, \bar{q}) = \zero &
+\mathrm{for~all~}  b \in \Omega_{>0}.\\
+\end{array}      
+\]
+
+In practice, it is sufficient to consider in $Q'$ only the prefixes of 
+sequences 
+
+
+
 \qed\end{proof}
 
 \section{Edit-Distance}
