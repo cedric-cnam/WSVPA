@@ -2,12 +2,325 @@
 %% http://bibdesk.sourceforge.net/
 
 
-%% Created for Florent Jacquemard at 2021-05-10 22:11:24 +0200 
+%% Created for Florent Jacquemard at 2021-05-12 10:36:20 +0200 
 
 
 %% Saved with string encoding Unicode (UTF-8) 
 
 
+
+@book{Verovio,
+	date-added = {2021-05-11 12:20:16 +0200},
+	date-modified = {2021-05-11 12:20:16 +0200},
+	doi = {10.5448/7em6-my23},
+	publisher = {RISM, FNSNF},
+	title = {Verovio Reference Book},
+	url = {https://book.verovio.org/verovio-reference-book.pdf},
+	year = {2021},
+	Bdsk-Url-1 = {https://book.verovio.org/verovio-reference-book.pdf},
+	Bdsk-Url-2 = {https://doi.org/10.5448/7em6-my23}}
+
+@article{Morbitz19multiop,
+	author = {M{\"o}rbitz, Richard and Vogler, Heiko},
+	date-added = {2021-05-11 11:50:58 +0200},
+	date-modified = {2021-05-11 11:51:51 +0200},
+	journal = {arXiv preprint arXiv:1911.06585},
+	title = {Weighted Parsing for Grammar-Based Language Models over Multioperator Monoids},
+	year = {2019},
+	Bdsk-File-1 = {YnBsaXN0MDDSAQIDBFxyZWxhdGl2ZVBhdGhZYWxpYXNEYXRhXxBaLi4vLi4vLi4vTGlicmFyeS9Nb2JpbGUgRG9jdW1lbnRzL2NvbX5hcHBsZX5DbG91ZERvY3MvQmlibGlvL0FydGljbGVzL01vcmJpdHoxOW11bHRpb3AucGRmTxEBvgAAAAABvgACAAAHc3lzdGVtZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEJEAAH/////FE1vcmJpdHoxOW11bHRpb3AucGRmAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP////8AAAAAAAAAAAAAAAAAAwAGAAAKIGN1AAAAAAAAAAAAAAAAAAhBcnRpY2xlcwACAGIvOlVzZXJzOmphY3F1ZW1hOkxpYnJhcnk6TW9iaWxlIERvY3VtZW50czpjb21+YXBwbGV+Q2xvdWREb2NzOkJpYmxpbzpBcnRpY2xlczpNb3JiaXR6MTltdWx0aW9wLnBkZgAOACoAFABNAG8AcgBiAGkAdAB6ADEAOQBtAHUAbAB0AGkAbwBwAC4AcABkAGYADwAQAAcAcwB5AHMAdABlAG0AZQASAGBVc2Vycy9qYWNxdWVtYS9MaWJyYXJ5L01vYmlsZSBEb2N1bWVudHMvY29tfmFwcGxlfkNsb3VkRG9jcy9CaWJsaW8vQXJ0aWNsZXMvTW9yYml0ejE5bXVsdGlvcC5wZGYAEwABLwAAFQACAA///wAAAAgADQAaACQAgQAAAAAAAAIBAAAAAAAAAAUAAAAAAAAAAAAAAAAAAAJD}}
+
+@book{BaierKatoen08MC,
+	abstract = {Our growing dependence on increasingly complex computer and software systems necessitates the development of formalisms, techniques, and tools for assessing functional properties of these systems. One such technique that has emerged in the last twenty years is model checking, which systematically (and automatically) checks whether a model of a given system satisfies a desired property such as deadlock freedom, invariants, or request-response properties. This automated technique for verification and debugging has developed into a mature and widely used approach with many applications. Principles of Model Checking offers a comprehensive introduction to model checking that is not only a text suitable for classroom use but also a valuable reference for researchers and practitioners in the field.
+
+The book begins with the basic principles for modeling concurrent and communicating systems, introduces different classes of properties (including safety and liveness), presents the notion of fairness, and provides automata-based algorithms for these properties. It introduces the temporal logics LTL and CTL, compares them, and covers algorithms for verifying these logics, discussing real-time systems as well as systems subject to random phenomena. Separate chapters treat such efficiency-improving techniques as abstraction and symbolic manipulation. The book includes an extensive set of examples (most of which run through several chapters) and a complete set of basic results accompanied by detailed proofs. Each chapter concludes with a summary, bibliographic notes, and an extensive list of exercises of both practical and theoretical nature.},
+	annote = {Contents
+Foreword xiii
+Preface xv
+
+1 System Verification 1
+
+1.1 Model Checking.................................. 7
+
+1.2 Characteristics of Model Checking ....................... 11 
+1.2.1 The Model-Checking Process ...................... 11 
+1.2.2 Strengths and Weaknesses........................ 14
+
+1.3 Bibliographic Notes................................ 16
+
+
+2 Modelling Concurrent Systems 19
+
+2.1 Transition Systems................................ 19 
+2.1.1 Executions ................................ 24 
+2.1.2 Modeling Hardware and Software Systems. . . . . . . . . . . . . . . 26
+
+2.2 Parallelism and Communication......................... 35 
+2.2.1 Concurrency and Interleaving...................... 36 
+2.2.2 Communication via Shared Variables.................. 39 
+2.2.3 Handshaking ............................... 47 
+2.2.4 Channel Systems............................. 53 
+2.2.5 Nano Promela............................... 63 
+2.2.6 Synchronous Parallelism......................... 75
+
+2.3 The State-Space Explosion Problem ...................... 77
+
+2.4 Summary ..................................... 80
+2.5 Bibliographic Notes................................ 80
+2.6 Exercises ..................................... 82
+
+
+3 Linear-Time Properties 89
+
+3.1 Deadlock ..................................... 89
+
+3.2 Linear-TimeBehavior .............................. 94 
+3.2.1 Pathsand State Graph ......................... 95 
+3.2.2 Traces................................... 97 
+3.2.3 Linear-TimeProperties .........................100
+3.2.4 Trace Equivalence and Linear-Time Properties . . . . . . . . . . . . 104
+
+3.3 Safety Properties and Invariants ........................107
+3.3.1 Invariants.................................107
+3.3.2 Safety Properties.............................111
+3.3.3 Trace Equivalence and Safety Properties. . . . . . . . . . . . . . . .116
+
+3.4 Liveness Properties................................120 
+3.4.1 Liveness Properties............................121 
+3.4.2 Safety vs. Liveness Properties......................122
+
+3.5 Fairness ......................................126 
+3.5.1 FairnessConstraints ...........................129 
+3.5.2 FairnessStrategies ............................137 
+3.5.3 FairnessandSafety............................139
+
+3.6 Summary .....................................141
+3.7 Bibliographic Notes................................143
+3.8 Exercises .....................................144
+
+
+4 Regular Properties 151
+
+4.1 Automata on Finite Words ...........................151
+
+4.2 Model-Checking Regular Safety Properties. . . . . . . . . . . . . . . . . . .159 
+4.2.1 RegularSafetyProperties ........................159
+4.2.2 VerifyingRegularSafetyProperties. . . . . . . . . . . . . . . . . . .163
+
+4.3 Automata on Infinite Words...........................170 
+4.3.1 ω-Regular Languages and Properties..................170 
+4.3.2 Non deterministic B{\"u}chi Automata ...................173 
+4.3.3 Deterministic B{\"u}chi Automata .....................188 
+4.3.4 Generalized B{\"u}chi Automata ......................192
+
+4.4 Model-Checking ω-Regular Properties .....................198
+4.4.1 Persistence Properties and Product. . . . . . . . . . . . . . . . . . .199 
+4.4.2 Nested Depth-First Search........................203
+
+4.5 Summary .....................................217
+4.6 BibliographicNotes................................218
+4.7 Exercises .....................................219
+
+
+5 Linear Temporal Logic 229
+5.1 Linear Temporal Logic..............................229
+5.1.1 Syntax...................................231
+5.1.2 Semantics.................................235
+5.1.3 SpecifyingProperties...........................239
+5.1.4 EquivalenceofLTLFormulae......................247
+5.1.5 WeakUntil,Release,andPositiveNormalForm . . . . . . . . . . .252
+5.1.6 FairnessinLTL..............................257
+
+5.2 Automata-Based LTL ModelChecking.....................270
+5.2.1 Complexity of the LTL Model-Checking Problem . . . . . . . . . . . 287
+5.2.2 LTL Satisfiability and Validity Checking................296
+
+5.3 Summary .....................................298
+5.4 BibliographicNotes................................299
+5.5 Exercises .....................................300
+
+
+6 Computation Tree Logic 313
+
+6.1 Introduction....................................313
+
+6.2 Computation Tree Logic.............................317 
+6.2.1 Syntax...................................317 
+6.2.2 Semantics.................................320 
+6.2.3 Equivalence of CTL Formulae......................329 
+6.2.4 Normal Forms for CTL .........................332
+
+6.3 Expressiveness of CTL vs. LTL .........................334
+
+6.4 CTL Model Checking ..............................341
+6.4.1 Basic Algorithm .............................341
+6.4.2 The Until and Existential Always Operator . . . . . . . . . . . . . .347
+6.4.3 Time and Space Complexity.......................355
+
+6.5 Fairness in CTL .................................358
+
+6.6 Counter examples and Witnesses ........................373 
+6.6.1 Counter examples in CTL ........................376
+6.6.2 Counter examples and Witnesses in CTL with Fairness . . . . . . . . 380
+
+6.7 Symbolic CTL Model Checking.........................381
+6.7.1 Switching Functions ...........................382
+6.7.2 Encoding Transition Systems by Switching Functions . . . . . . . . . 386
+6.7.3 Ordered Binary Decision Diagrams...................392
+6.7.4 Implementation of ROBDD-Based Algorithms . . . . . . . . . . . . 407
+
+6.8 CTL∗ .......................................422
+6.8.1 Logic,Expressiveness,andEquivalence. . . . . . . . . . . . . . . . .422
+6.8.2 CTL∗ModelChecking..........................427
+
+6.9 Summary .....................................430
+6.10 Bibliographic Notes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 431
+6.11Exercises .....................................433
+
+
+7 Equivalences and Abstraction 449
+
+7.1 Bisimulation....................................451 
+7.1.1 Bisimulation Quotient ..........................456 
+7.1.2 Action-Based Bisimulation .......................465
+
+7.2 Bisimulation and CTL∗Equivalence ......................468
+
+7.3 Bisimulation-Quotienting Algorithms......................476 
+7.3.1 DeterminingtheInitialPartition ....................478 
+7.3.2 RefiningPartitions............................480
+7.3.3 A First Partition Refinement Algorithm . . . . . . . . . . . . . . . .486
+7.3.4 An Efficiency Improvement .......................487
+7.3.5 Equivalence Checking of Transition Systems. . . . . . . . . . . . . .493
+
+7.4 Simulation Relations...............................496 
+7.4.1 SimulationEquivalence .........................505 
+7.4.2 Bisimulation, Simulation, and Trace Equivalence . . . . . . . . . . . 510
+
+7.5 Simulation and ∀CTL∗Equivalence.......................515
+
+7.6 Simulation-Quotienting Algorithms.......................521
+
+7.7 Stutter Linear-Time Relations..........................529
+7.7.1 Stutter Trace Equivalence........................530
+7.7.2 Stutter Trace and LTL\⃝ Equivalence .................534
+
+7.8 Stutter Bisimulation ...............................536
+7.8.1 Divergence-Sensitive Stutter Bisimulation . . . . . . . . . . . . . . . 543
+7.8.2 Normed Bisimulation...........................552
+7.8.3 Stutter Bisimulation and CTL∗\⃝ Equivalence . . . . . . . . . . . . . 560
+7.8.4 Stutter Bisimulation Quotienting....................567
+
+7.9 Summary .....................................579
+7.10 Bibliographic Notes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 580
+7.11Exercises .....................................582
+
+
+8 Partial Order Reduction 595
+
+8.1 Independence of Actions.............................598
+
+8.2 The Linear-Time Ample Set Approach.....................605 
+8.2.1 Ample Set Constraints..........................606 
+8.2.2 Dynamic Partial Order Reduction ...................619 
+8.2.3 Computing Ample Sets .........................627 
+8.2.4 StaticPartialOrderReduction .....................635
+
+8.3 The Branching-Time Ample Set Approach...................650
+
+8.4 Summary .....................................661
+8.5 BibliographicNotes................................661
+8.6 Exercises .....................................663
+
+
+9 Timed Automata 673
+
+9.1 Timed Automata.................................677 
+9.1.1 Semantics.................................684 
+9.1.2 Time Divergence, Timelock, and Zenoness...............690
+
+9.2 Timed Computation Tree Logic.........................698
+
+9.3 TCTL Model Checking..............................705
+9.3.1 Eliminating Timing Parameters.....................706
+9.3.2 Region Transition Systems .......................709
+9.3.3 The TCTL Model-Checking Algorithm. . . . . . . . . . . . . . . . .732
+
+9.4 Summary .....................................738
+9.5 BibliographicNotes................................739
+9.6 Exercises .....................................740
+
+
+10 Probabilistic Systems 745
+
+10.1Markov Chains ..................................747 
+10.1.1 Reachability Probabilities ........................759 
+10.1.2 Qualitative Properties ..........................770
+
+10.2 Probabilistic Computation Tree Logic .....................780 
+10.2.1 PCTL Model Checking .........................785 
+10.2.2 The Qualitative Fragment of PCTL ..................787
+
+10.3Linear-TimeProperties .............................796
+
+10.4 PCTL∗ and Probabilistic Bisimulation . . . . . . . . . . . . . . . . . . . . . 806 
+10.4.1 PCTL∗ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 806 
+10.4.2 Probabilistic Bisimulation . . . . . . . . . . . . . . . . . . . . . . . . 808
+
+10.5 Markov Chains with Costs . . . . . . . . . . . . . . . . . . . . . . . . . . . . 816 
+10.5.1 Cost-Bounded Reachability .......................818 
+10.5.2 Long-Run Properties...........................827
+
+10.6 Markov Decision Processes . . . . . . . . . . . . . . . . . . . . . . . . . . . . 832 
+10.6.1 Reachability Probabilities ........................851 
+10.6.2 PCTL Model Checking .........................866 
+10.6.3 Limiting Properties ...........................869 
+10.6.4 Linear-Time Properties and PCTL∗ ..................880 
+10.6.5 Fairness . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 883
+
+10.7 Summary .....................................894 
+10.8 Bibliographic Notes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 896 
+10.9 Exercises .....................................899
+
+
+A Appendix: Preliminaries 909
+A.1 Frequently Used Symbols and Notations ....................909 
+A.2 Formal Languages ................................912 
+A.3 Propositional Logic................................915 
+A.4 Graphs.......................................920 A.5 ComputationalComplexity ...........................925
+
+},
+	author = {Baier, Christel and Katoen, Joost-Pieter},
+	date-added = {2021-05-11 11:40:44 +0200},
+	date-modified = {2021-05-11 11:40:44 +0200},
+	isbn = {978-0-262-02649-9},
+	publisher = {MIT Press},
+	title = {Principles of Model Checking},
+	url = {http://mitpress.mit.edu/catalog/item/default.asp?ttype=2&tid=11481},
+	year = {2008},
+	Bdsk-File-1 = {YnBsaXN0MDDSAQIDBFxyZWxhdGl2ZVBhdGhZYWxpYXNEYXRhXxBfLi4vLi4vLi4vTGlicmFyeS9Nb2JpbGUgRG9jdW1lbnRzL2NvbX5hcHBsZX5DbG91ZERvY3MvQmlibGlvL0Jvb2tzL0JhaWVyS2F0b2VuLVByaW5jaXBsZXNNQy5wZGZPEQHYAAAAAAHYAAIAAAdzeXN0ZW1lAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQkQAAf////8cQmFpZXJLYXRvZW4tUHJpbmNpcGxlc01DLnBkZgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/////wAAAAAAAAAAAAAAAAADAAYAAAogY3UAAAAAAAAAAAAAAAAABUJvb2tzAAACAGcvOlVzZXJzOmphY3F1ZW1hOkxpYnJhcnk6TW9iaWxlIERvY3VtZW50czpjb21+YXBwbGV+Q2xvdWREb2NzOkJpYmxpbzpCb29rczpCYWllckthdG9lbi1QcmluY2lwbGVzTUMucGRmAAAOADoAHABCAGEAaQBlAHIASwBhAHQAbwBlAG4ALQBQAHIAaQBuAGMAaQBwAGwAZQBzAE0AQwAuAHAAZABmAA8AEAAHAHMAeQBzAHQAZQBtAGUAEgBlVXNlcnMvamFjcXVlbWEvTGlicmFyeS9Nb2JpbGUgRG9jdW1lbnRzL2NvbX5hcHBsZX5DbG91ZERvY3MvQmlibGlvL0Jvb2tzL0JhaWVyS2F0b2VuLVByaW5jaXBsZXNNQy5wZGYAABMAAS8AABUAAgAP//8AAAAIAA0AGgAkAIYAAAAAAAACAQAAAAAAAAAFAAAAAAAAAAAAAAAAAAACYg==},
+	Bdsk-Url-1 = {http://mitpress.mit.edu/catalog/item/default.asp?ttype=2&tid=11481}}
+
+@inproceedings{Vardi07ciaa,
+	author = {Vardi, Moshe Y},
+	booktitle = {International Conference on Implementation and Application of Automata},
+	date-added = {2021-05-11 11:29:21 +0200},
+	date-modified = {2021-05-11 11:29:21 +0200},
+	organization = {Springer},
+	pages = {5--10},
+	title = {Linear-time model checking: automata theory in practice},
+	year = {2007},
+	Bdsk-File-1 = {YnBsaXN0MDDSAQIDBFxyZWxhdGl2ZVBhdGhZYWxpYXNEYXRhXxBULi4vLi4vLi4vTGlicmFyeS9Nb2JpbGUgRG9jdW1lbnRzL2NvbX5hcHBsZX5DbG91ZERvY3MvQmlibGlvL1N1cnZleXMvVmFyZGkwN2NpYWEucGRmTxEBqAAAAAABqAACAAAHc3lzdGVtZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEJEAAH/////D1ZhcmRpMDdjaWFhLnBkZgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP////8AAAAAAAAAAAAAAAAAAwAGAAAKIGN1AAAAAAAAAAAAAAAAAAdTdXJ2ZXlzAAACAFwvOlVzZXJzOmphY3F1ZW1hOkxpYnJhcnk6TW9iaWxlIERvY3VtZW50czpjb21+YXBwbGV+Q2xvdWREb2NzOkJpYmxpbzpTdXJ2ZXlzOlZhcmRpMDdjaWFhLnBkZgAOACAADwBWAGEAcgBkAGkAMAA3AGMAaQBhAGEALgBwAGQAZgAPABAABwBzAHkAcwB0AGUAbQBlABIAWlVzZXJzL2phY3F1ZW1hL0xpYnJhcnkvTW9iaWxlIERvY3VtZW50cy9jb21+YXBwbGV+Q2xvdWREb2NzL0JpYmxpby9TdXJ2ZXlzL1ZhcmRpMDdjaWFhLnBkZgATAAEvAAAVAAIAD///AAAACAANABoAJAB7AAAAAAAAAgEAAAAAAAAABQAAAAAAAAAAAAAAAAAAAic=}}
+
+@inproceedings{Allauzen07openfst,
+	author = {Allauzen, Cyril and Riley, Michael and Schalkwyk, Johan and Skut, Wojciech and Mohri, Mehryar},
+	booktitle = {International Conference on Implementation and Application of Automata},
+	date-added = {2021-05-11 11:29:04 +0200},
+	date-modified = {2021-05-11 11:29:04 +0200},
+	organization = {Springer},
+	pages = {11--23},
+	title = {OpenFst: A general and efficient weighted finite-state transducer library},
+	year = {2007},
+	Bdsk-File-1 = {YnBsaXN0MDDSAQIDBFxyZWxhdGl2ZVBhdGhZYWxpYXNEYXRhXxBbLi4vLi4vLi4vTGlicmFyeS9Nb2JpbGUgRG9jdW1lbnRzL2NvbX5hcHBsZX5DbG91ZERvY3MvQmlibGlvL0FydGljbGVzL0FsbGF1emVuMDdvcGVuZnN0LnBkZk8RAcQAAAAAAcQAAgAAB3N5c3RlbWUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABCRAAB/////xVBbGxhdXplbjA3b3BlbmZzdC5wZGYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/////AAAAAAAAAAAAAAAAAAMABgAACiBjdQAAAAAAAAAAAAAAAAAIQXJ0aWNsZXMAAgBjLzpVc2VyczpqYWNxdWVtYTpMaWJyYXJ5Ok1vYmlsZSBEb2N1bWVudHM6Y29tfmFwcGxlfkNsb3VkRG9jczpCaWJsaW86QXJ0aWNsZXM6QWxsYXV6ZW4wN29wZW5mc3QucGRmAAAOACwAFQBBAGwAbABhAHUAegBlAG4AMAA3AG8AcABlAG4AZgBzAHQALgBwAGQAZgAPABAABwBzAHkAcwB0AGUAbQBlABIAYVVzZXJzL2phY3F1ZW1hL0xpYnJhcnkvTW9iaWxlIERvY3VtZW50cy9jb21+YXBwbGV+Q2xvdWREb2NzL0JpYmxpby9BcnRpY2xlcy9BbGxhdXplbjA3b3BlbmZzdC5wZGYAABMAAS8AABUAAgAP//8AAAAIAA0AGgAkAIIAAAAAAAACAQAAAAAAAAAFAAAAAAAAAAAAAAAAAAACSg==}}
 
 @inproceedings{Benedikt10logic,
 	author = {Benedikt, Michael and Ley, Clemens and Puppis, Gabriele},
@@ -29,7 +342,8 @@
 	publisher = {Elsevier},
 	title = {An algebraic approach to data languages and timed languages},
 	volume = {182},
-	year = {2003}}
+	year = {2003},
+	Bdsk-File-1 = {YnBsaXN0MDDSAQIDBFxyZWxhdGl2ZVBhdGhZYWxpYXNEYXRhXxBWLi4vLi4vLi4vTGlicmFyeS9Nb2JpbGUgRG9jdW1lbnRzL2NvbX5hcHBsZX5DbG91ZERvY3MvQmlibGlvL0FydGljbGVzL0JvdXllcjAzZGF0YS5wZGZPEQGuAAAAAAGuAAIAAAdzeXN0ZW1lAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQkQAAf////8QQm91eWVyMDNkYXRhLnBkZgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/////wAAAAAAAAAAAAAAAAADAAYAAAogY3UAAAAAAAAAAAAAAAAACEFydGljbGVzAAIAXi86VXNlcnM6amFjcXVlbWE6TGlicmFyeTpNb2JpbGUgRG9jdW1lbnRzOmNvbX5hcHBsZX5DbG91ZERvY3M6QmlibGlvOkFydGljbGVzOkJvdXllcjAzZGF0YS5wZGYADgAiABAAQgBvAHUAeQBlAHIAMAAzAGQAYQB0AGEALgBwAGQAZgAPABAABwBzAHkAcwB0AGUAbQBlABIAXFVzZXJzL2phY3F1ZW1hL0xpYnJhcnkvTW9iaWxlIERvY3VtZW50cy9jb21+YXBwbGV+Q2xvdWREb2NzL0JpYmxpby9BcnRpY2xlcy9Cb3V5ZXIwM2RhdGEucGRmABMAAS8AABUAAgAP//8AAAAIAA0AGgAkAH0AAAAAAAACAQAAAAAAAAAFAAAAAAAAAAAAAAAAAAACLw==}}
 
 @article{Bojanczyk11FO2,
 	author = {Boja{\'n}czyk, Miko{\l}aj and David, Claire and Muscholl, Anca and Schwentick, Thomas and Segoufin, Luc},
@@ -163,7 +477,7 @@ The reader should have an understanding of algorithmic thinking, especially recu
 	publisher = {Springer},
 	series = {Monographs in Computer Science},
 	title = {Parsing Techniques},
-	year = {2008 },
+	year = {2008},
 	Bdsk-File-1 = {YnBsaXN0MDDSAQIDBFxyZWxhdGl2ZVBhdGhZYWxpYXNEYXRhXxBVLi4vLi4vLi4vRHJvcGJveC9TaGFyZWQvQXV0b21hdGljIE11c2ljIFRyYW5zY3JpcHRpb24vUGFyc2luZy9HcnVuZUphY29icy1QYXJzaW5nLnBkZk8RAbwAAAAAAbwAAgAAB3N5c3RlbWUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABCRAAB/////xdHcnVuZUphY29icy1QYXJzaW5nLnBkZgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/////AAAAAAAAAAAAAAAAAAMABQAACiBjdQAAAAAAAAAAAAAAAAAHUGFyc2luZwAAAgBdLzpVc2VyczpqYWNxdWVtYTpEcm9wYm94OlNoYXJlZDpBdXRvbWF0aWMgTXVzaWMgVHJhbnNjcmlwdGlvbjpQYXJzaW5nOkdydW5lSmFjb2JzLVBhcnNpbmcucGRmAAAOADAAFwBHAHIAdQBuAGUASgBhAGMAbwBiAHMALQBQAGEAcgBzAGkAbgBnAC4AcABkAGYADwAQAAcAcwB5AHMAdABlAG0AZQASAFtVc2Vycy9qYWNxdWVtYS9Ecm9wYm94L1NoYXJlZC9BdXRvbWF0aWMgTXVzaWMgVHJhbnNjcmlwdGlvbi9QYXJzaW5nL0dydW5lSmFjb2JzLVBhcnNpbmcucGRmAAATAAEvAAAVAAIAD///AAAACAANABoAJAB8AAAAAAAAAgEAAAAAAAAABQAAAAAAAAAAAAAAAAAAAjw=}}
 
 @incollection{Kuich97semirings,
@@ -901,16 +1215,6 @@ t also gives an efficient linear-space algorithm for finding an optimal alignmen
 	year = {2009},
 	Bdsk-File-1 = {YnBsaXN0MDDSAQIDBFxyZWxhdGl2ZVBhdGhZYWxpYXNEYXRhXxBhLi4vLi4vLi4vTGlicmFyeS9Nb2JpbGUgRG9jdW1lbnRzL2NvbX5hcHBsZX5DbG91ZERvY3MvQmlibGlvL0FydGljbGVzL0FsbGF1emVuTW9ocmkwOWVkaXRkaXN0LnBkZk8RAdwAAAAAAdwAAgAAB3N5c3RlbWUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABCRAAB/////xtBbGxhdXplbk1vaHJpMDllZGl0ZGlzdC5wZGYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/////AAAAAAAAAAAAAAAAAAMABgAACiBjdQAAAAAAAAAAAAAAAAAIQXJ0aWNsZXMAAgBpLzpVc2VyczpqYWNxdWVtYTpMaWJyYXJ5Ok1vYmlsZSBEb2N1bWVudHM6Y29tfmFwcGxlfkNsb3VkRG9jczpCaWJsaW86QXJ0aWNsZXM6QWxsYXV6ZW5Nb2hyaTA5ZWRpdGRpc3QucGRmAAAOADgAGwBBAGwAbABhAHUAegBlAG4ATQBvAGgAcgBpADAAOQBlAGQAaQB0AGQAaQBzAHQALgBwAGQAZgAPABAABwBzAHkAcwB0AGUAbQBlABIAZ1VzZXJzL2phY3F1ZW1hL0xpYnJhcnkvTW9iaWxlIERvY3VtZW50cy9jb21+YXBwbGV+Q2xvdWREb2NzL0JpYmxpby9BcnRpY2xlcy9BbGxhdXplbk1vaHJpMDllZGl0ZGlzdC5wZGYAABMAAS8AABUAAgAP//8AAAAIAA0AGgAkAIgAAAAAAAACAQAAAAAAAAAFAAAAAAAAAAAAAAAAAAACaA==},
 	Bdsk-Url-1 = {http://arxiv.org/abs/0904.4686}}
-
-@inproceedings{Allauzen07openfst,
-	author = {Allauzen, Cyril and Riley, Michael and Schalkwyk, Johan and Skut, Wojciech and Mohri, Mehryar},
-	booktitle = {International Conference on Implementation and Application of Automata},
-	date-added = {2021-04-26 16:22:00 +0200},
-	date-modified = {2021-04-26 16:22:00 +0200},
-	organization = {Springer},
-	pages = {11--23},
-	title = {OpenFst: A general and efficient weighted finite-state transducer library},
-	year = {2007}}
 
 @inproceedings{dAntonyAlur14SVPDA,
 	abstract = {Nested words model data with both linear and hierarchical structure such as XML documents and program traces. A nested word is a sequence of positions together with a matching relation that con- nects open tags (calls) with the corresponding close tags (returns). Vis- ibly Pushdown Automata are a restricted class of pushdown automata that process nested words, and have many appealing theoretical proper- ties such as closure under Boolean operations and decidable equivalence. However, like any classical automata models, they are limited to finite alphabets. This limitation is restrictive for practical applications to both XML processing and program trace analysis, where values for individual symbols are usually drawn from an unbounded domain. With this mo- tivation, we introduce Symbolic Visibly Pushdown Automata (SVPA) as an executable model for nested words over infinite alphabets. In this model, transitions are labeled with predicates over the input alphabet, analogous to symbolic automata processing strings over infinite alpha- bets. A key novelty of SVPAs is the use of binary predicates to model relations between open and close tags in a nested word. We show how SVPAs still enjoy the decidability and closure properties of Visibly Push- down Automata. We use SVPAs to model XML validation policies and program properties that are not naturally expressible with previous for- malisms and provide experimental results for our implementation.},
