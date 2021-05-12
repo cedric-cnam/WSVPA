@@ -462,7 +462,7 @@ that motivated this study.
 
 We follow the approach of~\cite{Mohri03EDWA} for the computation of distances
 between words and languages, with weighted transducers, 
-and extending it to infinite alphabets.
+extending it to infinite alphabets.
 % with models of symbolic weighted automata and transducers. 
 %
 The models introduced in this section generalize 
@@ -477,7 +477,7 @@ where the latter guards are restricted to the Boolean semiring.
 
 \subsection{Semirings}
 \label{section:semiring}
-We shall consider semiring domains for the weight values of our language models.
+We shall consider semiring for the weight values of our language models.
 %
 A \emph{semiring} $\< \Semiring, \oplus, \zero, \otimes, \one>$ 
 is a structure with a domain~$\Semiring$,
@@ -487,9 +487,9 @@ with respective neutral elements $\zero$ and $\one$ and such that:
 %$\< \mathbb{S}, \oplus, \zero>$ is a commutative monoid
 %$\< \mathbb{S}, \otimes, \one>$ is a monoid
 \begin{itemize}
-\item $\oplus$ is commutative 
--- therefore $\< \Semiring, \oplus, \zero>$ is a commutative monoid 
-   and $\< \Semiring, \otimes, \one>$ is a monoid,
+\item $\oplus$ is commutative;
+ $\< \Semiring, \oplus, \zero>$ is a commutative monoid 
+   and $\< \Semiring, \otimes, \one>$ a monoid,
 \item $\otimes$ distributes over~$\oplus$:  $\forall x, y, z \in \mathbb{S}$,
 $x \otimes (y \oplus z) = (x \otimes y) \oplus (x \otimes z)$, 
 and $(x \oplus y) \otimes z = (x \otimes z) \oplus (y \otimes z)$,
@@ -503,7 +503,7 @@ Intuitively, in the models presented in this paper,
 $\oplus$ selects an optimal value from two given values, 
 in order to handle non-determinism, 
 and $\otimes$ combines two values into a single value, 
-in order to describe the chaining of several transitions.
+in a chaining of transitions.
 %and let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a {semiring}, 
 
 \medskip%\noindent
@@ -521,17 +521,20 @@ $x \leq_\oplus y \;\mbox{iff}\; x \oplus y = x$.
 %
 The natural ordering is sometimes defined in the opposite direction~\cite{DrosteKuich09semirings};
 We follow here the direction  %follows \cite{Mohri02semiring}, and 
-that coincides than the usual ordering on the Tropical semiring (\emph{min-plus}).
+that coincides with the usual ordering on the Tropical semiring \emph{min-plus} 
+(Figure~\ref{fig:semirings}).
 
-\begin{lemma}[Monotony, \cite{Mohri02semiring}]
+\begin{lemma}[Monotony, \cite{Mohri02semiring}] \label{lem:monotonic}
 Let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be an idempotent semiring.
 For all $x, y, z  \in \Semiring$,  
 if $x \leq_\oplus y$ then
 $x \oplus z \leq_\oplus y \oplus z$,
 $x \otimes z \leq_\oplus y \otimes z$
 and $z \otimes x \leq_\oplus z \otimes y$.
-\end{lemma}      
-We say in this case that $\Semiring$ is \emph{monotonic}. % \wrt $\leq_\oplus$.
+\end{lemma}   
+When the property of Lemma~\ref{lem:monotonic} holds, 
+%We say in this case that 
+$\Semiring$ is called  \emph{monotonic}. % \wrt $\leq_\oplus$.
 %A semiring $\Semiring$ 
 %is \emph{monotonic} \wrt a partial ordering~$\leq$ 
 %iff for all $x, y, z  \in \Semiring$,  $x \leq y$ implies
@@ -544,7 +547,7 @@ is {superiority}~\cite{Huang08advanceddynamic},
 which corresponds to the 
 \emph{non-negative weights} condition in shortest-path algorithms~\cite{Dijkstra59anote}.
 Intuitively, it means that combining elements with $\otimes$ always increase their weight. 
-Formally, it is defined as the property of the following lemma.
+Formally, it is defined as the property ($i$) below. %of the following lemma.
 
 \begin{lemma}[Superiority, Boundedness]
 \label{lem:superior}\label{lem:bounded}
@@ -558,38 +561,43 @@ $y \leq_\oplus x \otimes y$
 \end{itemize}
 \end{lemma}
 %
-In~\cite{Huang08advanceddynamic}, the property~$i.$ is called 
-$\Semiring$ is \emph{superior} \wrt the ordering~$\leq_\oplus$.
-It implies that 
-%It holds that If $\Semiring$ is superior \wrt~$\leq$, then %$\one \leq \zero$
-for all $x \in \Semiring$, $\one \leq_\oplus x \leq_\oplus \zero$.
-Indeed, by the second inequality of $(i.)$ with $y = \one$, $\one \leq_\oplus \one \otimes x = x$, 
-and, by the first inequality of $(i.)$ with $y = \zero$,  
+\begin{proof} %(Lemma~\ref{lem:bounded})
+For $(ii) \Rightarrow (i)$ : 
+$x \oplus (x \otimes y) = x \otimes (\one \oplus y) = x$, 
+by distributivity of~$\otimes$ over~$\oplus$. 
+Hence $x \leq_\oplus x \otimes y$.
+Similarly, $y \oplus (x \otimes y) = (\one \oplus x) \otimes y = y$, 
+hence $y \leq_\oplus x \otimes y$.
+%
+For $(i) \Rightarrow (ii)$ :
+%$(i)$ implies that $\one \leq_\oplus x$ for all $x \in \Semiring$, 
+by the second inequality of ($i$), with $y = \one$, 
+$\one \leq_\oplus x \otimes \one = x$
+\ie, by definition of $\leq_\oplus$, $\one \oplus x = \one$.
+\qed
+\end{proof}
+
+In~\cite{Huang08advanceddynamic}, $\Semiring$ with the property~$(i)$ 
+is called \emph{superior} \wrt the ordering~$\leq_\oplus$.
+We have seen in the proof of Lemma~\ref{lem:bounded} that it implies that 
+$\one \leq_\oplus x$ for all $x \in \Semiring$.
+Similarly, by the first inequality of ($i$) with $y = \zero$,  
 $x \leq_\oplus x \otimes \zero = \zero$.
+%
+Hence, in a superior semiring, % \wrt~$\leq$, 
+it holds that %$\one \leq \zero$
+for all $x \in \Semiring$, $\one \leq_\oplus x \leq_\oplus \zero$.
 %
 Intuitively, from an optimization point of view,
 it means that $\one$ is the best value, and $\zero$ the worst.
 %** superior implies $\Semiring$ bounded~\cite{Mohri02semiring} see **
 %
-In~\cite{Mohri02semiring}, the property of Lemma~\ref{lem:bounded}(in the form $ii.$) 
+In~\cite{Mohri02semiring}, the property ($ii$) of Lemma~\ref{lem:bounded}  
 is called \emph{boundedness} of $\Semiring$ -- we shall use this term in the rest of the paper. 
 % \emph{negative boundedness} 
 It implies that, when looking for a best path in a graph whose edges
 are weighted by values of $\Semiring$, the loops can be safely avoided.
 
-\begin{proof}(Lemma~\ref{lem:bounded})
-For $(ii.) \Rightarrow (i.)$ : 
-$x \oplus (x \otimes y) = x \otimes (\one \oplus y) = x$, 
-by distributivity of $\otimes$ over $\oplus$. 
-Hence $x \leq_\oplus x \otimes y$.
-Similarly, $y \oplus (x \otimes y) = (\one \oplus x) \otimes y = y$, 
-hence $y \leq_\oplus x \otimes y$.
-%
-For $(i.) \Rightarrow (ii.)$ : as we have seen, $(i.)$ implies that 
-$\one \leq_\oplus x$ for all $x \in \Semiring$, 
-\ie, by definition of $\leq_\oplus$, $\one \oplus x = \one$.
-\qed
-\end{proof}
 
 %Following the terminology of~\cite{Mohri02semiring},
 %when $\forall x \in \dom(\Semiring), \one \oplus x = \one$,
@@ -618,7 +626,7 @@ $(x_i)_{i \in I}$ %$\{ x_i \mid i \in I \}$
 of elements of $\dom(\Semiring)$ over an index set $I \subset \mathbb{N}$,
 the infinite sum $\bigoplus_{i \in I} x_i$
 is well-defined and in $\dom(\Semiring)$,
-and the following properties hold:
+and the following holds: %properties
 \begin{description}
 \item[$i.$]
 \emph{infinite sums extend finite sums:}
@@ -651,7 +659,7 @@ for all $I \subseteq \mathbb{N}$,
 
 
 \begin{example}
-Figure~\ref{gif:semirings} presented examples of semirings interesting in practice 
+Figure~\ref{fig:semirings} presented examples of semirings interesting in practice 
 and enjoying the above properties.
 \end{example}
 
