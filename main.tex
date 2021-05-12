@@ -161,7 +161,7 @@
 \begin{abstract}
 %Symbolic Weighted (SW) extension of symbolic automata...
 We propose a framework for weighted parsing over infinite alphabets.
-
+%
 It is based on language models called Symbolic Weighted Automata (SWA) 
 at the joint %intersection 
 between Symbolic Automata (SA) and Weighted Automata (WA), 
@@ -277,8 +277,9 @@ Typically, $\oplus$ can select the minimum of two weights.
 The weight domain, equipped with these two operators is assumed, at minima, 
 to form a \emph{semiring} $\Semiring$ handling infinite sums, 
 %\cite{Eilenberg74automata}
-such as a min-plus algebra of domain $\mathbb{R}^+ \cup \{ +\infty\}$, 
-where $\oplus$ is min and $\otimes$ is plus.
+such as the Viterbi semiring and the tropical min-plus algebra, see Figure~\ref{fig:semirings}. 
+%of domain $\mathbb{R}^+ \cup \{ +\infty\}$, 
+%where $\oplus$ is min and $\otimes$ is plus .
 %by ranking 
 %making the weight domain a semiring.
 %Some efficient specialized parsing algorithms~\cite{Huang05kbest} have been proposed in this context 
@@ -376,18 +377,22 @@ More precisely, a \SWVPA $A$ associates a weight value $A(t)$ % \in \Semiring$
 to a given a nested word $t$ which is the linearization of an AST. %representing a parse tree.
 %
 On the other hand, 
-a \SWT is used to define a distance $d(s, t)$ between two finite words $s$ and $t$
+a \SWT is used to define a distance $T(s, t)$ between two finite words $s$ and $t$
 over an infinite alphabet, following~\cite{Mohri03EDWA}.
 Then, the \emph{SW-parsing} problem aims at %computing 
-finding $t$ minimizing (\wrt the ranking defined by $\oplus$)
-$d(s, t) \otimes A(w)$ -- 
-this value is called the distance between $s$ and $A$ in~\cite{Mohri03EDWA}.
-
-
-... like above weighted-parsing methods, 
-our approach to parsing proceeds in 2 steps, 
-Bar-Hillel construction... and best path search \cite{Mohri,Huang05}...
-** revise **
+finding $t$ minimizing 
+$T(s, t) \otimes A(t)$ (\wrt the ranking defined by $\oplus$)
+-- this value is called the distance between $s$ and $A$ in~\cite{Mohri03EDWA}.
+%
+Similarly to weighted-parsing 
+methods~\cite{Goodman99SemiringParsing,Nederhof03weightedParsing,MorbitzVogler19weighted-parsing}, 
+our approach proceeds in two steps, 
+based on properties of the SW models. 
+The first step is a Bar-Hillel construction where, 
+given a \SWT $T$, a \SWVPA $A$, and an input word $s$, 
+a \SWVPA $A_{T, s}$ is built, such that for all $t$, $A_{T, s}(t) = T(s, t) \otimes A(t)$.
+In the second step, a best AST $t$ is found by applying best search
+similar to shortest distance in graphs~\cite{Mohri02semiring,Huang05kbest} to $A_{T, s}$.
 %In expressiveness, they are equivalent to weighted CFG. 
 %and can be used in a general approach for parsing over infinite input alphabets.
 %
@@ -408,19 +413,34 @@ Bar-Hillel construction... and best path search \cite{Mohri,Huang05}...
 % %dealing with infinite set of input symbols...
 % value in a semiring...
 
-The main contributions of the paper are: ...
-%generalization of 2 classes
-%framework for parsing over infinite alphabet, based on generic def. of distances
-%use of VPA for parsing, word instead of trees, use comparison input-output
+The main contributions of the paper are: 
+($i$)~the introduction of automata, \SWA, transducers, \SWT (Section~\ref{section:SWA}),
+and visibly pushdown automata \SWVPA (Section~\ref{sec:SWVPA}),
+generalizing the corresponding classes of symbolic and weighted models, 
+%for the weighted computation on (nested) words over infinite alphabets;  
+($ii$)~a polynomial best-search algorithm for \SWVPA, %(Section~\ref{sec:best})
+% a framework for parsing over infinite alphabets, 
+and ($iii$)~a uniform framework (Section~\ref{sec:parsing}) for parsing over infinite alphabets, 
+the keys to which are 
+($iii.a$)~the \SWT-based definition of generic edit distances between input and output words,
+and ($iii.b$)~the use of nested words, and \SWVPA, 
+instead of syntax trees and grammars. %(\S~\ref{sec:trees}).
+%
+Finally, Section~\ref{sec:transcription} describes
+the implemented application %of this approach 
+to automated music transcription
+that motivated this study.
 
+%based these models and on generic def. of distances;
+%the use of VPA for parsing, word instead of trees, use comparison input-output.
+%and best-search
 
-
-In Section~\ref{section:SWA} we introduce \SWA and \SWT.
-Then \SWVPA are defined in Section~\ref{sec:SWVPA}, 
-where a polynomial 1-best algorithm is described that can be use to solve
-Symbolic Weighted Parsing, as described Section~\ref{sec:parsing}.
-Finally, in Section~\ref{sec:transcription}, we present an application 
-of this approach to automated music transcription that has been implemented.
+%In Section~\ref{section:SWA} we introduce \SWA and \SWT.
+%Then \SWVPA are defined in Section~\ref{sec:SWVPA}, 
+%where a polynomial 1-best algorithm is described that can be use to solve
+%Symbolic Weighted Parsing, as described Section~\ref{sec:parsing}.
+%Finally, in Section~\ref{sec:transcription}, we present an application 
+%of this approach to automated music transcription that has been implemented.
 
 
 
@@ -643,7 +663,7 @@ Counting & $\mathbb{N}$ & $+$ & $\times$ & 0 & 1 \\
 \hline
 Viterbi & $[0, 1] \subset \mathbb{R}$ & $\mathit{max}$ & $\times$ & 0 & 1\\ % & $x \leq_\oplus y \iff x \ge y$  \\
 \hline
-Tropical & $\mathbb{R}_+ \cup \{ +\infty\}$ & $\mathit{min}$ & $+$ & $+\infty$ & $0$\\ % & $x \leq_\oplus y \iff x \leq y$   \\
+Tropical min-plus & $\mathbb{R}_+ \cup \{ +\infty\}$ & $\mathit{min}$ & $+$ & $+\infty$ & $0$\\ % & $x \leq_\oplus y \iff x \leq y$   \\
 \hline
 %MaxPlus & $\mathbb{Q} \cup \{ -\infty\}$ & $\mathsf{max}$ & $+$ & $-\infty$ & $0$ \\
 %\hline
@@ -1127,7 +1147,8 @@ The construction is essentially the same
 as in the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 
 
-\subsection{Best-first Search}
+\subsection{Best-first Search} 
+\label{sec:best}\label{sec:search}
 Let us assume that the semiring $\Semiring$ is
 commutative, bounded, complete, and total.
 % total ? 
@@ -1312,6 +1333,7 @@ such that $A(s)$ is minimal \wrt the natural ordering for $\Semiring$.
 
 
 \subsection{Trees and Nested-Words}
+\label{sec:trees}
 The hierarchical structure of nested-words, defined the \emph{call} and \emph{return} markup symbols of 
 suggest a correspondence between these word and trees. 
 The lifting of this correspondence to languages, respective of tree automata and VPA have
