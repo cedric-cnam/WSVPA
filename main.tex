@@ -111,6 +111,7 @@
 \def\SWVPA{\textsf{sw-VPA}\xspace}
 \def\weight{\mathsf{weight}}
 \def\wei{\mathsf{w}}
+\def\mei{\mathsf{m}}
 \def\init{\mathsf{in}}
 \def\final{\mathsf{out}}
 \newcommand{\call}[1]{\ensuremath #1} %{\ensuremath \langle_{#1}}
@@ -482,8 +483,8 @@ We shall consider semiring for the weight values of our language models.
 A \emph{semiring} $\< \Semiring, \oplus, \zero, \otimes, \one>$ 
 is a structure with a domain~$\Semiring$,
 equipped with two associative
-binary operators~$\oplus$ and $\otimes$
-with respective neutral elements $\zero$ and $\one$ and such that:
+binary operators~$\oplus$ and $\otimes$,
+with respective neutral elements $\zero$ and $\one$, and such that:
 %$\< \mathbb{S}, \oplus, \zero>$ is a commutative monoid
 %$\< \mathbb{S}, \otimes, \one>$ is a monoid
 \begin{itemize}
@@ -562,23 +563,23 @@ $y \leq_\oplus x \otimes y$
 \end{lemma}
 %
 \begin{proof} %(Lemma~\ref{lem:bounded})
-For $(ii) \Rightarrow (i)$ : 
+$(ii) \Rightarrow (i)$ : 
 $x \oplus (x \otimes y) = x \otimes (\one \oplus y) = x$, 
 by distributivity of~$\otimes$ over~$\oplus$. 
 Hence $x \leq_\oplus x \otimes y$.
 Similarly, $y \oplus (x \otimes y) = (\one \oplus x) \otimes y = y$, 
 hence $y \leq_\oplus x \otimes y$.
 %
-For $(i) \Rightarrow (ii)$ :
+$(i) \Rightarrow (ii)$ :
 %$(i)$ implies that $\one \leq_\oplus x$ for all $x \in \Semiring$, 
 by the second inequality of ($i$), with $y = \one$, 
-$\one \leq_\oplus x \otimes \one = x$
-\ie, by definition of $\leq_\oplus$, $\one \oplus x = \one$.
+$\one \leq_\oplus x \otimes \one = x$, \ie, 
+by definition of $\leq_\oplus$, $\one \oplus x = \one$.
 \qed
 \end{proof}
 
-In~\cite{Huang08advanceddynamic}, $\Semiring$ with the property~$(i)$ 
-is called \emph{superior} \wrt the ordering~$\leq_\oplus$.
+In~\cite{Huang08advanceddynamic}, the property~$(i)$ 
+is called $\Semiring$ \emph{superior} \wrt the ordering~$\leq_\oplus$.
 We have seen in the proof of Lemma~\ref{lem:bounded} that it implies that 
 $\one \leq_\oplus x$ for all $x \in \Semiring$.
 Similarly, by the first inequality of ($i$) with $y = \zero$,  
@@ -620,23 +621,25 @@ it~$\leq_\oplus$ is total
 
 %\medskip
 We shall need below infinite sums with~$\oplus$.
-A semiring~$\Semiring$ is called \emph{complete}~\cite{Kuich97semirings}
-if for every family
+A semiring~$\Semiring$ is called \emph{complete}~\cite{Droste09handbook} 
+%(\cite{Droste09handbook} chapter 1) %\cite{Kuich97semirings}
+if it has an %infinite sum 
+operation $\bigoplus_{i \in I} x_i$
+for every family
 $(x_i)_{i \in I}$ %$\{ x_i \mid i \in I \}$
-of elements of $\dom(\Semiring)$ over an index set $I \subset \mathbb{N}$,
-the infinite sum $\bigoplus_{i \in I} x_i$
-is well-defined and in $\dom(\Semiring)$,
-and the following holds: %properties
+of elements of $\dom(\Semiring)$ over an index set $I \subset \mathbb{N}$, such that
+%is well-defined and in $\dom(\Semiring)$,
+the following holds: %properties
 \begin{description}
 \item[$i.$]
-\emph{infinite sums extend finite sums:}
+\emph{infinite sums extend finite sums:}\\
 $\displaystyle\bigoplus_{i \in \emptyset} x_i = \zero$,\quad 
-      $\forall j\in \mathbb{N}, \displaystyle\bigoplus_{i \in \{ j \}} x_i = x_j$,\quad
+      $\forall j\in \mathbb{N}, \displaystyle\bigoplus_{i \in \{ j \}} x_i = x_j$,
       $\forall j, k\in \mathbb{N}, j\neq k, 
       \displaystyle\bigoplus_{i \in \{ j, k \}} x_i = x_j \oplus x_k$,
 %
 \item[$ii.$]
-\emph{associativity and commutativity:}
+\emph{associativity and commutativity:}\\
 for all $I \subseteq \mathbb{N}$
 and all partition $(I_{j})_{j \in J}$ of $I$, %\subseteq \mathbb{N}$, 
 \(
@@ -676,7 +679,7 @@ Counting & $\mathbb{N}$ & $+$ & $\times$ & 0 & 1 \\
 \hline
 Viterbi & $[0, 1] \subset \mathbb{R}$ & $\mathit{max}$ & $\times$ & 0 & 1\\ % & $x \leq_\oplus y \iff x \ge y$  \\
 \hline
-Tropical min-plus & $\mathbb{R}_+ \cup \{ +\infty\}$ & $\mathit{min}$ & $+$ & $+\infty$ & $0$\\ % & $x \leq_\oplus y \iff x \leq y$   \\
+Tropical min-plus & $\mathbb{R}_+ \cup \{ \infty\}$ & $\mathit{min}$ & $+$ & $\infty$ & $0$\\ % & $x \leq_\oplus y \iff x \leq y$   \\
 \hline
 %MaxPlus & $\mathbb{Q} \cup \{ -\infty\}$ & $\mathsf{max}$ & $+$ & $-\infty$ & $0$ \\
 %\hline
@@ -695,59 +698,111 @@ Tropical min-plus & $\mathbb{R}_+ \cup \{ +\infty\}$ & $\mathit{min}$ & $+$ & $+
 
 
 
-
 \subsection{Label Theory}
 \label{section:symbols}
-We shall now define the functions labeling the transitions of SW-automata and -transducers.
-Let $\Sigma$ and $\Delta$ be two countable sets of symbols
-called respectively \emph{input} and \emph{output} \emph{alphabets}, 
-and let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a commutative semiring.
-
-\noindent 
-A \emph{label theory} over $\Sigma$ and $\Delta$
-is made of 3 recursively enumerable sets:
-%$\Phi_\epsilon \subseteq \Semiring$, % containing constant functions valued in $\Semiring$, 
-$\Phi_\Sigma$ and $\Phi_\Delta$, 
-containing unary functions in $\Sigma \to \Semiring$, resp. $\Delta \to \Semiring$, 
-and $\Phi_{\Sigma, \Delta}$  containing binary functions in $\Sigma \times \Delta \to \Semiring$, 
-such that 
-for all $\alpha \in \Semiring$, and $\phi \in \Phi_\Sigma$,
-$\alpha \otimes \phi : x \mapsto \alpha \otimes \phi(x)$, 
-and $\phi \otimes \alpha : x \mapsto \phi(x) \otimes \alpha$
-belong to $\Phi_\Sigma$, and similarly for $\oplus$ 
-and for $\Phi_\Delta$ and $\Phi_{\Sigma, \Delta}$.
+We shall now define the functions labeling the transitions of SW automata and transducers,
+generalizing the Boolean algebras of~\cite{dAntoniVeanes17CAV} 
+from Boolean to other semiring domains.
 %
-Moreover, these sets are required to be closed under the following 
-operators~$\oplus$ and $\otimes$ of~$\Semiring$:
-for all $\phi, \phi' \in \Phi_\Sigma$,
-all $\psi, \psi' \in \Phi_\Delta$, 
-and $\eta, \eta' \in \Phi_{\Sigma, \Delta}$, the function
-\begin{description}
-\item $\phi \otimes \phi' : x \mapsto \phi(x) \otimes \phi'(x)$ belongs to $\Phi_\Sigma$, 
-\item $\psi \otimes \psi' : y \mapsto \psi(y) \otimes \psi'(y)$ belongs to $\Phi_\Delta$,
-\item $\phi \otimes \eta : x, y \mapsto \phi(x) \otimes \eta(x, y)$ belongs to $\Phi_{\Sigma, \Delta}$,
-\item $\eta \otimes \psi : x, y \mapsto \eta(x, y) \otimes \psi(y)$ belongs to $\Phi_{\Sigma, \Delta}$,
-\item $\eta \otimes \eta' : x, y \mapsto \eta(x, y) \otimes \eta'(x, y)$ belongs to $\Phi_{\Sigma, \Delta}$.
-\end{description}
-And the same also holds for the binary sum operator $\oplus$.
+We consider \emph{alphabets}, which are countable sets of symbols 
+denoted $\Sigma$, $\Delta$,...
+%Let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a commutative, complete semiring.
+%
+\noindent 
+Given a semiring $\< \Semiring, \oplus, \zero, \otimes, \one>$, 
+a $\Semiring$-\emph{label theory}
+is a tuplet $\bar\Phi$ of recursively enumerable sets of the form
+%$\Phi_\epsilon \subseteq \Semiring$, % containing constant functions valued in $\Semiring$, 
+$\Phi_\Sigma$, %and $\Phi_\Delta$, 
+containing unary functions of type $\Sigma \to \Semiring$, %resp. $\Delta \to \Semiring$, 
+and $\Phi_{\Sigma, \Delta}$, containing binary functions $\Sigma \times \Delta \to \Semiring$, 
+such that:
 
-\noindent
-%\marginpar{necessary?}
-Finally, it is also required 
-% that the codomain of every function of $\Phi_\Sigma$ and $\Phi_\Delta$ 
-% is a subset of $\Phi_\epsilon$, and
-that all partial applications of functions $\Phi_{\Sigma, \Delta}$, 
-resp.  $f_a: y \mapsto f(a, y)$ for $a \in \Sigma$ and $y \in \Delta$
-and  $f_b: x \mapsto f(x, b)$ for $b \in \Delta$ and $x \in \Sigma$, 
+\noindent -- 
+for all $\Phi_{\Sigma, \Delta} \in \bar\Phi$, there exists 
+$\Phi_{\Sigma} \in \bar\Phi$ and $\Phi_{\Delta} \in \bar\Phi$
+
+\noindent -- 
+for all $\alpha \in \Semiring$ and $\phi \in \Phi_\Sigma$,
+      $\alpha \otimes \phi : x \mapsto \alpha \otimes \phi(x)$, 
+      and $\phi \otimes \alpha : x \mapsto \phi(x) \otimes \alpha$\\
+\phantom{--} belong to $\Phi_\Sigma$, and similarly for $\oplus$ 
+      and for $\Phi_{\Sigma, \Delta}$
+
+\noindent -- 
+for all $\phi, \phi' \in \Phi_\Sigma$,
+$\phi \otimes \phi': x \mapsto \phi(x) \otimes \phi'(x)$ belongs to $\Phi_\Sigma$
+
+\noindent -- 
+for all $\eta, \eta' \in \Phi_{\Sigma, \Delta}$
+$\eta \otimes \eta': x, y \mapsto \eta(x, y) \otimes \eta'(x, y)$ belongs to $\Phi_{\Sigma, \Delta}$
+
+\noindent -- 
+for all $\phi \in \Phi_\Sigma$ and $\eta \in \Phi_{\Sigma, \Delta}$,
+$\phi \otimes \eta: x, y \mapsto \phi(x) \otimes \eta(x, y)$ belongs to $\Phi_{\Sigma, \Delta}$
+
+\noindent -- 
+for all $\psi \in \Phi_\Delta$ and $\eta \in \Phi_{\Sigma, \Delta}$,
+$\eta \otimes \psi: x, y \mapsto \eta(x, y) \otimes \psi(y)$ belongs to $\Phi_{\Sigma, \Delta}$
+
+\noindent -- 
+similar closures holds for $\oplus$
+
+\noindent -- 
+partial applications $\eta \in \Phi_{\Sigma, \Delta}$, 
+resp. $\eta_a: y \mapsto \eta(a, y)$ for $a \in \Sigma$ %and $y \in \Delta$
+and\\
+\phantom{--} $\eta_b: x \mapsto \eta(x, b)$ for $b \in \Delta$ %and $x \in \Sigma$, 
 belong resp. to~$\Phi_\Sigma$ and~$\Phi_\Delta$.
+
+
+%Moreover, these sets are required to be closed under the 
+%operators~$\oplus$ and~$\otimes$ of~$\Semiring$:
+%for all $\phi, \phi' \in \Phi_\Sigma$,
+%$\psi, \psi' \in \Phi_\Delta$, 
+%and $\eta, \eta' \in \Phi_{\Sigma, \Delta}$, %the function
+%%
+%\begin{center}
+%\begin{tabular}{cclll}
+%$\phi \otimes \phi'$ & : & $x \mapsto \phi(x) \otimes \phi'(x)$ & belongs to $\Phi_\Sigma$,\\
+%$\psi \otimes \psi'$ & : & $y \mapsto \psi(y) \otimes \psi'(y)$ & belongs to $\Phi_\Delta$,\\
+%$\phi \otimes \eta$\;  & : & $x, y \mapsto \phi(x) \otimes \eta(x, y)$ & belongs to $\Phi_{\Sigma, \Delta}$,\\
+%$\eta \otimes \psi$  & : & $x, y \mapsto \eta(x, y) \otimes \psi(y)$ & belongs to $\Phi_{\Sigma, \Delta}$,\\
+%$\eta \otimes \eta'$ & : & $x, y \mapsto \eta(x, y) \otimes \eta'(x, y)$ & belongs to $\Phi_{\Sigma, \Delta}$, &
+%\multicolumn{1}{r}{and similarly for $\oplus$.}\\ %the same also holds for the binary sum operator $\oplus$.
+%\end{tabular}
+%\end{center}
+%
+%Finally, it is also required 
+%% that the codomain of every function of $\Phi_\Sigma$ and $\Phi_\Delta$ 
+%% is a subset of $\Phi_\epsilon$, and
+%that the partial applications of a function $\eta \in \Phi_{\Sigma, \Delta}$, 
+%resp.  $\eta_a: y \mapsto f(a, y)$ for $a \in \Sigma$ and $y \in \Delta$
+%and  $\eta_b: x \mapsto f(x, b)$ for $b \in \Delta$ and $x \in \Sigma$, 
+%belong resp. to~$\Phi_\Sigma$ and~$\Phi_\Delta$.
+
+
+%For a complete semiring $\Semiring$, 
+%a function $\phi: \Sigma \to \Semiring$, 
+%resp. $\eta: \Sigma \times \Delta \to \Semiring$,
+%is called 
+
+
+
 
 \subsection{Definitions} \label{sec:SWTdef}\label{sec:SWAdef}
 %(SWT)
+
+Let $\Semiring$ be a commutative and complete semiring, 
+$\Sigma$ and $\Delta$ be alphabets called respectively \emph{input} and \emph{output}, %{alphabets}, 
+and $\bar\Phi = \< \Phi_\Sigma, \Phi_\Delta, \Phi_{\Sigma, \Delta}>$ be an $\Semiring$-label theory.
+
 \begin{definition}
 \label{def:transducer} \label{def:SWT}
 A \emph{symbolic-weighted transducer} (\SWT)
-over the input and output alphabets~$\Sigma$ and $\Delta$ 
-and the semiring $\Semiring$ is a tuple
+over $\Sigma$, $\Delta$, $\Semiring$ and $\bar\Phi$
+%the input and output alphabets~$\Sigma$ and $\Delta$ with label theory $\bar\Phi$, and the semiring $\Semiring$ 
+is a tuple
 $T = \< Q, \init, \bar{\wei}, \final >$,
 where $Q$ is a finite set of states, 
 $\mathsf{in} : Q \to \Semiring$, 
@@ -760,22 +815,25 @@ from $Q \times Q$ into respectively~$\Semiring$, %$\Phi_\epsilon$,
 $\Phi_\Sigma$, $\Phi_\Delta$, and $\Phi_{\Sigma, \Delta}$.
 \end{definition}
 %
-We summarize the above 4-uplet of transition functions into a unique 
-function~$\wei$ from
-$Q \times (\Sigma \cup \{ \epsilon \}) \times (\Delta \cup \{ \epsilon \}) \times Q$
-into $\Semiring$, %also called $\wei$ for simplicity, 
-such that, for all $q, q' \in Q$, $a \in \Sigma$, and $b \in \Delta$, 
+A pair of states $\< q, q'>$ such that $\wei_\epsilon(q, q') \neq \zero$
+is called an \emph{$\epsilon$-transition}.
+
+\noindent We synthesize the 4-uplet of transition functions into a unique 
+function~$\wei:
+ Q \times (\Sigma \cup \{ \epsilon \}) \times (\Delta \cup \{ \epsilon \}) \times Q 
+ \to \Semiring$, %also called $\wei$ for simplicity, 
+such that, for all $q, q' \in Q$, $a \in \Sigma$,  $b \in \Delta$, 
 %and with 
 %$\< \phi_\epsilon, \phi_\Sigma, \phi_\Delta, \phi_{\Sigma, \Delta}> = \wei(q, q')$, 
 \[
 \begin{array}{rcll}
 \wei(q, \epsilon, \epsilon, q') & = &  \wei_\epsilon(q, q'),\\ %\phi_\epsilon\\
-\wei(q, a, \epsilon, q') & = & \phi_\Sigma(a) & %\wei_\Sigma(q, q')(a)
-\quad\mathrm{where~} \phi_\Sigma = \wei_\Sigma(q, q'),\\
-\wei(q, \epsilon, b, q') & = & \phi_\Delta(b) & 
-\quad\mathrm{where~} \phi_\Delta = \wei_\Delta(q, q'),\\
-\wei(q, a, b, q') & = & \phi_{\Sigma, \Delta}(a, b) & 
-\quad\mathrm{where~} \phi_{\Sigma, \Delta} = \wei_{\Sigma, \Delta}(q, q').\\
+\wei(q, a, \epsilon, q') & = & \phi(a) & %\wei_\Sigma(q, q')(a)
+\quad\mathrm{where~} \phi = \wei_\Sigma(q, q') \in \Phi_\Sigma,\\
+\wei(q, \epsilon, b, q') & = & \psi(b) & 
+\quad\mathrm{where~} \psi = \wei_\Delta(q, q') \in \Phi_\Delta,\\
+\wei(q, a, b, q') & = & \eta(a, b) & 
+\quad\mathrm{where~} \eta = \wei_{\Sigma, \Delta}(q, q') \in \Phi_{\Sigma, \Delta}.\\
 \end{array}      
 \]
 %More precisely, $Q \times Q$, 
@@ -784,16 +842,17 @@ such that, for all $q, q' \in Q$, $a \in \Sigma$, and $b \in \Delta$,
 %$Q \times \Sigma \times \Delta \times Q$,
 %into resp. $\Phi_0$, $\Phi_\Sigma$, $\Phi_\Delta$ $\Phi_{\Sigma, \Delta}$.
 
-The symbolic-weighted transducer $T$ defines a mapping 
+\noindent
+The symbolic-weighted transducer~$T$ defines a mapping 
 from the pairs of strings of $\Sigma^* \times \Delta^*$ 
-into the weights of~$\Semiring$,
+into~$\Semiring$,
 based on the following intermediate function $\weight_T$
 defined recursively for every $q, q' \in Q$, 
 %$a \in \Sigma$, $b \in \Delta$ 
 for every strings of $s \in \Sigma^*$, $t \in \Delta^*$:
 \[
 \begin{array}{rccl}
-xc(q, s, t, q') & = & 
+\weight_T(q, s, t, q') & = & 
    \displaystyle\bigoplus_{q'' \in Q} &
    \wei(q, \epsilon, \epsilon, q'') \otimes \weight_T(q'', s, t, q')\\
    & \oplus & \displaystyle\bigoplus_{q'' \in Q} &
@@ -816,10 +875,11 @@ xc(q, s, t, q') & = &
    \wei(q, a, b, q'') \otimes \weight_T(q'', u, v, q').\\ 
 \end{array}
 \]
-The sum above can be infinite because of the expression in the first line, 
-however, $\T(\Omega)$ is well defined since $\Semiring$ is complete.
+
+The above sum may be infinite because of the $\epsilon$-transitions in the first and second lines.
+However, $\weight_T$ is well defined since $\Semiring$ is complete.
 %
-As we shall see, epsilon-transitions can be removed and hence the sum made finite.
+As we shall see, under conditions, the $\epsilon$-transitions can be removed and hence the sum made finite.
 %
 %** The application of $\oplus$ can be seen as a ND choice between transitions **
 We recall that, by convention, an empty sum with $\oplus$ is $\zero$. 
@@ -828,20 +888,20 @@ Since $\zero$ is absorbing for~$\otimes$ in~$\Semiring$,
 one term $\wei(q, a, b, q'')$ equal to $\zero$ in the above expression 
 will be ignored in the sum, meaning that there is no possible transition
 from state $q$ into state $q'$ while reading $a$ and writing $b$ 
-(including the case $a = \epsilon$ and $a = \epsilon$).
+(including the case $a = \epsilon$ and $b = \epsilon$).
 %These functions $\phi$ act as guards for the transducer's transitions, 
 %preventing a transition when they return the absorbing $\zero$ of $\Semiring$.
 This is analogous to a transition's guard not satisfied by $\<a, b>$ in 
 the case of symbolic transducers.
 
-The above expression of $\weight_T$ can be seen as a stateful definition of 
+The expression of $\weight_T$ can be seen as a stateful definition of 
 an edit-distance between a word $s \in \Sigma^*$ and a word $t \in \Delta^*$,
 see also~\cite{Mohri03ijfcs}.
 Intuitively, 
 $\wei(q, a, \epsilon, q'')$, in the third line, is the cost of 
-the deletion of a symbol~$a \in \Sigma$ in~$s$, 
+the deletion of the symbol~$a \in \Sigma$ in~$s$, 
 $\wei(q, \epsilon, b, q'')$, in the fourth line, is the cost 
-of the deletion of insertion of~$b \in \Delta$ in~$s$, 
+of the insertion of~$b \in \Delta$ in $t$, 
 and $\wei(q, a, b, q'')$, in the last line, is the cost 
 of the substitution of  $a \in \Sigma$ by~$b \in \Delta$.
 The cost of a sequence of such operations transforming $s$ into $t$, 
@@ -852,7 +912,7 @@ of all such product of costs.
 
 \medskip\noindent
 The weight associated by $T$ to  $\< s, t> \in \Sigma^* \times \Delta^*$
-is then defined as follows: 
+is defined as follows: 
 \begin{equation}
 T(s, t)  = 
 \displaystyle\bigoplus_{q, q' \in Q} \mathsf{in}(q) 
@@ -870,17 +930,19 @@ DTW for sequences of timestamped events **
 
 \noindent
 The \emph{Symbolic Weighted Automata} %$A = \< Q, \init, \weight, \final >$
-over $\Sigma$ and $\Semiring$ 
+%over $\Sigma$,  $\Semiring$ and $\bar\Phi$
 are defined similarly as the transducers of Definition~\ref{def:SWT}, 
 by simply omitting the output symbols.
 %
-In this case, a label theory over $\Sigma$ is reduced to
-a set $\Phi_\Sigma$ closed under~$\oplus$ and~$\otimes$.
+In this case, the label theory $\bar\Phi$ is reduced to a singleton $\< \Phi_\Sigma>$.
+%over $\Sigma$ is reduced to
+%a set $\Phi_\Sigma$ closed under~$\oplus$ and~$\otimes$.
 %
 \begin{definition} \label{def:SWA}
 A \emph{symbolic-weighted automaton} (\SWA)
-over the input alphabet~$\Sigma$
-and the commutative semiring $\Semiring$ is a tuple
+over $\Sigma$, $\Semiring$ and $\bar\Phi$
+%the input alphabet~$\Sigma$ and the commutative semiring $\Semiring$ 
+is a tuple
 $A = \< Q, \init, \bar{\wei}, \final >$,
 where $Q$ is a finite set of states, 
 $\mathsf{in} : Q \to \Semiring$, 
@@ -895,12 +957,12 @@ and $\Phi_\Sigma$.
       
 \noindent
 The above transition functions $\wei_\epsilon$ and $\wei_\Sigma$
-are synthesized into a function~$\wei$ 
-from~$Q \times (\Sigma \cup \{ \epsilon \}) \times Q$ into~$\Semiring$ 
-as above.
+can be synthesized as above into a function
+$\wei: Q \times (\Sigma \cup \{ \epsilon \}) \times Q \to \Semiring$.
+
 %
-When $\wei_\epsilon(q, q') = \zero$ for all $q, q' \in Q$, 
-the automaton~$A$ is called \emph{without $\epsilon$-transitions}.
+%When $\wei_\epsilon(q, q') = \zero$ for all $q, q' \in Q$, 
+%the automaton~$A$ is called \emph{without $\epsilon$-transitions}.
       
 \subsection{Properties}
 The two following properties will be useful to our approach on 
@@ -916,42 +978,91 @@ such that for all $t \in \Delta^*$, $A_{T, s}(t) = T(s, t)$.
 \end{proposition}
 %
 \begin{proof}
-Let $T = \< Q, \init, \bar{\wei}, \final >$ 
-where $\bar{\wei} \< \wei_\epsilon, \wei_\Sigma, \wei_\Delta, \wei_{\Sigma, \Delta}>$
-has an associated synthesized form $\wei$, 
+Let $T = \< Q, \init, \bar{\wei}, \final >$,
+let 
+$\wei: Q \times (\Sigma \cup \{ \epsilon \}) \times (\Delta \cup \{ \epsilon \}) \times Q 
+ \to \Semiring$
+be the synthesized form of 
+$\bar{\wei} = \< \wei_\epsilon, \wei_\Sigma, \wei_\Delta, \wei_{\Sigma, \Delta}>$,
 and let $s = s_1 \ldots s_n$ with $s_1, \ldots, s_n \in \Sigma$.
 %$n = |s|$ be the length of $s$.
 %
-Let $Q' = [1..n] \times Q$ be the state set of $A_{T, s}$,
-and let, for all $q \in Q$, 
-$\init'(1, q) = \init(q)$ and $\init'(i, q) = \zero$ for all $1 < i \leq n$, 
-and $\final'(n, q) = \final(q)$ and $\final'(i, q) = \zero$ for all $1 \leq i <  n$. 
+The state set of $A_{T, s}$ will be $Q' = [1..n] \times Q$.
+Its state entering weight function is defined by 
+$\init'(1, q) = \init(q)$ for all $q \in Q$, 
+and $\init'(i, q) = \zero$ for all $1 < i \leq n$, 
+and its state leaving weight function by 
+$\final'(n, q) = \final(q)$ or all $q \in Q$, 
+and $\final'(i, q) = \zero$ for all $1 \leq i <  n$. 
 
 \noindent
-We define the functions $\wei'_\epsilon$ and $\wei'_\Sigma$ for $A_{T, s}$
-in their synthesized form: for all $1 \leq i, j \leq n$, $q, q' \in Q$ and $a \in \Sigma$, 
+We define transition functions $\wei'_\epsilon$ and $\wei'_\Sigma$ for $A_{T, s}$, 
+together with their synthesized form $\wei'$ as follows: 
+for all $1 \leq i, j \leq n$, $q, q' \in Q$, %and $a \in \Sigma$, 
 and $b \in \Delta$, 
 \[
-\begin{array}{lclcl}
-\wei'(\< i, q>, \epsilon, \< i, q'>)   & = & \wei(q, \epsilon, \epsilon, q'), & \quad & \\ 
-\wei'(\< i, q>, \epsilon, \< i+1, q'>) & = & \wei(q, s_i, \epsilon, q') & & \mathrm{if~} i < n,\\ 
-\wei'(\< i, q>, \epsilon, \< j, q'>)   & = & \zero & & \mathrm{if~} j \neq i, j \neq i+1,\\ 
-\wei'(\< i, q>, b, \< i, q'>)          & = & \wei(q, \epsilon, b, q'),\\ 
-\wei'(\< i, q>, b, \< i+1, q'>)        & = & \wei(q, s_i, b, q') & & \mathrm{if~} i < n,\\ 
-\wei'(\< i, q>, b, \< j, q'>)          & = & \zero & & \mathrm{if~} j \neq i, j \neq i+1. 
+\begin{array}{lclclcll}
+\wei'_\epsilon\bigl(\< i, q>, \< i, q'>\bigr) & = & \wei_\epsilon(q, q') & \mathrm{\ie} &
+\wei'\bigl(\< i, q>, \epsilon, \< i, q'>\bigr)   & = & \wei(q, \epsilon, \epsilon, q'), & \\ 
+%
+\wei'_\epsilon\bigl(\< i, q>, \< i+1, q'>\bigr) & = & \phi(s_i) & 
+\multicolumn{5}{l}{\mathrm{where~} \phi = \wei_\Sigma(q, q'),}\\
+ & & & \mathrm{\ie} &
+\wei'\bigl(\< i, q>, \epsilon, \< i+1, q'>\bigr) & = & \wei(q, s_i, \epsilon, q') & 
+\mathrm{if~} i < n,\\ 
+%
+\wei'_\epsilon\bigl(\< i, q>, \< j, q'>\bigr) & = & \zero & 
+%\mathrm{\ie} & \wei'(\< i, q>, \epsilon, \< j, q'>)   & = & \zero & & 
+\multicolumn{5}{l}{\mathrm{if~} j \neq i, i+1,}\\ 
+%
+\wei'_\Sigma\bigl(\< i, q>, \< i, q'>\bigr) & = & \wei_\Delta(q, q') & \mathrm{\ie} &
+\wei'\bigl(\< i, q>, b, \< i, q'>\bigr)          & = & \wei(q, \epsilon, b, q'),\\ 
+%
+\wei'_\Sigma\bigl(\< i, q>, \< i+1, q'>\bigr) & = & \eta_{s_i} &
+\multicolumn{5}{l}{\mathrm{where~} \eta = \wei_{\Sigma, \Delta}(q, q'),}\\
+ & & & \mathrm{\ie} & \wei'\bigl(\< i, q>, b, \< i+1, q'>\bigr) & = & \wei(q, s_i, b, q') & 
+ \mathrm{if~} i < n,\\ 
+%
+\wei'_\Sigma\bigl(\< i, q>, \< j, q'>\bigr) & = & \zero & \mathrm{\ie} &
+\wei'\bigl(\< i, q>, b, \< j, q'>\bigr)     & = & \zero & \mathrm{if~} j \neq i, i+1. 
 \end{array}      
 \]
-Note that the functions defined above belong to the set $\Phi_\Delta$ 
-of the underlying label theory, 
-by the hypothesis of closure under partial application.
-%
+We use the assumption that the underlying label theory of $T$ is 
+is closed under partial applications (Section~\ref{section:symbols})
+in the above construction of $\wei'_\Sigma$.
+
+\noindent
 The $\SWA$ wanted is $A_{T, s} = \< Q', \init', \bar{\wei'}, \final' >$.
 \qed
 \end{proof}
 
-
 The construction time and size for $A_{T, s}$ are $O(\| T \| . | s |)$,
 where the size $\| T \|$ of $T$ is its number of states $|Q|$.
+
+
+\noindent 
+When $\Semiring$ is complete, we call \emph{summary} of a 
+to a $\SWT$ $T = \< Q, \init, \bar{\wei}, \final >$
+a triplet of functions 
+$\mei_\Sigma$, $\mei_\Delta$, and $\mei_{\Sigma, \Delta}$
+from $Q \times Q$ into~$\Semiring$, defined by 
+\[
+\begin{array}{rcll}
+\mei_\Sigma(q, q') & = & \bigoplus_{a \in \Sigma} \phi(a) & 
+\quad\mathrm{where~} \phi = \wei_\Sigma(q, q') \in \Phi_\Sigma,\\
+\mei_\Delta(q, q') & = & \bigoplus_{b \in \Delta} \psi(b) & 
+\quad\mathrm{where~} \psi = \wei_\Delta(q, q') \in \Phi_\Delta,\\
+\mei_{\Sigma, \Delta}(q, q') & = & 
+ \bigoplus_{a \in \Sigma} \bigoplus_{b \in \Delta} \eta(a, b) & 
+\quad\mathrm{where~} \eta = \wei_{\Sigma, \Delta}(q, q') \in \Phi_{\Sigma, \Delta}.\\
+\end{array}      
+\]
+Note that these functions are well defined under the assumption that $\Semiring$ is complete.
+%A $\SWT$ is called \emph{presented} when these functions, with finite domains, 
+%are given explicitly.
+For a \SWA, the summary is only defined by $\mei_\Sigma$.
+ 
+ 
 
 
 % gen. to transducers
@@ -991,6 +1102,11 @@ By definition of $\weight_{A}$ and distributivity of $\otimes$ on $\oplus$,
 it holds that $\weight_{A}(q, s, q') = \weight_{A'}(q, s, q')$.
 \qed
 \end{proof}     
+
+
+
+
+
 
 
 
@@ -1090,8 +1206,8 @@ The intuition is the following for the above transitions.
 \end{description}
 
 We give now a formal definition of these transitions of the automaton~$A$
-in term of a weight value
-computed by an intermediate function $\weight_A$, like in Section~\ref{sec:SWT}.
+in term of %a weight value computed by 
+an intermediate function $\weight_A$, like in Section~\ref{sec:SWT}.
 In the case of a pushdown automaton, a configuration is composed 
 of a state $q \in Q$ and a stack content $\gamma \in \Gamma^*$, where $\Gamma = \Omegac \times P$.
 Therefore, $\weight_A$ is a function from 
@@ -1162,16 +1278,29 @@ as in the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 
 \subsection{Best-first Search} 
 \label{sec:best}\label{sec:search}
-Let us assume that the semiring $\Semiring$ is
+**hypotheses**
+Let us assume that the semiring~$\Semiring$ is
 commutative, bounded, complete, and total.
+and 
+** assume label theory is s.t. 
+for all $\phi \in \Phii$, 
+$\psi \in \Phir$, 
+and $\eta \in \Phicr$, 
+$\displaystyle\bigoplus_{a \in \Omegai} \phi(a)$ 
+$\displaystyle\bigoplus_{r \in \Omegar} \phi(r)$ and 
+$\displaystyle\bigoplus_{{\call{c}} \in \Omegac} 
+\displaystyle\bigoplus_{{\return{r}} \in \Omegar} \eta({\call{c}}, {\return{r}})$
+are computable...
+
 % total ? 
 % monotonic and superior writ natural ordering
 %Regarding the infinite sum operator, note that
 %$\bigoplus_{x \in \Phi_\Omega} \phi(x)$, 
 %$\bigoplus_{y \in \Phi_\Delta} \psi(y)$, and  
 %... exist and in $\Semiring$.
+
 We propose a Dijkstra algorithm computing the minimal weight by $A$, 
-\wrt $\leq_\oplus$, for a word in $\Semiring^*$.
+\wrt~$\leq_\oplus$, for a word in~$\Omega^*$.
 
 \noindent
 More precisely, 
@@ -1325,6 +1454,7 @@ at the termination of Algorithm~\ref{algo:Dijkstra}, %it holds that,
 In order to obtain effectively a witness 
 (word of $\Semiring^*$ with computation of $A$ of minimal weight), 
 we require an additional property the of weight functions.
+%
 \begin{definition}
 Let $\Omega$ be an alphabet and $\Semiring$ a complete semiring.
 A function $\phi$ from $\Omega^n$ into $\Semiring$
@@ -1333,6 +1463,8 @@ $\mathit{card}\{ \mathbf{a} \in \Omega^n \mid \phi(\mathbf{a}) =
                  \displaystyle\bigoplus_{\mathbf{p} \in \Omega^n} \phi(\mathbf{p}) \} \leq k$.
 \end{definition}
 A label theory is $k$-convex if all its functions are $k$-convex.
+
+
 
 \begin{proposition}
 For a \SWVPA $A$ over a 

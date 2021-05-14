@@ -125,7 +125,6 @@ cases:
 - tie or dot : one onset aligned to several successive events (note or chord)
   dotted rest = one single event. there are no tied rests.
   dotted note = 2 events
-  
 
 ---
 
@@ -151,7 +150,9 @@ the next elements have duration 1/4, except the G (duration 0).
 
 
 
-- if the depth (of markups) is bounded, the number of possible durations is finite.
+rem:
+
+- if the depth (of markups) is bounded, the number of possible durations is finite and this can be encoded in a NFA.
 - for a pushdown automaton, the duration may be pushed onto the stack 
   the stack alphabet is infinite for Symbolic Visibly Pushdown Automata
 
