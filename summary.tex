@@ -1,0 +1,21 @@
+\noindent 
+When $\Semiring$ is complete, we call \emph{summary} of a 
+to a $\SWT$ $T = \< Q, \init, \bar{\wei}, \final >$
+a triplet of functions 
+$\mei_\Sigma$, $\mei_\Delta$, and $\mei_{\Sigma, \Delta}$
+from $Q \times Q$ into~$\Semiring$, defined by 
+\[
+\begin{array}{rcll}
+\mei_\Sigma(q, q') & = & \bigoplus_{a \in \Sigma} \phi(a) & 
+\quad\mathrm{where~} \phi = \wei_\Sigma(q, q') \in \Phi_\Sigma,\\
+\mei_\Delta(q, q') & = & \bigoplus_{b \in \Delta} \psi(b) & 
+\quad\mathrm{where~} \psi = \wei_\Delta(q, q') \in \Phi_\Delta,\\
+\mei_{\Sigma, \Delta}(q, q') & = & 
+ \bigoplus_{a \in \Sigma} \bigoplus_{b \in \Delta} \eta(a, b) & 
+\quad\mathrm{where~} \eta = \wei_{\Sigma, \Delta}(q, q') \in \Phi_{\Sigma, \Delta}.\\
+\end{array}      
+\]
+Note that these functions are well defined under the assumption that $\Semiring$ is complete.
+%A $\SWT$ is called \emph{presented} when these functions, with finite domains, 
+%are given explicitly.
+For a \SWA, the summary is only defined by $\mei_\Sigma$.

@@ -1,0 +1,104 @@
+% !TEX root = main.tex
+%
+% Label Theory
+%
+We shall now define the functions labeling the transitions of SW automata and transducers,
+generalizing the Boolean algebras of~\cite{dAntoniVeanes17CAV} 
+from Boolean to other semiring domains.
+%
+We consider \emph{alphabets}, which are countable sets of symbols 
+denoted $\Sigma$, $\Delta$,...
+%Let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a commutative, complete semiring.
+%
+\noindent 
+Given a semiring $\< \Semiring, \oplus, \zero, \otimes, \one>$, 
+a $\Semiring$-\emph{label theory}
+is a tuplet $\bar\Phi$ of recursively enumerable sets of the form
+%$\Phi_\epsilon \subseteq \Semiring$, % containing constant functions valued in $\Semiring$, 
+$\Phi_\Sigma$, %and $\Phi_\Delta$, 
+containing unary functions of type $\Sigma \to \Semiring$, %resp. $\Delta \to \Semiring$, 
+and $\Phi_{\Sigma, \Delta}$, containing binary functions $\Sigma \times \Delta \to \Semiring$, 
+such that:
+
+\noindent -- 
+for all $\Phi_{\Sigma, \Delta} \in \bar\Phi$, there exists 
+$\Phi_{\Sigma} \in \bar\Phi$ and $\Phi_{\Delta} \in \bar\Phi$
+
+\noindent -- 
+for all $\alpha \in \Semiring$ and $\phi \in \Phi_\Sigma$,
+      $\alpha \otimes \phi : x \mapsto \alpha \otimes \phi(x)$, 
+      and $\phi \otimes \alpha : x \mapsto \phi(x) \otimes \alpha$\\
+\phantom{--} belong to $\Phi_\Sigma$, and similarly for $\oplus$ 
+      and for $\Phi_{\Sigma, \Delta}$
+
+\noindent -- 
+for all $\phi, \phi' \in \Phi_\Sigma$,
+$\phi \otimes \phi': x \mapsto \phi(x) \otimes \phi'(x)$ belongs to $\Phi_\Sigma$
+
+\noindent -- 
+for all $\eta, \eta' \in \Phi_{\Sigma, \Delta}$
+$\eta \otimes \eta': x, y \mapsto \eta(x, y) \otimes \eta'(x, y)$ belongs to $\Phi_{\Sigma, \Delta}$
+
+\noindent -- 
+for all $\phi \in \Phi_\Sigma$ and $\eta \in \Phi_{\Sigma, \Delta}$,
+$\phi \otimes \eta: x, y \mapsto \phi(x) \otimes \eta(x, y)$ belongs to $\Phi_{\Sigma, \Delta}$
+
+\noindent -- 
+for all $\psi \in \Phi_\Delta$ and $\eta \in \Phi_{\Sigma, \Delta}$,
+$\eta \otimes \psi: x, y \mapsto \eta(x, y) \otimes \psi(y)$ belongs to $\Phi_{\Sigma, \Delta}$
+
+\noindent -- 
+similar closures holds for $\oplus$
+
+\noindent -- 
+partial applications $\eta \in \Phi_{\Sigma, \Delta}$, 
+resp. $\eta_a: y \mapsto \eta(a, y)$ for $a \in \Sigma$ %and $y \in \Delta$
+and\\
+\phantom{--} $\eta_b: x \mapsto \eta(x, b)$ for $b \in \Delta$ %and $x \in \Sigma$, 
+belong resp. to~$\Phi_\Sigma$ and~$\Phi_\Delta$.
+
+
+%Moreover, these sets are required to be closed under the 
+%operators~$\oplus$ and~$\otimes$ of~$\Semiring$:
+%for all $\phi, \phi' \in \Phi_\Sigma$,
+%$\psi, \psi' \in \Phi_\Delta$, 
+%and $\eta, \eta' \in \Phi_{\Sigma, \Delta}$, %the function
+%%
+%\begin{center}
+%\begin{tabular}{cclll}
+%$\phi \otimes \phi'$ & : & $x \mapsto \phi(x) \otimes \phi'(x)$ & belongs to $\Phi_\Sigma$,\\
+%$\psi \otimes \psi'$ & : & $y \mapsto \psi(y) \otimes \psi'(y)$ & belongs to $\Phi_\Delta$,\\
+%$\phi \otimes \eta$\;  & : & $x, y \mapsto \phi(x) \otimes \eta(x, y)$ & belongs to $\Phi_{\Sigma, \Delta}$,\\
+%$\eta \otimes \psi$  & : & $x, y \mapsto \eta(x, y) \otimes \psi(y)$ & belongs to $\Phi_{\Sigma, \Delta}$,\\
+%$\eta \otimes \eta'$ & : & $x, y \mapsto \eta(x, y) \otimes \eta'(x, y)$ & belongs to $\Phi_{\Sigma, \Delta}$, &
+%\multicolumn{1}{r}{and similarly for $\oplus$.}\\ %the same also holds for the binary sum operator $\oplus$.
+%\end{tabular}
+%\end{center}
+%
+%Finally, it is also required 
+%% that the codomain of every function of $\Phi_\Sigma$ and $\Phi_\Delta$ 
+%% is a subset of $\Phi_\epsilon$, and
+%that the partial applications of a function $\eta \in \Phi_{\Sigma, \Delta}$, 
+%resp.  $\eta_a: y \mapsto f(a, y)$ for $a \in \Sigma$ and $y \in \Delta$
+%and  $\eta_b: x \mapsto f(x, b)$ for $b \in \Delta$ and $x \in \Sigma$, 
+%belong resp. to~$\Phi_\Sigma$ and~$\Phi_\Delta$.
+
+\medskip\noindent
+When~$\Semiring$ is complete, 
+we call \emph{summary} of a function
+$\phi \in \Phi_\Sigma$,
+resp. $\eta \in \Phi_{\Sigma, \Delta}$,
+the value $\bigoplus_{a \in \Sigma} \phi(a)$, 
+resp. $\bigoplus_{a \in \Sigma} \bigoplus_{b \in \Delta} \eta(a, b)$.
+Note that, by definition of infinite sums in complete semirings, 
+a summary of $\phi \oplus \phi'$ and $\phi \otimes \phi'$ %(and $\alpha \otimes \phi$)
+can be computed from summaries of $\phi$ and $\phi'$ in $\Phi_{\Sigma}$, using the operators of $\Semiring$, 
+and the same holds for $\eta, \eta' \in \Phi_{\Sigma, \Delta}$. 
+%
+A label theory is called \emph{effective} when 
+summaries of $\phi \oplus \eta$, $\phi \otimes \eta$, $\eta \oplus \psi$, $\eta \otimes \psi$, 
+and of the partial applications $\eta_a$ and $\eta_b$, 
+can be computed, using the operators of $\Semiring$, 
+from summaries of 
+$\phi \in \Phi_{\Sigma}$, $\psi \in \Phi_{\Delta}$, $\eta \in \Phi_{\Sigma, \Delta}$. 
+

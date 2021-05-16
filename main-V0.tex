@@ -1,3 +1,6 @@
+% old version 
+
+
 \documentclass[runningheads]{llncs}
 %\documentclass[a4paper,11pt]{article}
 %\setcounter{page}{1}
@@ -163,7 +166,29 @@
 \maketitle
 
 \begin{abstract}
-\input{abstract}
+%Symbolic Weighted (SW) extension of symbolic automata...
+We propose a framework for weighted parsing over infinite alphabets.
+%
+It is based on language models called Symbolic Weighted Automata (SWA) 
+at the joint %intersection 
+between Symbolic Automata (SA) and Weighted Automata (WA), 
+as well as Transducers (SWT) and Visibly Pushdown (SWPDA) variants.
+%
+Like SA, SWA deal with large or infinite input alphabets, 
+and like WA, they output a weight value in a semiring domain.
+The transitions of WA are labeled by functions from an infinite alphabet into the weight domain. 
+This is unlike WA whose transitions are guarded by boolean predicates 
+overs symbols in an infinite alphabet 
+and also unlike WA whose transitions are labeled by constant weight values, 
+and who deal only with finite automata.
+%
+We present some properties of WA, WT and SWPDA models, 
+%and show how they can be used 
+that we use to define and solve a variant of parsing 
+over infinite alphabets.
+%
+We also briefly describe the application that motivated the introduction of these models: 
+an parse-based approach to automated music transcription.
 \end{abstract}
 
 
@@ -174,7 +199,258 @@
 
 
 \section{Introduction} \label{sec:intro}
-\input{introduction}
+Parsing %variant of membership problem for formal languages
+%- given a language model and an input word $s$, compute a derivation of the model that yields $s$.
+is the problem %process 
+of structuring a linear representation in input %typically
+(a finite word over an alphabet) according to a language model. % (a formal grammar).
+% natural language, programming language, 
+%
+Most of the context-free parsing approaches~\cite{GruneJacobs08parsing}  
+assume a finite and reasonably small input alphabet. %models and algorithms 
+Such a restriction makes perfectly sense in the context of NLP tasks 
+like constituency parsing or of programming languages compilers or interpreters.
+Considering large or infinite alphabets can however be of practical interest
+in other cases.
+%
+For instance, when dealing with large characters encodings such as UTF-16, % processing strings in 
+\eg for vulnerability detection in Web-applications~\cite{dAntoni21CACM}, 
+%
+for the analyse (\eg validation or filtering) 
+of data streams or serialization of structured documents 
+(which may contain textual or numerical attributes)~\cite{Segoufin06csl}, 
+or for processing timed execution traces~\cite{Bouyer03algebraic}.
+% algebraic definition of a class of data languages 
+% (notion of monoid recognizability, based on registers, comparable to Bojancszik et al. data words)
+Regarding the latter case, we describe %briefly 
+at the end of the paper 
+a parse-based approach to automated music transcription,
+where a symbolic music performance, 
+presented as a sequence of timed musical events, % timestamped
+% a symbolic representation of a music performance 
+is converted into a structured score in Common Western Music Notation~\cite{foscarin:hal-01988990}.
+%generalizes weighted parsing: 
+%finding the best derivation for a weighted grammar. 
+
+Various extensions of language models for handling infinite alphabets have been studied.
+%words carrying data values in an infinite domain (e.g. integers) e.g. data processing 
+For instance, some automata with memory extensions 
+allow restricted storage and comparison of input symbols, 
+%and correspond with logics, 
+(see~\cite{Segoufin06csl} for a survey),
+with pebbles for marking positions~\cite{NevenSchwentickVianu04FSMinfinite}, 
+registers~\cite{KaminskiFrancez94}, 
+or %computations in 2 steps
+the possibility to compute on subsequences 
+with the same attribute values~\cite{Bojanczyk11FO2}. % data words automata.
+%
+%for the and verification of infinite state systems 
+%(model checkers: alphabet = long bit-vectors)
+%...For the representation of  in model checking, verification and 
+The automata at the core of model checkers
+compute on input symbols represented by large bitvectors~\cite{Vardi07ciaa} %\cite{BaierKatoen08MC}
+(sets of assignments of Boolean variables) %propositional variables)
+and in practice,  %implementation
+each transition accepts a set of such symbols (instead of an individual symbol), 
+represented by Boolean formula or Binary Decision Diagrams.
+%
+Following a similar idea, % and generalizing,
+in symbolic automata (\SA)~\cite{dAntoniVeanes17CAV,dAntoni21CACM}, 
+the transitions are guarded by predicates over infinite alphabet domains.
+With closure conditions on the sets of such predicates, % (alphabet theories), 
+all the good properties enjoyed by automata over finite alphabets are preserved.
+
+Other extensions of language models  %(automata and grammars) 
+help in dealing with non-determinism, by the computation of weight values. 
+With an ambiguous grammar, there may exists several derivations 
+(\emph{abstract syntax trees} -- AST), % \ie the result of an analyze.
+yielding one input word. % structuring a word, 
+The association of one weight value %in semiring domain
+to each derivation permits to select a best one (or $n$ bests). % a fixed number of bests 
+% = ...a ranking of derivations 
+This is roughly the principle of \emph{weighted parsing}
+approaches~\cite{Goodman99SemiringParsing,Nederhof03weightedParsing,MorbitzVogler19weighted-parsing}.
+In \emph{weighted language models}, 
+like \eg probabilistic context-free grammars % (CFG),
+and weighted automata (\WA) \cite{Droste09handbook},
+a weight value is associated to each transition rule, % production rule
+and the rule's weights can be combined with a associative product operator~$\otimes$ into 
+the weight of a derivation.
+A second operator~$\oplus$, associative and commutative, 
+is moreover used to handle ambiguity of the model, 
+by summing the weights of the possibly several (in general exponentially many) AST %syntax trees 
+associated to a given input word.
+Typically, $\oplus$ will select the best of two weight values.
+%Intuitively,~$\oplus$ selects, or ranking, the syntax trees.
+The weight domain, equipped with these two operators is assumed, at minima, 
+to form a \emph{semiring} %$\Semiring$ 
+where $\oplus$ can be extended to infinite sums, 
+%\cite{Eilenberg74automata}
+such as the Viterbi semiring and the tropical min-plus algebra, see Figure~\ref{fig:semirings}. 
+%of domain $\mathbb{R}^+ \cup \{ +\infty\}$, 
+%where $\oplus$ is min and $\otimes$ is plus .
+%by ranking 
+%making the weight domain a semiring.
+%Some efficient specialized parsing algorithms~\cite{Huang05kbest} have been proposed in this context 
+%% models represented as hypergraphs \cite{Huang05kbest}
+%in order to compute the $n$ best syntax trees of a given input word without having to enumerate them all.
+%Generally based on dynamic programming, these algorithms rely on 
+%additional algebraic properties of~$\Semiring$.
+%-- see \eg~\cite{Huang05kbest} for some NLP applications.
+%The extraction of $n$ best list is useful 
+%the problem: quantitative parsing or symbolic parsing
+%of parsing of words over infinite input alphabet.
+
+In this paper, we present a uniform framework for weighted parsing over infinite input alphabets.
+It is based on weighted %finite states 
+language models generalizing 
+both~\SA, with functions in an arbitrary semiring instead of Boolean guards, 
+and~\WA, by handling infinite alphabets -- Figure~\ref{fig:hierarchy}.
+%***
+%some weighted language models
+%model of weighted CFG 
+%computing on words over infinite input alphabets %sets of terminal symbol
+%- but with finite sets of states and transitions rules. 
+% non-terminals and production rules).
+In their transition rules, input symbols appear as variables %(parameters)
+and the weight associated to a transition rule is a function of these variables.
+%
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\node (NFA) at (0,4) {%
+  \(
+  \begin{array}{c} 
+  \mathsf{NFA} : \Sigma_{\mathsf{fin}}^* \to \mathbb{B}\\
+  q \xrightarrow{a} q' \quad  a \in \Sigma_\mathsf{fin}
+  \end{array} 
+  \)
+};
+%
+\node (WA) at (-2,2) {%
+  \(
+  \begin{array}{c} 
+  \mathsf{WA} : \Sigma_{\mathsf{fin}}^* \to \mathbb{S}\\
+  q \xrightarrow{a, w} q' \quad  a \in \Sigma_\mathsf{fin}, w \in \mathbb{S}
+  \end{array} 
+  \)
+};
+%
+\node (SA) at (2,2) {%
+  \(
+  \begin{array}{c} 
+  \mathsf{SA} : \Sigma_{\mathsf{inf}}^* \to \mathbb{B}\\
+  q \xrightarrow{\phi} q' \quad \phi : \Sigma_\mathsf{inf} \to \mathbb{B}
+  \end{array} 
+  \)
+};
+%
+\node (SWA) at (0,0) {%
+  \(
+  \begin{array}{c} 
+  \mathsf{SWA} : \Sigma_{\mathsf{inf}}^* \to \mathbb{S}\\
+  q \xrightarrow{\phi} q' \quad \phi : \Sigma_\mathsf{inf} \to \mathbb{S}
+  \end{array} 
+  \)
+};
+\draw[->] (NFA)--(WA);
+\draw[->] (NFA)--(SA);
+\draw[->] (WA)--(SWA);
+\draw[->] (SA)--(SWA);
+%\begin{array}{c} \mathsf{NFA} : \Sigma^* \to \mathbb{B} \end{array} 
+\end{tikzpicture}
+\caption{Classes of Symbolic/Weighted Automata. 
+$\Sigma_\mathsf{fin}$ is a finite alphabet, 
+$\Sigma_\mathsf{inf}$ is a countable alphabet,
+$\mathbb{B}$ is the Boolean algebra, 
+$\mathbb{S}$ is an arbitrary commutative semiring, 
+$q \xrightarrow{\dots} q'$ represents the form of a transition between states $q$ and $q'$.}
+\label{fig:hierarchy}  
+\end{figure}
+%
+%This approach is close to the case of 
+%Symbolic Automata (SA)~\cite{dAntoniVeanes17CAV,dAntoni21CACM}, 
+%except that the domain for weight values is not restricted to be Boolean, 
+%like for the guards in the rules of SA, 
+%but can be an arbitrary commutative semiring (assuming some restrictions).
+%
+The models presented here are finite automata called symbolic-weighted (\SWA),
+transducers (\SWT) and pushdown automata,
+with a visibly restriction~\cite{AlurMadhusudan09nested} (\SWVPA).
+%\wrt an edit distance
+The latter model of automata computes on \emph{nested words}~\cite{AlurMadhusudan09nested}, 
+a structured form of words parenthesized with markup symbols, 
+corresponding to a linearization of trees.
+In the context of parsing, they are used here to represent (weighted) AST of CF grammars.
+More precisely, a \SWVPA $A$ associates a weight value $A(t)$ % \in \Semiring$ 
+to a given a nested word $t$, which is the linearization of an AST. %representing a parse tree.
+%
+On the other hand, 
+a \SWT is used to define a distance $T(s, t)$ between two finite words $s$ and $t$
+over an infinite alphabet, following~\cite{Mohri03EDWA}.
+Then, the \emph{SW-parsing} problem aims at %computing 
+finding $t$ minimizing 
+$T(s, t) \otimes A(t)$ (\wrt the ranking defined by $\oplus$)
+-- this value is called the distance between $s$ and $A$ in~\cite{Mohri03EDWA}.
+%
+Similarly to weighted-parsing 
+methods~\cite{Goodman99SemiringParsing,Nederhof03weightedParsing,MorbitzVogler19weighted-parsing}, 
+our approach proceeds in two steps, 
+based on properties of the SW models. 
+The first step is a Bar-Hillel construction where, 
+given a \SWT $T$, a \SWVPA $A$, and an input word $s$, 
+a \SWVPA $A_{T, s}$ is built, such that for all $t$, $A_{T, s}(t) = T(s, t) \otimes A(t)$.
+In the second step, a best AST $t$ is found by applying to $A_{T, s}$ 
+a best search algorithm similar to shortest distance in graphs~\cite{Mohri02semiring,Huang05kbest}.
+%In expressiveness, they are equivalent to weighted CFG. 
+%and can be used in a general approach for parsing over infinite input alphabets.
+%
+%Let $A$ be a \SWVPA, associating $A(w) \in \Semiring$ 
+%to a given a nested word $w$ (representing a parse tree),
+%and let a \SWT compute a distance $d$, in $\Semiring$, 
+%between 2 strings over respectively an infinite input alphabet and the 
+%same (infinite) alphabet of $A$.
+%Then, the problem of Symbolic Weighted Parsing is, 
+%given an input string $s$, to find a nested word $w$ minimizing 
+%(according to the ranking defined by $\oplus$)
+%the distance $d(s, w) \otimes A(w)$ between $s$ and $A$, 
+%as defined in~\cite{Mohri03EDWA}.
+
+% First one general edit-distance is defined by a weighted word 
+% transducer~\cite{Mohri}
+% %Symbolic automata transducers are extended models~\cite{VeanesdAntoniJACM}
+% %dealing with infinite set of input symbols...
+% value in a semiring...
+
+The main contributions of the paper are: 
+($i$)~the introduction of automata, \SWA, transducers, \SWT (Section~\ref{section:SWA}),
+and visibly pushdown automata \SWVPA (Section~\ref{sec:SWVPA}),
+generalizing the corresponding classes of symbolic and weighted models, 
+%for the weighted computation on (nested) words over infinite alphabets;  
+($ii$)~a polynomial best-search algorithm for \SWVPA, %(Section~\ref{sec:best})
+% a framework for parsing over infinite alphabets, 
+and ($iii$)~a uniform framework (Section~\ref{sec:parsing}) for parsing over infinite alphabets, 
+the keys to which are 
+($iii.a$)~the \SWT-based definition of generic edit distances between input and output words,
+and ($iii.b$)~the use of nested words, and \SWVPA, 
+instead of syntax trees and grammars. %(\S~\ref{sec:trees}).
+%
+Finally, Section~\ref{sec:transcription} describes
+the implemented application %of this approach 
+to automated music transcription
+that motivated this study.
+
+%based these models and on generic def. of distances;
+%the use of VPA for parsing, word instead of trees, use comparison input-output.
+%and best-search
+
+%In Section~\ref{section:SWA} we introduce \SWA and \SWT.
+%Then \SWVPA are defined in Section~\ref{sec:SWVPA}, 
+%where a polynomial 1-best algorithm is described that can be use to solve
+%Symbolic Weighted Parsing, as described Section~\ref{sec:parsing}.
+%Finally, in Section~\ref{sec:transcription}, we present an application 
+%of this approach to automated music transcription that has been implemented.
+
 
 
 
@@ -203,16 +479,330 @@ but they can return values in an arbitrary semiring,
 where the latter guards are restricted to the Boolean semiring.
 
 
-\subsection{Semirings} 
+\subsection{Semirings}
 \label{section:semiring}
-\input{semiring}
+We shall consider semiring for the weight values of our language models.
+%
+A \emph{semiring} $\< \Semiring, \oplus, \zero, \otimes, \one>$ 
+is a structure with a domain~$\Semiring$,
+equipped with two associative
+binary operators~$\oplus$ and $\otimes$,
+with respective neutral elements $\zero$ and $\one$, and such that:
+%$\< \mathbb{S}, \oplus, \zero>$ is a commutative monoid
+%$\< \mathbb{S}, \otimes, \one>$ is a monoid
+\begin{itemize}
+\item $\oplus$ is commutative;
+ $\< \Semiring, \oplus, \zero>$ is a commutative monoid 
+   and $\< \Semiring, \otimes, \one>$ a monoid,
+\item $\otimes$ distributes over~$\oplus$:  $\forall x, y, z \in \mathbb{S}$,
+$x \otimes (y \oplus z) = (x \otimes y) \oplus (x \otimes z)$, 
+and $(x \oplus y) \otimes z = (x \otimes z) \oplus (y \otimes z)$,
+\item $\zero$ is absorbing for~$\otimes$: 
+$\forall x\in \mathbb{S}$, $\zero \otimes x = x \otimes \zero = \zero$.
+\end{itemize}
+%Components of a semiring~$\Semiring$ may be subscripted by~$\Semiring$ when needed.
+%We simply write $x \in \Semiring$ to mean $x \in \mathbb{S}$.
+%
+Intuitively, in the models presented in this paper, 
+$\oplus$ selects an optimal value from two given values, 
+in order to handle non-determinism, 
+and $\otimes$ combines two values into a single value, 
+in a chaining of transitions.
+%and let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a {semiring}, 
+
+\medskip%\noindent
+A semiring $\Semiring$ is \emph{commutative} if $\otimes$ is commutative.
+It is \emph{idempotent} if for each $x \in \dom(\Semiring)$, $x \oplus x = x$.
+%
+Every idempotent semiring~$\Semiring$ induces 
+a partial ordering~$\leq_\oplus$ 
+called the \emph{natural ordering} of~$\Semiring$~\cite{Mohri02semiring} 
+and defined,  by: 
+%implicitly defined by the semiring $\Semiring$ 
+for all $x$ and $y$,
+$x \leq_\oplus y \;\mbox{iff}\; x \oplus y = x$.
+%(see~\cite{Mohri02semiring} for the proof that it is an ordering).
+%
+The natural ordering is sometimes defined in the opposite direction~\cite{DrosteKuich09semirings};
+We follow here the direction  %follows \cite{Mohri02semiring}, and 
+that coincides with the usual ordering on the Tropical semiring \emph{min-plus} 
+(Figure~\ref{fig:semirings}).
+
+\begin{lemma}[Monotony, \cite{Mohri02semiring}] \label{lem:monotonic}
+Let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be an idempotent semiring.
+For all $x, y, z  \in \Semiring$,  
+if $x \leq_\oplus y$ then
+$x \oplus z \leq_\oplus y \oplus z$,
+$x \otimes z \leq_\oplus y \otimes z$
+and $z \otimes x \leq_\oplus z \otimes y$.
+\end{lemma}   
+When the property of Lemma~\ref{lem:monotonic} holds, 
+%We say in this case that 
+$\Semiring$ is called  \emph{monotonic}. % \wrt $\leq_\oplus$.
+%A semiring $\Semiring$ 
+%is \emph{monotonic} \wrt a partial ordering~$\leq$ 
+%iff for all $x, y, z  \in \Semiring$,  $x \leq y$ implies
+%$x \oplus z \leq y \oplus z$,
+%$x \otimes z \leq y \otimes z$,
+%and $z \otimes x \leq z \otimes y$.
+%
+Another important semiring property in the context of optimization
+is {superiority}~\cite{Huang08advanceddynamic}, 
+which corresponds to the 
+\emph{non-negative weights} condition in shortest-path algorithms~\cite{Dijkstra59anote}.
+Intuitively, it means that combining elements with $\otimes$ always increase their weight. 
+Formally, it is defined as the property ($i$) below. %of the following lemma.
+
+\begin{lemma}[Superiority, Boundedness]
+\label{lem:superior}\label{lem:bounded}
+Let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be an idempotent semiring.
+The two following statements are equivalent:
+\begin{itemize}
+\item [$i.$] for all $x, y \in \Semiring$,  
+$x \leq_\oplus x \otimes y$ and 
+$y \leq_\oplus x \otimes y$
+\item[$ii.$] for all $x \in \Semiring$,  $\one \oplus x = \one$.
+\end{itemize}
+\end{lemma}
+%
+\begin{proof} %(Lemma~\ref{lem:bounded})
+$(ii) \Rightarrow (i)$ : 
+$x \oplus (x \otimes y) = x \otimes (\one \oplus y) = x$, 
+by distributivity of~$\otimes$ over~$\oplus$. 
+Hence $x \leq_\oplus x \otimes y$.
+Similarly, $y \oplus (x \otimes y) = (\one \oplus x) \otimes y = y$, 
+hence $y \leq_\oplus x \otimes y$.
+%
+$(i) \Rightarrow (ii)$ :
+%$(i)$ implies that $\one \leq_\oplus x$ for all $x \in \Semiring$, 
+by the second inequality of ($i$), with $y = \one$, 
+$\one \leq_\oplus x \otimes \one = x$, \ie, 
+by definition of $\leq_\oplus$, $\one \oplus x = \one$.
+\qed
+\end{proof}
+
+In~\cite{Huang08advanceddynamic}, the property~$(i)$ 
+is called $\Semiring$ \emph{superior} \wrt the ordering~$\leq_\oplus$.
+We have seen in the proof of Lemma~\ref{lem:bounded} that it implies that 
+$\one \leq_\oplus x$ for all $x \in \Semiring$.
+Similarly, by the first inequality of ($i$) with $y = \zero$,  
+$x \leq_\oplus x \otimes \zero = \zero$.
+%
+Hence, in a superior semiring, % \wrt~$\leq$, 
+it holds that %$\one \leq \zero$
+for all $x \in \Semiring$, $\one \leq_\oplus x \leq_\oplus \zero$.
+%
+Intuitively, from an optimization point of view,
+it means that $\one$ is the best value, and $\zero$ the worst.
+%** superior implies $\Semiring$ bounded~\cite{Mohri02semiring} see **
+%
+In~\cite{Mohri02semiring}, the property ($ii$) of Lemma~\ref{lem:bounded}  
+is called \emph{boundedness} of $\Semiring$ -- we shall use this term in the rest of the paper. 
+% \emph{negative boundedness} 
+It implies that, when looking for a best path in a graph whose edges
+are weighted by values of $\Semiring$, the loops can be safely avoided.
+
+
+%Following the terminology of~\cite{Mohri02semiring},
+%when $\forall x \in \dom(\Semiring), \one \oplus x = \one$,
+%the semiring $\Semiring$ is is called \emph{bounded}.
+
+\begin{lemma}
+Every bounded semiring is idempotent.
+\end{lemma}
+\begin{proof}
+By boundedness, $\one \oplus \one = \one$, 
+and idempotency follows by multiplying
+both sides by $x$ and distributing. 
+\qed
+\end{proof}
+
+\noindent
+An idempotent semiring $\Semiring$~is called \emph{total} if
+it~$\leq_\oplus$ is total
+\ie when for all $x, y \in \Semiring$, either $x \oplus y = x$ or $x \oplus y = y$.
+
+%\medskip
+We shall need below infinite sums with~$\oplus$.
+A semiring~$\Semiring$ is called \emph{complete}~\cite{Droste09handbook} 
+%(\cite{Droste09handbook} chapter 1) %\cite{Kuich97semirings}
+if it has an %infinite sum 
+operation $\bigoplus_{i \in I} x_i$
+for every family
+$(x_i)_{i \in I}$ %$\{ x_i \mid i \in I \}$
+of elements of $\dom(\Semiring)$ over an index set $I \subset \mathbb{N}$, such that
+%is well-defined and in $\dom(\Semiring)$,
+the following holds: %properties
+\begin{description}
+\item[$i.$]
+\emph{infinite sums extend finite sums:}\\
+$\displaystyle\bigoplus_{i \in \emptyset} x_i = \zero$,\quad 
+      $\forall j\in \mathbb{N}, \displaystyle\bigoplus_{i \in \{ j \}} x_i = x_j$,
+      $\forall j, k\in \mathbb{N}, j\neq k, 
+      \displaystyle\bigoplus_{i \in \{ j, k \}} x_i = x_j \oplus x_k$,
+%
+\item[$ii.$]
+\emph{associativity and commutativity:}\\
+for all $I \subseteq \mathbb{N}$
+and all partition $(I_{j})_{j \in J}$ of $I$, %\subseteq \mathbb{N}$, 
+\(
+\displaystyle
+\bigoplus_{j \in J}\bigoplus_{i \in I_j} x_i = 
+\bigoplus_{i \in I} x_i
+\),
+%
+\item[$iii.$] 
+\emph{distributivity of product over infinite sum:}\\
+for all $I \subseteq \mathbb{N}$,
+\(
+\displaystyle
+\bigoplus_{i \in I} (x \otimes y_i) = x \otimes \bigoplus_{i\in I} y_i\), and
+\(
+\displaystyle
+\bigoplus_{i \in I} (x_i \otimes y) = (\bigoplus_{i \in I} x_i ) \otimes y\).
+\end{description}
+
+
+
+\begin{example}
+Figure~\ref{fig:semirings} presented examples of semirings interesting in practice 
+and enjoying the above properties.
+\end{example}
+
+
+\begin{figure}[t]
+\begin{center}
+\begin{tabular}{|c|c|C{2em}|C{2em}|C{2em}|C{2em}|}
+\hline
+        & domain & $\oplus$ & $\otimes$ & $\zero$  & $\one$\\ %& nat. ordering\\
+\hline\hline
+Boolean & $\{\bot, \top\}$ & $\vee$ & $\wedge$ & $\bot$ & $\top$\\ %& $\top \leq_\oplus \bot$  \\
+\hline
+Counting & $\mathbb{N}$ & $+$ & $\times$ & 0 & 1 \\
+\hline
+Viterbi & $[0, 1] \subset \mathbb{R}$ & $\mathit{max}$ & $\times$ & 0 & 1\\ % & $x \leq_\oplus y \iff x \ge y$  \\
+\hline
+Tropical min-plus & $\mathbb{R}_+ \cup \{ \infty\}$ & $\mathit{min}$ & $+$ & $\infty$ & $0$\\ % & $x \leq_\oplus y \iff x \leq y$   \\
+\hline
+%MaxPlus & $\mathbb{Q} \cup \{ -\infty\}$ & $\mathsf{max}$ & $+$ & $-\infty$ & $0$ \\
+%\hline
+%Word lang. & $2^{\Sigma^*}$ & $\cup$ & $\cdot$ & $\emptyset$ & $\{ \varepsilon \}$ \\
+%\hline
+\end{tabular}
+\end{center}
+\vskip-1em
+\caption{Some commutative, bounded, total and complete semirings.}
+\label{fig:semirings}
+\end{figure}
+
+
+
 
 
 
 
 \subsection{Label Theory}
 \label{section:symbols}
-\input{labels}
+We shall now define the functions labeling the transitions of SW automata and transducers,
+generalizing the Boolean algebras of~\cite{dAntoniVeanes17CAV} 
+from Boolean to other semiring domains.
+%
+We consider \emph{alphabets}, which are countable sets of symbols 
+denoted $\Sigma$, $\Delta$,...
+%Let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a commutative, complete semiring.
+%
+\noindent 
+Given a semiring $\< \Semiring, \oplus, \zero, \otimes, \one>$, 
+a $\Semiring$-\emph{label theory}
+is a tuplet $\bar\Phi$ of recursively enumerable sets of the form
+%$\Phi_\epsilon \subseteq \Semiring$, % containing constant functions valued in $\Semiring$, 
+$\Phi_\Sigma$, %and $\Phi_\Delta$, 
+containing unary functions of type $\Sigma \to \Semiring$, %resp. $\Delta \to \Semiring$, 
+and $\Phi_{\Sigma, \Delta}$, containing binary functions $\Sigma \times \Delta \to \Semiring$, 
+such that:
+
+\noindent -- 
+for all $\Phi_{\Sigma, \Delta} \in \bar\Phi$, there exists 
+$\Phi_{\Sigma} \in \bar\Phi$ and $\Phi_{\Delta} \in \bar\Phi$
+
+\noindent -- 
+for all $\alpha \in \Semiring$ and $\phi \in \Phi_\Sigma$,
+      $\alpha \otimes \phi : x \mapsto \alpha \otimes \phi(x)$, 
+      and $\phi \otimes \alpha : x \mapsto \phi(x) \otimes \alpha$\\
+\phantom{--} belong to $\Phi_\Sigma$, and similarly for $\oplus$ 
+      and for $\Phi_{\Sigma, \Delta}$
+
+\noindent -- 
+for all $\phi, \phi' \in \Phi_\Sigma$,
+$\phi \otimes \phi': x \mapsto \phi(x) \otimes \phi'(x)$ belongs to $\Phi_\Sigma$
+
+\noindent -- 
+for all $\eta, \eta' \in \Phi_{\Sigma, \Delta}$
+$\eta \otimes \eta': x, y \mapsto \eta(x, y) \otimes \eta'(x, y)$ belongs to $\Phi_{\Sigma, \Delta}$
+
+\noindent -- 
+for all $\phi \in \Phi_\Sigma$ and $\eta \in \Phi_{\Sigma, \Delta}$,
+$\phi \otimes \eta: x, y \mapsto \phi(x) \otimes \eta(x, y)$ belongs to $\Phi_{\Sigma, \Delta}$
+
+\noindent -- 
+for all $\psi \in \Phi_\Delta$ and $\eta \in \Phi_{\Sigma, \Delta}$,
+$\eta \otimes \psi: x, y \mapsto \eta(x, y) \otimes \psi(y)$ belongs to $\Phi_{\Sigma, \Delta}$
+
+\noindent -- 
+similar closures holds for $\oplus$
+
+\noindent -- 
+partial applications $\eta \in \Phi_{\Sigma, \Delta}$, 
+resp. $\eta_a: y \mapsto \eta(a, y)$ for $a \in \Sigma$ %and $y \in \Delta$
+and\\
+\phantom{--} $\eta_b: x \mapsto \eta(x, b)$ for $b \in \Delta$ %and $x \in \Sigma$, 
+belong resp. to~$\Phi_\Sigma$ and~$\Phi_\Delta$.
+
+
+%Moreover, these sets are required to be closed under the 
+%operators~$\oplus$ and~$\otimes$ of~$\Semiring$:
+%for all $\phi, \phi' \in \Phi_\Sigma$,
+%$\psi, \psi' \in \Phi_\Delta$, 
+%and $\eta, \eta' \in \Phi_{\Sigma, \Delta}$, %the function
+%%
+%\begin{center}
+%\begin{tabular}{cclll}
+%$\phi \otimes \phi'$ & : & $x \mapsto \phi(x) \otimes \phi'(x)$ & belongs to $\Phi_\Sigma$,\\
+%$\psi \otimes \psi'$ & : & $y \mapsto \psi(y) \otimes \psi'(y)$ & belongs to $\Phi_\Delta$,\\
+%$\phi \otimes \eta$\;  & : & $x, y \mapsto \phi(x) \otimes \eta(x, y)$ & belongs to $\Phi_{\Sigma, \Delta}$,\\
+%$\eta \otimes \psi$  & : & $x, y \mapsto \eta(x, y) \otimes \psi(y)$ & belongs to $\Phi_{\Sigma, \Delta}$,\\
+%$\eta \otimes \eta'$ & : & $x, y \mapsto \eta(x, y) \otimes \eta'(x, y)$ & belongs to $\Phi_{\Sigma, \Delta}$, &
+%\multicolumn{1}{r}{and similarly for $\oplus$.}\\ %the same also holds for the binary sum operator $\oplus$.
+%\end{tabular}
+%\end{center}
+%
+%Finally, it is also required 
+%% that the codomain of every function of $\Phi_\Sigma$ and $\Phi_\Delta$ 
+%% is a subset of $\Phi_\epsilon$, and
+%that the partial applications of a function $\eta \in \Phi_{\Sigma, \Delta}$, 
+%resp.  $\eta_a: y \mapsto f(a, y)$ for $a \in \Sigma$ and $y \in \Delta$
+%and  $\eta_b: x \mapsto f(x, b)$ for $b \in \Delta$ and $x \in \Sigma$, 
+%belong resp. to~$\Phi_\Sigma$ and~$\Phi_\Delta$.
+
+\medskip\noindent
+When~$\Semiring$ is complete, 
+we call \emph{summary} of a function
+$\phi \in \Phi_\Sigma$,
+resp. $\eta \in \Phi_{\Sigma, \Delta}$,
+the value $\bigoplus_{a \in \Sigma} \phi(a)$, 
+resp. $\bigoplus_{a \in \Sigma} \bigoplus_{b \in \Delta} \eta(a, b)$.
+Note that, by definition of infinite sums in complete semirings, 
+a summary of $\phi \oplus \phi'$ and $\phi \otimes \phi'$ %(and $\alpha \otimes \phi$)
+can be computed from summaries of $\phi$ and $\phi'$ in $\Phi_{\Sigma}$, using the operators of $\Semiring$, 
+and the same holds for $\eta, \eta' \in \Phi_{\Sigma, \Delta}$. 
+%
+A label theory is called \emph{effective} when 
+summaries of $\phi \oplus \eta$, $\phi \otimes \eta$, $\eta \oplus \psi$, $\eta \otimes \psi$, 
+and of the partial applications $\eta_a$ and $\eta_b$, 
+can be computed, using the operators of $\Semiring$, 
+from summaries of 
+$\phi \in \Phi_{\Sigma}$, $\psi \in \Phi_{\Delta}$, $\eta \in \Phi_{\Sigma, \Delta}$. 
+
 
 
 \subsection{Definitions} \label{sec:SWTdef}\label{sec:SWAdef}
