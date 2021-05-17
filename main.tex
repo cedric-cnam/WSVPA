@@ -68,6 +68,7 @@
 % \theorembodyfont{\slshape}
 % \newtheorem{example}[theorem]{Example}
 % \newtheorem{remark}[theorem]{Remark}
+\def\endex{\hspace*{\fill} $\Diamond$\smallskip }
 {\theorembodyfont{\rmfamily} \theoremstyle{break} \newtheorem{algo}{Algorithm}}
 
 %% algorithms
@@ -79,6 +80,10 @@
 
 %% arrows etc
 %\input{rewriting}
+
+%% music symbols
+% see http://tug.ctan.org/info/latex4musicians/latex4musicians.pdf
+\usepackage{musicography}
 
 %% Misc macros
 
@@ -103,8 +108,8 @@
 \newcommand{\dom}{\ensuremath{\mathit{dom}}}
 
 
-\def\SA{\textsf{SA}\xspace}
-\def\WA{\textsf{WA}\xspace}
+\def\SA{\textsf{sA}\xspace}
+\def\WA{\textsf{wA}\xspace}
 \def\SWT{\textsf{swT}\xspace}
 \def\SWA{\textsf{swA}\xspace}
 \def\SWTA{\textsf{swTA}\xspace}
@@ -146,14 +151,14 @@
 % 
 %\title{Symbolic Weighted Parsing and Automated Music Transcription}
 %\title{Symbolic Weighted Language Models and Automated Music Transcription}
-\title{Symbolic Weighted Language Models and Parsing over Infinite Alphabets}
+\title{Symbolic Weighted Language Models and\\ Parsing over Infinite Alphabets}
 %\title{Weighted Visibly Pushdown Automata and Automated Music Transcription}
 \author{Florent Jacquemard}
 \institute{INRIA \& CNAM, Paris, France\\
 \email{florent.jacquemard@inria.fr}}
 
 %\titlerunning{WVPA \& AMT}
-\titlerunning{Symbolic Weighted Parsing and Automated Music Transcription}
+%\titlerunning{Symbolic Weighted Parsing} % and Automated Music Transcription
 %\authorrunning{Florent Jacquemard}
 
 \date{\today}
@@ -188,19 +193,19 @@
 \label{section:SWA}\label{sec:SWA}
 \label{section:SWT}\label{sec:SWT}
 
-We follow the approach of~\cite{Mohri03EDWA} for the computation of distances
-between words and languages, with weighted transducers, 
-extending it to infinite alphabets.
+We follow the approach of~\cite{Mohri03EDWA} for the computation of distances,
+between words and languages, using weighted transducers, 
+and extend it to infinite alphabets.
 % with models of symbolic weighted automata and transducers. 
 %
 The models introduced in this section generalize 
 weighted automata and transducers~\cite{Droste09handbook} 
 %over finite alphabets, see  e.g.~\cite{Mohri03EDWA}, 
-by labeling each transition with a weight function that takes the 
-input and output symbols as parameters, instead of a simple weight value.
+by labelling each transition with a weight function (instead of a simple weight value), 
+that takes the input and output symbols as parameters. 
 These functions are similar to the guards of symbolic automata~\cite{dAntoniVeanes17CAV,dAntoni21CACM},
-but they can return values in an arbitrary semiring, 
-where the latter guards are restricted to the Boolean semiring.
+but they can return values in an generic semiring, 
+whereas the latter guards are restricted to the Boolean semiring.
 
 
 \subsection{Semirings} 
@@ -277,15 +282,16 @@ defined recursively for every $q, q' \in Q$,
 for every strings of $s \in \Sigma^*$, $t \in \Delta^*$:
 \[
 \begin{array}{rccl}
+\weight_T(q, \epsilon, \epsilon, q') & = &              \wei(q, \epsilon, \epsilon, q')\\
 \weight_T(q, s, t, q') & = & 
-   \displaystyle\bigoplus_{q'' \in Q} &
-   \wei(q, \epsilon, \epsilon, q'') \otimes \weight_T(q'', s, t, q')\\
-   & \oplus & \displaystyle\bigoplus_{q'' \in Q} &
-              \wei(q'', \epsilon, \epsilon, q') \otimes \weight_T(q, s, t, q'')\\
- & \oplus & \displaystyle\bigoplus_{\begin{array}{c}
-                                      \scriptstyle q'' \in Q\\[-2pt]
-                                      \scriptstyle s = au, a \in \Sigma
-                                      \end{array}} &
+             \displaystyle\bigoplus_{q'' \in Q} &
+             \wei(q, \epsilon, \epsilon, q'') \otimes \weight_T(q'', s, t, q')\\
+ & \oplus &  \displaystyle\bigoplus_{q'' \in Q} &
+             \wei(q'', \epsilon, \epsilon, q') \otimes \weight_T(q, s, t, q'')\\
+ & \oplus &  \displaystyle\bigoplus_{\begin{array}{c}
+                                     \scriptstyle q'' \in Q\\[-2pt]
+                                     \scriptstyle s = au, a \in \Sigma
+                                     \end{array}} &
    \wei(q, a, \epsilon, q'') \otimes \weight_T(q'', u, t, q')\\
  & \oplus & \displaystyle\bigoplus_{\begin{array}{c}
                                     \scriptstyle q'' \in Q\\[-2pt]
@@ -300,15 +306,15 @@ for every strings of $s \in \Sigma^*$, $t \in \Delta^*$:
    \wei(q, a, b, q'') \otimes \weight_T(q'', u, v, q').\\ 
 \end{array}
 \]
-
-The above sum may be infinite because of the $\epsilon$-transitions in the first and second lines.
-However, $\weight_T$ is well defined since $\Semiring$ is complete.
 %
+We recall that, by convention, an empty sum with $\bigoplus$ is $\zero$. 
+%
+The above sum may be infinite because of the $\epsilon$-transitions, % in the first and second lines.
+in this case, the infinite sum operators applies since $\Semiring$ is assumed complete.
 As we shall see, under conditions, the $\epsilon$-transitions can be removed and hence the sum made finite.
 %
 %** The application of $\oplus$ can be seen as a ND choice between transitions **
-We recall that, by convention, an empty sum with $\oplus$ is $\zero$. 
-%
+
 Since $\zero$ is absorbing for~$\otimes$ in~$\Semiring$,
 one term $\wei(q, a, b, q'')$ equal to $\zero$ in the above expression 
 will be ignored in the sum, meaning that there is no possible transition
@@ -345,16 +351,54 @@ T(s, t)  =
 \label{eq:weightT}
 \end{equation}
 
-\begin{example}
-Let $\Sigma$ be an alphabet of symbols with timestamps. 
-The timestamp of $a \in \Sigma$, denoted by $\mathsf{t}(a)$, is expressed as a rational number.
+% DTW for sequences of timestamped events 
+% impossible, needs reading input/output symbols even by epsilon-transitions.
 
-
-DTW for sequences of timestamped events **     
-\end{example}
-      
 \begin{example}
-(simpler) pointwise distance between two sequences of timestamped events **
+% simple pointwise distance between two sequences of timestamped events **
+Let us consider the tropical (\emph{min-plus}) semiring~$\Semiring$ 
+of Figure~\ref{fig:semirings} and 
+let $\Sigma = \mathbb{R}_+$ be an input alphabet of event dates
+and $\Delta = \{ \mathsf{e}, \mathsf{-} \} \times \mathbb{R}_+$ 
+be an output alphabet of symbols with timestamps. 
+A symbol $\< \mathsf{e}, d > \in \Delta$ represents an event starting at date $d$, 
+and $\< \mathsf{-}, d >$ is a continuation of the previous event.
+%More precisely, we let 
+%$\Sigma = \{ a, - \} \times \R_+$ and 
+This example of $\Delta$ is motivated by the case of music notation, 
+where several notated events (notes) can be tied together, 
+with a \emph{tie} or a \emph{dot}
+(like in $\musQuarter\!\!\mathrel{\raisebox{-1.5mm}{$\smile$}}\!\!\musEighth$ 
+ or equivalently~\musQuarterDotted),
+meaning that they will be played as a unique sounding event.
+%The timestamp of $a \in \Sigma$, denoted by $\mathsf{t}(a)$, is expressed as a rational number.
+
+We consider a \SWT with two states $q_0$ and $q_1$ whose purpose 
+is to compare a recorded performance $s \in \Sigma^*$
+with notated music sheet $t \in \Delta^*$.
+One timestamp $d_i \in \Sigma$ may corresponds 
+to one notated event $\<\mathsf{e}, d'_i> \in \Sigma$, in which case 
+the weight value computed by the \SWT is the time distance between both
+(see transitions $\wei_{11}$ below).
+%
+Moreover, if $\<\mathsf{e}, d'_i>$ is followed by continuations 
+$\<\mathsf{-}, d'_{i+1}>$..., they are just skip with no cost (transitions $\wei_{01}$ or weight $\one$).
+%transitions
+\[
+\begin{array}{rclcrcl}
+\wei_{11}(q_0, d, \< \mathsf{e}, d'>, q_0) & = & |d' - d| & \quad &
+\wei_{11}(q_1, d, \< \mathsf{e}, d'>, q_0) & = & |d' - d|\\
+\wei_{01}(q_0, \epsilon, \< \mathsf{-}, d'>, q_0) & = & \one & &
+\wei_{01}(q_1, \epsilon, \< \mathsf{-}, d'>, q_0) & = & \one\\
+\wei_{10}(q_0, d, \epsilon, q_1) & = & \alpha\\
+\end{array}
+\]
+%
+Finally, it may happen that the performers plays an extra note accidentally, but only once in a row. 
+This is modelled by the transition $\wei_{10}$ with an arbitrary weight value $\alpha \in \Semiring$, 
+switch from state $q_0$ (normal) to $q_1$ (error).
+The transitions in the second column below switch back to the normal state $q_0$.
+\endex
 \end{example}
 
 \noindent
@@ -392,8 +436,7 @@ $\wei: Q \times (\Sigma \cup \{ \epsilon \}) \times Q \to \Semiring$.
 %When $\wei_\epsilon(q, q') = \zero$ for all $q, q' \in Q$, 
 %the automaton~$A$ is called \emph{without $\epsilon$-transitions}.
       
-A $\SWT$ or $\SWA$ is called \emph{summarized}
-when       
+The \emph{summary} of a $\SWT$, resp. a $\SWA$, is ***
       
       
       

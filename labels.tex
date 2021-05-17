@@ -13,15 +13,15 @@ denoted $\Sigma$, $\Delta$,...
 \noindent 
 Given a semiring $\< \Semiring, \oplus, \zero, \otimes, \one>$, 
 a $\Semiring$-\emph{label theory}
-is a tuplet $\bar\Phi$ of recursively enumerable sets of the form
+is a tuplet $\bar\Phi$ of recursively enumerable sets denoted
 %$\Phi_\epsilon \subseteq \Semiring$, % containing constant functions valued in $\Semiring$, 
 $\Phi_\Sigma$, %and $\Phi_\Delta$, 
 containing unary functions of type $\Sigma \to \Semiring$, %resp. $\Delta \to \Semiring$, 
 and $\Phi_{\Sigma, \Delta}$, containing binary functions $\Sigma \times \Delta \to \Semiring$, 
-such that:
+and such that:
 
 \noindent -- 
-for all $\Phi_{\Sigma, \Delta} \in \bar\Phi$, there exists 
+for all $\Phi_{\Sigma, \Delta} \in \bar\Phi$, we have
 $\Phi_{\Sigma} \in \bar\Phi$ and $\Phi_{\Delta} \in \bar\Phi$
 
 \noindent -- 
@@ -48,7 +48,7 @@ for all $\psi \in \Phi_\Delta$ and $\eta \in \Phi_{\Sigma, \Delta}$,
 $\eta \otimes \psi: x, y \mapsto \eta(x, y) \otimes \psi(y)$ belongs to $\Phi_{\Sigma, \Delta}$
 
 \noindent -- 
-similar closures holds for $\oplus$
+similar closures hold for $\oplus$
 
 \noindent -- 
 partial applications $\eta \in \Phi_{\Sigma, \Delta}$, 
@@ -90,15 +90,17 @@ $\phi \in \Phi_\Sigma$,
 resp. $\eta \in \Phi_{\Sigma, \Delta}$,
 the value $\bigoplus_{a \in \Sigma} \phi(a)$, 
 resp. $\bigoplus_{a \in \Sigma} \bigoplus_{b \in \Delta} \eta(a, b)$.
-Note that, by definition of infinite sums in complete semirings, 
-a summary of $\phi \oplus \phi'$ and $\phi \otimes \phi'$ %(and $\alpha \otimes \phi$)
-can be computed from summaries of $\phi$ and $\phi'$ in $\Phi_{\Sigma}$, using the operators of $\Semiring$, 
-and the same holds for $\eta, \eta' \in \Phi_{\Sigma, \Delta}$. 
+By definition of infinite sums in complete semirings, 
+a summary of $\phi \oplus \phi'$, $\alpha \otimes \phi$ and $\phi \otimes \alpha$
+can be computed from $\alpha \in \Semiring$ and summaries of $\phi$ and $\phi'$ in $\Phi_{\Sigma}$, using the operators of $\Semiring$, 
+and the same holds for $\Phi_{\Delta}$ and $\Phi_{\Sigma, \Delta}$. 
 %
-A label theory is called \emph{effective} when 
-summaries of $\phi \oplus \eta$, $\phi \otimes \eta$, $\eta \oplus \psi$, $\eta \otimes \psi$, 
+A $\Semiring$-label theory is called \emph{effective} when 
+summaries of $\phi \otimes \phi'$, 
+$\phi \oplus \eta$, $\phi \otimes \eta$, $\eta \oplus \psi$, $\eta \otimes \psi$, 
 and of the partial applications $\eta_a$ and $\eta_b$, 
-can be computed, using the operators of $\Semiring$, 
+can be effectively computed, using the operators of $\Semiring$, 
 from summaries of 
-$\phi \in \Phi_{\Sigma}$, $\psi \in \Phi_{\Delta}$, $\eta \in \Phi_{\Sigma, \Delta}$. 
+$\phi, \phi' \in \Phi_{\Sigma}$, $\psi \in \Phi_{\Delta}$, 
+and $\eta \in \Phi_{\Sigma, \Delta}$. 
 
