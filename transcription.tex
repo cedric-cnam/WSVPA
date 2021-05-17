@@ -1,0 +1,107 @@
+
+
+
+
+\subsection{Application to Automated Music Transcription}
+\label{sec:transcription}
+Symbolic Automated Music Transcription
+and analysis of music performances
+
+\subsubsection{Time Scales}
+Real-Time Unit (RTU) = seconds
+
+\noindent 
+Musical-Time Unit (MTU) = number of measures
+
+\noindent 
+conversion via tempo value
+
+\subsubsection{Representation of Music Performances}
+We consider symbolic representations of musical performances, as finite sequences of events.
+It corresponds to the concrete case of a MIDI file~\cite{SMF} 
+recorded  from an electronic keyboard, 
+or the output of a transcription from audio files~\cite{Benetos18AMTsurvey}.
+%
+For the sake of simplicity, 
+we shall only consider here the case of monophonic performances, 
+where at most one note is sounding at a time. 
+The approach however extends to the polyphonic case.
+
+A music performance is a finite sequence of events in a set~$\Sigma$.
+Every event $e \in \Sigma$ has attributes such from a finite domain, 
+like a number of key for a note 
+or a flag indicating that it is a rest 
+(\textsf{ON} and \textsf{OFF} messages in~\cite{SMF})
+and a velocity value (0..127 in~\cite{SMF})).
+%This representation is similar to the piano roll ~\cite{Muller15fundamentals} chap.1. 
+Moreover, it contains a RTU value $\ioi{e}$ (real number) 
+representing the time distance to the next event, 
+or to the end of performance for the last event,
+also called \emph{inter-onset interval}.
+
+
+\subsubsection{Representation of Music Scores}
+Music score are represented as structured words
+made of timed %quantified 
+events and parenthesized markups,
+akin of nested words~\cite{AlurMadhusudan09nested}.
+
+We consider an alphabet $\Delta$, every symbol of which is 
+composed of a tag, in a finite set $\Xi$, 
+and an MTU (rational) IOI duration value.
+%The alphabet $\Delta$ 
+It is partitioned into 
+$\Delta = \Deltai \uplus \Deltac \uplus \Deltar$, 
+like in Section~\ref{section:SWVPA}.
+%
+\noindent
+The symbols of $\Deltai$ represent events:
+% (infinite alphabet of internal symbols) made of:
+with tags indicating a new note or grace-note (with null IOI), 
+a rest or the continuation of the previous note (tie or dot).
+%
+The elements of $\Deltac \uplus \Deltar$ are matched
+markups for describing the structure of the score, 
+\ie the hierarchical grouping of events, and also, 
+importantly the division of time in measures, tuplets...
+%- parentheses for time divisions : tuplets, bars...
+(linearization of rhythm trees \cite{jacquemard:hal-01138642}...).
+They contain additional info such as tuple number, beaming policy...
+
+\noindent
+The duration values of letters of $\Delta$, in MTU (rational), 
+can be computed with the markups and tags (\eg grace note has duration 0).
+
+%\noindent
+%There are simultaneous events, since grace notes has duration 0. They are ordered.
+%
+%\noindent
+%Finite bound on the number of duration ratio. ?
+
+\begin{example}
+...      
+\end{example}
+
+\subsubsection{Performance/Score Distance Computation}
+\label{app:distance}
+We define a distance between performance and score representations
+by a $\SWT$ $T = \< Q, \init, \wei, \final >$, over a semiring $\Semiring$.
+** detail the elements of $\Semiring$ ....**
+%are quadruplets of the form
+%$\< t, s, \delta_t, \delta_s>$
+
+Every state of $Q$ contains a 
+tempo value in a finite domain (e.g. 30..300 bpm).
+This value can be fixed 
+or recomputed by the $T$ %transducer 
+after reading each event, 
+according to a perceptive/cognitive model of tempo 
+such as~\cite{LargeJones99tempo}
+(also used in the context of score following~\cite{Cont10TPAMI}).
+% we wont detail here.
+
+
+\subsection{Transcription by SW Parsing} %Best-first Search}
+We assume a score language defined by a \SWVPA over the semiring 
+$\Semiring$ of Section~\ref{app:distance}.
+

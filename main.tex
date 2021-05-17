@@ -435,8 +435,8 @@ $\wei: Q \times (\Sigma \cup \{ \epsilon \}) \times Q \to \Semiring$.
 %
 %When $\wei_\epsilon(q, q') = \zero$ for all $q, q' \in Q$, 
 %the automaton~$A$ is called \emph{without $\epsilon$-transitions}.
-      
-The \emph{summary} of a $\SWT$, resp. a $\SWA$, is ***
+     
+%The \emph{summary} of a $\SWT$, resp. a $\SWA$, is ***
       
       
       
@@ -529,34 +529,34 @@ without $\epsilon$-transitions
 such that for all $s \in \Sigma^*$, $A'(s) = A(s)$.
 \end{proposition}
 %
-\begin{proof}  ** Tb revised **   
-Let $A = \< Q, \init, \<\wei_\epsilon, \wei_\Sigma>, \final >$.
-The automaton $A'$ is $\< Q, \init, \<\wei'_\epsilon, \wei'_\Sigma>, \final >$,
-where, for all $q, q' \in Q$,
-$\wei'_\epsilon(q, q') = \zero$  
-and 
-% \[
-% \begin{array}{rcccl}
-% \wei'_\Sigma(q, q') & = &  & \displaystyle\bigoplus_{q_1 \in Q} &
-%                \wei_\Sigma(q, q_1) \otimes  \wei_\epsilon(q_1, q')\\
-%                     &   & \oplus  & \displaystyle\bigoplus_{q_2 \in Q} &
-%                \wei_\epsilon(q, q_2) \otimes \wei_\Sigma(q_2, q')\\
-% \end{array}
-% \]
-\[
-\wei'_\Sigma(q, q') = 
-\displaystyle\bigoplus_{q'' \in Q} \wei_\epsilon(q, q'') \otimes \wei_\Sigma(q'', q')
-\oplus \displaystyle\bigoplus_{q_1 \in Q} \wei_\Sigma(q, q'') \otimes \wei_\epsilon(q'', q')
-\]
-In the above definition of $\wei'_\Sigma$ we use the operator
-of product of function of $\Phi_\Sigma$ by $\Semiring$ 
-described in Section~\ref{section:symbols}.
-%
-By definition of $\weight_{A}$ and distributivity of $\otimes$ on $\oplus$, 
-** NO. TBC see \cite{Mohri02ijfcs} **
-it holds that $\weight_{A}(q, s, q') = \weight_{A'}(q, s, q')$.
-\qed
-\end{proof}     
+%\begin{proof}  ** Tb revised **   
+%Let $A = \< Q, \init, \<\wei_\epsilon, \wei_\Sigma>, \final >$.
+%The automaton $A'$ is $\< Q, \init, \<\wei'_\epsilon, \wei'_\Sigma>, \final >$,
+%where, for all $q, q' \in Q$,
+%$\wei'_\epsilon(q, q') = \zero$  
+%and 
+%% \[
+%% \begin{array}{rcccl}
+%% \wei'_\Sigma(q, q') & = &  & \displaystyle\bigoplus_{q_1 \in Q} &
+%%                \wei_\Sigma(q, q_1) \otimes  \wei_\epsilon(q_1, q')\\
+%%                     &   & \oplus  & \displaystyle\bigoplus_{q_2 \in Q} &
+%%                \wei_\epsilon(q, q_2) \otimes \wei_\Sigma(q_2, q')\\
+%% \end{array}
+%% \]
+%\[
+%\wei'_\Sigma(q, q') = 
+%\displaystyle\bigoplus_{q'' \in Q} \wei_\epsilon(q, q'') \otimes \wei_\Sigma(q'', q')
+%\oplus \displaystyle\bigoplus_{q_1 \in Q} \wei_\Sigma(q, q'') \otimes \wei_\epsilon(q'', q')
+%\]
+%In the above definition of $\wei'_\Sigma$ we use the operator
+%of product of function of $\Phi_\Sigma$ by $\Semiring$ 
+%described in Section~\ref{section:symbols}.
+%%
+%By definition of $\weight_{A}$ and distributivity of $\otimes$ on $\oplus$, 
+%** NO. TBC see \cite{Mohri02ijfcs} **
+%it holds that $\weight_{A}(q, s, q') = \weight_{A'}(q, s, q')$.
+%\qed
+%\end{proof}     
 
 
 
@@ -708,10 +708,10 @@ A(s)  =
 \label{eq:weightA}
 \end{equation}
 
-\begin{example}
-structured words...
-intro language of music notation ?
-\end{example}
+%\begin{example}
+%structured words...
+%intro language of music notation ?
+%\end{example}
 
 
 \subsection{Properties}
@@ -733,19 +733,18 @@ as in the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 
 \subsection{Best-first Search} 
 \label{sec:best}\label{sec:search}
-**hypotheses**
+%**hypotheses**
 Let us assume that the semiring~$\Semiring$ is
 commutative, bounded, complete, and total.
-and 
-** assume label theory is s.t. 
-for all $\phi \in \Phii$, 
-$\psi \in \Phir$, 
-and $\eta \in \Phicr$, 
-$\displaystyle\bigoplus_{a \in \Omegai} \phi(a)$ 
-$\displaystyle\bigoplus_{r \in \Omegar} \phi(r)$ and 
-$\displaystyle\bigoplus_{{\call{c}} \in \Omegac} 
-\displaystyle\bigoplus_{{\return{r}} \in \Omegar} \eta({\call{c}}, {\return{r}})$
-are computable...
+and assume an effective label theory.
+%s.t. for all $\phi \in \Phii$, 
+%$\psi \in \Phir$, 
+%and $\eta \in \Phicr$, 
+%$\displaystyle\bigoplus_{a \in \Omegai} \phi(a)$ 
+%$\displaystyle\bigoplus_{r \in \Omegar} \phi(r)$ and 
+%$\displaystyle\bigoplus_{{\call{c}} \in \Omegac} 
+%\displaystyle\bigoplus_{{\return{r}} \in \Omegar} \eta({\call{c}}, {\return{r}})$
+%are computable...
 
 % total ? 
 % monotonic and superior writ natural ordering
@@ -860,9 +859,10 @@ since~$\Semiring$ is complete.
 The algorithm performs $2.|Q|^2$ iterations until $P$ is empty, 
 and each iteration has a time complexity $O(|Q|^2 . |P|)$.
 This gives a time complexity $O(|Q|^4 . |P|)$. 
-It can be reduced by implementing $P$ as a priority queue, 
-prioritized by the value returned by $d$
-***complete***. %$|Q|^3.\log(|Q|^2)$
+%
+%It can be reduced by implementing $P$ as a priority queue, 
+%prioritized by the value returned by $d$
+%***complete***. %$|Q|^3.\log(|Q|^2)$
 
 The correctness of Algorithm~\ref{algo:Dijkstra} 
 is ensured by the invariant expressed in the following lemma.
@@ -1186,122 +1186,16 @@ can be solved in PTIME in the size of the input \SWT, \SWVPA (or \SWTA) and inpu
 and the computation time of the functions of the label theory.
 \end{proposition}
 %
-\begin{proof}
-Bar-Hillel construction
-\qed  
-\end{proof}
+%\begin{proof}
+%Bar-Hillel construction
+%\qed  
+%\end{proof}
 
 
 
 
 
 
-
-
-
-
-\subsection{Application to Automated Music Transcription}
-\label{sec:transcription}
-Symbolic Automated Music Transcription
-and analysis of music performances
-
-\subsubsection{Time Scales}
-Real-Time Unit (RTU) = seconds
-
-\noindent 
-Musical-Time Unit (MTU) = number of measures
-
-\noindent 
-conversion via tempo value
-
-\subsubsection{Representation of Music Performances}
-We consider symbolic representations of musical performances, as finite sequences of events.
-It corresponds to the concrete case of a MIDI file~\cite{SMF} 
-recorded  from an electronic keyboard, 
-or the output of a transcription from audio files~\cite{Benetos18AMTsurvey}.
-%
-For the sake of simplicity, 
-we shall only consider here the case of monophonic performances, 
-where at most one note is sounding at a time. 
-The approach however extends to the polyphonic case.
-
-A music performance is a finite sequence of events in a set~$\Sigma$.
-Every event $e \in \Sigma$ has attributes such from a finite domain, 
-like a number of key for a note 
-or a flag indicating that it is a rest 
-(\textsf{ON} and \textsf{OFF} messages in~\cite{SMF})
-and a velocity value (0..127 in~\cite{SMF})).
-%This representation is similar to the piano roll ~\cite{Muller15fundamentals} chap.1. 
-Moreover, it contains a RTU value $\ioi{e}$ (real number) 
-representing the time distance to the next event, 
-or to the end of performance for the last event,
-also called \emph{inter-onset interval}.
-
-
-\subsubsection{Representation of Music Scores}
-Music score are represented as structured words
-made of timed %quantified 
-events and parenthesized markups,
-akin of nested words~\cite{AlurMadhusudan09nested}.
-
-We consider an alphabet $\Delta$, every symbol of which is 
-composed of a tag, in a finite set $\Xi$, 
-and an MTU (rational) IOI duration value.
-%The alphabet $\Delta$ 
-It is partitioned into 
-$\Delta = \Deltai \uplus \Deltac \uplus \Deltar$, 
-like in Section~\ref{section:SWVPA}.
-%
-\noindent
-The symbols of $\Deltai$ represent events:
-% (infinite alphabet of internal symbols) made of:
-with tags indicating a new note or grace-note (with null IOI), 
-a rest or the continuation of the previous note (tie or dot).
-%
-The elements of $\Deltac \uplus \Deltar$ are matched
-markups for describing the structure of the score, 
-\ie the hierarchical grouping of events, and also, 
-importantly the division of time in measures, tuplets...
-%- parentheses for time divisions : tuplets, bars...
-(linearization of rhythm trees \cite{jacquemard:hal-01138642}...).
-They contain additional info such as tuple number, beaming policy...
-
-\noindent
-The duration values of letters of $\Delta$, in MTU (rational), 
-can be computed with the markups and tags (\eg grace note has duration 0).
-
-%\noindent
-%There are simultaneous events, since grace notes has duration 0. They are ordered.
-%
-%\noindent
-%Finite bound on the number of duration ratio. ?
-
-\begin{example}
-...      
-\end{example}
-
-\subsubsection{Performance/Score Distance Computation}
-\label{app:distance}
-We define a distance between performance and score representations
-by a $\SWT$ $T = \< Q, \init, \wei, \final >$, over a semiring $\Semiring$.
-** detail the elements of $\Semiring$ ....**
-%are quadruplets of the form
-%$\< t, s, \delta_t, \delta_s>$
-
-Every state of $Q$ contains a 
-tempo value in a finite domain (e.g. 30..300 bpm).
-This value can be fixed 
-or recomputed by the $T$ %transducer 
-after reading each event, 
-according to a perceptive/cognitive model of tempo 
-such as~\cite{LargeJones99tempo}
-(also used in the context of score following~\cite{Cont10TPAMI}).
-% we wont detail here.
-
-
-\subsection{Transcription by SW Parsing} %Best-first Search}
-We assume a score language defined by a \SWVPA over the semiring 
-$\Semiring$ of Section~\ref{app:distance}.
 
 
 
@@ -1350,6 +1244,10 @@ semi-online implementation for AMT (bar-by-bar approach)
 
 
 
+\end{document}
+
+
+
 \section{Edit-Distance}
 
 %\subsection{Distance between words or languages}
@@ -1388,7 +1286,3 @@ e.g. Levenstein edit-distance: $S$ is min-plus and $\delta(a, b) = 1$ for all $(
 
 
 %\paragraph{Distance between a word and a regular language}
-
-
-\end{document}
-
