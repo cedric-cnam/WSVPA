@@ -314,6 +314,7 @@ in this case, the infinite sum operators applies since $\Semiring$ is assumed co
 As we shall see, under conditions, the $\epsilon$-transitions can be removed and hence the sum made finite.
 %
 %** The application of $\oplus$ can be seen as a ND choice between transitions **
+% choose to advance head in input, in output or both (or none)
 
 Since $\zero$ is absorbing for~$\otimes$ in~$\Semiring$,
 one term $\wei(q, a, b, q'')$ equal to $\zero$ in the above expression 
@@ -398,6 +399,8 @@ Finally, it may happen that the performers plays an extra note accidentally, but
 This is modelled by the transition $\wei_{10}$ with an arbitrary weight value $\alpha \in \Semiring$, 
 switch from state $q_0$ (normal) to $q_1$ (error).
 The transitions in the second column below switch back to the normal state $q_0$.
+% the metric computed by the \SWT is the smallest sum of point wise distances 
+% between dates of input and output events.
 \endex
 \end{example}
 
@@ -429,8 +432,9 @@ and $\Phi_\Sigma$.
 \end{definition}
       
 \noindent
-The above transition functions $\wei_\epsilon$ and $\wei_\Sigma$
-can be synthesized as above into a function
+As above in the case of \SWT, 
+the transition functions $\wei_\epsilon$ and $\wei_\Sigma$
+can be synthesized into a single function
 $\wei: Q \times (\Sigma \cup \{ \epsilon \}) \times Q \to \Semiring$.
 %
 %When $\wei_\epsilon(q, q') = \zero$ for all $q, q' \in Q$, 
@@ -1192,9 +1196,7 @@ and the computation time of the functions of the label theory.
 %\end{proof}
 
 
-
-
-
+%\input{transcription}
 
 
 

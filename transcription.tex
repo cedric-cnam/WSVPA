@@ -1,7 +1,7 @@
-
-
-
-
+% !TEX root = main.tex
+%
+% Application to AMT
+%
 \subsection{Application to Automated Music Transcription}
 \label{sec:transcription}
 Symbolic Automated Music Transcription
@@ -34,7 +34,7 @@ or a flag indicating that it is a rest
 (\textsf{ON} and \textsf{OFF} messages in~\cite{SMF})
 and a velocity value (0..127 in~\cite{SMF})).
 %This representation is similar to the piano roll ~\cite{Muller15fundamentals} chap.1. 
-Moreover, it contains a RTU value $\ioi{e}$ (real number) 
+Moreover, it contains a time value $\ioi{e}$ (real number) in RTU (seconds)
 representing the time distance to the next event, 
 or to the end of performance for the last event,
 also called \emph{inter-onset interval}.
@@ -48,7 +48,7 @@ akin of nested words~\cite{AlurMadhusudan09nested}.
 
 We consider an alphabet $\Delta$, every symbol of which is 
 composed of a tag, in a finite set $\Xi$, 
-and an MTU (rational) IOI duration value.
+and an IOI duration value expressed in MTU (rational number).
 %The alphabet $\Delta$ 
 It is partitioned into 
 $\Delta = \Deltai \uplus \Deltac \uplus \Deltar$, 
@@ -104,4 +104,20 @@ such as~\cite{LargeJones99tempo}
 \subsection{Transcription by SW Parsing} %Best-first Search}
 We assume a score language defined by a \SWVPA over the semiring 
 $\Semiring$ of Section~\ref{app:distance}.
+
+\subsection{Implementation}
+
+\textsf{qparse} based on a similar approach.
+
+slightly different models of symbolic weighted tree automata
+...WTA  specification of a prior score language.
+
+% we hope to gain flexibility with the present framework and extend application field
+% from transicription to other problems related to music notation and symbolic recorded performances.
+
+
+
+
+
+
 
