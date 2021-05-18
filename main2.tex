@@ -73,6 +73,7 @@
 % \theorembodyfont{\slshape}
 % \newtheorem{example}[theorem]{Example}
 % \newtheorem{remark}[theorem]{Remark}
+\def\endex{\hspace*{\fill} $\Diamond$\smallskip }
 {\theorembodyfont{\rmfamily} \theoremstyle{break} \newtheorem{algo}{Algorithm}}
 
 %% algorithms
@@ -84,6 +85,10 @@
 
 %% arrows etc
 %\input{rewriting}
+
+%% music symbols
+% see http://tug.ctan.org/info/latex4musicians/latex4musicians.pdf
+\usepackage{musicography}
 
 %% Misc macros
 
@@ -108,8 +113,8 @@
 \newcommand{\dom}{\ensuremath{\mathit{dom}}}
 
 
-\def\SA{\textsf{SA}\xspace}
-\def\WA{\textsf{WA}\xspace}
+\def\SA{\textsf{sA}\xspace}
+\def\WA{\textsf{wA}\xspace}
 \def\SWT{\textsf{swT}\xspace}
 \def\SWA{\textsf{swA}\xspace}
 \def\SWTA{\textsf{swTA}\xspace}
@@ -151,14 +156,14 @@
 % 
 %\title{Symbolic Weighted Parsing and Automated Music Transcription}
 %\title{Symbolic Weighted Language Models and Automated Music Transcription}
-\title{Symbolic Weighted Language Models and Parsing over Infinite Alphabets}
+\title{Symbolic Weighted Language Models and\\ Parsing over Infinite Alphabets}
 %\title{Weighted Visibly Pushdown Automata and Automated Music Transcription}
 \author{Florent Jacquemard}
 \institute{INRIA \& CNAM, Paris, France\\
 \email{florent.jacquemard@inria.fr}}
 
 %\titlerunning{WVPA \& AMT}
-\titlerunning{Symbolic Weighted Parsing and Automated Music Transcription}
+%\titlerunning{Symbolic Weighted Parsing} % and Automated Music Transcription
 %\authorrunning{Florent Jacquemard}
 
 \date{\today}
@@ -193,19 +198,19 @@
 \label{section:SWA}\label{sec:SWA}
 \label{section:SWT}\label{sec:SWT}
 
-We follow the approach of~\cite{Mohri03EDWA} for the computation of distances
-between words and languages, with weighted transducers, 
-extending it to infinite alphabets.
+We follow the approach of~\cite{Mohri03EDWA} for the computation of distances,
+between words and languages, using weighted transducers, 
+and extend it to infinite alphabets.
 % with models of symbolic weighted automata and transducers. 
 %
 The models introduced in this section generalize 
 weighted automata and transducers~\cite{Droste09handbook} 
 %over finite alphabets, see  e.g.~\cite{Mohri03EDWA}, 
-by labeling each transition with a weight function that takes the 
-input and output symbols as parameters, instead of a simple weight value.
+by labelling each transition with a weight function (instead of a simple weight value), 
+that takes the input and output symbols as parameters. 
 These functions are similar to the guards of symbolic automata~\cite{dAntoniVeanes17CAV,dAntoni21CACM},
-but they can return values in an arbitrary semiring, 
-where the latter guards are restricted to the Boolean semiring.
+but they can return values in an generic semiring, 
+whereas the latter guards are restricted to the Boolean semiring.
 
 
 \subsection{Semirings} 
@@ -224,7 +229,8 @@ where the latter guards are restricted to the Boolean semiring.
 %(SWT)
 
 Let $\Semiring$ be a commutative and complete semiring, 
- and $\bar\Phi = \< \Phi_\Sigma, \Phi_\Delta, \Phi_{\Sigma, \Delta}>$ be an $\Semiring$-label theory.
+$\Sigma$ and $\Delta$ be alphabets called respectively \emph{input} and \emph{output}, %{alphabets}, 
+and $\bar\Phi = \< \Phi_\Sigma, \Phi_\Delta, \Phi_{\Sigma, \Delta}>$ be an $\Semiring$-label theory.
 
 \begin{definition}
 \label{def:transducer} \label{def:SWT}
@@ -243,28 +249,23 @@ $\wei_{00}$, $\wei_{10}$, $\wei_{01}$, and $\wei_{11}$
 %$\wei_{i, j}: Q \times Q \to \Phi_{\Sigma, \Delta}$, with $i, j \in \{ 0, 1\}$.
 from $Q \times Q$ into $\Phi_{\Sigma, \Delta}$.
 \end{definition}
-%
-%A pair of states $\< q, q'>$ such that $\wei_\epsilon(q, q') \neq \zero$
-%is called an \emph{$\epsilon$-transition}.
 
-The \SWT $T$ computes on pairs of words $\< s, t> \in \Sigma^* \times \Delta^*$,
-$s$, resp. $t$, being called input word, resp. output word.
+A pair of states $\< q, q'>$ such that $\wei_{00}(q, q') \neq \zero$
+is called an \emph{$\epsilon$-transition}.
 %
 For convenience, when $\wei_{ij}(q, q') = \eta \in \Phi_{\Sigma, \Delta}$, 
 for $q, q' \in Q$ and $i, j \in \{ 0, 1\}$,
 we shall sometimes write, overloading the function names:
 $\wei_{ij}(q, a, b, q') = \eta(a, b)$ when  $a \in \Sigma$,  $b \in \Delta$.
+
+\noindent 
+The \SWT $T$ computes on pairs of words $\< s, t> \in \Sigma^* \times \Delta^*$,
+$s$, resp. $t$, being called input word, resp. output word.
 %
-Intuitively, using a transition $\wei_{ij}(q, a, b, q')$ means for $T$:
-read $a$, resp. $b$, at the current position in the input word, resp. output word;
-if $i = 1$, resp. $j = 1$,
-increment the current position in the input word (otherwise, do not change it);
-change state from $q$ to $q'$.
-
-
-\noindent
-More precisely, the \SWT~$T$ defines a mapping 
-from the pairs of words of $\Sigma^* \times \Delta^*$ into~$\Semiring$,
+% \noindent
+More precisely, the symbolic-weighted transducer~$T$ defines a mapping 
+from the pairs of strings of $\Sigma^* \times \Delta^*$ 
+into~$\Semiring$,
 based on the following intermediate function $\weight_T$
 defined recursively for every $q, q' \in Q$, 
 %$a \in \Sigma$, $b \in \Delta$ 
@@ -272,33 +273,52 @@ defined recursively for every $q, q' \in Q$,
 $a \in \Sigma$, $u \in \Sigma^*$, $b\in \Delta$, $v\in \Delta^*$, 
 \[
 \begin{array}{lccl}
-\weight_T(q, \epsilon, \epsilon, q)  & = & \multicolumn{2}{l}{\final(q)}\\
+\weight_T(q, \epsilon, \epsilon, q)  & = & \multicolumn{2}{l}{\one}\\ % or \final(q)
 \weight_T(q, \epsilon, \epsilon, q') & = & \multicolumn{2}{l}{\zero \mathrm{~if~} q \neq q'}\\
 \weight_T(q, au, bv, q') & = & 
    \displaystyle\bigoplus_{q'' \in Q} &
    \wei_{00}(q, a, b, q'') \otimes \weight_T(q'', au, bv, q')\\
   & \oplus & \displaystyle\bigoplus_{q'' \in Q} &
-    \wei_{10}(q'', a, b, q') \otimes \weight_T(q, u, bv, q'')\\
+    \wei_{10}(q, a, b, q'') \otimes \weight_T(q'', u, bv, q')\\
   & \oplus & \displaystyle\bigoplus_{q'' \in Q} &
-    \wei_{01}(q'', a, b, q') \otimes \weight_T(q, au, v, q'')\\
+    \wei_{01}(q, a, b, q'') \otimes \weight_T(q'', au, v, q')\\
   & \oplus & \displaystyle\bigoplus_{q'' \in Q} &
-    \wei_{11}(q'', a, b, q') \otimes \weight_T(q, u, v, q'')\\
+    \wei_{11}(q, a, b, q'') \otimes \weight_T(q'', u, v, q')\\
 \end{array}
 \]
-
-The above sum may be infinite because of the third line.
-However, $\weight_T$ is well defined since $\Semiring$ is complete.
 %
-As we shall see, under conditions, the $\epsilon$-transitions can be removed and hence the sum made finite.
-** SUPPR. $\epsilon$-transition (with $\wei_{00}$) first. **
-
-*** rem. there is no case for $a, \epsilon$ or $\epsilon, b$.
-   It can be simulated with $\wei_{10}$ and $\wei_{01}$ on the last letter. ***
-
+We recall that, by convention, an empty sum with $\bigoplus$ is $\zero$. 
+%
+The above sum may be infinite because of the $\epsilon$-transitions, % in the first and second lines.
+in this case, the infinite sum operators applies since $\Semiring$ is assumed complete.
+%As we shall see, under conditions, the $\epsilon$-transitions can be removed and hence the sum made finite.
+%** SUPPR. $\epsilon$-transition (with $\wei_{00}$) first. **
+%
+%*** rem. there is no case for $a, \epsilon$ or $\epsilon, b$.
+%   It can be simulated with $\wei_{10}$ and $\wei_{01}$ on the last letter. ***
 
 %** The application of $\oplus$ can be seen as a ND choice between transitions **
-We recall that, by convention, an empty sum with $\oplus$ is $\zero$. 
+% choose to advance head in input, in output or both (or none)
+Intuitively, using a transition $\wei_{ij}(q, a, b, q')$ means for $T$:
+read $a$, resp. $b$, at the current position in the input word, resp. output word;
+if $i = 1$, resp. $j = 1$,
+increment the current position in the input word (otherwise, do not change it);
+change state from $q$ to $q'$.
+The input and output symbols are always read at current positions, 
+even during transition that do not increment the head's position.
+This is in contrast with the models of weighted transducers over finite alphabets~\cite{Mohri03ijfcs},
+which ignore the symbol at current position in this case.
+In our case, symbols in a infinite alphabet cannot be stored in the finite memory of the transducer, 
+whereas considering the current symbol may be useful to compute a transition weight .
+%(even when it does not change the head's position, like with $\epsilon$-transitions).
 %
+The cases $\weight_T(q, au, \epsilon, q')$ and $\weight_T(q, \epsilon, bv, q')$
+are missing in the definition of $\weight_T$.
+It means that $T$ must avoid configurations where it reached the end of 
+the output word and not of the input one, or vice-versa.
+This can be done by using $\wei_{10}$ and $\wei_{01}$
+before reaching the end of word, and using a special state for this purpose.
+
 Since $\zero$ is absorbing for~$\otimes$ in~$\Semiring$,
 one term $\wei_{ij}(q, a, b, q'')$ equal to $\zero$ in the above expression 
 will be ignored in the sum, meaning that there is no possible transition
@@ -337,15 +357,76 @@ T(s, t)  =
 \end{equation}
 
 \begin{example}
-Let $\Sigma$ be an alphabet of symbols with timestamps. 
-The timestamp of $a \in \Sigma$, denoted by $\mathsf{t}(a)$, is expressed as a rational number.
+We can define with a \SWT the computation of a similarity measure 
+between timed sequences
+similar to dynamic time warping (DTW).
 
-
-DTW for sequences of timestamped events **     
+Let $\Semiring$  be the tropical (\emph{min-plus}) semiring of Figure~\ref{fig:semirings} and 
+let $\Sigma = \Delta = \mathbb{R}_+$ be sets of timestamps.
+We consider a \SWT with one state $q$ and transitions
+$\wei_{11}(q, d, d', q) = 
+ \wei_{01}(q, d, d', q) = 
+ \wei_{10}(q, d, d', q) = |d' - d|$,
+and $\wei_{00}(q, d, d', q) = \zero$, for all $d, d' \in \mathbb{R}_+$.
+% needs reading input/output symbols even by epsilon-transitions.
+The recursive definition of $\weight_T$ correspond to the dynamic programming equations of DTW
+for the computation of an optimal match between words, 
+the matching cost for two symbols being the 
+the time distance between them.
+\endex
 \end{example}
-      
+
+
 \begin{example}
-(simpler) pointwise distance between two sequences of timestamped events **
+% simple pointwise distance between two sequences of timestamped events **
+Let us consider the tropical (\emph{min-plus}) semiring~$\Semiring$ 
+of Figure~\ref{fig:semirings} and 
+let $\Sigma = \mathbb{R}_+$ be an input alphabet of event dates
+and $\Delta = \{ \mathsf{e}, \mathsf{-} \} \times \mathbb{R}_+$ 
+be an output alphabet of symbols with timestamps. 
+A symbol $\< \mathsf{e}, d > \in \Delta$ represents an event starting at date $d$, 
+and $\< \mathsf{-}, d >$ is a continuation of the previous event.
+%More precisely, we let 
+%$\Sigma = \{ a, - \} \times \R_+$ and 
+This example of $\Delta$ is motivated by the case of music notation, 
+where several notated events (notes) can be tied together, 
+with a \emph{tie} or a \emph{dot}
+(like in $\musQuarter\!\!\mathrel{\raisebox{-1.5mm}{$\smile$}}\!\!\musEighth$ 
+ or equivalently~\musQuarterDotted),
+meaning that they will be played as a unique sounding event.
+%The timestamp of $a \in \Sigma$, denoted by $\mathsf{t}(a)$, is expressed as a rational number.
+
+We consider a \SWT with two states $q_0$ and $q_1$ whose purpose 
+is to compare a recorded performance $s \in \Sigma^*$
+with notated music sheet $t \in \Delta^*$.
+One timestamp $d_i \in \Sigma$ may corresponds 
+to one notated event $\<\mathsf{e}, d'_i> \in \Sigma$, in which case 
+the weight value computed by the \SWT is the time distance between both
+(see transitions $\wei_{11}$ below).
+%
+Moreover, if $\<\mathsf{e}, d'_i>$ is followed by continuations 
+$\<\mathsf{-}, d'_{i+1}>$..., they are just skip with no cost (transitions $\wei_{01}$ or weight $\one$).
+%transitions
+\[
+\begin{array}{rclcrcl}
+\wei_{11}(q_0, d, \< \mathsf{e}, d'>, q_0) & = & |d' - d| & \quad &
+\wei_{11}(q_1, d, \< \mathsf{e}, d'>, q_0) & = & |d' - d|\\
+\wei_{01}(q_0, d, \< \mathsf{-}, d'>, q_0) & = & \one & &
+\wei_{01}(q_1, d, \< \mathsf{-}, d'>, q_0) & = & \one\\
+\wei_{10}(q_0, d, b, q_1) & = & \alpha & & \multicolumn{3}{l}{\mathrm{for~all~} b \in \Delta}
+\end{array}
+\]
+%
+Moreover, it may happen that the performers plays an extra note accidentally, but only once in a row. 
+This is modelled by the transition $\wei_{10}$ with an arbitrary weight value $\alpha \in \Semiring$, 
+switching from state $q_0$ (normal) to $q_1$ (error).
+The transitions in the second column below switch back to the normal state $q_0$.
+% the metric computed by the \SWT is the smallest sum of point wise distances 
+% between dates of input and output events.
+At last, we let $q_0$ be the only initial and final state, with
+$\init(q_0) = \one$, $\init(q_1) = \zero$, 
+$\final(q_0) = \one$, $\final(q_1) = \zero$, 
+\endex
 \end{example}
 
 \noindent
@@ -354,7 +435,7 @@ The \emph{Symbolic Weighted Automata} %$A = \< Q, \init, \weight, \final >$
 are defined similarly as the transducers of Definition~\ref{def:SWT}, 
 by simply omitting the output symbols.
 %
-In this case, the label theory $\bar\Phi$ is reduced to a singleton $\< \Phi_\Sigma>$.
+In this case, the label theory $\bar\Phi$ can be reduced to a singleton $\< \Phi_\Sigma>$.
 %over $\Sigma$ is reduced to
 %a set $\Phi_\Sigma$ closed under~$\oplus$ and~$\otimes$.
 %
@@ -370,20 +451,23 @@ respectively $\mathsf{out} : Q \to \Semiring,$
 are functions defining the weight for entering, 
 respectively leaving, a state, 
 and $\bar{\wei}$ is a pair of transition functions 
-$\wei_\epsilon$ and $\wei_\Sigma$ from $Q \times Q$ into 
-respectively $\Semiring$ %$\Phi_\epsilon$ 
-and $\Phi_\Sigma$.
+$\wei_{0}$, $\wei_{1}$
+%$\wei_{i, j}: Q \times Q \to \Phi_{\Sigma, \Delta}$, with $i, j \in \{ 0, 1\}$.
+from $Q \times Q$ into $\Phi_{\Sigma}$.
 \end{definition}
+A pair of states $\< q, q'>$ such that $\wei_{0}(q, q') \neq \zero$
+is called an \emph{$\epsilon$-transition}.
       
 \noindent
-The above transition functions $\wei_\epsilon$ and $\wei_\Sigma$
-can be synthesized as above into a function
-$\wei: Q \times (\Sigma \cup \{ \epsilon \}) \times Q \to \Semiring$.
+As above in the case of \SWT, 
+the transition functions $\wei_0$ and $\wei_1$
+can be synthesized into a single function
+$\wei: Q \times \Sigma \times Q \to \Semiring$.
 %
 %When $\wei_\epsilon(q, q') = \zero$ for all $q, q' \in Q$, 
 %the automaton~$A$ is called \emph{without $\epsilon$-transitions}.
       
-The \emph{summary} of a $\SWT$, resp. a $\SWA$, is ***
+%The \emph{summary} of a $\SWT$, resp. a $\SWA$, is ***
       
       
       
@@ -392,21 +476,19 @@ The two following properties will be useful to our approach on
 symbolic weighted parsing in Section~\ref{sec:parsing}.
 
 \begin{proposition}
-Given a \SWT $T$ 
-over alphabet $\Sigma$, $\Delta$ and a commutative semiring~$\Semiring$, 
+Given a \SWT $T$ over $\Sigma$, $\Delta$, $\Semiring$ and $\bar\Phi$,
 and $s \in \Sigma^*$, 
 there exists an effectively constructible \SWA 
-$A_{T, s}$ over $\Delta$ and $\Semiring$ 
+$A_{T, s}$ over $\Delta$, $\Semiring$ and $\bar\Phi$,
 such that for all $t \in \Delta^*$, $A_{T, s}(t) = T(s, t)$.
 \end{proposition}
 %
 \begin{proof}
 Let $T = \< Q, \init, \bar{\wei}, \final >$,
 let 
-$\wei: Q \times (\Sigma \cup \{ \epsilon \}) \times (\Delta \cup \{ \epsilon \}) \times Q 
- \to \Semiring$
+$\wei: Q \times \Sigma \times \Delta \times Q \to \Semiring$
 be the synthesized form of 
-$\bar{\wei} = \< \wei_\epsilon, \wei_\Sigma, \wei_\Delta, \wei_{\Sigma, \Delta}>$,
+$\bar{\wei} = \< \wei_{00}, \wei_{10}, \wei_{01}, \wei_{11}>$,
 and let $s = s_1 \ldots s_n$ with $s_1, \ldots, s_n \in \Sigma$.
 %$n = |s|$ be the length of $s$.
 %
@@ -419,40 +501,32 @@ $\final'(n, q) = \final(q)$ or all $q \in Q$,
 and $\final'(i, q) = \zero$ for all $1 \leq i <  n$. 
 
 \noindent
-We define transition functions $\wei'_\epsilon$ and $\wei'_\Sigma$ for $A_{T, s}$, 
+We define transition functions $\wei'_0$ and $\wei'_1$ for $A_{T, s}$, 
 together with their synthesized form $\wei'$ as follows: 
 for all $1 \leq i, j \leq n$, $q, q' \in Q$, %and $a \in \Sigma$, 
 and $b \in \Delta$, 
 \[
-\begin{array}{lclcrcll}
-\wei'_\epsilon\bigl(\< i, q>, \< i, q'>\bigr) & = & \wei_\epsilon(q, q') & \mathrm{\ie} &
-\wei'\bigl(\< i, q>, \epsilon, \< i, q'>\bigr)   & = & \wei(q, \epsilon, \epsilon, q'), & \\ 
+\begin{array}{lclcr}
+\wei'_0\bigl(\< i, q>, \< i, q'>\bigr) & = & \wei_{00}(q, q')\\ 
 %
-\wei'_\epsilon\bigl(\< i, q>, \< i+1, q'>\bigr) & = & \phi(s_i) & 
-\multicolumn{5}{l}{\mathrm{where~} \phi = \wei_\Sigma(q, q'),}\\
- & & & \mathrm{\ie} &
-\wei'\bigl(\< i, q>, \epsilon, \< i+1, q'>\bigr) & = & \wei(q, s_i, \epsilon, q') & 
-\mathrm{if~} i < n,\\ 
+\wei'_0\bigl(\< i, q>, \< i+1, q'>\bigr) & = & \phi(s_i) & 
+\mathrm{if} & i < n, \mathrm{where~} \phi = \wei_{10}(q, q'),\\
 %
-\wei'_\epsilon\bigl(\< i, q>, \< j, q'>\bigr) & = & \zero & 
-%\mathrm{\ie} & \wei'(\< i, q>, \epsilon, \< j, q'>)   & = & \zero & & 
-\multicolumn{5}{l}{\mathrm{if~} j \neq i, i+1,}\\ 
+\wei'_0\bigl(\< i, q>, \< j, q'>\bigr) & = & \zero & 
+\mathrm{if} & j \neq i, i+1,\\ 
 %
-\wei'_\Sigma\bigl(\< i, q>, \< i, q'>\bigr) & = & \wei_\Delta(q, q') & \mathrm{\ie} &
-\wei'\bigl(\< i, q>, b, \< i, q'>\bigr)          & = & \wei(q, \epsilon, b, q'),\\ 
+\wei'_1\bigl(\< i, q>, \< i, q'>\bigr) & = & \wei_{01}(q, q')\\
 %
-\wei'_\Sigma\bigl(\< i, q>, \< i+1, q'>\bigr) & = & \eta_{s_i} &
-\multicolumn{5}{l}{\mathrm{where~} \eta = \wei_{\Sigma, \Delta}(q, q'),}\\
- & & & \mathrm{\ie} & \wei'\bigl(\< i, q>, b, \< i+1, q'>\bigr) & = & \wei(q, s_i, b, q') & 
- \mathrm{if~} i < n,\\ 
+\wei'_1\bigl(\< i, q>, \< i+1, q'>\bigr) & = & \eta_{s_i} &
+\mathrm{if} & i < n, \mathrm{where~} \eta = \wei_{11}(q, q'),\\
 %
-\wei'_\Sigma\bigl(\< i, q>, \< j, q'>\bigr) & = & \zero & \mathrm{\ie} &
-\wei'\bigl(\< i, q>, b, \< j, q'>\bigr)     & = & \multicolumn{2}{l}{\zero\ \mathrm{~if~} j \neq i, i+1.}
+\wei'_1\bigl(\< i, q>, \< j, q'>\bigr) & = & \zero & 
+\mathrm{if} & j \neq i, i+1.
 \end{array}      
 \]
 We use the assumption that the underlying label theory of $T$ is 
 is closed under partial applications (Section~\ref{section:symbols})
-in the above construction of $\wei'_\Sigma$.
+in the above construction of $\wei'_1$.
 
 \noindent
 The $\SWA$ wanted is $A_{T, s} = \< Q', \init', {\bar\wei}', \final' >$.
@@ -469,19 +543,21 @@ where the size $\| T \|$ of $T$ is its number of states $|Q|$.
 
 % gen. to transducers
 \begin{proposition}
-Given a \SWA $A$ over alphabet $\Sigma$ 
-and a commutative and bounded semiring $\Semiring$, 
+When $\Semiring$ is commutative, bounded and complete, 
+given a \SWA $A$ 
+over $\Sigma$, $\Semiring$ and $\bar\Phi$
 there exists an effectively constructible \SWA $A'$ 
 without $\epsilon$-transitions 
+over $\Sigma$, $\Semiring$ and $\bar\Phi$,
 such that for all $s \in \Sigma^*$, $A'(s) = A(s)$.
 \end{proposition}
 %
-\begin{proof}  ** Tb revised **   
-Let $A = \< Q, \init, \<\wei_\epsilon, \wei_\Sigma>, \final >$.
-The automaton $A'$ is $\< Q, \init, \<\wei'_\epsilon, \wei'_\Sigma>, \final >$,
+\begin{proof} Let $A = \< Q, \init, \<\wei_0, \wei_1>, \final >$.
+The automaton $A'$ is $\< Q, \init, \<\wei'_0, \wei'_1>, \final >$,
 where, for all $q, q' \in Q$,
-$\wei'_\epsilon(q, q') = \zero$  
+$\wei'_0(q, q') = \zero$  
 and 
+** Tb revised **   
 % \[
 % \begin{array}{rcccl}
 % \wei'_\Sigma(q, q') & = &  & \displaystyle\bigoplus_{q_1 \in Q} &
@@ -523,7 +599,6 @@ The following model generalizes Symbolic VPA~\cite{dAntonyAlur14SVPDA}
 from Boolean semirings to arbitrary semiring weight domains.
 
 
-
 \subsection{Definition}
 Let $\Omega$ be a countable alphabet 
 %finite (large) or infinite,
@@ -536,16 +611,16 @@ whose elements are respectively called
 % \item a set $\Omegac$ of \emph{call symbols} denoted $\call{a}$,
 % \item a set $\Omegar$ of \emph{return symbols} denoted $\return{a}$.
 % \end{itemize}
-Let~$\< \Semiring, \oplus, \zero, \otimes, \one>$ be a commutative semiring and  
-let  $(\Phi_\epsilon, \Phic, \Phir, \Phicr)$ be a label theory over $\Semiring$
+Let~$\< \Semiring, \oplus, \zero, \otimes, \one>$ be a commutative and complete semiring and  
+let  $(\Phi_\epsilon, \Phii, \Phic, \Phir, \Phicr)$ be a label theory over $\Semiring$
 %In order to simplify notations, %and following the definition of Section~\ref{section:transducer}, 
 %we shall write respectively 
-where $\Phic$, $\Phir$ and~$\Phicr$ stand respectively 
-for~$\Phi_\Omegac$, $\Phi_\Omegar$ and~$\Phi_{\Omegac, \Omegar}$.
+where $\Phii$, $\Phic$, $\Phir$ and~$\Phicr$ stand respectively 
+for~$\Phi_\Omegai$, $\Phi_\Omegac$, $\Phi_\Omegar$ and~$\Phi_{\Omegac, \Omegar}$.
 %
-Moreover, we extend this theory with a set $\Phii$ 
-of unary functions in $\Omegai \to \Semiring$,
-closed under $\oplus$ and $\otimes$.
+%Moreover, we extend this theory with a set $\Phii$ 
+%of unary functions in $\Omegai \to \Semiring$,
+%closed under $\oplus$ and $\otimes$.
 
 \begin{definition}
 A \emph{Symbolic Weighted Visibly Pushdown Automata} (\SWVPA) 
@@ -683,16 +758,15 @@ as in the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 **hypotheses**
 Let us assume that the semiring~$\Semiring$ is
 commutative, bounded, complete, and total.
-and 
-** assume label theory is s.t. 
-for all $\phi \in \Phii$, 
-$\psi \in \Phir$, 
-and $\eta \in \Phicr$, 
-$\displaystyle\bigoplus_{a \in \Omegai} \phi(a)$ 
-$\displaystyle\bigoplus_{r \in \Omegar} \phi(r)$ and 
-$\displaystyle\bigoplus_{{\call{c}} \in \Omegac} 
-\displaystyle\bigoplus_{{\return{r}} \in \Omegar} \eta({\call{c}}, {\return{r}})$
-are computable...
+and assume an effective label theory.
+%s.t. for all $\phi \in \Phii$, 
+%$\psi \in \Phir$, 
+%and $\eta \in \Phicr$, 
+%$\displaystyle\bigoplus_{a \in \Omegai} \phi(a)$ 
+%$\displaystyle\bigoplus_{r \in \Omegar} \phi(r)$ and 
+%$\displaystyle\bigoplus_{{\call{c}} \in \Omegac} 
+%\displaystyle\bigoplus_{{\return{r}} \in \Omegar} \eta({\call{c}}, {\return{r}})$
+%are computable...
 
 % total ? 
 % monotonic and superior writ natural ordering
@@ -1133,122 +1207,14 @@ can be solved in PTIME in the size of the input \SWT, \SWVPA (or \SWTA) and inpu
 and the computation time of the functions of the label theory.
 \end{proposition}
 %
-\begin{proof}
-Bar-Hillel construction
-\qed  
-\end{proof}
+%\begin{proof}
+%Bar-Hillel construction
+%\qed  
+%\end{proof}
 
 
+%\input{transcription}
 
-
-
-
-
-
-
-
-\subsection{Application to Automated Music Transcription}
-\label{sec:transcription}
-Symbolic Automated Music Transcription
-and analysis of music performances
-
-\subsubsection{Time Scales}
-Real-Time Unit (RTU) = seconds
-
-\noindent 
-Musical-Time Unit (MTU) = number of measures
-
-\noindent 
-conversion via tempo value
-
-\subsubsection{Representation of Music Performances}
-We consider symbolic representations of musical performances, as finite sequences of events.
-It corresponds to the concrete case of a MIDI file~\cite{SMF} 
-recorded  from an electronic keyboard, 
-or the output of a transcription from audio files~\cite{Benetos18AMTsurvey}.
-%
-For the sake of simplicity, 
-we shall only consider here the case of monophonic performances, 
-where at most one note is sounding at a time. 
-The approach however extends to the polyphonic case.
-
-A music performance is a finite sequence of events in a set~$\Sigma$.
-Every event $e \in \Sigma$ has attributes such from a finite domain, 
-like a number of key for a note 
-or a flag indicating that it is a rest 
-(\textsf{ON} and \textsf{OFF} messages in~\cite{SMF})
-and a velocity value (0..127 in~\cite{SMF})).
-%This representation is similar to the piano roll ~\cite{Muller15fundamentals} chap.1. 
-Moreover, it contains a RTU value $\ioi{e}$ (real number) 
-representing the time distance to the next event, 
-or to the end of performance for the last event,
-also called \emph{inter-onset interval}.
-
-
-\subsubsection{Representation of Music Scores}
-Music score are represented as structured words
-made of timed %quantified 
-events and parenthesized markups,
-akin of nested words~\cite{AlurMadhusudan09nested}.
-
-We consider an alphabet $\Delta$, every symbol of which is 
-composed of a tag, in a finite set $\Xi$, 
-and an MTU (rational) IOI duration value.
-%The alphabet $\Delta$ 
-It is partitioned into 
-$\Delta = \Deltai \uplus \Deltac \uplus \Deltar$, 
-like in Section~\ref{section:SWVPA}.
-%
-\noindent
-The symbols of $\Deltai$ represent events:
-% (infinite alphabet of internal symbols) made of:
-with tags indicating a new note or grace-note (with null IOI), 
-a rest or the continuation of the previous note (tie or dot).
-%
-The elements of $\Deltac \uplus \Deltar$ are matched
-markups for describing the structure of the score, 
-\ie the hierarchical grouping of events, and also, 
-importantly the division of time in measures, tuplets...
-%- parentheses for time divisions : tuplets, bars...
-(linearization of rhythm trees \cite{jacquemard:hal-01138642}...).
-They contain additional info such as tuple number, beaming policy...
-
-\noindent
-The duration values of letters of $\Delta$, in MTU (rational), 
-can be computed with the markups and tags (\eg grace note has duration 0).
-
-%\noindent
-%There are simultaneous events, since grace notes has duration 0. They are ordered.
-%
-%\noindent
-%Finite bound on the number of duration ratio. ?
-
-\begin{example}
-...      
-\end{example}
-
-\subsubsection{Performance/Score Distance Computation}
-\label{app:distance}
-We define a distance between performance and score representations
-by a $\SWT$ $T = \< Q, \init, \wei, \final >$, over a semiring $\Semiring$.
-** detail the elements of $\Semiring$ ....**
-%are quadruplets of the form
-%$\< t, s, \delta_t, \delta_s>$
-
-Every state of $Q$ contains a 
-tempo value in a finite domain (e.g. 30..300 bpm).
-This value can be fixed 
-or recomputed by the $T$ %transducer 
-after reading each event, 
-according to a perceptive/cognitive model of tempo 
-such as~\cite{LargeJones99tempo}
-(also used in the context of score following~\cite{Cont10TPAMI}).
-% we wont detail here.
-
-
-\subsection{Transcription by SW Parsing} %Best-first Search}
-We assume a score language defined by a \SWVPA over the semiring 
-$\Semiring$ of Section~\ref{app:distance}.
 
 
 
@@ -1297,6 +1263,10 @@ semi-online implementation for AMT (bar-by-bar approach)
 
 
 
+\end{document}
+
+
+
 \section{Edit-Distance}
 
 %\subsection{Distance between words or languages}
@@ -1335,7 +1305,3 @@ e.g. Levenstein edit-distance: $S$ is min-plus and $\delta(a, b) = 1$ for all $(
 
 
 %\paragraph{Distance between a word and a regular language}
-
-
-\end{document}
-
