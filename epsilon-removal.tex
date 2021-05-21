@@ -1,0 +1,108 @@
+% gen. to transducers
+\medskip
+The following proposition shows that the transitions of type $\wei_{00}$
+(analogous of $\epsilon$-transitions of automata over finite alphabets)
+are not necessary to the expressiveness of $\SWA$, 
+and can safely nullified, 
+with an appropriate update of the other transitions.
+%
+\begin{proposition}
+When $\Semiring$ is commutative, bounded and complete, 
+given a \SWA $A$ 
+over $\Sigma$, $\Semiring$ and $\bar\Phi$
+there exists an effectively constructible \SWA $A'$ 
+over $\Sigma$, $\Semiring$ and $\bar\Phi$,
+without $\epsilon$-transitions,
+such that for all $s \in \Sigma^*$, $A'(s) = A(s)$.
+\end{proposition}
+%
+\begin{proof} 
+Let $A = \< Q, \init, \<\wei_0, \wei_1>, \final >$.
+%
+We associate to every sequence in $Q^+$ called \emph{$\epsilon$-path}, 
+and every $a \in \Sigma$, a weight value 
+defined recursively as follows (for $q_1, q_2 \in Q$ and $\sigma \in Q^*$):
+\[
+\begin{array}{rcl}
+\weight_\epsilon(q_1, a) & = & \one\\
+\weight_\epsilon(q_1 q_2 \sigma, a) & = & \wei_0(q_1, a, q_2) \otimes \weight_\epsilon(q_2 \sigma, a)\\
+\end{array}
+\]
+%
+We shall construct a \SWA $A' = \< Q, \init, \<\wei'_0, \wei'_1>, \final' >$,
+where, for all $q, q' \in Q$, and $a \in \Sigma$, 
+and 
+\[
+\begin{array}{rcl}
+\wei'_0(q, a, q') & = & \zero\\
+\wei'_1(q, a, q') & = & 
+\displaystyle\bigoplus_{r \in Q} 
+\displaystyle\bigoplus_{\sigma \in Q^*} 
+\weight_\epsilon(q\sigma r, a) \otimes  \wei_1(r, a, q')\\
+\final'(q, a) & = & 
+\final(a, q) \oplus
+\displaystyle\bigoplus_{r \in Q} 
+\displaystyle\bigoplus_{\sigma \in Q^*} 
+\weight_\epsilon(q\sigma r, a) \otimes \final(r, a)\\
+\end{array}
+\]
+Hence $\wei'_0(q, q')$ is the constant function $\zero$ of $\Phi_\Sigma$.
+Following Equation~(\ref{eq:SWA-value}),
+\[
+\begin{array}{lccl}
+\weight_{A'}(q, au, q') & = & 
+    \displaystyle\bigoplus_{r \in Q, u \neq \epsilon} &
+    \wei'_{1}(q, a, r) \otimes \weight_{A'}(r, u, q')
+    \oplus \displaystyle\bigoplus_{u = \epsilon} \wei'_{1}(q, a, q') \\
+ & = & \displaystyle\bigoplus_{r \in Q, u \neq \epsilon} & 
+  \displaystyle\bigoplus_{\sigma \in Q^*} 
+  \weight_\epsilon(q\sigma r, a) \otimes  \wei_1(r, a, q') \otimes \weight_{A'}(r, u, q')\\
+ & \oplus & \displaystyle\bigoplus_{r \in Q, u = \epsilon} &
+   \displaystyle\bigoplus_{\sigma \in Q^*} \weight_\epsilon(q\sigma r, a) \otimes \wei_{1}(r, a, q')  
+\end{array}
+\]
+Moreover, %we can show that
+\[
+\begin{array}{lccl}
+\weight_{A}(q, au, q') & = & 
+    \displaystyle\bigoplus_{r \in Q, u \neq \epsilon} &
+    \wei'_{1}(q, a, r) \otimes \weight_{A'}(r, u, q')\\
+ & = & \displaystyle\bigoplus_{r \in Q, u \neq \epsilon} & 
+  \displaystyle\bigoplus_{\sigma \in Q^*} 
+  \weight_\epsilon(q\sigma r, a) \otimes  \wei_1(r, a, q')
+\end{array}
+\]
+
+
+
+%By definition of $A(s)$ and $A'(s)$ (Equation~\ref{eq:SWA-value}), based on 
+%$\weight_A(q, s, q')$ and $\weight_{A'}(q, s, q')$, 
+%and by distributy of $\otimes$ over $\bigoplus$.
+
+
+
+In the above definition of $\wei'_1(q, a, q')$ and $\final'(q, a)$, 
+the first sum is finite and the second is not. 
+%
+We will show how to compute effectively the sum 
+$\bigoplus_{\sigma \in Q^*} \weight_\epsilon(q\sigma r, a)$
+for given $q$, $r$ and $a$, 
+using a shortest distance algorithm.
+
+
+** In the above definition of $\wei'_\Sigma$ we use the operator
+of product of function of $\Phi_\Sigma$ by $\Semiring$ 
+described in Section~\ref{section:symbols}.
+%
+By definition of $\weight_{A}$ and distributivity of $\otimes$ on $\oplus$, 
+** NO. TBC see \cite{Mohri02ijfcs} **
+it holds that $\weight_{A}(q, s, q') = \weight_{A'}(q, s, q')$.
+\qed
+\end{proof}     
+
+The construction of Proposition~\ref{prop:epsilon} 
+can be straigthforwardly generalized to \SWT.
+
+not bounded: 
+procedure of removal of $\epsilon$-transitions
+... essentially the same as for \WA~\cite{Mohri02ijfcs}.

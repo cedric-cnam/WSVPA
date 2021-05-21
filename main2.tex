@@ -190,6 +190,25 @@
 \input{introduction}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% prelin
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Preliminary Notions}
+\label{section:prelim}\label{sec:prelim}
+
+notations: for set $S$ : $S^*$ and $S^+$.
+interval $[i..j]$ of natural numbers
+
+\subsection{Semirings} 
+\label{section:semiring}\label{sec:semiring}
+\input{semiring}
+
+
+\subsection{Label Theory}
+\label{section:symbols}
+\input{labels}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -216,20 +235,10 @@ but they can return values in an generic semiring,
 whereas the latter guards are restricted to the Boolean semiring.
 
 
-\subsection{Semirings} 
-\label{section:semiring}\label{sec:semiring}
-\input{semiring}
-
-
-\subsection{Label Theory}
-\label{section:symbols}
-\input{labels}
-
-
-\subsection{Definitions} \label{sec:SWTdef}\label{sec:SWAdef}
+%\subsection{Definitions} \label{sec:SWTdef}\label{sec:SWAdef}
 %(SWT)
 
-Let $\Semiring$ be a commutative and complete semiring, 
+Let $\Semiring$ be a commutative semiring, 
 $\Sigma$ and $\Delta$ be alphabets called respectively \emph{input} and \emph{output}, %{alphabets}, 
 and $\bar\Phi = \< \Phi_\Sigma, \Phi_\Delta, \Phi_{\Sigma, \Delta}>$ be an $\Semiring$-label theory.
 
@@ -245,8 +254,8 @@ $\mathsf{in} : Q \to \Phi_{\Sigma, \Delta}$,
 respectively $\mathsf{out} : Q \to \Phi_{\Sigma, \Delta}$,
 are functions defining the weight for entering, 
 respectively leaving, a state, 
-and $\bar{\wei}$ is a 4-uplet of transition functions 
-$\wei_{00}$, $\wei_{10}$, $\wei_{01}$, and $\wei_{11}$
+and $\bar{\wei}$ is a triplet of transition functions 
+$\wei_{10}$, $\wei_{01}$,  and $\wei_{11}$
 %$\wei_{i, j}: Q \times Q \to \Phi_{\Sigma, \Delta}$, with $i, j \in \{ 0, 1\}$.
 from $Q \times Q$ into $\Phi_{\Sigma, \Delta}$.
 \end{definition}
@@ -255,13 +264,12 @@ from $Q \times Q$ into $\Phi_{\Sigma, \Delta}$.
 %is called an \emph{$\epsilon$-transition}.
 %
 For convenience, when $\wei_{ij}(q, q') = \eta \in \Phi_{\Sigma, \Delta}$, 
-for $q, q' \in Q$ and $i, j \in \{ 0, 1\}$,
+for $q, q' \in Q$ and $i, j \in \{ 0, 1\} \setminus \{ \<0, 0> \}$,
 respectively $\mathsf{in}(q) = \eta$, $\mathsf{out}(q') = \eta$,
 we shall sometimes write, overloading the function names:
 $\wei_{ij}(q, a, b, q') = \eta(a, b)$ for $a \in \Sigma$,  $b \in \Delta$,
 respectively $\mathsf{in}(q, a, b) = \eta(a, b)$,
 $\mathsf{out}(q', a, b) = \eta(a, b)$.
-
 
 \noindent 
 The \SWT $T$ computes on pairs of words $\< s, t> \in \Sigma^+ \times \Delta^+$,
@@ -276,59 +284,47 @@ defined recursively for every $q, q' \in Q$,
 %$a \in \Sigma$, $b \in \Delta$ 
 %for every strings of $s \in \Sigma^*$, $t \in \Delta^*$:
 $a \in \Sigma$, $u \in \Sigma^*$, $b\in \Delta$, $v\in \Delta^*$, 
-\[
-\begin{array}{lccl}
+
+\begin{equation}
+\begin{array}[t]{lccl}
 %\weight_T(q, \epsilon, \epsilon, q)  & = & \multicolumn{2}{l}{\one}\\ % or \final(q)
 %\weight_T(q, \epsilon, \epsilon, q') & = & \multicolumn{2}{l}{\zero \mathrm{~if~} q \neq q'}\\
 \weight_T(q, au, bv, q') & = & 
-   \displaystyle\bigoplus_{r \in Q} &
-   \wei_{00}(q, a, b, r) \otimes \weight_T(r, au, bv, q')\\
-  & \oplus & \displaystyle\bigoplus_{r \in Q, u \neq \epsilon} &
-    \wei_{10}(q, a, b, r) \otimes \weight_T(r, u, bv, q')\\
-  & \oplus & \displaystyle\bigoplus_{r \in Q, v \neq \epsilon} &
-    \wei_{01}(q, a, b, r) \otimes \weight_T(r, au, v, q')\\
-  & \oplus & \displaystyle\bigoplus_{r \in Q, u,v \neq \epsilon} &
-    \wei_{11}(q, a, b, r) \otimes \weight_T(r, u, v, q')\\
+             \displaystyle\bigoplus_{q'' \in Q, u \neq \epsilon} &
+    \wei_{10}(q, a, b, q'') \otimes \weight_T(q'', u, bv, q')\\
+  & \oplus & \displaystyle\bigoplus_{q'' \in Q, v \neq \epsilon} &
+    \wei_{01}(q, a, b, q'') \otimes \weight_T(q'', au, v, q')\\
+  & \oplus & \displaystyle\bigoplus_{q'' \in Q, u,v \neq \epsilon} &
+    \wei_{11}(q, a, b, q'') \otimes \weight_T(q'', u, v, q')\\
   & \oplus & \displaystyle\bigoplus_{u,v = \epsilon} &
     \wei_{11}(q, a, b, q')
 \end{array}
-\]
+\label{eq:SWT-weight}
+\end{equation}
 %
 We recall that, by convention (Section~\ref{sec:semiring}), 
 an empty sum with $\bigoplus$ is equal to~$\zero$. 
+%
+Intuitively, using a transition $\wei_{ij}(q, a, b, q')$ means for $T$:
+when reading respectively $a$ and $b$ at the current positions in the input and output words, 
+increment the current position in the input word if if $i = 1$, 
+and in the output word if $j = 1$ (otherwise, do not change it),
+and change state from $q$ to $q'$.
+%
+In contrast with the models of weighted transducers over finite alphabets~\cite{Mohri03ijfcs},
+the input and output symbols at current positions are always read by transitions, 
+even when they do not change the reading position the head's position.
+This is an important feature in the case of an infinite alphabet in 
+order to compare input and output symbols.
+%which cannot be stored in the finite memory of the transducer.
+
 Since $\zero$ is absorbing for~$\otimes$ in~$\Semiring$,
 one term $\wei_{ij}(q, a, b, q'')$ equal to $\zero$ in the above expression 
 will be ignored in the sum, meaning that there is no possible transition
 from state $q$ into state $q'$ while reading $a$ and $b$.
-%(including the case $a = \epsilon$ and $b = \epsilon$).
-%These functions $\phi$ act as guards for the transducer's transitions, 
-%preventing a transition when they return the absorbing $\zero$ of $\Semiring$.
 This is analogous to the case of a transition's guard not satisfied by $\<a, b>$ for 
 symbolic transducers.
-% 
-The above sum may be infinite because of the transitions $\wei_{00}$. % in the first and second lines.
-In this case, the infinite sum operators applies since $\Semiring$ is assumed complete.
-%As we shall see, under conditions, the $\epsilon$-transitions can be removed and hence the sum made finite.
-%** SUPPR. $\epsilon$-transition (with $\wei_{00}$) first. **
-%
-%*** rem. there is no case for $a, \epsilon$ or $\epsilon, b$.
-%   It can be simulated with $\wei_{10}$ and $\wei_{01}$ on the last letter. ***
 
-%** The application of $\oplus$ can be seen as a ND choice between transitions **
-% choose to advance head in input, in output or both (or none)
-Intuitively, using a transition $\wei_{ij}(q, a, b, q')$ means for $T$:
-when reading respectively $a$ and $b$ at the current positions in the input and output words, 
-increment the current position in the input word if if $i = 1$ (otherwise, do not change it),
-increment the current position in the output word if if $j = 1$, 
-and change state from $q$ to $q'$.
-%
-In contrast with the models of weighted transducers over finite alphabets~\cite{Mohri03ijfcs},
-the input and output symbols at current positions are read by every transitions, 
-even transitions that do not increment the head's position.
-%This is in contrast with the models of weighted transducers over finite alphabets~\cite{Mohri03ijfcs},
-%which ignore the symbol at current position in this case.
-This is an important feature in the case of an infinite alphabet, 
-since symbols cannot be stored in the finite memory of the transducer in this case.
 %whereas considering the current symbol may be useful to compute a transition weight.
 %(even when it does not change the head's position, like with $\epsilon$-transitions).
 %
@@ -355,15 +351,15 @@ is the product, with $\otimes$, of the individual costs of the operations involv
 And the distance between $s$ and $t$ is the sum, with $\oplus$,
 of all such product of costs.
 
-
 \medskip\noindent
-Let $\< s, t> \in \Sigma^+ \times \Delta^+$, with $s = s_0\ldots s_m$, $t = t_0\ldots t_n$). 
+Let $\< s, t> \in \Sigma^+ \times \Delta^+$, with $s = s_1\ldots s_n$, 
+and $t = t_1\ldots t_m$. 
 The weight associated by $T$ to $\< s, t>$
 is defined as follows:
 \begin{equation}
 T(s, t)  = 
-\displaystyle\bigoplus_{q, q' \in Q} \mathsf{in}(q, s_0, t_0) 
-\mathop{\otimes} \weight_T(q, s, t, q') \mathop{\otimes} \mathsf{out}(q', s_m, t_n)
+\displaystyle\bigoplus_{q, q' \in Q} \mathsf{in}(q, s_1, t_1) 
+\mathop{\otimes} \weight_T(q, s, t, q') \mathop{\otimes} \mathsf{out}(q', s_n, t_m)
 \label{eq:SWT-value}
 \end{equation}
 
@@ -378,7 +374,7 @@ We consider a \SWT with one state $q$ and transitions
 $\wei_{11}(q, d, d', q) = 
  \wei_{01}(q, d, d', q) = 
  \wei_{10}(q, d, d', q) = |d' - d|$,
-and $\wei_{00}(q, d, d', q) = \zero$, for all $d, d' \in \mathbb{R}_+$.
+for all $d, d' \in \mathbb{R}_+$.
 % needs reading input/output symbols even by epsilon-transitions.
 The recursive definition of $\weight_T$ correspond to the dynamic programming equations of DTW
 for the computation of an optimal match between words, 
@@ -415,7 +411,7 @@ to one notated event $\<\mathsf{e}, d'_i> \in \Sigma$, in which case
 the weight value computed by the \SWT is the time distance between both
 (see transitions $\wei_{11}$ below).
 %
-Moreover, if $\<\mathsf{e}, d'_i>$ is followed by continuations 
+If $\<\mathsf{e}, d'_i>$ is followed by continuations 
 $\<\mathsf{-}, d'_{i+1}>$..., they are just skip with no cost (transitions $\wei_{01}$ or weight $\one$).
 %transitions
 \[
@@ -435,8 +431,9 @@ The transitions in the second column below switch back to the normal state $q_0$
 % the metric computed by the \SWT is the smallest sum of point wise distances 
 % between dates of input and output events.
 At last, we let $q_0$ be the only initial and final state, with
-$\init(q_0) = \one$, $\init(q_1) = \zero$, 
-$\final(q_0) = \one$, $\final(q_1) = \zero$, 
+$\init(q_0, d, b) = \final(q_0, d, b) = \one$, and 
+$\init(q_1, d, b) = \final(q_1, d, b) = \zero$, 
+for all $d \in \Sigma$ and $b \in \Delta$.
 \endex
 \end{example}
 
@@ -455,51 +452,47 @@ A \emph{symbolic-weighted automaton} (\SWA)
 over $\Sigma$, $\Semiring$ and $\bar\Phi$
 %the input alphabet~$\Sigma$ and the commutative semiring $\Semiring$ 
 is a tuple
-$A = \< Q, \init, \bar{\wei}, \final >$,
+$A = \< Q, \init, {\wei_1}, \final >$,
 where $Q$ is a finite set of states, 
 $\mathsf{in} : Q \to \Phi_\Sigma$, 
 respectively $\mathsf{out} : Q \to \Phi_\Sigma,$
 are functions defining the weight for entering, 
 respectively leaving, a state, 
-and $\bar{\wei}$ is a pair of transition functions 
-$\wei_{0}$, $\wei_{1}$
-%$\wei_{i, j}: Q \times Q \to \Phi_{\Sigma, \Delta}$, with $i, j \in \{ 0, 1\}$.
+and ${\wei_1}$ is a transition functions 
 from $Q \times Q$ into $\Phi_{\Sigma}$.
 \end{definition}
-A pair of states $\< q, q'>$ such that $\wei_{0}(q, q') \neq \zero$
-is called an \emph{$\epsilon$-transition}.
-      
+%      
 \noindent
 As above in the case of \SWT, 
-the transition functions $\wei_0$ and $\wei_1$
-can be synthesized into a single function
-$\wei: Q \times \Sigma \times Q \to \Semiring$, 
-and the computation of $A$ on words $s \in \Sigma^+$
+when $\wei_1(q, q') = \phi \in \Phi_\Sigma$, 
+respectively $\mathsf{in}(q) = \phi$, $\mathsf{out}(q') = \phi$,
+we may write $\wei_1(q, a, q')$ for $\phi(a)$, 
+respectively $\mathsf{in}(q, a) = \phi(a)$, $\mathsf{out}(q', a) = \phi(a)$.
+%$\wei_1: Q \times \Sigma \times Q \to \Semiring$, 
+The computation of $A$ on words $s \in \Sigma^+$
 is defined with an intermediate function $\weight_A$, 
-%$a \in \Sigma$, $b \in \Delta$ 
-%for every strings of $s \in \Sigma^*$, $t \in \Delta^*$:
 defined as follows for $q, q' \in Q$, $a \in \Sigma$, $u \in \Sigma^*$,
-\[
+%
+\begin{equation}
 \begin{array}{lccl}
 %\weight_T(q, \epsilon, \epsilon, q)  & = & \multicolumn{2}{l}{\one}\\ % or \final(q)
 %\weight_T(q, \epsilon, \epsilon, q') & = & \multicolumn{2}{l}{\zero \mathrm{~if~} q \neq q'}\\
 \weight_A(q, au, q') & = & 
-   \displaystyle\bigoplus_{r \in Q} &
-   \wei_{0}(q, a, r) \otimes \weight_A(r, au, q')\\
-  & \oplus & \displaystyle\bigoplus_{r \in Q, u \neq \epsilon} &
+            \displaystyle\bigoplus_{r \in Q, u \neq \epsilon} &
     \wei_{1}(q, a, r) \otimes \weight_A(r, u, q')\\
   & \oplus & \displaystyle\bigoplus_{u = \epsilon} & 
     \wei_{1}(q, a, q')
 \end{array}
-\]
+\label{eq:SWA-weight}
+\end{equation}
 %
 \noindent
 and the weight value associated by $A$ to 
-$s = s_0\ldots s_m \in \Sigma^+$ is: % defined as follows:
+$s = s_1\ldots s_n \in \Sigma^+$ is: % defined as follows:
 \begin{equation}
 A(s)  = 
-\displaystyle\bigoplus_{q, q' \in Q} \mathsf{in}(q, s_0) 
-\mathop{\otimes} \weight_A(q, s, q') \mathop{\otimes} \mathsf{out}(q', s_m)
+\displaystyle\bigoplus_{q, q' \in Q} \mathsf{in}(q, s_1) 
+\mathop{\otimes} \weight_A(q, s, q') \mathop{\otimes} \mathsf{out}(q', s_n)
 \label{eq:SWA-value}
 \end{equation}
 
@@ -512,16 +505,17 @@ A(s)  =
       
       
       
-\subsection{Properties}
-The two following properties will be useful to our approach on 
-symbolic weighted parsing in Section~\ref{sec:parsing}.
+%\subsection{Properties}
+\noindent
+The following property will be useful to the approach on 
+symbolic weighted parsing presented in Section~\ref{sec:parsing}.
 
 \begin{proposition} \label{prop:epsilon}
 Given a \SWT $T$ over $\Sigma$, $\Delta$, $\Semiring$ and $\bar\Phi$,
-and $s \in \Sigma^*$, 
+and $s \in \Sigma^+$, 
 there exists an effectively constructible \SWA 
 $A_{T, s}$ over $\Delta$, $\Semiring$ and $\bar\Phi$,
-such that for all $t \in \Delta^*$, $A_{T, s}(t) = T(s, t)$.
+such that for all $t \in \Delta^+$, $A_{T, s}(t) = T(s, t)$.
 \end{proposition}
 %
 \begin{proof}
@@ -529,168 +523,106 @@ Let $T = \< Q, \init, \bar{\wei}, \final >$,
 let 
 $\wei: Q \times \Sigma \times \Delta \times Q \to \Semiring$
 be the synthesized form of 
-$\bar{\wei} = \< \wei_{00}, \wei_{10}, \wei_{01}, \wei_{11}>$,
-and let $s = s_1 \ldots s_n$ with $s_1, \ldots, s_n \in \Sigma$.
+$\bar{\wei} = \< \wei_{10}, \wei_{01}, \wei_{11}>$,
+and let $s = s_1 \ldots s_n$ with $s_1, \ldots, s_n \in \Sigma$ ($n \geq 1$).
 %$n = |s|$ be the length of $s$.
+
+The state set of $A_{T, s}$ will be $Q' = [1..n+1] \times Q$.
+Its state entering weight function is defined by, 
+for all $q \in Q$ and $b \in \Delta$,  
+$\init'(\< 1, q>, b) = \init(q, s_1, b)$ 
+and $\init'(\< i, q>, b) = \zero$ for all $1 < i \leq n+1$. 
+Its state leaving weight function is defined by, for all $q \in Q$ and $b \in \Delta$,  
+$\final'(\< n+1, q>, b) = \final(q, s_n, b)$, 
+and $\final'(\< i, q>, b) = \zero$ for all $1 \leq i <  n+1$.
+
+Every non-null transition of $A_{T, s}$ will
+simulate a sequence of transitions of $T$ which advance in 
+the input word while staying immobile in the output word, 
+and then make one step in the output word (and advance in the input word or not).
 %
-The state set of $A_{T, s}$ will be $Q' = [1..n] \times Q$.
-Its state entering weight function is defined by 
-$\init'(1, q) = \init(q)$ for all $q \in Q$, 
-and $\init'(i, q) = \zero$ for all $1 < i \leq n$, 
-and its state leaving weight function by 
-$\final'(n, q) = \final(q)$ or all $q \in Q$, 
-and $\final'(i, q) = \zero$ for all $1 \leq i <  n$. 
+The above initial sequence correspond to $\epsilon$-transitions of automata, 
+and its total weight is computed by the following intermediate function 
+$\wei'_0 : Q' \times Q' \to \Phi_{\Sigma}$, 
+defined for all $q, q' \in Q$: % all $1 \leq i < n$ and $1 \leq k \leq n-i$, 
+by:
+\[
+\begin{array}{rcl}
+\wei'_0\bigl(\<i, q>, \< i, q>\bigr) & = & \one 
+\quad \mathrm{if~} 1 \leq i \leq n+1,\\
+%
+\wei'_0\bigl(\<i, q>, \< i, q'>\bigr) & = & \zero 
+\quad \mathrm{if~} 1 \leq i \leq n+1 \mathrm{~and~} q \neq q',\\
+%
+\wei'_0\bigl(\<i, q>, \< i+k, q'>\bigr) & = & 
+\displaystyle
+\bigoplus_{\begin{array}{c}
+           \scriptstyle q_0,\ldots, q_k \in Q\\[-2pt]
+           \scriptstyle q_0 = q, q_k = q'
+           \end{array}} 
+\bigotimes_{j=0}^{k-1} \bigl[\wei_{10}(q_j, q_{j+1})\bigr]_{s_{i+j}}
+\quad \begin{array}[t]{l}
+      \mathrm{if~} 1 \leq i < n\\
+      \mathrm{and~} 1 \leq k \leq n-i.
+      \end{array}
+\end{array}
+\]
+where $\bigl[\wei_{10}(q_j, q_{j+1})\bigr]_{s_{i+j}}$ 
+is the partial application $\eta_{s_{i+j}} \in \Phi_{\Delta}$
+for $\eta = \wei_{10}(q_j, q_{j+1}) \in \Phi_{\Sigma, \Delta}$ ($s_{i+j} \in \Sigma$).
+%
+The function $\wei'_0$ is defined thanks to the closure properties of the label theory $\bar\Phi$
+(Section~\ref{section:symbols}). 
+% closed under partial applications 
+The sum and product in its definition are finite, 
+we shall see below how to compute the first sum in polynomial time.
+%The effective computation of $\wei'_0$ does not require enumerating all the state sequences 
+%of length $k+1$ in the sum.
+%Indeed, it amounts to search short
 
 \noindent
-We define transition functions $\wei'_0$ and $\wei'_1$ for $A_{T, s}$, 
-together with their synthesized form $\wei'$ as follows: 
-for all $1 \leq i, j \leq n$, $q, q' \in Q$, %and $a \in \Sigma$, 
-and $b \in \Delta$, 
+We define now the transition function 
+$\wei'_1: Q' \times Q' \to \Phi_\Sigma$
+of $A_{T, s}$ as follows,
+for $q, q' \in Q$,
+$1 \leq i \leq n$, and $0 \leq k \leq n-i$:
 \[
-\begin{array}{lclcl}
-\wei'_0\bigl(\< i, q>, \< i, q'>\bigr) & = & \wei_{00}(q, q')\\ 
-%
-\wei'_0\bigl(\< i, q>, \< i+1, q'>\bigr) & = & \phi(s_i) & 
-\mathrm{if} & i < n, \mathrm{where~} \phi = \wei_{10}(q, q'),\\
-%
-\wei'_0\bigl(\< i, q>, \< j, q'>\bigr) & = & \zero & 
-\mathrm{if} & j \neq i, i+1,\\ 
-%
+\begin{array}{lcl}
 \wei'_1\bigl(\< i, q>, \< i, q'>\bigr) & = & \wei_{01}(q, q')\\
 %
-\wei'_1\bigl(\< i, q>, \< i+1, q'>\bigr) & = & \eta_{s_i} &
-\mathrm{if} & i < n, \mathrm{where~} \eta = \wei_{11}(q, q'),\\
+\wei'_1\bigl(\< i, q>, \< i+k, q'>\bigr) & = & 
+\displaystyle
+\bigoplus_{\begin{array}{c}
+           \scriptstyle q'' \in Q\\[-2pt]
+           \scriptstyle i+k < n
+           \end{array}} 
+\wei'_0\bigl(\<i, q>, \< i+k, q''>\bigr) \otimes \eta_{s_{i+k}}
+\quad \mathrm{where~} \eta = \wei_{01}(q'', q'),\\
+ & \oplus & \displaystyle
+\bigoplus_{q'' \in Q} \wei'_0\bigl(\<i, q>, \< i+k-1, q''>\bigr) \otimes \eta'_{s_{i+k}}
+\quad \mathrm{where~}\eta' = \wei_{11}(q'', q'),\\
 %
-\wei'_1\bigl(\< i, q>, \< j, q'>\bigr) & = & \zero & 
-\mathrm{if} & j \neq i, i+1.
+\wei'_1\bigl(\< i, q>, \< j, q'>\bigr) & = & \zero  
+\quad \mathrm{if~} j < i.
 \end{array}      
 \]
-We use the assumption that the underlying label theory of $T$ is 
-is closed under partial applications (Section~\ref{section:symbols})
-in the above construction of $\wei'_1$.
+%
 
 \noindent
-The $\SWA$ wanted is $A_{T, s} = \< Q', \init', {\bar\wei}', \final' >$.
+We can show that the $\SWA$ $A_{T, s} = \< Q', \init', \wei'_1, \final' >$
+has the expected property: $\forall t \in \Delta^+, A_{T, s}(t) = T(s, t)$.
 \qed
 \end{proof}
-%
+
+\noindent
+On the quadratic computation of $\wei'_0$. **
+
+
 \noindent
 The construction time and size for $A_{T, s}$ are $O(\| T \| . | s |)$,
 where the size $\| T \|$ of $T$ is its number of states $|Q|$.
 
  
-
-
-% gen. to transducers
-\medskip
-The following proposition shows that the transitions of type $\wei_{00}$
-(analogous of $\epsilon$-transitions of automata over finite alphabets)
-are not necessary to the expressiveness of $\SWA$, 
-and can safely nullified, 
-with an appropriate update of the other transitions.
-%
-\begin{proposition}
-When $\Semiring$ is commutative, bounded and complete, 
-given a \SWA $A$ 
-over $\Sigma$, $\Semiring$ and $\bar\Phi$
-there exists an effectively constructible \SWA $A'$ 
-over $\Sigma$, $\Semiring$ and $\bar\Phi$,
-without $\epsilon$-transitions,
-such that for all $s \in \Sigma^*$, $A'(s) = A(s)$.
-\end{proposition}
-%
-\begin{proof} 
-Let $A = \< Q, \init, \<\wei_0, \wei_1>, \final >$.
-%
-We associate to every sequence in $Q^+$ called \emph{$\epsilon$-path}, 
-and every $a \in \Sigma$, a weight value 
-defined recursively as follows (for $q_1, q_2 \in Q$ and $\sigma \in Q^*$):
-\[
-\begin{array}{rcl}
-\weight_\epsilon(q_1, a) & = & \one\\
-\weight_\epsilon(q_1 q_2 \sigma, a) & = & \wei_0(q_1, a, q_2) \otimes \weight_\epsilon(q_2 \sigma, a)\\
-\end{array}
-\]
-%
-We shall construct a \SWA $A' = \< Q, \init, \<\wei'_0, \wei'_1>, \final' >$,
-where, for all $q, q' \in Q$, and $a \in \Sigma$, 
-and 
-\[
-\begin{array}{rcl}
-\wei'_0(q, a, q') & = & \zero\\
-\wei'_1(q, a, q') & = & 
-\displaystyle\bigoplus_{r \in Q} 
-\displaystyle\bigoplus_{\sigma \in Q^*} 
-\weight_\epsilon(q\sigma r, a) \otimes  \wei_1(r, a, q')\\
-\final'(q, a) & = & 
-\final(a, q) \oplus
-\displaystyle\bigoplus_{r \in Q} 
-\displaystyle\bigoplus_{\sigma \in Q^*} 
-\weight_\epsilon(q\sigma r, a) \otimes \final(r, a)\\
-\end{array}
-\]
-Hence $\wei'_0(q, q')$ is the constant function $\zero$ of $\Phi_\Sigma$.
-Following Equation~(\ref{eq:SWA-value}),
-\[
-\begin{array}{lccl}
-\weight_{A'}(q, au, q') & = & 
-    \displaystyle\bigoplus_{r \in Q, u \neq \epsilon} &
-    \wei'_{1}(q, a, r) \otimes \weight_{A'}(r, u, q')
-    \oplus \displaystyle\bigoplus_{u = \epsilon} \wei'_{1}(q, a, q') \\
- & = & \displaystyle\bigoplus_{r \in Q, u \neq \epsilon} & 
-  \displaystyle\bigoplus_{\sigma \in Q^*} 
-  \weight_\epsilon(q\sigma r, a) \otimes  \wei_1(r, a, q') \otimes \weight_{A'}(r, u, q')\\
- & \oplus & \displaystyle\bigoplus_{r \in Q, u = \epsilon} &
-   \displaystyle\bigoplus_{\sigma \in Q^*} \weight_\epsilon(q\sigma r, a) \otimes \wei_{1}(r, a, q')  
-\end{array}
-\]
-Moreover, %we can show that
-\[
-\begin{array}{lccl}
-\weight_{A}(q, au, q') & = & 
-    \displaystyle\bigoplus_{r \in Q, u \neq \epsilon} &
-    \wei'_{1}(q, a, r) \otimes \weight_{A'}(r, u, q')\\
- & = & \displaystyle\bigoplus_{r \in Q, u \neq \epsilon} & 
-  \displaystyle\bigoplus_{\sigma \in Q^*} 
-  \weight_\epsilon(q\sigma r, a) \otimes  \wei_1(r, a, q')
-\end{array}
-\]
-
-
-
-%By definition of $A(s)$ and $A'(s)$ (Equation~\ref{eq:SWA-value}), based on 
-%$\weight_A(q, s, q')$ and $\weight_{A'}(q, s, q')$, 
-%and by distributy of $\otimes$ over $\bigoplus$.
-
-
-
-In the above definition of $\wei'_1(q, a, q')$ and $\final'(q, a)$, 
-the first sum is finite and the second is not. 
-%
-We will show how to compute effectively the sum 
-$\bigoplus_{\sigma \in Q^*} \weight_\epsilon(q\sigma r, a)$
-for given $q$, $r$ and $a$, 
-using a shortest distance algorithm.
-
-
-** In the above definition of $\wei'_\Sigma$ we use the operator
-of product of function of $\Phi_\Sigma$ by $\Semiring$ 
-described in Section~\ref{section:symbols}.
-%
-By definition of $\weight_{A}$ and distributivity of $\otimes$ on $\oplus$, 
-** NO. TBC see \cite{Mohri02ijfcs} **
-it holds that $\weight_{A}(q, s, q') = \weight_{A'}(q, s, q')$.
-\qed
-\end{proof}     
-
-The construction of Proposition~\ref{prop:epsilon} 
-can be straigthforwardly generalized to \SWT.
-
-not bounded: 
-procedure of removal of $\epsilon$-transitions
-... essentially the same as for \WA~\cite{Mohri02ijfcs}.
-
-
 
 
 
