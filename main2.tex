@@ -138,6 +138,7 @@
 \def\Phii{{\Phi_\mathsf{i}}}
 \def\Phic{{\Phi_\mathsf{c}}}
 \def\Phir{{\Phi_\mathsf{r}}}
+\def\Phix{{\Phi_\mathsf{x}}}
 \def\Phici{{\Phi_\mathsf{ci}}}
 \def\Phicc{{\Phi_\mathsf{cc}}}
 \def\Phicr{{\Phi_\mathsf{cr}}}
@@ -146,6 +147,10 @@
 \def\weic{{\wei_\mathsf{c}}}
 \def\weir{{\wei_\mathsf{r}}}
 \def\weie{{\wei_\mathsf{e}}}
+\def\weiei{{\wei^\mathsf{e}_\mathsf{i}}}
+\def\weiec{{\wei^\mathsf{e}_\mathsf{c}}}
+\def\weier{{\wei^\mathsf{e}_\mathsf{r}}}
+\def\weiex{{\wei^\mathsf{e}_\mathsf{x}}}
 \newcommand{\config}[2]{\ensuremath \genfrac{[}{]}{0pt}{}{#1}{#2}} 
 \newcommand{\opluseq}{\ensuremath\mathrel{\oplus}=}
 \newcommand{\ioi}[1]{\mathsf{ioi}({#1})}
@@ -616,6 +621,9 @@ has the expected property: $\forall t \in \Delta^+, A_{T, s}(t) = T(s, t)$.
 
 \noindent
 On the quadratic computation of $\wei'_0$. **
+by a best path search in the graph with nodes $[i..i+k] \times Q$
+and edges labeled in $\Phi_\Sigma$...
+ordering = summary.
 
 
 \noindent
@@ -642,10 +650,11 @@ from Boolean semirings to arbitrary semiring weight domains.
 \subsection{Definition}
 Let $\Omega$ be a countable alphabet 
 %finite (large) or infinite,
-that we assume partitioned into three subsets 
-$\Omegai$, $\Omegac$, $\Omegac$,
+that we assume partitioned into three 
+subsets~$\Omegai$, $\Omegac$, $\Omegac$,
 whose elements are respectively called 
 \emph{internal}, \emph{call} and \emph{return} symbols.
+% names are  coined by application to functional program verification
 % \begin{itemize}
 % \item a set $\Omegai$ of \emph{internal symbols} denoted $a$,
 % \item a set $\Omegac$ of \emph{call symbols} denoted $\call{a}$,
@@ -667,19 +676,23 @@ for~$\Phi_\Omegai$, $\Phi_\Omegac$, $\Phi_\Omegar$ and~$\Phi_{\Omegac, \Omega_\m
 \begin{definition}
 A \emph{Symbolic Weighted Visibly Pushdown Automata} (\SWVPA) 
 over  $\Omega = \Omegai \uplus \Omegac \uplus \Omegar$, $\Semiring$ and $\bar\Phi$ 
-is a tuple $A = \< Q, P, \init, \weii, \weic, \weir, \weie, \final >$,
+is a tuple $A = \< Q, P, \init, \bar\wei, \final >$,
 where $Q$ is a finite set of states, 
 $P$ is a finite set of stack symbols, 
 $\mathsf{in} : Q \to \Semiring$, 
 respectively $\mathsf{out} : Q \to \Semiring,$
 are functions defining the weight for entering, 
 respectively leaving, a state, 
-and 
+and $\bar\wei$ is a sextuplet composed of the transition functions:
 $\weii : Q \times P \times Q \to \Phici$,  
+$\weiei : Q \times Q \to \Phii$,  
 $\weic : Q \times P \times Q \times P \to \Phicc$,  
+$\weiec : Q \times P \times Q \to \Phic$,  
 $\weir : Q \times P \times Q \to \Phicr$,  
-$\weie : Q \times Q \to \Phir$,  
-are transition functions.
+$\weier : Q \times Q \to \Phir$.
+%and 
+%$\weiex : Q \times Q \to \Phix$ 
+%with $\mathsf{x} \in \{ \mathsf{i}, \mathsf{c}, \mathsf{r}\}$.
 \end{definition}
 %
 Similarly as in Section~\ref{section:transducer}, 
@@ -695,55 +708,83 @@ overloading their names: % for simplicity:
 \weii(q, c, p, a, q') = \eta_\mathsf{ci}(c, a) & 
 \mathrm{where~} \eta_\mathsf{ci} = \weii(q, p, q'),\\
 %
-\weic: Q \times \Omegac \times P \times  \Omegac \times Q \times P \to \Semiring & 
-\weic(q, c, p, \call{c'}, q', p') = \eta_\mathsf{cc}(c, \call{c'}) & 
-\mathrm{where~} \eta_\mathsf{cc} = \weic(q, p, q', p'),\\
+\weiei: Q \times \Omegai \times Q \to \Semiring & 
+\weiei(q, a, q') = \phi_\mathsf{i}(a) &
+\mathrm{where~} \phi_\mathsf{i} = \weiei(q, q').\\
+%
+\weic: Q \times \Omegac \times P \times  \Omegac \times P \times Q \to \Semiring & 
+\weic(q, c, p, \call{c'}, p', q') = \eta_\mathsf{cc}(c, \call{c'}) & 
+\mathrm{where~} \eta_\mathsf{cc} = \weic(q, p, p', q'),\\
+%
+\weiec: Q \times \Omegac \times P \times Q \to \Semiring & 
+\weiec(q, {\call{c}}, p, q') = \phi_\mathsf{c}({\call{c}}) &
+\mathrm{where~} \phi_\mathsf{c} = \weiec(q, p, q').\\
 %
 \weir: Q \times \Omegac \times P \times \Omegar \times Q \to \Semiring & 
 \weir(q, {\call{c}},  p, {\return{r}}, q') = \eta_\mathsf{cr}({\call{c}},  {\return{r}}) & 
 \mathrm{where~} \eta_\mathsf{cr} = \weir(q, p, q'),\\
 %
-\weie: Q \times \Omegar \times Q \to \Semiring & 
-\weie(q, {\return{r}}, q') = \phi_\mathsf{e}({\return{r}}) &
-\mathrm{where~} \phi_\mathsf{e} = \weie(q, q').\\
+\weier: Q \times \Omegar \times Q \to \Semiring & 
+\weier(q, {\return{r}}, q') = \phi_\mathsf{r}({\return{r}}) &
+\mathrm{where~} \phi_\mathsf{r} = \weier(q, q').\\
 \end{array}      
 \]
 
 \noindent
 The intuition is the following for the above transitions.
-\begin{description}
-\item $\weii$ : read the input internal symbol $a$, change state to $q'$ (stack is untouched).
-\item $\weic$ : read the input call symbol $\call{c}$, push it to the stack along with $p$, change state to $q'$.
-\item $\weir$ : when the stack is not empty, 
-      read and pop from stack a pair made of $\call{c}$ and $p$, 
-      read the input return symbol $\return{r}$, change state to $q'$.
-      In this case, the weight function $\phi_\mathsf{r}$ 
-      computes a value of matching between the call and return symbols $c$ and $r$.
-      This value might be set to $\zero$ in order to express that the symbols do not match.
-\item $\weie$ : when the stack is empty, 
-      read the input symbol $\call{r}$, change state to $q'$.
-\end{description}
 
-We give now a formal definition of these transitions of the automaton~$A$
+\noindent
+$\weii$ and $\weiei$ both read an input internal symbol $a$ and change state from $q$ to $q'$, 
+without changing the stack. 
+Moreover, $\weii$ reads 
+${\call{c}} \in \Omegac$ and $p \in P$ at the top of the stack 
+($c$ is compared to $a$ by the weight function $\eta_\mathsf{ci} \in \Phici$)
+and $\weiei$ applies when the stack is empty.
+
+\noindent
+$\weic$ and $\weiec$ read the input call symbol $\call{c}'$, 
+push it to the stack along with $p'$, and change state from $q$ to to $q'$.
+Moreover, $\weic$ reads ${\call{c}}$ and $p$ at the top of the stack 
+($c$ is compared to $c'$),
+and $\weiec$ applies when the stack is empty.
+
+\noindent
+$\weir$ and $\weier$ read the input return symbol $\return{r}$, and change state from $q$ to to $q'$.
+Moreover, $\weir$ reads and pop from stack a pair made of $\call{c}$ and $p$, 
+($\call{c}$ is compared to $\return{r}$),
+and $\weier$ applies when the stack is empty.
+%In this case, the weight function $\phi_\mathsf{r}$ 
+%computes a value of matching between the call and return symbols $c$ and $r$.
+%This value might be set to $\zero$ in order to express that the symbols do not match.
+
+Formally, the transitions of the automaton~$A$ are defined
 in term of %a weight value computed by 
 an intermediate function $\weight_A$, like in Section~\ref{sec:SWT}.
 In the case of a pushdown automaton, a configuration is composed 
 of a state $q \in Q$ and a stack content $\gamma \in \Gamma^*$, where $\Gamma = \Omegac \times P$.
 Therefore, $\weight_A$ is a function from 
-$Q \times \Gamma^* \times \Omega^* \times Q \times \Gamma^*$ into $\Semiring$.
+$[Q \times \Gamma^*] \times \Omega^* \times [Q \times \Gamma^*]$ into~$\Semiring$.
 \[
 \begin{array}{rcl}
-\weight_A\bigl(\config{q}{\gamma}, a\, u, \config{q'}{\gamma'}\bigr) & = & 
- {\displaystyle\bigoplus_{q'' \in Q}} \weii(q, a, q'') 
+\weight_A\bigl(\config{q}{{\call{c}}\, p\cdot\gamma}, a\, u, \config{q'}{\gamma'}\bigr) & = & 
+ {\displaystyle\bigoplus_{q'' \in Q}} \weii(q, c, p, a, q'') 
  \otimes \weight_A\bigl(\config{q''}{\gamma}, u, \config{q'}{\gamma'}\bigr)\\
 %
-\weight_A\bigl(\config{q}{\gamma}, {\call{c}}\, u, \config{q'}{\gamma'}\bigr) & = & 
+\weight_A\bigl(\config{q}{\bot}, a\, u, \config{q'}{\gamma'}\bigr) & = & 
+ {\displaystyle\bigoplus_{q'' \in Q}} \weiei(q, a, q'') 
+ \otimes \weight_A\bigl(\config{q''}{\bot}, u, \config{q'}{\gamma'}\bigr)\\
+%
+\weight_A\bigl(\config{q}{{\call{c}}\, p\cdot\gamma}, {\call{c}'}\, u, \config{q'}{\gamma'}\bigr) & = & 
  {\displaystyle\bigoplus_{\begin{array}{c}
                           \scriptstyle q'' \in Q\\[-2pt]
                           \scriptstyle p \in P
                           \end{array}}}
- \weic\bigl(q, {\call{c}}, q'', p\bigr) 
- \otimes \weight_A\bigl(\config{q''}{{\call{c}}\, p\cdot \gamma}, u, \config{q'}{\gamma'}\bigr)\\[1mm]
+ \weic\bigl(q, {\call{c}}, p, {\call{c}'}, p', q''\bigr) 
+ \otimes \weight_A\bigl(\config{q''}{{\call{c}'}\, p' \cdot {\call{c}}\, p\cdot \gamma}, u, \config{q'}{\gamma'}\bigr)\\[1mm]
+%
+\weight_A\bigl(\config{q}{\bot}, {\call{c}}\, u, \config{q'}{\gamma'}\bigr) & = & 
+ {\displaystyle\bigoplus_{q'' \in Q}} \weiec(q, {\call{c}}, p, q'') 
+ \otimes \weight_A\bigl(\config{q''}{{\call{c}}\, p}, u, \config{q'}{\gamma'}\bigr)\\
 %
 \weight_A\bigl(\config{q}{{\call{c}}\, p\cdot \gamma}, {\return{r}}\, u, \config{q'}{\gamma'}\bigr) & = & 
  {\displaystyle\bigoplus_{q'' \in Q}} 
@@ -751,7 +792,7 @@ $Q \times \Gamma^* \times \Omega^* \times Q \times \Gamma^*$ into $\Semiring$.
  \otimes \weight_A\bigl(\config{q''}{\gamma}, u, \config{q'}{\gamma'}\bigr)\\
 %
 \weight_A\bigl(\config{q}{\bot}, {\return{r}}\, u, \config{q'}{\gamma'}\bigr) & = & 
- {\displaystyle\bigoplus_{q'' \in Q}} \weie(q, {\return{r}}, q'') 
+ {\displaystyle\bigoplus_{q'' \in Q}} \weier(q, {\return{r}}, q'') 
  \otimes \weight_A\bigl(\config{q''}{\bot}, u, \config{q'}{\gamma'}\bigr)\\
 \end{array}
 \]
@@ -761,8 +802,8 @@ and $\gamma$ is the rest of stack.
 
 \noindent
 The weight associated by $A$ to $s \in \Omega^*$
-is then defined as follows,
-following empty stack semantics: 
+is defined according to empty stack semantics: 
+%
 \begin{equation}
 A(s)  = 
 {\displaystyle\bigoplus_{q, q' \in Q}} \textstyle
@@ -795,7 +836,7 @@ The construction is essentially the same
 as in the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 
 
-\subsection{Best-first Search} 
+\subsection{Best Search} 
 \label{sec:best}\label{sec:search}
 **hypotheses**
 Let us assume that the semiring~$\Semiring$ is
@@ -832,18 +873,21 @@ let
 \]
 Since $\Semiring$ is complete, this infinite sum is well defined, 
 and since $\leq_\oplus$ is assumed total, it is the minimum in $\Omega^*$
-of $s \mapsto \weight_A(\config{q}{\sigma}, s, \config{q'}{\sigma})$ \wrt this ordering.
+of the fonction 
+$s \mapsto \weight_A(\config{q}{\sigma}, s, \config{q'}{\sigma})$ 
+\wrt this ordering.
 %
-When $\sigma = \bot$, $d_0(q, \sigma, q')$ is the central 
-expression in a term of the definition (\ref{eq:weightA}) of $A(s_0)$ for the minimum $s_0$
-(for the above function).
-When $\sigma = \bot$, intuitively, it is the minimum weight of a computation of $A$
+When $\sigma = \bot$, $d_0(q, \sigma, q')$ is the central expression in %a term of 
+the definition (\ref{eq:weightA}) of $A(s_0)$ for the minimum $s_0$
+(for the function $\weight_A$).
+%
+When $\sigma = \top$, intuitively, it is the minimum weight of a computation of $A$
 starting in state $q$ with a stack $\gamma \in \Gamma^*$ (possibly empty), 
-and ending in state $q$ with the same stack $\gamma$, such that moreover 
+and ending in state $q'$ with the same stack $\gamma$, such that moreover 
 the computation does not touch a symbol of $\gamma$. 
 That means that during the computation, 
 $A$ may apply the first case of in the definition of $\weight_A$ (internal symbol),
-as well as the second case, to can push call symbols on the top of $\gamma$, 
+as well as the second case, to push call symbols on the top of $\gamma$, 
 and may pop these symbols with the third case (return symbol). 
 However, it cannot apply one of the two last cases (return symbol and empty stack)
 when the current stack is $\gamma$.
@@ -852,17 +896,17 @@ when the current stack is $\gamma$.
 % two last cases in the definition of $\weight_A$ (return symbol and empty stack). 
 % However, it is possible to apply the two first cases 
 % (internal symbol or call symbol, with a push on the top of $\top$).
-
-The algorithm~\ref{algo:Dijkstra}
+%
+Algorithm~\ref{algo:Dijkstra}
 constructs iteratively a marking $d : Q \times \{ \bot, \top \} \times Q \to \Semiring$
 %of the triplets $\<q, \sigma, q'>$ 
 %of states of $A$ by weight values in $\Semiring$, 
-that converges eventually to $d_0(q, \sigma, q')$. 
+that converges eventually to $d_0$.
 %It uses for that purpose a priority queue $P$ containing triplets of 
 %$Q \times \{ \bot, \top \} \times Q$.
 
 
-\begin{algo}[1-best for \SWVPA] \label{algo:Dijkstra}
+\begin{algo}{best search for \SWVPA} \label{algo:Dijkstra}
 \textbf{initially} let $P = Q \times \{ \bot, \top \} \times Q$, %contains all %triplets 
 %$\< q_1, \bot, q_2>$ and $\<q_1, \top, q_2>$ for $q_1, q_2 \in Q$, with 
 and 
@@ -876,11 +920,14 @@ $d(q_1, \bot, q_2) = d(q_1, \top, q_2) = \zero$ otherwise.
 \quad\textbf{extract} $\< q_1, \sigma, q_2>$ from $P$ 
  such that $d(q_1, \sigma, q_2)$ is minimal wrt $\leq_\oplus$.
 
-\noindent\quad \textbf{for all} $q_0, q_3 \in Q$ and $p \in P$ do
+\noindent\quad \textbf{for all} $q_0, q_3 \in Q$ and $p \in P$, 
+update $d$ with $d(q_1, \sigma, q_2)$ (Figure~\ref{fig:best-update}).
+\end{algo}
 
-\noindent
-\qquad
-\(\begin{array}{rrcl}
+\begin{figure}[t]
+\[
+\begin{array}{rrcl}
+\multicolumn{4}{l}{\mathrm{For~all~} q_0, q_3 \in Q, p \in P,}\\
  & d(q_1, \sigma, q_3) & \opluseq &
    d(q_1, \sigma, q_2) \otimes \displaystyle\bigoplus_{a \in \Omegai} \weii(q_2, a, q_3)\\
 %
@@ -914,12 +961,18 @@ d(q_1, \sigma, q_2) \otimes
 \mathrm{if~} \sigma = \top & d(q_1, \top, q_3) & \opluseq & 
     d(q_1, \sigma, q_2) \otimes d(q_2, \top, q_3), \mathrm{if~} \< q_2, \top, q_3> \notin P \\
 \end{array}
-\) 
-\end{algo}
+\]
+\caption{Update $d$ with $d(q_1, \sigma, q_2)$.}
+\label{fig:best-update}
+\end{figure}
+
 
 \noindent
-The infinite sums in the updates of $d$ in Algorithm~\ref{algo:Dijkstra} are well defined
+The infinite sums in the updates of $d$ in Algorithm~\ref{algo:Dijkstra}, 
+Figure~\ref{fig:best-update}
+are well defined
 since~$\Semiring$ is complete.
+** effectively computable by hypothese that the label theory is effective**
 The algorithm performs $2.|Q|^2$ iterations until $P$ is empty, 
 and each iteration has a time complexity $O(|Q|^2 . |P|)$.
 This gives a time complexity $O(|Q|^4 . |P|)$. 
@@ -987,7 +1040,7 @@ A label theory is $k$-convex if all its functions are $k$-convex.
 \begin{proposition}
 For a \SWVPA $A$ over a 
 commutative, idempotent, superior, total and complete semiring 
-and an alphabet $\Omega$ with a $k$-convex label theory,
+and an alphabet $\Omega$ with a $k$-convex effective label theory,
 one can construct in PTIME a word $s \in \Omega^*$ 
 such that $A(s)$ is minimal \wrt the natural ordering for $\Semiring$. 
 %$\leg_\oplus$.
