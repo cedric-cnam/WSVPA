@@ -710,7 +710,7 @@ overloading their names: % for simplicity:
 %
 \weiei: Q \times \Omegai \times Q \to \Semiring & 
 \weiei(q, a, q') = \phi_\mathsf{i}(a) &
-\mathrm{where~} \phi_\mathsf{i} = \weiei(q, q').\\
+\mathrm{where~} \phi_\mathsf{i} = \weiei(q, q').\\[2pt]
 %
 \weic: Q \times \Omegac \times P \times  \Omegac \times P \times Q \to \Semiring & 
 \weic(q, c, p, \call{c'}, p', q') = \eta_\mathsf{cc}(c, \call{c'}) & 
@@ -718,7 +718,7 @@ overloading their names: % for simplicity:
 %
 \weiec: Q \times \Omegac \times P \times Q \to \Semiring & 
 \weiec(q, {\call{c}}, p, q') = \phi_\mathsf{c}({\call{c}}) &
-\mathrm{where~} \phi_\mathsf{c} = \weiec(q, p, q').\\
+\mathrm{where~} \phi_\mathsf{c} = \weiec(q, p, q').\\[2pt]
 %
 \weir: Q \times \Omegac \times P \times \Omegar \times Q \to \Semiring & 
 \weir(q, {\call{c}},  p, {\return{r}}, q') = \eta_\mathsf{cr}({\call{c}},  {\return{r}}) & 
@@ -736,23 +736,23 @@ The intuition is the following for the above transitions.
 \noindent
 $\weii$ and $\weiei$ both read an input internal symbol $a$ and change state from $q$ to $q'$, 
 without changing the stack. 
-Moreover, $\weii$ reads 
+Moreover, $\weii$ reads a pair made of 
 ${\call{c}} \in \Omegac$ and $p \in P$ at the top of the stack 
 ($c$ is compared to $a$ by the weight function $\eta_\mathsf{ci} \in \Phici$)
-and $\weiei$ applies when the stack is empty.
+and $\weiei$ applies if and only if the stack is empty.
 
 \noindent
 $\weic$ and $\weiec$ read the input call symbol $\call{c}'$, 
 push it to the stack along with $p'$, and change state from $q$ to to $q'$.
 Moreover, $\weic$ reads ${\call{c}}$ and $p$ at the top of the stack 
 ($c$ is compared to $c'$),
-and $\weiec$ applies when the stack is empty.
+and $\weiec$ applies iff the stack is empty.
 
 \noindent
 $\weir$ and $\weier$ read the input return symbol $\return{r}$, and change state from $q$ to to $q'$.
 Moreover, $\weir$ reads and pop from stack a pair made of $\call{c}$ and $p$, 
 ($\call{c}$ is compared to $\return{r}$),
-and $\weier$ applies when the stack is empty.
+and $\weier$ applies iff the stack is empty.
 %In this case, the weight function $\phi_\mathsf{r}$ 
 %computes a value of matching between the call and return symbols $c$ and $r$.
 %This value might be set to $\zero$ in order to express that the symbols do not match.
@@ -814,8 +814,8 @@ A(s)  =
 \end{equation}
 
 \begin{example}
-structured words...
-intro language of music notation ?
+structured words with timed symbols...
+intro language of music notation? (markup = time division, leaves = events etc)
 \end{example}
 
 
@@ -825,7 +825,7 @@ the class of \SWVPA is closed under the binary operators of the underlying semir
 %
 \begin{proposition}
 Let $A_1$ and $A_2$ be two (\SWVPA)
-over the same $\Omega$ and $\Semiring$.
+over the same $\Omega$, $\Semiring$ and $\bar\Phi$.
 There exists two $\SWVPA$ $A_1 \oplus A_2$ and $A_1 \otimes A_2$, 
 effectively constructible, 
 such that for all $s \in \Omega^*$, 
@@ -838,7 +838,7 @@ as in the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 
 \subsection{Best Search} 
 \label{sec:best}\label{sec:search}
-**hypotheses**
+%**hypotheses**
 Let us assume that the semiring~$\Semiring$ is
 commutative, bounded, complete, and total.
 and assume an effective label theory.
@@ -863,21 +863,31 @@ We propose a Dijkstra algorithm computing the minimal weight by $A$,
 
 \noindent
 More precisely, 
-let $\top$ be a fresh stack symbol which does not belong to $\Gamma$,
-and for every two states $q, q' \in Q$ and $\sigma \in \{ \bot, \top \}$, 
-let 
-\[ 
-  d_0(q, \sigma, q') = \bigoplus_{s\in \Omega^*} 
+let $b_\bot : Q \times Q \to \Semiring$ be the function:
+%
+\begin{equation}
+  b_\bot(q, q') = \bigoplus_{s\in \Omega^*} 
   \textstyle
-  \weight_A\bigl(\config{q}{\sigma}, s, \config{q'}{\sigma}\bigr). 
-\]
+  \weight_A\bigl(\config{q}{\bot}, s, \config{q'}{\bot}\bigr)
+\end{equation}
+%
 Since $\Semiring$ is complete, this infinite sum is well defined, 
 and since $\leq_\oplus$ is assumed total, it is the minimum in $\Omega^*$
 of the fonction 
 $s \mapsto \weight_A(\config{q}{\sigma}, s, \config{q'}{\sigma})$ 
 \wrt this ordering.
 %
-When $\sigma = \bot$, $d_0(q, \sigma, q')$ is the central expression in %a term of 
+Let $\top$ be a fresh stack symbol which does not belong to $\Gamma$.
+and let $b_\top : Q \times P \times Q \to \Phic$ be such that,
+for every two states $q, q' \in Q$ 
+and stack symbol $p \in P$ %and $\sigma \in \{ \bot, \top \}$, 
+\begin{equation}
+  b_\top(q, p, q') : c \mapsto \bigoplus_{s\in \Omega^*} 
+  \textstyle
+  \weight_A\bigl(\config{q}{c\,p\cdot \top }, s, \config{q'}{c\, p\cdot \top}\bigr). 
+\end{equation}
+%
+When $\sigma = \bot$, $b_\bot(q, q')$ is the central expression in %a term of 
 the definition (\ref{eq:weightA}) of $A(s_0)$ for the minimum $s_0$
 (for the function $\weight_A$).
 %
@@ -924,45 +934,64 @@ $d(q_1, \bot, q_2) = d(q_1, \top, q_2) = \zero$ otherwise.
 update $d$ with $d(q_1, \sigma, q_2)$ (Figure~\ref{fig:best-update}).
 \end{algo}
 
-\begin{figure}[t]
+
+
+\begin{figure}
+For all $q_0, q_3 \in Q$, %$p \in P$,
 \[
-\begin{array}{rrcl}
-\multicolumn{4}{l}{\mathrm{For~all~} q_0, q_3 \in Q, p \in P,}\\
- & d(q_1, \sigma, q_3) & \opluseq &
-   d(q_1, \sigma, q_2) \otimes \displaystyle\bigoplus_{a \in \Omegai} \weii(q_2, a, q_3)\\
+\begin{array}{lcl}
+%\multicolumn{3}{l}{\mathrm{For~all~} q_0, q_3 \in Q, p \in P,}\\
+d_\top(q_1, p, q_3) & \opluseq &
+  d_\top(q_1, p, q_2) \otimes 
+  \displaystyle\bigoplus_{a \in \Omegai} \weii(q_2, p, q_3)_a\\
+\multicolumn{3}{l}{\quad
+\mathrm{where~} \weii(q_2, p, q_3)_a \in \Phic
+\mathrm{~is~the~partial~application~}
+x_c \mapsto \weii(q_2, x_c, p, a, q_3)}\\
 %
-%  & d(q_0, \sigma, q_2) & \opluseq & 
-%    \displaystyle\bigoplus_{a \in \Omegai} \weii(q_0, a, q_1) \otimes d(q_1, \sigma, q_2)\\
+d_\bot(q_1, p, q_3) & \opluseq &
+  d_\bot(q_1, q_2) \otimes 
+  \displaystyle\bigoplus_{a \in \Omegai} \weie(q_2, a, q_3)\\
+%     
+d_\top(q_0, p, q_3) & \opluseq &
+  \displaystyle\bigoplus_{{\call{c}'} \in \Omegac} 
+  \displaystyle\bigoplus_{{\return{r}} \in \Omegar} 
+  \weic(q_0, p, p', q_1)_{c'} \otimes 
+  d_\top(q_1, p', q_2) \otimes
+  \weir(q_2, c', p', r, q_3)\\
+\multicolumn{3}{l}{\quad
+\mathrm{where~} \weic(q_0, p, p', q_1)_{c'} \in \Phic
+\mathrm{~is~the~partial~application~}
+x_c \mapsto \weic(q_0, p, x_c, c', p', q_1)}\\[2pt]
 %
-\mathrm{if~} \sigma = \top & d(q_0, \top, q_3) & \opluseq &
-d(q_1, \sigma, q_2) \otimes
-%\displaystyle\bigoplus_{p \in P} 
-\displaystyle\bigoplus_{{\call{c}} \in \Omegac} 
-\displaystyle\bigoplus_{{\return{r}} \in \Omegar} \eta({\call{c}}, {\return{r}})\\
-\mathrm{and} &  d(q_0, \bot, q_3) & \opluseq &
-d(q_1, \sigma, q_2) \otimes
-%\displaystyle\bigoplus_{p \in P} 
-\displaystyle\bigoplus_{{\call{c}} \in \Omegac} 
-\displaystyle\bigoplus_{{\return{r}} \in \Omegar} \eta({\call{c}}, {\return{r}})\\
-& & & \mathrm{where~} \eta = \weic(q_0, q_1, p) \otimes \weir(q_2, p, q_3)\\
+d_\bot(q_0, q_3) & \opluseq &
+  \displaystyle\bigoplus_{{\call{c}} \in \Omegac} 
+  \displaystyle\bigoplus_{{\return{r}} \in \Omegar} 
+  \weiec(q_0, c, p, q_1) \otimes 
+   d_\top(q_1, p, q_2)(c) \otimes
+  \weir(q_2, c, p, r, q_3)\\
 %
-\mathrm{if~} \sigma = \bot & d(q_1, \bot, q_3) & \opluseq &
-  d(q_1, \sigma, q_2) \otimes \displaystyle\bigoplus_{\return{r} \in \Omegar} \weie(q_2, {\return{r}}, q_3)\\
+d_\bot(q_1, q_3) & \opluseq &
+  d_\bot(q_1, q_2) \otimes 
+  \displaystyle\bigoplus_{\return{r} \in \Omegar} \weier(q_2, {\return{r}}, q_3)\\
 %
-%& d(q_0, \bot, q_2) & \opluseq & 
-%d(q_0, \bot, q_1) \otimes d(q_1, \sigma, q_2), \mathrm{if~} \< q_0, \bot, q_1> \notin P \\
+d_\top(q_1, p, q_3) & \opluseq & 
+  d_\top(q_1, p, q_2) \otimes d_\top(q_2, p, q_3), 
+  \mathrm{if~} \< q_2, \top, q_3> \notin P \\
 %
-%\mathrm{if~} \sigma = \top & d(q_0, \top, q_2) & \opluseq & 
-%d(q_0, \top, q_1) \otimes d(q_1, \sigma, q_2), \mathrm{if~} \< q_0, \top, q_1> \notin P \\
-%
-& d(q_1, \bot, q_3) & \opluseq & 
-   d(q_1, \sigma, q_2) \otimes d(q_2, \bot, q_3), \mathrm{if~} \< q_2, \bot, q_3> \notin P \\
-%
-\mathrm{if~} \sigma = \top & d(q_1, \top, q_3) & \opluseq & 
-    d(q_1, \sigma, q_2) \otimes d(q_2, \top, q_3), \mathrm{if~} \< q_2, \top, q_3> \notin P \\
+d_\bot(q_1, q_3) & \opluseq & 
+  d_\bot(q_1, q_2) \otimes d_\bot(q_2, q_3), \mathrm{if~} \< q_2, \bot, q_3> \notin P \\
 \end{array}
 \]
-\caption{Update $d$ with $d(q_1, \sigma, q_2)$.}
+%$\weii(q_2, p, q_3)_a \in \Phic$, for $a \in \Omegai$,
+%is the partial application
+%$x_c \mapsto \weii(q_2, x_c, p, a, q_3)$.
+%
+%$\weic(q_0, p, p', q_1)_{c'} \in \Phic$, for $c' \in \Omegac$,
+%is the partial application
+%$x_c \mapsto \weic(q_0, p, x_c, c', p', q_1)$.
+\caption{Update 
+$d_\top$ with $d_\top(q_1, p, q_2)$ or $d_\bot$ with $d_\top(\bot, q_2)$.}
 \label{fig:best-update}
 \end{figure}
 
