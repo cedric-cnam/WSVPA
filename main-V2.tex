@@ -649,7 +649,7 @@ The following model generalizes Symbolic VPA~\cite{dAntonyAlur14SVPDA}
 from Boolean semirings to arbitrary semiring weight domains.
 
 
-\subsection{Definition}
+\subsection{Definition}\label{se:SWVPA-def}
 Let $\Omega$ be a countable alphabet 
 %finite (large) or infinite,
 that we assume partitioned into three 
@@ -1082,24 +1082,25 @@ such that $A(s)$ is minimal \wrt the natural ordering for $\Semiring$.
 
 \subsection{Trees and Nested-Words}
 \label{sec:trees}
-The hierarchical structure of nested-words, defined the \emph{call} and \emph{return} markup symbols of 
-suggest a correspondence between these word and trees. 
-The lifting of this correspondence to languages, respective of tree automata and VPA have
-been discussed in~\cite{AlurMadhusudan09nested}, 
-see also~\cite{Caralp12VPAmult} for the weighted case.
-In this section, we discuss the correspondence between the symbolic-weighted extensions
+The hierarchical structure of nested-words, defined with the \emph{call} and \emph{return} markup symbols  
+suggest a correspondence with trees. 
+The lifting of this correspondence to languages, of tree automata and VPA,
+has been discussed in~\cite{AlurMadhusudan09nested}, 
+and~\cite{Caralp12VPAmult} for the weighted case.
+In this section, we describe a correspondence between the symbolic-weighted extensions
 of tree automata and VPA.
 
 Let $\Omega$ be a countable ranked alphabet, such that 
 every symbol $a \in \Omega$ has a rank 
 $\rank(a) \in [0..M]$ where $M$ is a fixed natural number.
-We write $\Omega_k$ the subset of all symbols $a$ of $\Omega$
-with $\rank(a) = k$, where $0 \leq k \leq M$.
-%$\cup_{i = 0}^{i = M} \Omega_i$ 
+We denote by $\Omega_k$ the subset of all symbols $a$ of $\Omega$
+with $\rank(a) = k$, where $0 \leq k \leq M$, 
+and $\Omega_{>0} = \Omega \setminus \Omega_0$.
 %
-$\T(\Omega)$ denotes the free $\Omega$-algebra of finite, ordered, 
-$\Omega$-labeled trees, 
-which is the smallest set such that  $\Omega_0 \subset \T(\Omega)$
+\noindent 
+The free $\Omega$-algebra of finite, ordered, 
+$\Omega$-labeled trees is denoted by $\T(\Omega)$.
+It is the smallest set such that  $\Omega_0 \subset \T(\Omega)$
 and for all $1 \leq k \leq M$, all $a \in \Omega_k$, 
 and all $t_1, \ldots, t_k \in \T(\Omega)$, $a(t_1, \ldots, t_k) \in \T(\Omega)$.
 %
@@ -1107,17 +1108,23 @@ and all $t_1, \ldots, t_k \in \T(\Omega)$, $a(t_1, \ldots, t_k) \in \T(\Omega)$.
 % (such a tree is simply denoted by $a$)
 % or the composition, denoted by $b(t_1,\ldots, t_n$) of a node labeled with $b$
 % and $n$ subtrees $t_1$,\ldots, $t_n$.
+%
+Let us assume a  commutative semiring $\Semiring$ 
+and a label theory $\bar{\Phi}$ over $\Semiring$ 
+containing one set $\Phi_{\Omega_k}$ for each $k \in [0..M]$.
 
 \renewcommand{\call}[1]{\ensuremath \langle_{#1}}
 \renewcommand{\return}[1]{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
 
-Let $\hat\Omega$ be the countable (unranked) alphabet obtained from 
-$\Omega$ as follows: 
-$\hat\Omega = \< \Omegai, \Omegac, \Omegar >$, with
+Let $\hat\Omega$ be the countable (unranked) alphabet obtained
+from $\Omega$ by: 
+$\hat\Omega = \Omegai \uplus \Omegac \uplus \Omegar$, with
 $\Omegai = \Omega_0$, 
 $\Omegac = \{ \; \call{a} \mid a \in \Omega_{>0} \}$,
-$\Omegac = \{ \; \return{a} \mid a \in \Omega_{>0} \}$,
-where $\Omega_{>0}$ denotes $\bigcup_{k = 1}^{M} \Omega_k$.
+$\Omegar = \{ \; \return{a} \mid a \in \Omega_{>0} \}$.
+We associate to $\hat\Omega$
+a label theory $\hat{\Phi}$ 
+like in Section~\ref{se:SWVPA-def}.
 
 \noindent
 We define a linearization of trees of $\T(\Omega)$ into 
@@ -1140,40 +1147,37 @@ words of $\hat{\Omega}^*$ as follows:
 % A tree $t \in \T(\Omega)$ is in the language of $G$ 
 % if it can be generated from $q_\mathsf{i}$ by 
 % non terminal replacement following the rules of $R$.
-
-Let us assume a label theory $\Phi_{\Omega_k}$ 
-for each $k \in [0..M]$.
 %
 \begin{definition}  \label{def:SWTA}
 A \emph{symbolic-weighted tree automaton} (\SWTA)
-over the ranked input alphabet~$\Omega$
-and the commutative semiring $\Semiring$ 
+over $\Omega$, $\Semiring$, and $\bar\Phi$
 is a triplet $A = \< Q, \init, \bar{\wei} >$ where
 $Q$ is a finite set of states, 
 $\mathsf{in} : Q \to \Semiring$ is the starting weight function, 
-and $\bar{\wei}$ is a $M+2$-uplet of transition functions made of:
-$\wei_\epsilon$ from $Q \times Q$ into $\Semiring$, and, 
-for each $k \in [0..M]$, $\wei_{\Omega, k}$
-from $Q \times Q^{k}$ into $\Phi_{\Omega_k}$.
+and $\bar{\wei}$ is a tuplet of transition functions containing
+%$\wei_\epsilon$ from $Q \times Q$ into $\Semiring$, and, 
+$\wei_{k}: Q \times Q^{k} \to \Phi_{\Omega_k}$
+for each $k \in [0..M]$. 
 \end{definition}
 %
-Like in Section~\ref{sec:SWAdef}, we define from $\bar{\wei}$ 
+%Like in Section~\ref{sec:SWAdef}, 
+We define from $\bar{\wei}$ 
 a transition function~$\wei$, %from $\bar\wei$
 from 
-$Q \times (\Sigma \cup \{ \epsilon \}) \times \bigcup_{k=0}^{M} Q^k$
-into~$\Semiring$: %also called $\wei$ for simplicity, 
+$Q \times \Omega \times \bigcup_{k=0}^{M} Q^k$
+into~$\Semiring$ by: %also called $\wei$ for simplicity, 
 %such that, for all $q, q' \in Q$, $a \in \Sigma$, and $b \in \Delta$, 
 \[
 \begin{array}{rcll}
-\wei(q_0, \epsilon, q_1) & = &  \wei_\epsilon(q_0, q_1),\\ %\phi_\epsilon\\
+%\wei(q_0, \epsilon, q_1) & = &  \wei_\epsilon(q_0, q_1),\\ %\phi_\epsilon\\
 \wei(q_0, a, q_1 \ldots q_k) & = & \phi_{\Omega, k}(a) &
-\quad\mathrm{where~} \phi_{\Omega, k} = \wei_{\Omega, k}(q_0, q_1\ldots q_k).\\
+\quad\mathrm{where~} \phi_{k} = \wei_{k}(q_0, q_1\ldots q_k).\\
 \end{array}      
 \]
 Intuitively, $\wei(q_0, a, q_1 \ldots q_k)$ can be seen as
 the weight of a production rule $q_0 \to a(q_1, \ldots, q_k)$ 
 of a regular tree grammar~\cite{tata}, 
-that replaces the non-terminal symbol $q_0$, by $a(q_1, \ldots, q_k)$. 
+that replaces the non-terminal symbol $q_0$ by $a(q_1, \ldots, q_k)$. 
 %in a step of tree building.
 %
 Such a grammar computes the weights of the derivation trees 
@@ -1184,72 +1188,73 @@ of the Context-Free grammar obtained by forgetting the labeling symbols of $\Ome
 \noindent
 The \SWTA of Definition~\ref{def:SWTA} defines a mapping 
 from trees of $\T(\Omega)$ into the weights of~$\Semiring$,
-based on the intermediate function $\weight_A$
+based on the intermediate function~$\weight_A$
 defined as follows for $q_0 \in Q$ and 
 $t = b(t_1,\ldots, t_k) \in \T(\Omega)$,
-åwith $0 \leq k \leq M$:
-\[
+with $0 \leq k \leq M$:
+\begin{equation}
 \begin{array}{rccl}
 \weight_A(q_0, t) & = & 
-   \displaystyle\bigoplus_{q_1 \in Q} &
-   \wei(q, \epsilon, q_1) \otimes \weight_A(q_1, t)\\
- & \oplus & \displaystyle\bigoplus_{q_1 \ldots q_k \in Q^k} &
+%   \displaystyle\bigoplus_{q_1 \in Q} &
+%   \wei(q, \epsilon, q_1) \otimes \weight_A(q_1, t)\\
+ \displaystyle\bigoplus_{q_1 \ldots q_k \in Q^k} &
               \wei(q_0, b, q_1 \ldots q_k ) 
    \otimes \displaystyle\bigotimes_{i=1}^{k}
-           \weight_A(q_i, t_i).\\
+           \weight_A(q_i, t_i)
 \end{array}
-\]
+\end{equation}
 
 \medskip\noindent
-The weight associated by $A$ to  $t \in \T(\Omega)$ is then
+The weight associated by $A$ to  $t \in \T(\Omega)$ is 
 \begin{equation}
 A(t)  = 
-\displaystyle\bigoplus_{q \in Q} \mathsf{in}(q) \mathop{\otimes} \weight_A(q, t).
+\displaystyle\bigoplus_{q \in Q} \mathsf{in}(q) \mathop{\otimes} \weight_A(q, t)
 \label{eq:weightTA}
 \end{equation}
 
 \begin{lemma}  \label{lem:SWTA}
-For all \SWTA $A$ over~$\Omega$ and $\Semiring$, without $\epsilon$-transitions,
+For all \SWTA $A$ over~$\Omega$, $\Semiring$ commutative, and $\Phi$,
 there exists an effectively constructible \SWVPA $A'$ over 
-$\hat\Omega$ and $\Semiring$
+$\hat\Omega$, $\Semiring$ and $\hat\Phi$ 
 such that for all $t \in \T(\Omega)$, $A'\bigl(\lin(t)\bigr) = A(t)$.
 \end{lemma} 
 % 
 \begin{proof}
-Let $A = \< Q, \init, \bar{\wei} >$ where $\bar{\wei}$ is summarized as above by a function
-$\wei: Q \times (\Sigma \cup \{ \epsilon \}) \times \bigcup_{k=0}^{M} Q^k \to \Semiring$. 
-
+Let $A = \< Q, \init, \bar{\wei} >$ where $\bar{\wei}$ is presented as above by a function
+    %
 We build 
-$A' = \< Q', P', \init', \weii, \weic, \weir, \weie, \final' >$,
-computing over $\hat\Omega = \< \Omegai, \Omegac, \Omegar >$,
-%
-%$\Omega = \Omegai \uplus \Omegac \uplus \Omegar$ and $\Semiring$ 
-where $Q' = \bigcup_{k=0}^{M} Q^k$ be  the set of sequences of state symbols of $A$, 
+$A' = \< Q', P', \init', \bar{\wei}', \final' >$,
+%computing over $\hat\Omega = \Omegai \uplus \Omegac \uplus \Omegar$,
+where $Q' = \bigcup_{k=0}^{M} Q^k$ is the set of sequences of state symbols of $A$, 
 of length at most $M$, including the empty sequence denoted by $\epsilon$, 
-and where $P' = Q'$.
+and where $P' = Q'$ and $\bar\wei$ is defined by:
 
 \[
 \begin{array}{ll}
-%\weii: Q \times \Omegai \times Q \to \Semiring & 
-\weii(\bar{q}, a, \bar{q} q') = \wei(q', a, \epsilon) & 
-\mathrm{for~all~} a \in \Omega_0,\\
+\weii(\bar{q}, {\call{b}}, \bar{p}, a, \bar{q} q') = \wei(q', a, \epsilon) & 
+\mathrm{for~all~} b \in \Omega_{>0}, \bar{p}\in P', a \in \Omega_0\\
 %
-%\weic: Q \times \Omegac \times Q \times P \to \Semiring & 
-\weic(\bar{q}, \call{b}, \epsilon, \bar{q}) = \one & %\wei(p', b, \bar{p}) & 
-\mathrm{for~all~} b \in \Omega_{>0},\\
+\weiei(\bar{q}, a, \bar{q} q') = \wei(q', a, \epsilon) & 
+\mathrm{for~all~} a \in \Omega_0\\
+%
+\weic(\bar{q}, {\call{b}}, \bar{p}, \call{b}, \epsilon, \bar{q}) = \one & %\wei(p', b, \bar{p}) & 
+\mathrm{for~all~} b \in \Omega_{>0},  \bar{p}\in P', b \in \Omega_{>0}\\
+%
+\weiec(\bar{q}, \call{b}, \epsilon, \bar{q}) = \one & %\wei(p', b, \bar{p}) & 
+\mathrm{for~all~} b \in \Omega_{>0}\\
 %
 %\weir: Q \times \Omegac \times P \times \Sigmar \times Q \to \Semiring & 
 \weir(\bar{q}, {\call{b}}, \bar{p}, {\return{b}}, \bar{p} q') = \wei(q', b, \bar{q}) & 
-\mathrm{for~all~}  b \in \Omega_{>0},\\
+\mathrm{for~all~}  b \in \Omega_{>0}, \bar{p}\in P'\\
 %
 %\weie: Q \times \Omegar \times Q \to \Semiring & 
-\weie(\bar{p}, {\return{b}}, \bar{q}) = \zero &
-\mathrm{for~all~}  b \in \Omega_{>0}.\\
+\weier(\bar{p}, {\return{b}}, \bar{q}) = \zero &
+\mathrm{for~all~}  b \in \Omega_{>0}\\
 \end{array}      
 \]
-
-In practice, it is sufficient to consider in $Q'$ only the prefixes of 
-sequences.
+\noindent
+It is sufficient to consider in $Q'$ only the prefixes of 
+sequences in transition with a non-null weight.
 \qed\end{proof}
 
 
