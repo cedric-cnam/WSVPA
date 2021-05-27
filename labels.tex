@@ -120,12 +120,14 @@ the superscripts in $\bigoplus^1_\Sigma$ and $\bigoplus^2_\Sigma$
 shall be reserved to the ambiguous case of $\Phi_{\Sigma,\Sigma}$,
 in order to to distinguish between the first and the second argument.
 %
-A label theory~$\bar\Phi$ is called \emph{complete} when 
-the underlying semiring $\Semiring$ is complete, and
+\begin{definition}\label{def:label-th-complete}
+A label theory~$\bar\Phi$ is \emph{complete} when 
+its underlying semiring~$\Semiring$ is complete, and
 for all $\Phi_{\Sigma, \Delta} \in \bar\Phi$ 
 and all $\eta \in \Phi_{\Sigma, \Delta}$,
 $\bigoplus_\Sigma \eta \in \Phi_{\Delta}$ and 
 $\bigoplus_\Delta \eta \in \Phi_{\Sigma}$.
+\end{definition}
 
 \noindent 
 The following facts are immediate.
@@ -196,7 +198,7 @@ can be effectively computed from $\phi$ and $\eta$.
 %and one symbol where the function reaches this minimum,
 %denoted $\bigominus_\Sigma \phi$
 
-\begin{definition}
+\begin{definition}\label{def:label-th-convex}
 Let $\Omega$ be an alphabet 
 A function $\phi \in \Phi_\Sigma$ in a label theory over a complete semiring $\Semiring$
 is called $k$-\emph{convex}, for a natural number $k$, iff 
