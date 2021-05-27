@@ -44,11 +44,15 @@ $\eta \otimes \eta': x, y \mapsto \eta(x, y) \otimes \eta'(x, y)$ belongs to $\P
 
 \noindent -- 
 for all $\phi \in \Phi_\Sigma$ and $\eta \in \Phi_{\Sigma, \Delta}$,
-$\phi \otimes \eta: x, y \mapsto \phi(x) \otimes \eta(x, y)$ belongs to $\Phi_{\Sigma, \Delta}$
+$\phi \otimes \eta: x, y \mapsto \phi(x) \otimes \eta(x, y)$ and\\
+\phantom{--} $\eta \otimes \phi: x, y \mapsto \eta(x, y) \otimes \phi(x)$
+belong to $\Phi_{\Sigma, \Delta}$
 
 \noindent -- 
 for all $\psi \in \Phi_\Delta$ and $\eta \in \Phi_{\Sigma, \Delta}$,
-$\eta \otimes \psi: x, y \mapsto \eta(x, y) \otimes \psi(y)$ belongs to $\Phi_{\Sigma, \Delta}$
+$\psi \otimes \eta: x, y \mapsto \psi(y) \otimes \eta(x, y)$ and\\
+\phantom{--} $\eta \otimes \psi: x, y \mapsto \eta(x, y) \otimes \psi(y)$ 
+belong to $\Phi_{\Sigma, \Delta}$
 
 \noindent -- 
 similar closures hold for $\oplus$
@@ -87,23 +91,97 @@ belong respectively to~$\Phi_\Delta$ and~$\Phi_\Sigma$.
 %belong resp. to~$\Phi_\Sigma$ and~$\Phi_\Delta$.
 
 \medskip\noindent
-When~$\Semiring$ is complete, 
-we call \emph{summary} of a function
-$\phi \in \Phi_\Sigma$,
-resp. $\eta \in \Phi_{\Sigma, \Delta}$,
-the value $\bigoplus_{a \in \Sigma} \phi(a)$, 
-resp. $\bigoplus_{a \in \Sigma} \bigoplus_{b \in \Delta} \eta(a, b)$.
-By definition of infinite sums in complete semirings, 
-a summary of $\phi \oplus \phi'$, $\alpha \otimes \phi$ and $\phi \otimes \alpha$
-can be computed from $\alpha \in \Semiring$ and summaries of $\phi$ and $\phi'$ in $\Phi_{\Sigma}$, using the operators of $\Semiring$, 
-and the same holds for $\Phi_{\Delta}$ and $\Phi_{\Sigma, \Delta}$. 
+When the semiring $\Semiring$ is complete, 
+let us consider the following operators on the functions of a label theory
+(we use overloading to simplify notations):
+\[
+\begin{array}{clclcrcl}
+\bigoplus_\Sigma : 
+  & \Phi_\Sigma & \to & \Semiring, & \  
+  & \phi & \mapsto & \displaystyle\bigoplus_{a \in \Sigma} \phi(a)\\
+\bigoplus_\Sigma : 
+  & \Phi_{\Sigma,\Delta} & \to & \Phi_\Delta, & 
+  & \eta & \mapsto & \bigl( y \mapsto \displaystyle\bigoplus_{a \in \Sigma} \eta(a, y) \bigr)\\
+\bigoplus_\Delta : 
+  & \Phi_{\Sigma,\Delta} & \to & \Phi_\Sigma, & 
+  & \eta & \mapsto & \bigl( x \mapsto \displaystyle\bigoplus_{b \in \Delta} \eta(x, b) \bigr)\\
+\end{array}
+\]
+%
+A label theory $\bar\Phi$ is called \emph{complete} when 
+the underlying semiring $\Semiring$ is complete, and
+for all $\Phi_{\Sigma, \Delta} \in \bar\Phi$ 
+and all $\eta \in \Phi_{\Sigma, \Delta}$,
+$\bigoplus_\Sigma \eta \in \Phi_{\Delta}$ and 
+$\bigoplus_\Delta \eta \in \Phi_{\Sigma}$.
+
+\noindent 
+The following facts are immediate.
+%
+\begin{lemma}
+For $\bar\Phi$ complete %label theory for all 
+$\alpha \in \Semiring$,
+$\phi, \phi' \in \Phi_{\Sigma}$,
+$\psi \in \Phi_{\Delta}$, and
+$\eta \in \Phi_{\Sigma, \Delta}$:
+%
+\begin{enumerate}
+\item[$i.$]
+\( \bigoplus_{\Sigma}\bigoplus_{\Delta} \eta = \bigoplus_{\Delta}\bigoplus_{\Sigma} \eta \)
+\item[$ii.$] 
+\( \alpha \otimes \bigoplus_{\Sigma} \phi = \bigoplus_{\Sigma} (\alpha \otimes \phi) \) and
+\( \bigl( \bigoplus_{\Sigma} \phi \bigr) \otimes\alpha = \bigoplus_{\Sigma} (\phi \otimes \alpha) \),
+and similarly for~$\oplus$
+\item[$iii.$]
+\( \bigl(\bigoplus_{\Sigma} \phi\bigr) \oplus \bigl(\bigoplus_{\Sigma} \phi'\bigr) 
+   = \bigoplus_{\Sigma} (\phi \oplus \phi') \) and
+\( \bigl(\bigoplus_{\Sigma} \phi\bigr) \otimes \bigl(\bigoplus_{\Sigma} \phi'\bigr) 
+   = \bigoplus_{\Sigma} (\phi \otimes \phi') \)
+\item[$iv.$] 
+\( \bigl(\bigoplus_{\Delta} \eta\bigr) \oplus \bigl(\bigoplus_{\Delta} \eta' \bigr) = 
+ \bigoplus_{\Delta} (\eta \oplus \eta') \), and
+\( \bigl(\bigoplus_{\Delta} \eta\bigr) \otimes \bigl(\bigoplus_{\Delta} \eta' \bigr) = 
+ \bigoplus_{\Delta} (\eta \otimes \eta') \)
+\item[$v.$] 
+%\( \phi \oplus \bigl(\bigoplus_{\Delta} \eta\bigr) = \bigoplus_{\Delta} (\phi \oplus \eta) \),
+\( \phi \otimes \bigl(\bigoplus_{\Delta} \eta\bigr) = \bigoplus_{\Delta} (\phi \otimes \eta) \), and
+\( \bigl(\bigoplus_{\Delta} \eta\bigr) \otimes \phi = \bigoplus_{\Delta} (\eta \otimes \phi) \),
+and simil. for~$\oplus$
+\item[$vi.$] 
+%\( \psi \oplus \bigl(\bigoplus_{\Sigma} \eta\bigr) = \bigoplus_{\Sigma} (\psi \oplus \eta) \),
+\( \psi \otimes \bigl(\bigoplus_{\Sigma} \eta\bigr) = \bigoplus_{\Sigma} (\psi \otimes \eta) \), and
+\( \bigl(\bigoplus_{\Sigma} \eta\bigr) \otimes \psi = \bigoplus_{\Sigma} (\eta \otimes \psi) \),
+and simil. for~$\oplus$.
+\end{enumerate}
+\end{lemma}
+
+%we call \emph{summary} of a function
+%$\phi \in \Phi_\Sigma$,
+%resp. $\eta \in \Phi_{\Sigma, \Delta}$,
+%the value $\bigoplus_{a \in \Sigma} \phi(a)$, 
+%resp. $\bigoplus_{a \in \Sigma} \bigoplus_{b \in \Delta} \eta(a, b)$.
+%By definition of infinite sums in complete semirings, 
+%a summary of $\phi \oplus \phi'$, $\alpha \otimes \phi$ and $\phi \otimes \alpha$
+%can be computed from $\alpha \in \Semiring$ and summaries of $\phi$ and $\phi'$ in $\Phi_{\Sigma}$, 
+%using the operators of $\Semiring$, 
+%and the same holds for $\Phi_{\Delta}$ and $\Phi_{\Sigma, \Delta}$. 
+
+\noindent 
+Intuitively, the operators $\bigoplus_\Sigma$ 
+return global minimum, \wrt $\leq_\oplus$, of functions of~$\bar\Phi$. 
 %
 A label theory is called \emph{effective} when 
-summaries of $\phi \otimes \phi'$, 
-$\phi \oplus \eta$, $\phi \otimes \eta$, $\eta \oplus \psi$, $\eta \otimes \psi$, 
-and of the partial applications $\eta_a$ and $\eta_b$, 
-can be effectively computed, using the operators of $\Semiring$, 
-from summaries of 
-$\phi, \phi' \in \Phi_{\Sigma}$, $\psi \in \Phi_{\Delta}$, 
-and $\eta \in \Phi_{\Sigma, \Delta}$. 
+for all $\phi \in \Phi_\Sigma$ and $\eta \in \Phi_{\Sigma, \Delta}$, 
+$\bigoplus_{\Sigma} \phi$, 
+$\bigoplus_{\Sigma} \eta$, and
+$\bigoplus_{\Delta} \eta$
+can be effectively computed from $\phi$ and $\eta$.
+%
+%summaries of $\phi \otimes \phi'$, 
+%$\phi \oplus \eta$, $\phi \otimes \eta$, $\eta \oplus \psi$, $\eta \otimes \psi$, 
+%and of the partial applications $\eta_a$ and $\eta_b$, 
+%can be effectively computed, using the operators of $\Semiring$, 
+%from summaries of 
+%$\phi, \phi' \in \Phi_{\Sigma}$, $\psi \in \Phi_{\Delta}$, 
+%and $\eta \in \Phi_{\Sigma, \Delta}$. 
 
