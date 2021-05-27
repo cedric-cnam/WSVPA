@@ -188,12 +188,22 @@ $\bigoplus_{\Sigma} \phi$,
 $\bigoplus_{\Sigma} \eta$, and
 $\bigoplus_{\Delta} \eta$
 can be effectively computed from $\phi$ and $\eta$.
-%
-%summaries of $\phi \otimes \phi'$, 
-%$\phi \oplus \eta$, $\phi \otimes \eta$, $\eta \oplus \psi$, $\eta \otimes \psi$, 
-%and of the partial applications $\eta_a$ and $\eta_b$, 
-%can be effectively computed, using the operators of $\Semiring$, 
-%from summaries of 
-%$\phi, \phi' \in \Phi_{\Sigma}$, $\psi \in \Phi_{\Delta}$, 
-%and $\eta \in \Phi_{\Sigma, \Delta}$. 
+
+%there is an oracle returning, in constant time,
+%$\bigoplus_{\Sigma} \phi$, 
+%$\bigoplus_{\Sigma} \eta$, and
+%$\bigoplus_{\Delta} \eta$
+%and one symbol where the function reaches this minimum,
+%denoted $\bigominus_\Sigma \phi$
+
+\begin{definition}
+Let $\Omega$ be an alphabet 
+A function $\phi \in \Phi_\Sigma$ in a label theory over a complete semiring $\Semiring$
+is called $k$-\emph{convex}, for a natural number $k$, iff 
+$\mathrm{card}\{ a \in \Sigma \mid \phi(a) = \bigoplus_{\Sigma} \phi \} \leq k$.
+\end{definition}
+A label theory is $k$-convex if all its functions are $k$-convex.
+
+
+
 

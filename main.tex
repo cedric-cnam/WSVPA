@@ -106,6 +106,25 @@
 
 \def\<#1>{\langle #1 \rangle}
 \newcommand{\pair}[2]{\langle{#1}, {#2}\rangle}
+
+%\newcommand{\config}[2]{\ensuremath \genfrac{[}{]}{0pt}{}{#1}{#2}} 
+\newcommand{\config}[2]{\ensuremath{#1}[{#2}]} 
+\newcommand{\configup}[2]{\ensuremath{#1}\left[\begin{array}{c} #2 \end{array}\right]}
+\def\stacksep{\cdot}
+\def\stackup{\\} 
+
+\newcommand{\opluseq}{\ensuremath\mathrel{\oplus}=}
+
+% \bigominus
+\DeclareFontFamily{U}{mathx}{\hyphenchar\font45}
+\DeclareFontShape{U}{mathx}{m}{n}{
+<-6> mathx5 <6-7> mathx6 <7-8> matha7
+<8-9> mathx8 <9-10> mathx9
+<10-12> mathx10 <12-> mathx12
+}{}
+\DeclareSymbolFont{mathx}{U}{mathx}{m}{n}
+\DeclareMathSymbol{\bigominus}{\mathop}{mathx}{"C1}
+
 %\newcommand{\A}{\mathcal{A}}
 %\newcommand{\B}{\mathcal{B}}
 \newcommand{\D}{\mathbb{D}}
@@ -119,7 +138,6 @@
 \newcommand{\zero}{\mathbb{0}}
 \newcommand{\one}{\mathbb{1}}
 \newcommand{\dom}{\ensuremath{\mathit{dom}}}
-
 
 \def\SA{\textsf{sA}\xspace}
 \def\WA{\textsf{wA}\xspace}
@@ -159,11 +177,10 @@
 \def\weiec{{\wei^\mathsf{e}_\mathsf{c}}}
 \def\weier{{\wei^\mathsf{e}_\mathsf{r}}}
 \def\weiex{{\wei^\mathsf{e}_\mathsf{x}}}
-\newcommand{\config}[2]{\ensuremath \genfrac{[}{]}{0pt}{}{#1}{#2}} 
-\newcommand{\opluseq}{\ensuremath\mathrel{\oplus}=}
 \newcommand{\ioi}[1]{\mathsf{ioi}({#1})}
 \newcommand{\rank}{\mathsf{rk}}
 \newcommand{\lin}{\mathsf{lin}}
+
 
 %\sloppy
 
@@ -779,47 +796,62 @@ and $\weier$ applies iff the stack is empty.
 Formally, the transitions of the automaton~$A$ are defined
 in term of %a weight value computed by 
 an intermediate function $\weight_A$, like in Section~\ref{sec:SWT}.
-In the case of a pushdown automaton, a configuration is composed 
-of a state $q \in Q$ and a stack content $\gamma \in \Gamma^*$, where $\Gamma = \Omegac \times P$.
+In the case of a pushdown automaton, a configuration, denoted by $q[\gamma]$ 
+is composed of a state $q \in Q$ 
+and a stack content $\gamma \in \Gamma^*$, 
+where $\Gamma = \Omegac \times P$.
 Hence, $\weight_A$ is a function from 
 $[Q \times \Gamma^*] \times \Omega^* \times [Q \times \Gamma^*]$ into~$\Semiring$.
 %
 \begin{align}
 %\begin{array}[t]{rcl}
-\weight_A\bigl(\config{q}{{\call{c}}\, p\cdot\gamma}, a\, u, \config{q'}{\gamma'}\bigr) & =  
+\weight_A\bigl(\configup{q}{\<{\call{c}}, p>\stackup\gamma}, a\, u, 
+               \config{q'}{\gamma'}\bigr) & =  
  {\displaystyle\bigoplus_{q'' \in Q}} \weii(q, c, p, a, q'') 
- \otimes \weight_A\bigl(\config{q''}{\gamma}, u, \config{q'}{\gamma'}\bigr)\nonumber\\
-\weight_A\bigl(\config{q}{\bot}, a\, u, \config{q'}{\gamma'}\bigr) & =  
- {\displaystyle\bigoplus_{q'' \in Q}} \weiei(q, a, q'') 
- \otimes \weight_A\bigl(\config{q''}{\bot}, u, \config{q'}{\gamma'}\bigr)\nonumber\\
+  \otimes \weight_A\bigl(\configup{q''}{\<{\call{c}}, p> \stackup \gamma}, u, 
+                         \config{q'}{\gamma'}\bigr)\nonumber\\
+ %
+\weight_A\bigl(\config{q}{\bot}, a\, u, 
+               \config{q'}{\gamma'}\bigr) & =  
+  {\displaystyle\bigoplus_{q'' \in Q}} \weiei(q, a, q'') 
+   \otimes \weight_A\bigl(\config{q''}{\bot}, u, \config{q'}{\gamma'}\bigr)\nonumber\\
 %
-\weight_A\bigl(\config{q}{{\call{c}}\, p\cdot\gamma}, {\call{c}'}\, u, \config{q'}{\gamma'}\bigr) & =  
+\weight_A\bigl(\configup{q}{\<{\call{c}}, p>\stackup\gamma}, {\call{c}'}\, u, 
+               \config{q'}{\gamma'}\bigr) & =  
  {\displaystyle\bigoplus_{\begin{array}{c}
                           \scriptstyle q'' \in Q\\[-2pt]
                           \scriptstyle p \in P
                           \end{array}}}
  \weic\bigl(q, {\call{c}}, p, {\call{c}'}, p', q''\bigr) 
- \otimes \weight_A\bigl(\config{q''}{{\call{c}'}\, p' \cdot {\call{c}}\, p\cdot \gamma}, u, \config{q'}{\gamma'}\bigr)\nonumber\\[1mm]
+ \otimes \weight_A\bigl(\configup{q''}{\<{\call{c}'}, p'>\stackup \<{\call{c}}, p>\stackup \gamma}, u, 
+                        \config{q'}{\gamma'}\bigr)\nonumber\\[1mm]
 %
-\weight_A\bigl(\config{q}{\bot}, {\call{c}}\, u, \config{q'}{\gamma'}\bigr) & =  
+\weight_A\bigl(\config{q}{\bot}, {\call{c}}\, u, 
+               \config{q'}{\gamma'}\bigr) & =  
  {\displaystyle\bigoplus_{q'' \in Q}} \weiec(q, {\call{c}}, p, q'') 
- \otimes \weight_A\bigl(\config{q''}{{\call{c}}\, p}, u, \config{q'}{\gamma'}\bigr)\nonumber\\
+  \otimes \weight_A\bigl(\config{q''}{{\call{c}}\, p}, u, 
+                         \config{q'}{\gamma'}\bigr)\nonumber\\
 %
-\weight_A\bigl(\config{q}{{\call{c}}\, p\cdot \gamma}, {\return{r}}\, u, \config{q'}{\gamma'}\bigr) & =  
+\weight_A\bigl(\configup{q}{\<{\call{c}}, p>\stackup \gamma}, {\return{r}}\, u, 
+               \config{q'}{\gamma'}\bigr) & =  
  {\displaystyle\bigoplus_{q'' \in Q}} 
- \weir\bigl(q, {\call{c}}, p, {\return{r}}, q''\bigr) 
- \otimes \weight_A\bigl(\config{q''}{\gamma}, u, \config{q'}{\gamma'}\bigr)\nonumber\\
+  \weir\bigl(q, {\call{c}}, p, {\return{r}}, q''\bigr) 
+  \otimes \weight_A\bigl(\config{q''}{\gamma}, u, 
+                         \config{q'}{\gamma'}\bigr)\nonumber\\
 %
-\weight_A\bigl(\config{q}{\bot}, {\return{r}}\, u, \config{q'}{\gamma'}\bigr) & =  
+\weight_A\bigl(\config{q}{\bot}, {\return{r}}\, u, 
+               \config{q'}{\gamma'}\bigr) & =  
  {\displaystyle\bigoplus_{q'' \in Q}} \weier(q, {\return{r}}, q'') 
- \otimes \weight_A\bigl(\config{q''}{\bot}, u, \config{q'}{\gamma'}\bigr)
+  \otimes \weight_A\bigl(\config{q''}{\bot}, u, 
+                         \config{q'}{\gamma'}\bigr)
 %\end{array}
 \label{eq:SWVPA-weight}
 \end{align}
 %
-where $\bot$ denotes the empty stack and ${\call{c}}\, p\cdot \gamma$ 
-denotes a stack where the pair made of ${\call{c}} \in \Omegac$ and $p \in P$ is the top symbol 
-and $\gamma$ is the rest of stack.
+where $\bot$ denotes the empty stack.
+% and ${\call{c}}\, p\stacksep \gamma$ 
+%denotes a stack where the pair made of ${\call{c}} \in \Omegac$ and $p \in P$ is the top symbol 
+%and $\gamma$ is the rest of stack.
 
 \noindent
 The weight associated by $A$ to $s \in \Omega^*$
@@ -913,7 +945,7 @@ and stack symbol $p \in P$: %and $\sigma \in \{ \bot, \top \}$,
 \begin{equation}\label{eq:btop}
   b_\top(q, p, q') : c \mapsto \bigoplus_{s\in \Omega^*} 
   \textstyle
-  \weight_A\bigl(\config{q}{c\,p\cdot \top }, s, \config{q'}{c\, p\cdot \top}\bigr). 
+  \weight_A\bigl(\configup{q}{\< c, p> \stackup \top }, s, \configup{q'}{\<c, p> \stackup \top}\bigr). 
 \end{equation}
 %
 Intuitively, the function defined in \eqref{eq:btop}
@@ -1072,24 +1104,14 @@ at the termination of Algorithm~\ref{algo:Dijkstra}, %it holds that,
 %\medskip
 \noindent
 In order to obtain effectively a witness 
-(word of $\Semiring^*$ with computation of $A$ of minimal weight), 
-we require an additional property the of weight functions.
-%
-\begin{definition}
-Let $\Omega$ be an alphabet and $\Semiring$ a complete semiring.
-A function $\phi$ from $\Omega^n$ into $\Semiring$
-is called $k$-\emph{convex} for a natural number $k$ iff 
-$\mathit{card}\{ \mathbf{a} \in \Omega^n \mid \phi(\mathbf{a}) = 
-                 \displaystyle\bigoplus_{\mathbf{p} \in \Omega^n} \phi(\mathbf{p}) \} \leq k$.
-\end{definition}
-A label theory is $k$-convex if all its functions are $k$-convex.
-
+(word of $\Omega^*$ with a computation of $A$ of minimal weight), 
+we require the additional property of convexity of weight functions.
 
 \begin{proposition}\label{th:best-search}
 For a \SWVPA $A$ 
 over $\Omega$, 
 $\Semiring$ commutative, bounded, total and complete, %semiring 
-and $\bar\Phi$ $k$-convex effective, % label theory,
+and $\bar\Phi$ effective and $k$-convex, % label theory,
 one can construct in PTIME a word $s \in \Omega^*$ 
 such that $A(s)$ is minimal \wrt the natural ordering for $\Semiring$. 
 \end{proposition} 
