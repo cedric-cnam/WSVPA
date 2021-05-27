@@ -981,37 +981,36 @@ For all $q_0, q_3 \in Q$, %$p \in P$,
 %\multicolumn{3}{l}{\mathrm{For~all~} q_0, q_3 \in Q, p \in P,}\\
 d_\top(q_1, p, q_3) & \opluseq &
   d_\top(q_1, p, q_2) \otimes 
-  \displaystyle\bigoplus_{a \in \Omegai} \weii(q_2, p, q_3)_a\\
-\multicolumn{3}{l}{\quad
-\mathrm{where~} \weii(q_2, p, q_3)_a \in \Phic
-\mathrm{~is~the~partial~application~}
-x_c \mapsto \weii(q_2, x_c, p, a, q_3)}\\
+  \displaystyle\bigoplus_{\Omegai} \weii(q_2, p, q_3)\\
+%\multicolumn{3}{l}{\quad
+%\mathrm{where~} \weii(q_2, p, q_3)_a \in \Phic
+%\mathrm{~is~the~partial~application~}
+%x_c \mapsto \weii(q_2, x_c, p, a, q_3)}\\
 %
 d_\bot(q_1, p, q_3) & \opluseq &
   d_\bot(q_1, q_2) \otimes 
-  \displaystyle\bigoplus_{a \in \Omegai} \weie(q_2, a, q_3)\\
+  \displaystyle\bigoplus_{\Omegai} \weiei(q_2, q_3)\\
 %     
 d_\top(q_0, p, q_3) & \opluseq &
-  \displaystyle\bigoplus_{{\call{c}'} \in \Omegac} 
-  \displaystyle\bigoplus_{{\return{r}} \in \Omegar} 
-  \weic(q_0, p, p', q_1)_{c'} \otimes 
-  d_\top(q_1, p', q_2) \otimes
-  \weir(q_2, c', p', r, q_3)\\
-\multicolumn{3}{l}{\quad
-\mathrm{where~} \weic(q_0, p, p', q_1)_{c'} \in \Phic
-\mathrm{~is~the~partial~application~}
-x_c \mapsto \weic(q_0, p, x_c, c', p', q_1)}\\[2pt]
+  {\displaystyle\bigoplus_{\Omegac}}^2 
+  \bigl[ \bigl( \weic(q_0, p, p', q_1) \otimes_2 
+  d_\top(q_1, p', q_2) \bigr) \otimes_2
+  {\displaystyle\bigoplus_{\Omegar}} \weir(q_2, p', q_3) \bigr]\\
+%\multicolumn{3}{l}{\quad
+%\mathrm{where~} \weic(q_0, p, p', q_1)_{c'} \in \Phic
+%\mathrm{~is~the~partial~application~}
+%x_c \mapsto \weic(q_0, p, x_c, c', p', q_1)}\\[2pt]
 %
 d_\bot(q_0, q_3) & \opluseq &
-  \displaystyle\bigoplus_{{\call{c}} \in \Omegac} 
-  \displaystyle\bigoplus_{{\return{r}} \in \Omegar} 
-  \weiec(q_0, c, p, q_1) \otimes 
-   d_\top(q_1, p, q_2)(c) \otimes
-  \weir(q_2, c, p, r, q_3)\\
+  {\displaystyle\bigoplus_{\Omegac}}
+  \bigl(
+  \weiec(q_0, p, q_1) \otimes 
+   d_\top(q_1, p, q_2) \otimes
+  \displaystyle\bigoplus_{\Omegar} \weir(q_2, p, q_3)\bigr)\\
 %
 d_\bot(q_1, q_3) & \opluseq &
   d_\bot(q_1, q_2) \otimes 
-  \displaystyle\bigoplus_{\return{r} \in \Omegar} \weier(q_2, {\return{r}}, q_3)\\
+  \displaystyle\bigoplus_{\Omegar} \weier(q_2, q_3)\\
 %
 d_\top(q_1, p, q_3) & \opluseq & 
   d_\top(q_1, p, q_2) \otimes d_\top(q_2, p, q_3), 

@@ -44,14 +44,14 @@ $\eta \otimes \eta': x, y \mapsto \eta(x, y) \otimes \eta'(x, y)$ belongs to $\P
 
 \noindent -- 
 for all $\phi \in \Phi_\Sigma$ and $\eta \in \Phi_{\Sigma, \Delta}$,
-$\phi \otimes \eta: x, y \mapsto \phi(x) \otimes \eta(x, y)$ and\\
-\phantom{--} $\eta \otimes \phi: x, y \mapsto \eta(x, y) \otimes \phi(x)$
+$\phi \otimes_1 \eta: x, y \mapsto \phi(x) \otimes \eta(x, y)$ and\\
+\phantom{--} $\eta \otimes_1 \phi: x, y \mapsto \eta(x, y) \otimes \phi(x)$
 belong to $\Phi_{\Sigma, \Delta}$
 
 \noindent -- 
 for all $\psi \in \Phi_\Delta$ and $\eta \in \Phi_{\Sigma, \Delta}$,
-$\psi \otimes \eta: x, y \mapsto \psi(y) \otimes \eta(x, y)$ and\\
-\phantom{--} $\eta \otimes \psi: x, y \mapsto \eta(x, y) \otimes \psi(y)$ 
+$\psi \otimes_2 \eta: x, y \mapsto \psi(y) \otimes \eta(x, y)$ and\\
+\phantom{--} $\eta \otimes_2 \psi: x, y \mapsto \eta(x, y) \otimes \psi(y)$ 
 belong to $\Phi_{\Sigma, \Delta}$
 
 \noindent -- 
@@ -63,7 +63,14 @@ and $\eta_a: y \mapsto \eta(a, y)$ for $a \in \Sigma$ %and $y \in \Delta$
 and\\ 
 \phantom{--} $\eta_b: x \mapsto \eta(x, b)$ for $b \in \Delta$ %and $x \in \Sigma$, 
 belong respectively to~$\Phi_\Delta$ and~$\Phi_\Sigma$.
+\marginpar{partial appli needed?}
 
+\medskip\noindent
+In what follows, we shall omit the subscripts in 
+$\otimes_1$, $\otimes_2$, $\oplus_1$, $\oplus_2$
+and reserve them to the special case $\Sigma = \Delta$,
+\ie $\eta \in \Phi_{\Sigma, \Sigma}$ for~$\otimes_1$ above,
+and $\eta \in \Phi_{\Delta, \Delta}$ for~$\otimes_2$. 
 
 %Moreover, these sets are required to be closed under the 
 %operators~$\oplus$ and~$\otimes$ of~$\Semiring$:
@@ -90,7 +97,7 @@ belong respectively to~$\Phi_\Delta$ and~$\Phi_\Sigma$.
 %and  $\eta_b: x \mapsto f(x, b)$ for $b \in \Delta$ and $x \in \Sigma$, 
 %belong resp. to~$\Phi_\Sigma$ and~$\Phi_\Delta$.
 
-\medskip\noindent
+\noindent
 When the semiring $\Semiring$ is complete, 
 let us consider the following operators on the functions of a label theory
 (we use overloading to simplify notations):
@@ -99,16 +106,21 @@ let us consider the following operators on the functions of a label theory
 \bigoplus_\Sigma : 
   & \Phi_\Sigma & \to & \Semiring, & \  
   & \phi & \mapsto & \displaystyle\bigoplus_{a \in \Sigma} \phi(a)\\
-\bigoplus_\Sigma : 
+\bigoplus^1_\Sigma : 
   & \Phi_{\Sigma,\Delta} & \to & \Phi_\Delta, & 
   & \eta & \mapsto & \bigl( y \mapsto \displaystyle\bigoplus_{a \in \Sigma} \eta(a, y) \bigr)\\
-\bigoplus_\Delta : 
+\bigoplus^2_\Delta : 
   & \Phi_{\Sigma,\Delta} & \to & \Phi_\Sigma, & 
   & \eta & \mapsto & \bigl( x \mapsto \displaystyle\bigoplus_{b \in \Delta} \eta(x, b) \bigr)\\
 \end{array}
 \]
 %
-A label theory $\bar\Phi$ is called \emph{complete} when 
+Similarly as for the notation of product and sum of functions above, 
+the superscripts in $\bigoplus^1_\Sigma$ and $\bigoplus^2_\Sigma$
+shall be reserved to the ambiguous case of $\Phi_{\Sigma,\Sigma}$,
+in order to to distinguish between the first and the second argument.
+%
+A label theory~$\bar\Phi$ is called \emph{complete} when 
 the underlying semiring $\Semiring$ is complete, and
 for all $\Phi_{\Sigma, \Delta} \in \bar\Phi$ 
 and all $\eta \in \Phi_{\Sigma, \Delta}$,
