@@ -12,7 +12,7 @@ with respective neutral elements $\zero$ and $\one$, and such that:
 %$\< \mathbb{S}, \oplus, \zero>$ is a commutative monoid
 %$\< \mathbb{S}, \otimes, \one>$ is a monoid
 \begin{itemize}
-\item $\oplus$ is commutative;
+\item $\oplus$ is commutative: 
  $\< \Semiring, \oplus, \zero>$ is a commutative monoid 
    and $\< \Semiring, \otimes, \one>$ a monoid,
 \item $\otimes$ distributes over~$\oplus$:  $\forall x, y, z \in \mathbb{S}$,
@@ -48,6 +48,11 @@ The natural ordering is sometimes defined in the opposite direction~\cite{Droste
 We follow here the direction  %follows \cite{Mohri02semiring}, and 
 that coincides with the usual ordering on the Tropical semiring \emph{min-plus} 
 (Figure~\ref{fig:semirings}).
+%
+\noindent
+An idempotent semiring $\Semiring$~is called \emph{total} if
+it~$\leq_\oplus$ is total
+\ie when for all $x, y \in \Semiring$, either $x \oplus y = x$ or $x \oplus y = y$.
 
 \begin{lemma}[Monotony, \cite{Mohri02semiring}] \label{lem:monotonic}
 Let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be an idempotent semiring.
@@ -102,8 +107,8 @@ by definition of $\leq_\oplus$, $\one \oplus x = \one$.
 \qed
 \end{proof}
 
-In~\cite{Huang08advanceddynamic}, the property~$(i)$ 
-is called $\Semiring$ \emph{superior} \wrt the ordering~$\leq_\oplus$.
+In~\cite{Huang08advanceddynamic}, when the property~$(i)$ holds,  
+$\Semiring$ is called \emph{superior} \wrt the ordering~$\leq_\oplus$.
 We have seen in the proof of Lemma~\ref{lem:bounded} that it implies that 
 $\one \leq_\oplus x$ for all $x \in \Semiring$.
 Similarly, by the first inequality of ($i$) with $y = \zero$,  
@@ -117,16 +122,15 @@ Intuitively, from an optimization point of view,
 it means that $\one$ is the best value, and $\zero$ the worst.
 %** superior implies $\Semiring$ bounded~\cite{Mohri02semiring} see **
 %
-In~\cite{Mohri02semiring}, the property ($ii$) of Lemma~\ref{lem:bounded}  
-is called \emph{boundedness} of $\Semiring$ -- we shall use this term in the rest of the paper. 
+In~\cite{Mohri02semiring}, 
+$\Semiring$ with the property ($ii$) of Lemma~\ref{lem:bounded}  
+is called \emph{bounded} -- we shall use this term in the rest of the paper. 
 % \emph{negative boundedness} 
 It implies that, when looking for a best path in a graph whose edges
-are weighted by values of $\Semiring$, the loops can be safely avoided.
+are weighted by values of $\Semiring$, the loops can be safely avoided
+(because, for all $x \in \Semiring$ and $n \geq 1$, 
+ $x \oplus x^n = x \otimes (\one \oplus x^{n-1}) = x$).
 
-
-%Following the terminology of~\cite{Mohri02semiring},
-%when $\forall x \in \dom(\Semiring), \one \oplus x = \one$,
-%the semiring $\Semiring$ is is called \emph{bounded}.
 
 \begin{lemma}
 Every bounded semiring is idempotent.
@@ -137,11 +141,6 @@ and idempotency follows by multiplying
 both sides by $x$ and distributing. 
 \qed
 \end{proof}
-
-\noindent
-An idempotent semiring $\Semiring$~is called \emph{total} if
-it~$\leq_\oplus$ is total
-\ie when for all $x, y \in \Semiring$, either $x \oplus y = x$ or $x \oplus y = y$.
 
 %\medskip
 We shall need below infinite sums with~$\oplus$.

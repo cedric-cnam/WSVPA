@@ -6,15 +6,14 @@ Parsing %variant of membership problem for formal languages
 %- given a language model and an input word $s$, compute a derivation of the model that yields $s$.
 is the problem %process 
 of structuring a linear representation in input %typically
-(a finite word over an alphabet) according to a language model. % (a formal grammar).
+(a finite word) according to a language model. % (a formal grammar).
 % natural language, programming language, 
 %
 Most of the context-free parsing approaches~\cite{GruneJacobs08parsing}  
 assume a finite and reasonably small input alphabet. %models and algorithms 
 Such a restriction makes perfectly sense in the context of NLP tasks 
 like constituency parsing or of programming languages compilers or interpreters.
-Considering large or infinite alphabets can however be of practical interest
-in other cases.
+Considering large or infinite alphabets can however be of practical interest. %in other cases.
 %
 For instance, when dealing with large characters encodings such as UTF-16, % processing strings in 
 \eg for vulnerability detection in Web-applications~\cite{dAntoni21CACM}, 
@@ -25,16 +24,13 @@ of data streams or serialization of structured documents
 or for processing timed execution traces~\cite{Bouyer03algebraic}.
 % algebraic definition of a class of data languages 
 % (notion of monoid recognizability, based on registers, comparable to Bojancszik et al. data words)
-Regarding the latter case, we briefly mention
-at the end of the paper 
-a parse-based approach to automated music transcription~\cite{foscarin:hal-01988990}
-that motivated the present work. 
-In this problem, a symbolic music performance, 
-presented as a sequence of timed musical events, % timestamped
-% a symbolic representation of a music performance 
+The latter case is related to a case study that motivated the present work: 
+automated music transcription.
+In this problem, a symbolic representation of a music performance, % a symbolic representation of a music performance 
+in the form of a sequence of timed musical events, % timestamped
 is converted into a structured score in Common Western Music Notation.
-%generalizes weighted parsing: 
-%finding the best derivation for a weighted grammar. 
+It can therefore be expressed as a parsing problem~\cite{foscarin:hal-01988990}, 
+over an infinite alphabet of timed events.
 
 Various extensions of language models for handling infinite alphabets have been studied.
 %words carrying data values in an infinite domain (e.g. integers) e.g. data processing 
@@ -65,13 +61,13 @@ With closure conditions on the sets of such predicates, % (alphabet theories),
 all the good properties enjoyed by automata over finite alphabets are preserved.
 
 Other extensions of language models  %(automata and grammars) 
-help in dealing with non-determinism, by the computation of weight values. 
+help in dealing with non-determinism, with the computation of weight values. 
 With an ambiguous grammar, there may exists several derivations 
 (\emph{abstract syntax trees} -- AST), % \ie the result of an analyze.
 yielding one input word. % structuring a word, 
 The association of one weight value %in semiring domain
-to each derivation permits to select a best one (or $n$ bests). % a fixed number of bests 
-% = ...a ranking of derivations 
+to each AST permits to select a best one (or $n$ bests). % a fixed number of bests 
+% = ...a ranking of ASTs 
 This is roughly the principle of \emph{weighted parsing}
 approaches~\cite{Goodman99SemiringParsing,Nederhof03weightedParsing,MorbitzVogler19weighted-parsing}.
 In \emph{weighted language models}, 
@@ -79,7 +75,7 @@ like \eg probabilistic context-free grammars % (CFG),
 and weighted automata (\WA) \cite{Droste09handbook},
 a weight value is associated to each transition rule, % production rule
 and the rule's weights can be combined with a associative product operator~$\otimes$ into 
-the weight of a derivation.
+the weight of a AST.
 A second operator~$\oplus$, associative and commutative, 
 is moreover used to handle ambiguity of the model, 
 by summing the weights of the possibly several (in general exponentially many) AST %syntax trees 
@@ -106,8 +102,7 @@ such as the Viterbi semiring and the tropical min-plus algebra, see Figure~\ref{
 %of parsing of words over infinite input alphabet.
 
 In this paper, we present a uniform framework for weighted parsing over infinite input alphabets.
-It is based on weighted %finite states 
-language models generalizing 
+It is based on symbolic weighted  (SW) finite states language models generalizing 
 both~\SA, with functions in an arbitrary semiring instead of Boolean guards, 
 and~\WA, by handling infinite alphabets -- Figure~\ref{fig:hierarchy}.
 %***
@@ -116,7 +111,7 @@ and~\WA, by handling infinite alphabets -- Figure~\ref{fig:hierarchy}.
 %computing on words over infinite input alphabets %sets of terminal symbol
 %- but with finite sets of states and transitions rules. 
 % non-terminals and production rules).
-In their transition rules, input symbols appear as variables %(parameters)
+In the transition rules of SW models, input symbols appear as variables %(parameters)
 and the weight associated to a transition rule is a function of these variables.
 %
 \begin{figure}
@@ -201,8 +196,9 @@ Similarly to weighted-parsing
 methods~\cite{Goodman99SemiringParsing,Nederhof03weightedParsing,MorbitzVogler19weighted-parsing}, 
 our approach proceeds in two steps, 
 based on properties of the SW models. 
-The first step is a Bar-Hillel construction where, 
-given a \SWT $T$, a \SWVPA $A$, and an input word $s$, 
+The first step is an intersection 
+(Bar-Hillel construction~\cite{GruneJacobs08parsing} \marginpar{chap. intersection in~\cite{GruneJacobs08parsing}}) 
+where, given a \SWT $T$, a \SWVPA $A$, and an input word $s$, 
 a \SWVPA $A_{T, s}$ is built, such that for all $t$, $A_{T, s}(t) = T(s, t) \otimes A(t)$.
 In the second step, a best AST $t$ is found by applying to $A_{T, s}$ 
 a best search algorithm similar to shortest distance in graphs~\cite{Mohri02semiring,Huang05kbest}.
@@ -236,7 +232,7 @@ generalizing the corresponding classes of symbolic and weighted models,
 and ($iii$)~a uniform framework (Section~\ref{sec:parsing}) for parsing over infinite alphabets, 
 the keys to which are 
 ($iii.a$)~the \SWT-based definition of generic edit distances between input and output words,
-and ($iii.b$)~the use of nested words, and \SWVPA, 
+and ($iii.b$)~the use in this context of nested words, and \SWVPA, 
 instead of syntax trees and grammars. %(\S~\ref{sec:trees}).
 %
 %Finally, Section~\ref{sec:transcription} describes
