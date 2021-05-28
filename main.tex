@@ -272,7 +272,8 @@ whereas the latter guards are restricted to the Boolean semiring.
 \noindent 
 Let $\Semiring$ be a commutative semiring, 
 $\Sigma$ and $\Delta$ be alphabets called respectively \emph{input} and \emph{output}, %{alphabets}, 
-and $\bar\Phi = \< \Phi_\Sigma, \Phi_\Delta, \Phi_{\Sigma, \Delta}>$ be a label theory over $\Semiring$.
+and $\bar\Phi$ be a label theory over $\Semiring$
+containing $\Phi_\Sigma$, $\Phi_\Delta$, $\Phi_{\Sigma, \Delta}$.
 
 \begin{definition}
 \label{def:transducer} \label{def:SWT}
@@ -293,7 +294,7 @@ $\wei_{11}: Q \times Q \to \Phi_{\Sigma, \Delta}$.
 \end{definition}
 %
 \noindent
-For convenience, we shall the following presentation of transition functions 
+For convenience, we shall sometimes present transition functions 
 as functions of  
 $Q \times (\Sigma \cup \{ \varepsilon \}) \times (\Delta \cup \{ \varepsilon \}) \times Q \to \Semiring$,
 overloading the function names,
@@ -310,33 +311,39 @@ such that, for all $q, q' \in Q$, $a \in \Sigma$,  $b \in \Delta$,
 \]
 %
 \noindent 
+% The symbolic-weighted transducer
 The \SWT $T$ computes on pairs of words $\< s, t> \in \Sigma^* \times \Delta^*$,
 $s$ and $t$, being respectively called input and output word.
-%
 % \noindent
-More precisely, the symbolic-weighted transducer~$T$ defines a mapping 
-from the pairs of strings of $\Sigma^* \times \Delta^*$ 
-into~$\Semiring$,
-based on the following intermediate function $\weight_T$
-defined recursively for every $q, q' \in Q$, 
-%$a \in \Sigma$, $b \in \Delta$ 
-%for every strings of $s \in \Sigma^*$, $t \in \Delta^*$:
-$a \in \Sigma$, $u \in \Sigma^*$, $b\in \Delta$, $v\in \Delta^*$, 
+More precisely, $T$ defines a mapping 
+from $\Sigma^* \times \Delta^*$ into~$\Semiring$,
+based on an intermediate function $\weight_T$
+defined recursively for every states $q, q' \in Q$, 
+and every strings $\< s, t> \in \Sigma^* \times \Delta^* \setminus \{ \< \varepsilon, \varepsilon >\}$ by:
+%$a \in \Sigma$, $u \in \Sigma^*$, $b\in \Delta$, $v\in \Delta^*$, by:
 %
 \begin{align}
-\weight_T(q, \varepsilon, \varepsilon, q)  & = \final(q)\\
+\weight_T(q, \varepsilon, \varepsilon, q)  & = \one \label{eq:SWT-weight}\\ %\final(q)\\
 \weight_T(q, \varepsilon, \varepsilon, q') & = \zero \quad \mathrm{if~} q \neq q'\nonumber\\
-\weight_T(q, au, \varepsilon, q') & = \displaystyle\bigoplus_{q'' \in Q} 
-    \wei_{10}(q, a, \varepsilon, q'') \otimes \weight_T(q'', u, \varepsilon, q')\nonumber\\
-\weight_T(q, \varepsilon, bv, q') & = \displaystyle\bigoplus_{q'' \in Q} 
-    \wei_{01}(q, \varepsilon, b, q'') \otimes \weight_T(q'', \varepsilon, v, q')\nonumber\\
-\weight_T(q, au, bv, q') & = \displaystyle\bigoplus_{q'' \in Q} 
-    \wei_{10}(q, a, \varepsilon, q'') \otimes \weight_T(q'', u, bv, q')\nonumber\\
-                    & \oplus \displaystyle\bigoplus_{q'' \in Q} 
-    \wei_{01}(q, \varepsilon, b, q'') \otimes \weight_T(q'', au, v, q')\nonumber\\
-                    & \oplus \displaystyle\bigoplus_{q'' \in Q} 
+%\weight_T(q, au, \varepsilon, q') & = \displaystyle\bigoplus_{q'' \in Q} 
+%    \wei_{10}(q, a, \varepsilon, q'') \otimes \weight_T(q'', u, \varepsilon, q')\nonumber\\
+%\weight_T(q, \varepsilon, bv, q') & = \displaystyle\bigoplus_{q'' \in Q} 
+%    \wei_{01}(q, \varepsilon, b, q'') \otimes \weight_T(q'', \varepsilon, v, q')\nonumber\\
+\weight_T(q, s, t, q') & = \displaystyle\bigoplus_{\begin{array}{c}
+                                                   \scriptstyle q'' \in Q\\
+                                                   \scriptstyle s = au,\, a \in \Sigma
+                                                   \end{array}} 
+    \wei_{10}(q, a, \varepsilon, q'') \otimes \weight_T(q'', u, t, q')\nonumber\\
+                    & \oplus \displaystyle\bigoplus_{\begin{array}{c}
+                                                     \scriptstyle q'' \in Q\\ 
+                                                     \scriptstyle t = bv,\, b \in \Delta\\
+                                                     \end{array}} 
+    \wei_{01}(q, \varepsilon, b, q'') \otimes \weight_T(q'', s, v, q')\nonumber\\
+                    & \oplus \displaystyle\bigoplus_{\begin{array}{c}
+                                                     \scriptstyle q'' \in Q\\
+                                                     \scriptstyle s = au,\, t = bv\\
+                                                     \end{array}} 
     \wei_{11}(q, a, b, q'') \otimes \weight_T(q'', u, v, q')\nonumber
-\label{eq:SWT-weight}
 \end{align}
 %
 We recall that, by convention (Section~\ref{sec:semiring}), 
@@ -374,7 +381,8 @@ symbolic transducers.
 %This can be done by using $\wei_{10}$ and $\wei_{01}$
 %before reaching the end of word, and using a special state for this purpose.
 
-The expression of $\weight_T$ can be seen as a stateful definition of 
+The expression \eqref{eq:SWT-weight} 
+can be seen as a stateful definition of 
 an edit-distance between a word $s \in \Sigma^*$ and a word $t \in \Delta^*$,
 see also~\cite{Mohri03ijfcs}.
 Intuitively, 
@@ -388,16 +396,16 @@ of the substitution of  $a \in \Sigma$ by~$b \in \Delta$.
 The cost of a sequence of such operations transforming $s$ into $t$, 
 is the product, with $\otimes$, of the individual costs of the operations involved;
 And the distance between $s$ and $t$ is the sum, with $\oplus$,
-of all such product of costs.
+of all possible products.
 
 \medskip\noindent
 %Let $\< s, t> \in \Sigma^* \times \Delta^*$, with $s = s_1\ldots s_n$, and $t = t_1\ldots t_m$. 
-The weight associated by $T$ to $\< s, t> \in \Sigma^* \times \Delta^*$
-is defined as follows:
+Formally, the weight associated by $T$ to $\< s, t> \in \Sigma^* \times \Delta^*$ is: 
+%defined as follows:
 \begin{equation}
 T(s, t)  = 
-\displaystyle\bigoplus_{q, q' \in Q} \mathsf{in}(q) 
-\mathop{\otimes} \weight_T(q, s, t, q') %\mathop{\otimes} \mathsf{out}(q', s_n, t_m)
+\displaystyle\bigoplus_{q, q' \in Q} \init(q) 
+\mathop{\otimes} \weight_T(q, s, t, q') \mathop{\otimes} \final(q')
 \label{eq:SWT-value}
 \end{equation}
 
@@ -422,7 +430,16 @@ T(s, t)  =
 %\end{example}
 
 \begin{example}
+In Common Western Music Notation~\cite{Gould11BB}, 
+several symbols may be used to represent a unique sounding event.
+For instance, several notes can be combined with a tie, 
+like in $\musQuarter\!\!\mathrel{\raisebox{-1.5mm}{$\smile$}}\!\!\musEighth$,  
+and a note can be augmented with a dot like in~\musQuarterDotted).
+We propose a small transducer that compares an input sequence of sounding 
+events (music "performance") 
+to an output sequence of written events (music "score").
 % simple pointwise distance between two sequences of timestamped events **
+
 Let us consider the tropical (\emph{min-plus}) semiring~$\Semiring$ 
 of Figure~\ref{fig:semirings} and 
 let $\Sigma = \mathbb{R}_+$ be an input alphabet of event dates
@@ -432,12 +449,10 @@ A symbol $\< \mathsf{e}, d > \in \Delta$ represents an event starting at date $d
 and $\< \mathsf{-}, d >$ is a continuation of the previous event.
 %More precisely, we let 
 %$\Sigma = \{ a, - \} \times \R_+$ and 
-This example of $\Delta$ is motivated by the case of music notation, 
-where several notated events (notes) can be tied together, 
-with a \emph{tie} or a \emph{dot}
-(like in $\musQuarter\!\!\mathrel{\raisebox{-1.5mm}{$\smile$}}\!\!\musEighth$ 
- or equivalently~\musQuarterDotted),
-meaning that they will be played as a unique sounding event.
+%This example of $\Delta$ is motivated by the case of music notation, 
+%where several notated events (notes) can be tied together, 
+%with a \emph{tie} or a \emph{dot}
+%meaning that they will be played as a unique sounding event.
 %The timestamp of $a \in \Sigma$, denoted by $\mathsf{t}(a)$, is expressed as a rational number.
 
 We consider a \SWT with two states $q_0$ and $q_1$ whose purpose 
@@ -513,7 +528,7 @@ is defined with an intermediate function $\weight_A$,
 defined as follows for $q, q' \in Q$, $a \in \Sigma$, $u \in \Sigma^*$,
 %
 \begin{align}
-\weight_A(q, \varepsilon, q) & = \final(q)\\
+\weight_A(q, \varepsilon, q) & = \one\\ %\final(q)\\
 \weight_A(q, \varepsilon, q') & = \zero \quad \mathrm{if~} q \neq q'\nonumber\\
 \weight_A(q, au, q') & =  \displaystyle\bigoplus_{q'' \in Q} 
     \wei_{1}(q, a, q'') \otimes \weight_A(q'', u, q')\nonumber
@@ -525,8 +540,8 @@ and the weight value associated by $A$ to
 $s \in \Sigma^*$ is defined as follows: %$s = s_1\ldots s_n \in \Sigma^+$ 
 \begin{equation}
 A(s)  = 
-\displaystyle\bigoplus_{q, q' \in Q} \mathsf{in}(q) 
-\mathop{\otimes} \weight_A(q, s, q') 
+\displaystyle\bigoplus_{q, q' \in Q} \init(q) 
+\mathop{\otimes} \weight_A(q, s, q') \mathop{\otimes} \final(q') 
 \label{eq:SWA-value}
 \end{equation}
 
