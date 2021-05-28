@@ -818,10 +818,14 @@ is composed of a state $q \in Q$
 and a stack content $\gamma \in \Gamma^*$, 
 where $\Gamma = \Omegac \times P$.
 Hence, $\weight_A$ is a function from 
-$[Q \times \Gamma^*] \times \Omega^* \times [Q \times \Gamma^*]$ into~$\Semiring$.
+$[Q \times \Gamma^*] \times \Omega^* \times [Q \times \Gamma^*]$ into~$\Semiring$
+(the empty stack is denoted by $\bot$). 
 %
 \begin{align}
 %\begin{array}[t]{rcl}
+\weight_A\bigl(\config{q}{\bot}, \varepsilon, \config{q}{\bot}) & = \one\label{eq:SWVPA-weight}\\
+\weight_A\bigl(\config{q}{\bot}, \varepsilon, \config{q'}{\gamma}) & = \zero 
+\mathrm{~if~} q \neq q'\nonumber\\
 \weight_A\bigl(\configup{q}{\<{\call{c}}, p>\stackup\gamma}, a\, u, 
                \config{q'}{\gamma'}\bigr) & =  
  {\displaystyle\bigoplus_{q'' \in Q}} \weii(q, c, p, a, q'') 
@@ -837,7 +841,7 @@ $[Q \times \Gamma^*] \times \Omega^* \times [Q \times \Gamma^*]$ into~$\Semiring
                \config{q'}{\gamma'}\bigr) & =  
  {\displaystyle\bigoplus_{\begin{array}{c}
                           \scriptstyle q'' \in Q\\[-2pt]
-                          \scriptstyle p \in P
+                          \scriptstyle p' \in P
                           \end{array}}}
  \weic\bigl(q, {\call{c}}, p, {\call{c}'}, p', q''\bigr) 
  \otimes \weight_A\bigl(\configup{q''}{\<{\call{c}'}, p'>\stackup \<{\call{c}}, p>\stackup \gamma}, u, 
@@ -845,7 +849,11 @@ $[Q \times \Gamma^*] \times \Omega^* \times [Q \times \Gamma^*]$ into~$\Semiring
 %
 \weight_A\bigl(\config{q}{\bot}, {\call{c}}\, u, 
                \config{q'}{\gamma'}\bigr) & =  
- {\displaystyle\bigoplus_{q'' \in Q}} \weiec(q, {\call{c}}, p, q'') 
+ {\displaystyle\bigoplus_{\begin{array}{c}
+                          \scriptstyle q'' \in Q\\[-2pt]
+                          \scriptstyle p \in P
+                          \end{array}}}
+  \weiec(q, {\call{c}}, p, q'') 
   \otimes \weight_A\bigl(\config{q''}{{\call{c}}\, p}, u, 
                          \config{q'}{\gamma'}\bigr)\nonumber\\
 %
@@ -860,12 +868,10 @@ $[Q \times \Gamma^*] \times \Omega^* \times [Q \times \Gamma^*]$ into~$\Semiring
                \config{q'}{\gamma'}\bigr) & =  
  {\displaystyle\bigoplus_{q'' \in Q}} \weier(q, {\return{r}}, q'') 
   \otimes \weight_A\bigl(\config{q''}{\bot}, u, 
-                         \config{q'}{\gamma'}\bigr)
+                         \config{q'}{\gamma'}\bigr)\nonumber
 %\end{array}
-\label{eq:SWVPA-weight}
 \end{align}
 %
-where $\bot$ denotes the empty stack.
 % and ${\call{c}}\, p\stacksep \gamma$ 
 %denotes a stack where the pair made of ${\call{c}} \in \Omegac$ and $p \in P$ is the top symbol 
 %and $\gamma$ is the rest of stack.
