@@ -1,0 +1,32 @@
+% !TEX root = main.tex
+
+% http://www.eptcs.org
+\documentclass[submission,copyright,creativecommons]{eptcs}
+\providecommand{\event}{GandALF 2021} % Name of the event you are submitting to
+\usepackage{breakurl}                 % Not needed if you use pdflatex only.
+\usepackage{underscore}               % Only needed if you use pdflatex.
+
+
+%% theorem environments
+\usepackage{theorem}
+\newtheorem{theorem}{Theorem} %[section]
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newenvironment{proof}{\vspace{-2ex}{\it Proof. }}{\hspace*{\fill} $\Box$\smallskip }
+\theorembodyfont{\slshape}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\def\endex{\hspace*{\fill} $\Diamond$\smallskip }
+\def\qed{}
+{\theorembodyfont{\rmfamily} \theoremstyle{break} \newtheorem{algo}{Algorithm}}
+
+\author{Florent Jacquemard
+\institute{INRIA \& CNAM, Paris, France\\
+\email{florent.jacquemard@inria.fr}}
+} % end author
+
+\def\titlerunning{Symbolic Weighted Language Models and\\ Parsing over Infinite Alphabets}
+\def\authorrunning{Florent Jacquemard}
+

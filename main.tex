@@ -6,9 +6,17 @@
 % SW-VPA read top of stack (when not empty) at every transition 
 %        (6 kinds of transitions).
 
-\documentclass[runningheads]{llncs}
-%\documentclass[a4paper,11pt]{article}
-%\setcounter{page}{1}
+% default style article.cls
+\input{main-article}
+
+% Springer llncs style
+% https://www.springer.com/gp/computer-science/lncs/conference-proceedings-guidelines
+%\input{main-llncs}
+
+% EPTCS style
+% http://www.eptcs.org
+%\input{main-eptcs}
+ 
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -65,20 +73,6 @@
 \usepackage{harmony} % simple music fonts
 \usepackage{mathtools} % for arrows
 %\usepackage{mathptmx}
-
-%% theorem environments
-\usepackage{theorem}
-% \newtheorem{theorem}{Theorem} %[section]
-% \newtheorem{definition}[theorem]{Definition}
-% \newtheorem{lemma}[theorem]{Lemma}
-% \newtheorem{corollary}[theorem]{Corollary}
-% \newtheorem{proposition}[theorem]{Proposition}
-% \newenvironment{proof}{\vspace{-2ex}{\it Proof. }}{\hspace*{\fill} $\Box$\smallskip }
-% \theorembodyfont{\slshape}
-% \newtheorem{example}[theorem]{Example}
-% \newtheorem{remark}[theorem]{Remark}
-\def\endex{\hspace*{\fill} $\Diamond$\smallskip }
-{\theorembodyfont{\rmfamily} \theoremstyle{break} \newtheorem{algo}{Algorithm}}
 
 %% algorithms
 %\usepackage{algorithm} 
@@ -191,10 +185,6 @@
 %\title{Symbolic Weighted Language Models and Automated Music Transcription}
 \title{Symbolic Weighted Language Models and\\ Parsing over Infinite Alphabets}
 %\title{Weighted Visibly Pushdown Automata and Automated Music Transcription}
-\author{Florent Jacquemard}
-\institute{INRIA \& CNAM, Paris, France\\
-\email{florent.jacquemard@inria.fr}}
-
 %\titlerunning{WVPA \& AMT}
 %\titlerunning{Symbolic Weighted Parsing} % and Automated Music Transcription
 %\authorrunning{Florent Jacquemard}
@@ -286,7 +276,7 @@ where $Q$ is a finite set of states,
 $\mathsf{in} : Q \to \Semiring$   %\Phi_{\Sigma, \Delta}
 respectively $\mathsf{out} : Q \to \Semiring$  %\Phi_{\Sigma, \Delta}
 are functions defining the weight for entering, 
-respectively leaving, a state, 
+respectively leaving, computation in a state,  
 and $\bar{\wei}$ is a triplet of transition functions 
 $\wei_{10}: Q \times Q \to \Phi_{\Sigma}$,
 $\wei_{01}: Q \times Q \to \Phi_{\Delta}$, and 
@@ -430,16 +420,18 @@ T(s, t)  =
 %\end{example}
 
 \begin{example}
-In Common Western Music Notation~\cite{Gould11BB}, 
+In Common Western Music Notation~\cite{Gould11Notation}, 
 several symbols may be used to represent a unique sounding event.
 For instance, several notes can be combined with a tie, 
-like in $\musQuarter\!\!\mathrel{\raisebox{-1.5mm}{$\smile$}}\!\!\musEighth$,  
-and a note can be augmented with a dot like in~\musQuarterDotted).
-We propose a small transducer that compares an input sequence of sounding 
+like in $\musQuarter\!\!\!\mathrel{\raisebox{-1.5mm}{$\smile$}}\!\!\!\musEighth$,  
+and one note can be augmented by half its duration with a dot like in~\musQuarterDotted{}
+
+\noindent 
+We propose a small transducer model that compares an input sequence of sounding 
 events (music "performance") 
 to an output sequence of written events (music "score").
 % simple pointwise distance between two sequences of timestamped events **
-
+%
 Let us consider the tropical (\emph{min-plus}) semiring~$\Semiring$ 
 of Figure~\ref{fig:semirings} and 
 let $\Sigma = \mathbb{R}_+$ be an input alphabet of event dates
@@ -511,9 +503,9 @@ where $Q$ is a finite set of states,
 $\mathsf{in} : Q \to \Semiring$, %\Phi_\Sigma$, 
 respectively $\mathsf{out} : Q \to \Semiring$  %\Phi_\Sigma,$
 are functions defining the weight for entering, 
-respectively leaving, a state, 
+respectively leaving, computation in a state, 
 and ${\wei_1}$ is a transition functions 
-from $Q \times Q$ into $\Phi_{\Sigma}$.
+from $Q \times Q$ into~$\Phi_{\Sigma}$.
 \end{definition}
 %      
 \noindent
@@ -560,117 +552,87 @@ The following property will be useful to the approach on
 symbolic weighted parsing presented in Section~\ref{sec:parsing}.
 
 \begin{proposition} \label{prop:epsilon}
-Given a \SWT $T$ over $\Sigma$, $\Delta$, $\Semiring$ and $\bar\Phi$,
-and $s \in \Sigma^+$, 
+Given a \SWT $T$ over $\Sigma$, $\Delta$, 
+$\Semiring$ commutative, bounded and complete,
+and $\bar\Phi$ effective,
+and a $\SWTA$ $A$ over $\Sigma$, $\Semiring$ and $\bar\Phi$,
 there exists an effectively constructible \SWA 
-$A_{T, s}$ over $\Delta$, $\Semiring$ and $\bar\Phi$,
-such that for all $t \in \Delta^+$, $A_{T, s}(t) = T(s, t)$.
+$B_{T, A}$ over $\Delta$, $\Semiring$ and $\bar\Phi$,
+such that for all $t \in \Delta^*$, 
+$B_{T, A}(t) = \displaystyle\bigoplus_{s\in \Sigma^*} A(s) \otimes T(s, t)$.
 \end{proposition}
 %
 \begin{proof}
-Let $T = \< Q, \init, \bar{\wei}, \final >$,
+Let $T = \< Q, \init_T, \bar{\wei}, \final_T >$,
 with $\bar{\wei} = \< \wei_{10}, \wei_{01}, \wei_{11}>$,
-%where the component functions of
-%be the synthesized form of 
-%$Q \times (\Sigma \cup \{ \varepsilon \}) \times (\Delta \cup \{ \varepsilon \}) \times Q \to \Semiring$,
-and let $s = s_1 \ldots s_n$ with $s_1, \ldots, s_n \in \Sigma$ ($n \geq 1$). %$n = |s|$ be the length of $s$.
-
-The state set of $A_{T, s}$ will be $Q' = [1..n+1] \times Q$.
-Its state entering weight function is defined by, 
-for all $q \in Q$ $\init'(1, q) = \init(q)$ 
-and $\init'(i, q) = \zero$ for all $1 < i \leq n+1$. 
-Its state leaving weight function is defined by, for all $q \in Q$ 
-$\final'(n+1, q) = \final(q)$, 
-and $\final'(i, q) = \zero$ for all $1 \leq i <  n+1$.
-
-Every non-null transition of $A_{T, s}$ will
-simulate a sequence of transitions of $T$ performing the following steps:
-advance in the input word while staying immobile in the output word, 
-and then make one step in the output word (and advance in the input word or not).
-%
-The first steps in the sequence correspond to $\varepsilon$-transitions of automata, 
-and their total weight is computed by the following intermediate function 
-$\wei'_0 : Q' \times Q' \to \Semiring$, 
-defined for all $q, q' \in Q$: % all $1 \leq i < n$ and $1 \leq k \leq n-i$, 
-by:
-\[
-\begin{array}{rcl}
-\wei'_0\bigl(\<i, q>, \< i, q>\bigr) & = & \one 
-\quad \mathrm{if~} 1 \leq i \leq n+1,\\
-%
-\wei'_0\bigl(\<i, q>, \< i, q'>\bigr) & = & \zero 
-\quad \mathrm{if~} 1 \leq i \leq n+1 \mathrm{~and~} q \neq q',\\
-%
-\wei'_0\bigl(\<i, q>, \< i+k, q'>\bigr) & = & 
-\displaystyle
-\bigoplus_{\begin{array}{c}
-           \scriptstyle q_0,\ldots, q_k \in Q\\[-2pt]
-           \scriptstyle q_0 = q, q_k = q'
-           \end{array}} 
-\bigotimes_{j=0}^{k-1} \phi_{j, j+1}(s_{i+j})
-\quad \begin{array}[t]{l}
-      \mathrm{if~} 1 \leq i < n,
-      \mathrm{~and~} 1 \leq k \leq n-i,\\
-      \mathrm{where~} \phi_{j, j+1} = \wei_{10}(q_j, q_{j+1})
-      \end{array}
-\end{array}
-\]
-%where $\bigl[\wei_{10}(q_j, q_{j+1})\bigr]_{s_{i+j}}$ 
-%is the partial application $\eta_{s_{i+j}} \in \Phi_{\Delta}$
-%for $\eta = \wei_{10}(q_j, q_{j+1}) \in \Phi_{\Sigma, \Delta}$ ($s_{i+j} \in \Sigma$).
-%
-The function $\wei'_0$ is defined thanks to the closure properties of the label theory $\bar\Phi$
-(Section~\ref{section:symbols}). 
-% closed under partial applications 
-The sum and product in its definition are finite, 
-we shall see below how to compute the first sum in polynomial time.
-%The effective computation of $\wei'_0$ does not require enumerating all the state sequences 
-%of length $k+1$ in the sum.
-%Indeed, it amounts to search short
+and $A = \< P, \init_A, \wei_1, \final_A >$.
 
 \noindent
-We define now the transition function 
-$\wei'_1: Q' \times Q' \to \Phi_\Sigma$
-of $A_{T, s}$ as follows,
-for $q, q' \in Q$,
-$1 \leq i \leq n$, and $0 \leq k \leq n-i$:
-\[
-\begin{array}{lcl}
-\wei'_1\bigl(\< i, q>, \< i, q'>\bigr) & = & \wei_{01}(q, q')\\
+The state set of $B_{T, A}$ will be $Q' = P \times Q$.
+The entering, leaving and transition functions of $B_{T, A}$ will 
+simulate synchronized computations of $A$ and $T$, 
+while reading an output word of $\Delta^*$.
 %
-\wei'_1\bigl(\< i, q>, \< i+k, q'>\bigr) & = & 
-\displaystyle
-\bigoplus_{\begin{array}{c}
-           \scriptstyle q'' \in Q\\[-2pt]
-           \scriptstyle i+k < n
-           \end{array}} 
-\wei'_0\bigl(\<i, q>, \< i+k, q''>\bigr) \otimes \psi %\eta_{s_{i+k}}
-\quad \mathrm{where~} \psi = \wei_{01}(q'', q'),\\
- & \oplus & \displaystyle
-\bigoplus_{q'' \in Q} \wei'_0\bigl(\<i, q>, \< i+k-1, q''>\bigr) \otimes \eta_{s_{i+k}}
-\quad \mathrm{where~}\eta = \wei_{11}(q'', q'),\\
-%
-\wei'_1\bigl(\< i, q>, \< j, q'>\bigr) & = & \zero  
-\quad \mathrm{if~} j < i.
-\end{array}      
-\]
-%
-In the second equation, 
-$\eta_{s_{i+j}} \in \Phi_{\Delta}$ is a partial application 
-for $\eta \in \Phi_{\Sigma, \Delta}$, $s_{i+j} \in \Sigma$, 
-defined by $\eta_{s_{i+j}}(y) = \eta(s_{i+j}, y)$ for all $y \in \Sigma$.
+Its state entering functions is defined 
+for all $p \in P$, $q \in Q$ 
+by $\init'(p, q) = \init_A(p) \otimes \init_T(q)$.
+The transition function $\wei'_1$ will roughly perform product of 
+transitions defined by $\wei_1$, 
+$\wei_{01}$ ($T$ reading in output word and not in input word)
+and $\wei_{11}$ ($T$ reading in output word and input word).
+
+
+% Initialize state leaving functions i
+%and $\final'(p, q) = \final_A(p) \otimes \final_T(q)$. 
+
+%Every transition of $B_{T, A}$ will
+%simulate a sequence of transitions of $T$ performing the following steps:
+%advance in the input word while staying immobile in the output word, 
+%and then make one step in the output word (and advance in the input word or not).
 
 \noindent
-We can show that the $\SWA$ $A_{T, s} = \< Q', \init', \wei'_1, \final' >$
-has the expected property: $\forall t \in \Delta^+, A_{T, s}(t) = T(s, t)$.
+Initially, let
+\(
+\wei'_1\bigl( \< p_1, q_1>, \< p_2, q_2>\bigr) = 
+\wei_1(p_1, p_2) \otimes
+\bigl[
+\wei_{01}(q_1, q_2) 
+\oplus
+\displaystyle\bigoplus_{\Sigma}
+\wei_{11}(q_1, q_2) 
+\bigr].
+\)
+
+\noindent
+For each $p_1\in P$ and $q_1, q_2 \in Q$, do let
+\[
+\wei'_1\bigl( \< p_1, q_1>, \< p_2, q_3>\bigr) \opluseq 
+\displaystyle\bigoplus_{\Sigma} \wei_{10}(q_1, q_2) 
+\otimes 
+\wei'_1\bigl( \< p_1, q_2>, \< p_2, q_3>\bigr)
+\]
+and
+\[
+\final'(p_1, q_1) \opluseq 
+\displaystyle\bigoplus_{\Sigma} \wei_{10}(q_1, q_2) 
+\otimes \final'(p_1, q_2)
+\]
+...
 \qed
 \end{proof}
 
-\noindent
-On the quadratic computation of $\wei'_0$. **
-by a best path search in the graph with nodes $[i..i+k] \times Q$
-and edges labeled in $\Phi_\Sigma$...
-ordering = summary.
+complexity of construction...
+
+
+\begin{corollary} \label{cor:epsilon}
+Given a \SWT $T$ over $\Sigma$, $\Delta$, 
+$\Semiring$ commutative, bounded and complete,
+and $\bar\Phi$ effective,
+and $s \in \Sigma^+$, 
+there exists an effectively constructible \SWA 
+$B_{T, s}$ over $\Delta$, $\Semiring$ and $\bar\Phi$,
+such that for all $t \in \Delta^*$, $B_{T, s}(t) = T(s, t)$.
+\end{corollary}
 
 
 \noindent
@@ -1316,7 +1278,8 @@ and where $P' = Q'$ and $\bar\wei$ is defined by:
 \noindent
 It is sufficient to consider in $Q'$ only the prefixes of 
 sequences in transition with a non-null weight.
-\qed\end{proof}
+\qed
+\end{proof}
 
 
 
@@ -1519,6 +1482,9 @@ semi-online implementation for AMT (bar-by-bar approach)
 %\bibliographystyle{plainurl} 
 \bibliographystyle{abbrv}
 %\bibliographystyle{splncs04}
+%\bibliographystyle{eptcs}
+%\bibliography{generic}
+
 \bibliography{references}
 
 

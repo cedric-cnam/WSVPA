@@ -1,0 +1,25 @@
+% !TEX root = main.tex
+
+% default style article.cls
+\documentclass[a4paper,11pt]{article}
+\setcounter{page}{1}
+
+%% theorem environments
+\usepackage{theorem}
+\newtheorem{theorem}{Theorem} %[section]
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newenvironment{proof}{\vspace{-2ex}{\it Proof. }}{\hspace*{\fill} $\Box$\smallskip }
+\theorembodyfont{\slshape}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\def\endex{\hspace*{\fill} $\Diamond$\smallskip }
+\def\qed{}
+{\theorembodyfont{\rmfamily} \theoremstyle{break} \newtheorem{algo}{Algorithm}}
+
+\author{Florent Jacquemard\\
+        INRIA \& CNAM, Paris, France\\
+   \url{florent.jacquemard@inria.fr}
+} % end author

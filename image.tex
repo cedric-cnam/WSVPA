@@ -1,0 +1,119 @@
+
+\begin{proposition} \label{prop:epsilon}
+Given a \SWT $T$ over $\Sigma$, $\Delta$, $\Semiring$ and $\bar\Phi$,
+and $s \in \Sigma^+$, 
+there exists an effectively constructible \SWA 
+$A_{T, s}$ over $\Delta$, $\Semiring$ and $\bar\Phi$,
+such that for all $t \in \Delta^+$, $A_{T, s}(t) = T(s, t)$.
+\end{proposition}
+%
+\begin{proof}
+Let $T = \< Q, \init, \bar{\wei}, \final >$,
+with $\bar{\wei} = \< \wei_{10}, \wei_{01}, \wei_{11}>$,
+%where the component functions of
+%be the synthesized form of 
+%$Q \times (\Sigma \cup \{ \varepsilon \}) \times (\Delta \cup \{ \varepsilon \}) \times Q \to \Semiring$,
+and let $s = s_1 \ldots s_n$ with $s_1, \ldots, s_n \in \Sigma$ ($n \geq 1$). %$n = |s|$ be the length of $s$.
+
+The state set of $A_{T, s}$ will be $Q' = [1..n+1] \times Q$.
+Its state entering weight function is defined by, 
+for all $q \in Q$ $\init'(1, q) = \init(q)$ 
+and $\init'(i, q) = \zero$ for all $1 < i \leq n+1$. 
+Its state leaving weight function is defined by, for all $q \in Q$ 
+$\final'(n+1, q) = \final(q)$, 
+and $\final'(i, q) = \zero$ for all $1 \leq i <  n+1$.
+
+Every non-null transition of $A_{T, s}$ will
+simulate a sequence of transitions of $T$ performing the following steps:
+advance in the input word while staying immobile in the output word, 
+and then make one step in the output word (and advance in the input word or not).
+%
+The first steps in the sequence correspond to $\varepsilon$-transitions of automata, 
+and their total weight is computed by the following intermediate function 
+$\wei'_0 : Q' \times Q' \to \Semiring$, 
+defined for all $q, q' \in Q$: % all $1 \leq i < n$ and $1 \leq k \leq n-i$, 
+by:
+\[
+\begin{array}{rcl}
+\wei'_0\bigl(\<i, q>, \< i, q>\bigr) & = & \one 
+\quad \mathrm{if~} 1 \leq i \leq n+1,\\
+%
+\wei'_0\bigl(\<i, q>, \< i, q'>\bigr) & = & \zero 
+\quad \mathrm{if~} 1 \leq i \leq n+1 \mathrm{~and~} q \neq q',\\
+%
+\wei'_0\bigl(\<i, q>, \< i+k, q'>\bigr) & = & 
+\displaystyle
+\bigoplus_{\begin{array}{c}
+           \scriptstyle q_0,\ldots, q_k \in Q\\[-2pt]
+           \scriptstyle q_0 = q, q_k = q'
+           \end{array}} 
+\bigotimes_{j=0}^{k-1} \phi_{j, j+1}(s_{i+j})
+\quad \begin{array}[t]{l}
+      \mathrm{if~} 1 \leq i < n,
+      \mathrm{~and~} 1 \leq k \leq n-i,\\
+      \mathrm{where~} \phi_{j, j+1} = \wei_{10}(q_j, q_{j+1})
+      \end{array}
+\end{array}
+\]
+%where $\bigl[\wei_{10}(q_j, q_{j+1})\bigr]_{s_{i+j}}$ 
+%is the partial application $\eta_{s_{i+j}} \in \Phi_{\Delta}$
+%for $\eta = \wei_{10}(q_j, q_{j+1}) \in \Phi_{\Sigma, \Delta}$ ($s_{i+j} \in \Sigma$).
+%
+The function $\wei'_0$ is defined thanks to the closure properties of the label theory~$\bar\Phi$
+(Section~\ref{section:symbols}). 
+% closed under partial applications 
+The sum and product in its definition are finite, 
+we shall see below how to compute the first sum in polynomial time.
+%The effective computation of $\wei'_0$ does not require enumerating all the state sequences 
+%of length $k+1$ in the sum.
+%Indeed, it amounts to search short
+
+\noindent
+We define now the transition function 
+$\wei'_1: Q' \times Q' \to \Phi_\Sigma$
+of $A_{T, s}$ as follows,
+for $q, q' \in Q$,
+$1 \leq i \leq n$, and $0 \leq k \leq n-i$:
+\[
+\begin{array}{lcl}
+\wei'_1\bigl(\< i, q>, \< i, q'>\bigr) & = & \wei_{01}(q, q')\\
+%
+\wei'_1\bigl(\< i, q>, \< i+k, q'>\bigr) & = & 
+\displaystyle
+\bigoplus_{\begin{array}{c}
+           \scriptstyle q'' \in Q\\[-2pt]
+           \scriptstyle i+k < n
+           \end{array}} 
+\wei'_0\bigl(\<i, q>, \< i+k, q''>\bigr) \otimes \psi %\eta_{s_{i+k}}
+\quad \mathrm{where~} \psi = \wei_{01}(q'', q'),\\
+ & \oplus & \displaystyle
+\bigoplus_{q'' \in Q} \wei'_0\bigl(\<i, q>, \< i+k-1, q''>\bigr) \otimes \eta_{s_{i+k}}
+\quad \mathrm{where~}\eta = \wei_{11}(q'', q'),\\
+%
+\wei'_1\bigl(\< i, q>, \< j, q'>\bigr) & = & \zero  
+\quad \mathrm{if~} j < i.
+\end{array}      
+\]
+%
+In the second equation, 
+$\eta_{s_{i+j}} \in \Phi_{\Delta}$ is a partial application 
+for $\eta \in \Phi_{\Sigma, \Delta}$, $s_{i+j} \in \Sigma$, 
+defined by $\eta_{s_{i+j}}(y) = \eta(s_{i+j}, y)$ for all $y \in \Sigma$.
+
+\noindent
+We can show that the $\SWA$ $A_{T, s} = \< Q', \init', \wei'_1, \final' >$
+has the expected property: $\forall t \in \Delta^+, A_{T, s}(t) = T(s, t)$.
+\qed
+\end{proof}
+
+\noindent
+On the quadratic computation of $\wei'_0$. **
+by a best path search in the graph with nodes $[i..i+k] \times Q$
+and edges labeled in $\Phi_\Sigma$...
+ordering = summary.
+
+
+\noindent
+The construction time and size for $A_{T, s}$ are $O(\| T \| . | s |)$,
+where the size $\| T \|$ of $T$ is its number of states $|Q|$.
+
