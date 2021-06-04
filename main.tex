@@ -1169,29 +1169,9 @@ and all $t_1, \ldots, t_k \in \T(\Omega)$, $a(t_1, \ldots, t_k) \in \T(\Omega)$.
 Let us assume a commutative semiring~$\Semiring$ 
 and a label theory~$\bar{\Phi}$ over~$\Semiring$ 
 containing one set~$\Phi_{\Omega_k}$ for each $k \in [0..M]$.
-
+%
 \renewcommand{\call}[1]{\ensuremath \langle_{#1}}
 \renewcommand{\return}[1]{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
-
-Let $\hat\Omega$ be the countable (unranked) alphabet obtained
-from $\Omega$ by: 
-$\hat\Omega = \Omegai \uplus \Omegac \uplus \Omegar$, with
-$\Omegai = \Omega_0$, 
-$\Omegac = \{ \; \call{a} \mid a \in \Omega_{>0} \}$,
-$\Omegar = \{ \; \return{a} \mid a \in \Omega_{>0} \}$.
-We associate to $\hat\Omega$
-a label theory $\hat{\Phi}$ 
-like in Section~\ref{se:SWVPA-def}.
-
-\noindent
-We define a linearization of trees of $\T(\Omega)$ into 
-words of $\hat{\Omega}^*$ as follows:
-\begin{description}
-\item $\lin(a) = a$ for all $a \in \Omega_0$, 
-\item $\lin\bigl( b(t_1, \ldots, t_k)\bigr) = 
-       \call{b} \; \lin(t_1) \ldots \lin(t_k) \; \return{b}$ 
-       when $b \in \Omega_k$, $1 \leq k \leq M$.
-\end{description}
 
 % A \emph{regular tree grammar} over $\Omega$ 
 % is a triplet $G = \< N, q_\mathsf{i}, R>$ where
@@ -1213,7 +1193,7 @@ $Q$ is a finite set of states,
 $\mathsf{in} : Q \to \Semiring$ is the starting weight function, 
 and $\bar{\wei}$ is a tuplet of transition functions containing
 %$\wei_\varepsilon$ from $Q \times Q$ into $\Semiring$, and, 
-$\wei_{k}: Q \times Q^{k} \to \Phi_{\Omega_k}$
+one function $\wei_{k}: Q \times Q^{k} \to \Phi_{\Omega_k}$
 for each $k \in [0..M]$. 
 \end{definition}
 %
@@ -1227,24 +1207,14 @@ into~$\Semiring$ by: %also called $\wei$ for simplicity,
 \[
 \begin{array}{rcll}
 %\wei(q_0, \varepsilon, q_1) & = &  \wei_\varepsilon(q_0, q_1),\\ %\phi_\varepsilon\\
-\wei(q_0, a, q_1 \ldots q_k) & = & \phi_{\Omega, k}(a) &
+\wei(q_0, a, q_1 \ldots q_k) & = & \phi_{k}(a) &
 \quad\mathrm{where~} \phi_{k} = \wei_{k}(q_0, q_1\ldots q_k).\\
 \end{array}      
 \]
-Intuitively, $\wei(q_0, a, q_1 \ldots q_k)$ can be seen as
-the weight of a production rule $q_0 \to a(q_1, \ldots, q_k)$ 
-of a regular tree grammar~\cite{tata}, 
-that replaces the non-terminal symbol $q_0$ by $a(q_1, \ldots, q_k)$. 
-%in a step of tree building.
 %
-Such a grammar computes the weights of the derivation trees 
-of the Context-Free grammar obtained by forgetting the labeling symbols of $\Omega_{>0}$.
-
-
-
 \noindent
 The \SWTA of Definition~\ref{def:SWTA} defines a mapping 
-from trees of $\T(\Omega)$ into the weights of~$\Semiring$,
+from trees of $\T(\Omega)$ into the weight values in~$\Semiring$,
 based on the intermediate function~$\weight_A$
 defined as follows for $q_0 \in Q$ and 
 $t = b(t_1,\ldots, t_k) \in \T(\Omega)$,
@@ -1269,12 +1239,58 @@ A(t)  =
 \label{eq:weightTA}
 \end{equation}
 
-\begin{lemma}\label{lem:SWTA}
-For all \SWTA $A$ over~$\Omega$, $\Semiring$ commutative, and $\Phi$,
+\noindent
+Intuitively, $\wei(q_0, a, q_1 \ldots q_k)$ can be seen as
+the weight of a production rule $q_0 \to a(q_1, \ldots, q_k)$ 
+of a regular tree grammar $G$~\cite{tata}, 
+that replaces the non-terminal symbol $q_0$ by $a(q_1, \ldots, q_k)$. 
+%in a step of tree building.
+%
+%Such a grammar computes the weights of the derivation trees 
+%of the Context-Free grammar obtained by forgetting the labeling symbols of $\Omega_{>0}$.
+And the above production rule can also be seen as 
+a rule of a weighted CF grammar, of the form
+$[a]\, q_0 := q_1 \ldots q_k$ if $k > 0$,
+and $q_0 := a$ if $k = 0$. 
+In the first case, $a$ is a label of the rule, 
+in the second case it is a terminal symbol.
+On can observe that the weight of a labeled derivation tree $t$
+of the weighted CF grammar associated to~$A$ as above, 
+is $\weight_A(q, t)$, 
+when $q$ is the start non-terminal.
+%
+We shall now establish a correspondence between such derivation tree $t$
+and some word describing a linearization of $t$, 
+in a way that $\weight_A(q, t)$ can be computed by a $\SWVPA$.
+
+Let $\hat\Omega$ be the countable (unranked) alphabet obtained
+from $\Omega$ by: 
+$\hat\Omega = \Omegai \uplus \Omegac \uplus \Omegar$, with
+$\Omegai = \Omega_0$, 
+$\Omegac = \{ \; \call{a} \mid a \in \Omega_{>0} \}$,
+$\Omegar = \{ \; \return{a} \mid a \in \Omega_{>0} \}$.
+
+\noindent
+We associate to $\hat\Omega$
+a label theory $\hat{\Phi}$ 
+like in Section~\ref{se:SWVPA-def}, 
+%
+\noindent
+and we define a linearization of trees of $\T(\Omega)$ into 
+words of $\hat{\Omega}^*$ as follows:
+\begin{description}
+\item $\lin(a) = a$ for all $a \in \Omega_0$, 
+\item $\lin\bigl( b(t_1, \ldots, t_k)\bigr) = 
+       \call{b} \; \lin(t_1) \ldots \lin(t_k) \; \return{b}$ 
+       when $b \in \Omega_k$ for $1 \leq k \leq M$.
+\end{description}
+
+\begin{proposition}\label{lem:SWTA}
+For all \SWTA $A$ over~$\Omega$, $\Semiring$ commutative, and $\bar\Phi$,
 there exists an effectively constructible \SWVPA $A'$ over 
 $\hat\Omega$, $\Semiring$ and $\hat\Phi$ 
 such that for all $t \in \T(\Omega)$, $A'\bigl(\lin(t)\bigr) = A(t)$.
-\end{lemma} 
+\end{proposition} 
 % 
 \begin{proof}
 Let $A = \< Q, \init, \bar{\wei} >$ where $\bar{\wei}$ is presented as above by a function
@@ -1325,65 +1341,57 @@ sequences in transition with a non-null weight.
 Let us now apply the models and results of the previous sections %in order to define 
 to the problem of parsing over infinite alphabet. %appropriate
 %
-Besides considering infinitely many possible of input symbols, 
-handled with suitable language formalisms, 
-this approach extends conventional parsing and weighted parsing
-by computing a derivation tree modulo 
-a generic distance between words,  
-defined by a SW transducer given in input.
-This enables considering finer word relationships than strict equality 
-as in the conventional parsing approach, 
-opening possibilities of quantitative analysis via this method.
-
 %\subsection{Definition}
 %
-Let $\Sigma$ be a countable input alphabet 
-and let $\Omega$ be a countable output ranked alphabet, 
-with maximal rank value $M$, 
-and $\hat\Omega = \Omegai \uplus \Omegac \uplus \Omegar$
-be the alphabet with nesting symbols, associated like Section~\ref{sec:trees}, 
-for the linearization of trees of $\T(\Omega)$
-(remember that $\Omegai = \Omega_0$).
+Let~$\Sigma$ be a countable input alphabet 
+and~$\Omega$ be a countable output ranked alphabet, 
+with maximal rank value~$M$, 
+and let $\hat\Omega = \Omegai \uplus \Omegac \uplus \Omegar$
+be the alphabet with nesting symbols associated to $\Omega$ like in Section~\ref{sec:trees},
+for the linearization of trees of $\T(\Omega)$.
+%(remember that $\Omegai = \Omega_0$).
 %
-Let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a commutative, bounded, complete 
-and total semiring 
-and let $\bar\Phi$ be a label theory over $\Semiring$
-containing
-$\Phi_\Sigma$, $\Phi_{\Sigma, \Omegai}$, as well as
+Let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a 
+commutative, bounded, and complete \marginpar{\tiny total?} semiring  
+and let $\bar\Phi$ be an effective label theory over $\Semiring$,
+containing $\Phi_\Sigma$, $\Phi_{\Sigma, \Omegai}$, as well as
 $\Phii$, $\Phic$, $\Phir$, $\Phicr$
 (following the notations of Section~\ref{se:SWVPA-def}).
-It is moreover assumed computable and $k$-convex for some fixed $k$.
-
+%It is moreover assumed computable and $k$-convex for some fixed~$k$.
+%
 \noindent
-Let us assume given the following input:
-\begin{itemize}
-\item a \SWT $T$ over $\Sigma$, $\Omegai$, $\Semiring$, and $\bar\Phi$, 
+We assume given the following input:
+\begin{description}
+\item[--] a \SWT $T$ over $\Sigma$, $\Omegai$, $\Semiring$, and $\bar\Phi$, 
 defining a measure %between words 
 $T: \Sigma^* \times \Omegai^* \to \Semiring$,
 
-\item a \SWTA $A$ over $\Omega$, $\Semiring$, and $\bar\Phi$,
+\item[--] a \SWTA $A$ over $\Omega$, $\Semiring$, and $\bar\Phi$,
 defining a measure $A: \T(\Omega) \to \Semiring$,
 %a \SWVPA $A$ over $\Omega$, and $\Semiring$, defining a series of nested words
 %      $A : \Omega^* \to \Semiring$,
-\item an input word $s \in \Sigma^*$.
-\end{itemize}
+\item[--] an input word $s \in \Sigma^*$.
+\end{description}
 %
 As explained in Section~\ref{sec:trees}, 
 $A = \< Q, \init, \bar{\wei} >$ can be seen as a weighted regular tree grammar, 
-that generates (weighted) trees by replacement of a state symbol $q_0$ (non-terminal), 
-by a tree $a(q_1,\ldots, q_k)$, where $k = \rank(a)$.
-A replacement rule $q_0 \to a(q_1,\ldots, q_k)$, 
-of weight $\wei(q_0, a, q_1 \ldots q_k) \in \Semiring$ 
-according to Definition~\ref{def:SWTA}, 
-corresponds to the production rule $q_0 := a(q_1,\ldots, q_k)$ of a weighted CF grammar,
-with set non-terminal symbols $Q$ and set of terminal symbols $\Omega_0$.
-This actually is a slight generalization of CFG since 
-each such production rule is labelled by  a symbol of $\Omega_{>0}$, 
-hence parse trees %derivation trees
-are trees of $\T(\Omega)$.
+or a labeled weighted CF grammar whose derivation trees are in $\T(\Omega)$, 
+with weight defined by $A$.
+%that generates (weighted) trees by replacement of a state symbol~$q_0$ (non-terminal), 
+%by a tree $a(q_1,\ldots, q_k)$, where $k = \rank(a)$.
+%A replacement rule $q_0 \to a(q_1,\ldots, q_k)$, 
+%of weight $\wei(q_0, a, q_1 \ldots q_k) \in \Semiring$ 
+%according to Definition~\ref{def:SWTA}, 
+%corresponds to the production rule $q_0 := a(q_1,\ldots, q_k)$ of a weighted CF grammar,
+%with set non-terminal symbols $Q$ and set of terminal symbols $\Omega_0$.
 %
-Another (more original) generalization is that the set of terminal symbols 
-$\Omega_0$ may be infinite.
+%This actually is a slight generalization of CFG since 
+%each such production rule is labelled by  a symbol of $\Omega_{>0}$, 
+%hence parse trees %derivation trees
+%are trees of $\T(\Omega)$.
+%
+%Another (more original) generalization is that the set of terminal symbols 
+%$\Omega_0$ may be infinite.
 
 \noindent 
 We extend the measure defined by $T$ to 
@@ -1412,7 +1420,7 @@ d(s, t) \otimes A(t) = \displaystyle\bigoplus_{t' \in \T(\Omega)} d(s, t') \otim
 \end{equation}
 %
 The measure expressed in~\eqref{eq:distance-lang} is called
-called edit-distance between $s$ and $A$ in~\cite{Mohri03EDWA}.
+called the edit-distance between~$s$ and~$A$ in~\cite{Mohri03EDWA}.
 %
 %The input language can also be expressed as a \SWTA, or, 
 %as a particular case, as a weighted context-free grammar, 
@@ -1420,7 +1428,7 @@ called edit-distance between $s$ and $A$ in~\cite{Mohri03EDWA}.
 %
 The problem of searching, in a WTA language, 
 the best parse tree matching a given input,  
-sometimes referred as~\emph{weighted parsing}
+sometimes referred as~\emph{weighted parsing},
 corresponds to SW parsing in the case of finite alphabets
 and when the transducer $T$ characterizes identity
 see \eg~\cite{Goodman99SemiringParsing} 
@@ -1439,8 +1447,8 @@ weighted parsing framework.
 %\end{description}
 
 
-\subsection{Computation}
-
+%\subsection{Computation}
+%
 \begin{proposition}
 The problem of Symbolic Weighted  parsing 
 can be solved in PTIME in the size of the input \SWT $T$, \SWTA $A$ %\SWVPA (or ) 
@@ -1481,9 +1489,9 @@ for~$T$, $A$ and~$s$.
 \qed  
 \end{proof}
 
-\subsection{Application to Automated Music Transcription}
+\paragraph{Application to Automated Music Transcription.}
 %\input{transcription}
-
+...
 
 
 
@@ -1499,21 +1507,22 @@ This approach extends conventional parsing and weighted parsing
 by computing a derivation tree modulo 
 a generic distance between words,  
 defined by a SW transducer given in input.
-This enables considering finer word relationships than strict equality 
-as in the conventional parsing approach, 
+This enables to consider finer word relationships than strict equality, 
+%as in the conventional parsing approach, 
 opening possibilities of quantitative analysis via this method.
 
 % discussion
+\noindent
 Ongoing and future work include 
 
 \noindent
--- other theoretical properties of SW models
-\eg extention to $n$-best, 
-to $k$-\emph{closed} semirings~\cite{Mohri02semiring}
-(instead of \emph{bounded}, which is equivalent to $0$-\emph{closed})
+-- The study of other theoretical properties of SW models, 
+such as the extension of the best search algorithm from $1$-best to $n$-best~\cite{Huang05kbest}, 
+and to $k$-\emph{closed} semirings~\cite{Mohri02semiring}
+(instead of \emph{bounded}, which corresponds to $0$-\emph{closed}).
 
 \noindent
--- room to improve complexity for best-search algorithm
+-- ...there is room to improve the complexity bounds for the algorithms
 ... modular approach with oracles ...
 
 \noindent
