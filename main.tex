@@ -564,9 +564,12 @@ $B_{T, A}(t) = \displaystyle\bigoplus_{s\in \Sigma^*} A(s) \otimes T(s, t)$.
 %
 \begin{proof}
 Let $T = \< Q, \init_T, \bar{\wei}, \final_T >$,
-with $\bar{\wei} = \< \wei_{10}, \wei_{01}, \wei_{11}>$,
-and $A = \< P, \init_A, \wei_1, \final_A >$.
-
+where $\bar{\wei}$ contains $\wei_{10}$, $\wei_{01}$, and $\wei_{11}$,
+from $Q \times Q$ into respectively 
+$\Phi_{\Sigma}$, $\Phi_{\Delta}$, and $\Phi_{\Sigma, \Delta}$,
+and let $A = \< P, \init_A, \wei_1, \final_A >$
+with $\wei_1: Q \times Q \to \Phi_{\Sigma}$.
+%
 \noindent
 The state set of $B_{T, A}$ will be $Q' = P \times Q$.
 The entering, leaving and transition functions of $B_{T, A}$ will 
@@ -576,12 +579,20 @@ while reading an output word of $\Delta^*$.
 Its state entering functions is defined 
 for all $p \in P$, $q \in Q$ 
 by $\init'(p, q) = \init_A(p) \otimes \init_T(q)$.
-The transition function $\wei'_1$ will roughly perform product of 
-transitions defined by $\wei_1$, 
+The transition function $\wei'_1$ will roughly perform 
+a synchronized product of transitions defined by $\wei_1$, 
 $\wei_{01}$ ($T$ reading in output word and not in input word)
 and $\wei_{11}$ ($T$ reading in output word and input word).
-
-
+%
+Moreover, $\wei'_1$ also needs to simulate transitions 
+defined by $\wei_{10}$: $T$ reading in intput word and not in output word.
+Since $B_{T, A}$  will read only in the output word, such a transition corresponds
+to an $\varepsilon$-transition of $\SWA$, 
+but $\SWA$ have been defined without $\varepsilon$-transitions.
+Therefore, in order to take care of this case, we perform an on-the-fly
+suppression of $\varepsilon$-transition in the $\SWA$ in construction, 
+following the algorithm of~\cite{LombardySakarovitch12ciaa}. 
+%
 % Initialize state leaving functions i
 %and $\final'(p, q) = \final_A(p) \otimes \final_T(q)$. 
 
@@ -591,8 +602,8 @@ and $\wei_{11}$ ($T$ reading in output word and input word).
 %and then make one step in the output word (and advance in the input word or not).
 
 \noindent
-Initially, let
-\(
+Initially, for all $p_1, p_2 \in P$, and $q_1, q_2 \in Q$, let
+\[
 \wei'_1\bigl( \< p_1, q_1>, \< p_2, q_2>\bigr) = 
 \wei_1(p_1, p_2) \otimes
 \bigl[
@@ -601,10 +612,11 @@ Initially, let
 \displaystyle\bigoplus_{\Sigma}
 \wei_{11}(q_1, q_2) 
 \bigr].
-\)
+\]
 
 \noindent
-For each $p_1\in P$ and $q_1, q_2 \in Q$, do let
+Iterate the following for all $p_1\in P$ and $q_1, q_2 \in Q$:
+for all $p_2\in P$ and $q_3 \in Q$,
 \[
 \wei'_1\bigl( \< p_1, q_1>, \< p_2, q_3>\bigr) \opluseq 
 \displaystyle\bigoplus_{\Sigma} \wei_{10}(q_1, q_2) 
@@ -616,12 +628,17 @@ and
 \final'(p_1, q_1) \opluseq 
 \displaystyle\bigoplus_{\Sigma} \wei_{10}(q_1, q_2) 
 \otimes \final'(p_1, q_2)
-\]
-...
+\] 
+\marginpar{\tiny proof correctness}
 \qed
 \end{proof}
 
-complexity of construction...
+%The complexity of construction
+\noindent
+The construction time and size for $B_{T, A}$ are $O(\| T \|^3 . \| A \|^2)$,
+where the sizes $\| T \|$ and $\| A \|$ are their number of states.
+%of~$T$ is its number of states $|Q|$.
+
 
 
 \begin{corollary} \label{cor:epsilon}
@@ -635,9 +652,9 @@ such that for all $t \in \Delta^*$, $B_{T, s}(t) = T(s, t)$.
 \end{corollary}
 
 
-\noindent
-The construction time and size for $A_{T, s}$ are $O(\| T \| . | s |)$,
-where the size $\| T \|$ of $T$ is its number of states $|Q|$.
+%\noindent
+%The construction time and size for $B_{T, s}$ are $O(\| T \|^3 . | s |^2)$,
+%where the size $\| T \|$ of~$T$ is its number of states $|Q|$.
 
  
 
@@ -856,29 +873,45 @@ structured words with timed symbols...
 intro language of music notation? (markup = time division, leaves = events etc)
 \end{example}
 
+\noindent 
+Every $\SWA$ $A = \< Q, \init, {\wei_1}, \final >$,
+over $\Sigma$, $\Semiring$ and $\bar\Phi$
+is a particular case of $\SWVPA$ 
+$\< Q, \emptyset, \init, \bar\wei, \final >$ 
+over $\Omega$, $\Semiring$ and $\bar\Phi$
+with $\Omegai = \Sigma$ and $\Omegac = \Omegar = \emptyset$,
+and computing with an always empty stack:
+$\weiei = \wei_1$ and all the other functions 
+of~$\bar\wei$ are the constant~$\zero$.
+
+
 
 \subsection{Properties}
 Like VPA and symbolic VPA, 
 the class of \SWVPA is closed under the binary operators of the underlying semiring.
 %
 \begin{proposition}\label{prop:SWVPA-product}
-Let $A_1$ and $A_2$ be two (\SWVPA)
+Let $A_1$ and $A_2$ be two \SWVPA
 over the same $\Omega$, $\Semiring$ and $\bar\Phi$.
-There exists two $\SWVPA$ $A_1 \oplus A_2$ and $A_1 \otimes A_2$, 
-effectively constructible, 
+There exists two effectively constructible $\SWVPA$ 
+$A_1 \oplus A_2$ and $A_1 \otimes A_2$,  
 such that for all $s \in \Omega^*$, 
 $(A_1 \oplus A_2)(s) = A_1(s) \oplus A_2(s)$ and 
 $(A_1 \otimes A_2)(s) = A_1(s) \otimes A_2(s)$.
 \end{proposition}
+%
+\begin{proof}
 The construction is essentially the same 
 as in the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
+\end{proof}
 
 
 \subsection{Best Search} 
 \label{sec:best}\label{sec:search}
 %**hypotheses**
 Let us assume that the semiring~$\Semiring$ is
-commutative, bounded, total, and complete.
+commutative, bounded, and complete,  
+\marginpar{\tiny total?}
 and assume an effective label theory.
 %s.t. for all $\phi \in \Phii$, 
 %$\psi \in \Phir$, 
@@ -888,17 +921,18 @@ and assume an effective label theory.
 %$\displaystyle\bigoplus_{{\call{c}} \in \Omegac} 
 %\displaystyle\bigoplus_{{\return{r}} \in \Omegar} \eta({\call{c}}, {\return{r}})$
 %are computable...
-
+% 
 % total ? 
 % monotonic and superior writ natural ordering
 %Regarding the infinite sum operator, note that
 %$\bigoplus_{x \in \Phi_\Omega} \phi(x)$, 
 %$\bigoplus_{y \in \Phi_\Delta} \psi(y)$, and  
 %... exist and in $\Semiring$.
-
+%
 We propose a Dijkstra algorithm computing, for a $\SWVPA$ $A$
 over~$\Omega$, $\Semiring$ and~$\bar\Phi$, 
-the minimal weight \wrt~$\leq_\oplus$, for a word in~$\Omega^*$.
+the minimal weight %\wrt~$\leq_\oplus$, 
+for a word in~$\Omega^*$.
 
 \noindent
 More precisely, 
@@ -911,10 +945,10 @@ let $b_\bot : Q \times Q \to \Semiring$ be the function:
 \end{equation}
 %
 Since $\Semiring$ is complete, the infinite sum in \eqref{eq:bbot} is well defined,
-and by totality of $\leq_\oplus$, it is the minimum in $\Omega^*$
+and, roviding that $\Semiring$ is total, it is the minimum in $\Omega^*$,
+\wrt~$\leq_\oplus$, % this ordering.
 of the fonction 
-$s \mapsto \weight_A(\config{q}{\sigma}, s, \config{q'}{\sigma})$ 
-\wrt this ordering.
+$s \mapsto \weight_A(\config{q}{\sigma}, s, \config{q'}{\sigma})$.
 %
 The term $\config{q}{\bot}, s, \config{q'}{\bot}$ 
 of this sum is the central expression in 
@@ -1301,8 +1335,8 @@ This enables considering finer word relationships than strict equality
 as in the conventional parsing approach, 
 opening possibilities of quantitative analysis via this method.
 
-\subsection{Definition}
-
+%\subsection{Definition}
+%
 Let $\Sigma$ be a countable input alphabet 
 and let $\Omega$ be a countable output ranked alphabet, 
 with maximal rank value $M$, 
@@ -1454,23 +1488,38 @@ for~$T$, $A$ and~$s$.
 
 
 \section*{Conclusion}
-% discussion
+% summary 
+We have introduced weighted language models (SW transducers and visibly pushdown automata)
+computing over infinite alphabets, 
+and applied them to the problem of parsing 
+with infinitely many possible input symbols (typically timed events).
+%handled with suitable language formalisms, 
+%
+This approach extends conventional parsing and weighted parsing
+by computing a derivation tree modulo 
+a generic distance between words,  
+defined by a SW transducer given in input.
+This enables considering finer word relationships than strict equality 
+as in the conventional parsing approach, 
+opening possibilities of quantitative analysis via this method.
 
-\noindent
--- summary 
+% discussion
+Ongoing and future work include 
 
 \noindent
 -- other theoretical properties of SW models
+\eg extention to $n$-best, 
+to $k$-\emph{closed} semirings~\cite{Mohri02semiring}
+(instead of \emph{bounded}, which is equivalent to $0$-\emph{closed})
 
 \noindent
 -- room to improve complexity for best-search algorithm
 ... modular approach with oracles ...
 
-and extention to $n$-best
-
 \noindent
--- offline algorithm, 
+-- present here an offline algorithm for best search, 
 semi-online implementation for AMT (bar-by-bar approach)
+with an on-the-fly automata construction.
 
 
 
