@@ -166,11 +166,11 @@
 \def\weii{{\wei_\mathsf{i}}}
 \def\weic{{\wei_\mathsf{c}}}
 \def\weir{{\wei_\mathsf{r}}}
-\def\weie{{\wei_\mathsf{e}}}
-\def\weiei{{\wei^\mathsf{e}_\mathsf{i}}}
-\def\weiec{{\wei^\mathsf{e}_\mathsf{c}}}
-\def\weier{{\wei^\mathsf{e}_\mathsf{r}}}
-\def\weiex{{\wei^\mathsf{e}_\mathsf{x}}}
+\newcommand{\weie[1]}{\wei_{#1}^\mathsf{e}}
+\def\weiei{\weie[\mathsf{i}]}
+\def\weiec{\weie[\mathsf{c}]}
+\def\weier{\weie[\mathsf{r}]}
+\def\weiex{\weie[\mathsf{x}]}
 \newcommand{\ioi}[1]{\mathsf{ioi}({#1})}
 \newcommand{\rank}{\mathsf{rk}}
 \newcommand{\lin}{\mathsf{lin}}
@@ -1187,74 +1187,92 @@ containing one set~$\Phi_{\Omega_k}$ for each $k \in [0..M]$.
 %
 \begin{definition}  \label{def:SWTA}
 A \emph{symbolic-weighted tree automaton} (\SWTA)
-over $\Omega$, $\Semiring$, and $\bar\Phi$
+over $\Omega$, $\Semiring$, and~$\bar\Phi$
 is a triplet $A = \< Q, \init, \bar{\wei} >$ where
 $Q$ is a finite set of states, 
-$\mathsf{in} : Q \to \Semiring$ is the starting weight function, 
-and $\bar{\wei}$ is a tuplet of transition functions containing
+$\mathsf{in} : Q \to \Phi_\Omega$ is the starting weight function, 
+and $\bar{\wei}$ is a tuplet of transition functions containing, 
+for each $k \in [0..M]$, 
 %$\wei_\varepsilon$ from $Q \times Q$ into $\Semiring$, and, 
-one function $\wei_{k}: Q \times Q^{k} \to \Phi_{\Omega_k}$
-for each $k \in [0..M]$. 
+the functions $\wei_{k}: Q \times Q^{k} \to \Phi_{\Omega_{>0},\Omega_k}$
+and $\weie[k]: Q \times Q^{k} \to \Phi_{\Omega_k}$.
 \end{definition}
 %
 %Like in Section~\ref{sec:SWAdef}, 
-We define from $\bar{\wei}$ 
-a transition function~$\wei$, %from $\bar\wei$
-from 
-$Q \times \Omega \times \bigcup_{k=0}^{M} Q^k$
-into~$\Semiring$ by: %also called $\wei$ for simplicity, 
+We define %from $\bar{\wei}$ 
+a transition 
+function~$\wei: Q \times (\Omega_{> 0} \cup \{ \varepsilon \}) \times \Omega \times \bigcup_{k=0}^{M} Q^k 
+  \to \Semiring$
+by: %also called $\wei$ for simplicity, 
 %such that, for all $q, q' \in Q$, $a \in \Sigma$, and $b \in \Delta$, 
 \[
 \begin{array}{rcll}
 %\wei(q_0, \varepsilon, q_1) & = &  \wei_\varepsilon(q_0, q_1),\\ %\phi_\varepsilon\\
-\wei(q_0, a, q_1 \ldots q_k) & = & \phi_{k}(a) &
-\quad\mathrm{where~} \phi_{k} = \wei_{k}(q_0, q_1\ldots q_k).\\
+\wei(q_0, a, b, q_1 \ldots q_k) & = & \eta(a, b) &
+\quad\mathrm{where~} \eta = \wei_{k}(q_0, q_1\ldots q_k)\\
+\wei(q_0, \varepsilon, b, q_1 \ldots q_k) & = & \phi(b) &
+\quad\mathrm{where~} \phi = \weie[k](q_0, q_1\ldots q_k).
 \end{array}      
 \]
 %
 \noindent
-The \SWTA of Definition~\ref{def:SWTA} defines a mapping 
+The first case deals with a strict subtree, with a parent node labeled by $a$, 
+and the second case with a root tree.
+%
+Every \SWTA %of Definition~\ref{def:SWTA} 
+defines a mapping 
 from trees of $\T(\Omega)$ into the weight values in~$\Semiring$,
-based on the intermediate function~$\weight_A$
-defined as follows for $q_0 \in Q$ and 
-$t = b(t_1,\ldots, t_k) \in \T(\Omega)$,
-with $0 \leq k \leq M$:
+based on an intermediate function
+$\weight_A: Q \times (\Omega \cup \{ \varepsilon \}) \times \T(\Omega) \to \Semiring$
+defined as follows 
 \begin{equation}
 \begin{array}{rccl}
-\weight_A(q_0, t) & = & 
+\weight_A(q_0, a, t) & = & 
 %   \displaystyle\bigoplus_{q_1 \in Q} &
 %   \wei(q, \varepsilon, q_1) \otimes \weight_A(q_1, t)\\
  \displaystyle\bigoplus_{q_1 \ldots q_k \in Q^k} &
-              \wei(q_0, b, q_1 \ldots q_k ) 
+              \wei(q_0, a, b, q_1 \ldots q_k ) 
    \otimes \displaystyle\bigotimes_{i=1}^{k}
-           \weight_A(q_i, t_i)
+           \weight_A(q_i, b, t_i)
 \end{array}
 \end{equation}
+where $q_0 \in Q$, $a \in \Omega_{>0} \cup \{ \varepsilon \}$ and 
+$t = b(t_1,\ldots, t_k) \in \T(\Omega)$,
+$0 \leq k \leq M$.
 
 \medskip\noindent
-The weight associated by $A$ to  $t \in \T(\Omega)$ is 
+Finally, the weight associated by $A$ to  $t \in \T(\Omega)$ is 
 \begin{equation}
 A(t)  = 
-\displaystyle\bigoplus_{q \in Q} \mathsf{in}(q) \mathop{\otimes} \weight_A(q, t)
+\displaystyle\bigoplus_{q \in Q} \mathsf{in}(q) \mathop{\otimes} \weight_A(q, \varepsilon, t)
 \label{eq:weightTA}
 \end{equation}
 
 \noindent
-Intuitively, $\wei(q_0, a, q_1 \ldots q_k)$ can be seen as
-the weight of a production rule $q_0 \to a(q_1, \ldots, q_k)$ 
-of a regular tree grammar $G$~\cite{tata}, 
-that replaces the non-terminal symbol $q_0$ by $a(q_1, \ldots, q_k)$. 
+Intuitively, $\wei(q_0, a, b, q_1 \ldots q_k)$ can be seen as
+the weight of a production rule $q_0 \to b(q_1, \ldots, q_k)$ 
+of a regular tree grammar~\cite{tata}, 
+that replaces the non-terminal symbol $q_0$ by $b(q_1, \ldots, q_k)$, 
+provided that the parent of $q_0$ is labeled by $a$
+(or $q_0$ is the root node if $a = \varepsilon$).
 %in a step of tree building.
 %
 %Such a grammar computes the weights of the derivation trees 
 %of the Context-Free grammar obtained by forgetting the labeling symbols of $\Omega_{>0}$.
-And the above production rule can also be seen as 
+The above production rule can also be seen as 
 a rule of a weighted CF grammar, of the form
-$[a]\, q_0 := q_1 \ldots q_k$ if $k > 0$,
-and $q_0 := a$ if $k = 0$. 
-In the first case, $a$ is a label of the rule, 
-in the second case it is a terminal symbol.
-On can observe that the weight of a labeled derivation tree $t$
+$[a, b]\, q_0 := q_1 \ldots q_k$ if $k > 0$,
+and $[a]\, q_0 := b$ if $k = 0$. 
+In the first case, $b$ is a label of the rule, 
+and in the second case, it is a terminal symbol.
+And in both cases, $a$ is a constraint on the label of the 
+parent node in the derivation tree.
+This features of observation of parent's label  
+are useful in the case of infinite alphabet, 
+where it is not possible to memorize a label with the states.
+%
+%One can observe that 
+The weight of a labeled derivation tree $t$
 of the weighted CF grammar associated to~$A$ as above, 
 is $\weight_A(q, t)$, 
 when $q$ is the start non-terminal.
@@ -1304,20 +1322,20 @@ and where $P' = Q'$ and $\bar\wei$ is defined by:
 
 \[
 \begin{array}{ll}
-\weii(\bar{q}, {\call{b}}, \bar{p}, a, \bar{q} q') = \wei(q', a, \varepsilon) & 
-\mathrm{for~all~} b \in \Omega_{>0}, \bar{p}\in P', a \in \Omega_0\\
+\weii(\bar{q}, {\call{c}}, \bar{p}, a, \bar{q} q') = \wei(q', c, a, \varepsilon) & 
+\mathrm{for~all~} c \in \Omega_{>0}, \bar{p}\in P', a \in \Omega_0\\
 %
-\weiei(\bar{q}, a, \bar{q} q') = \wei(q', a, \varepsilon) & 
+\weiei(\bar{q}, a, \bar{q} q') = \wei(q', \varepsilon, a, \varepsilon) & 
 \mathrm{for~all~} a \in \Omega_0\\
 %
-\weic(\bar{q}, {\call{b}}, \bar{p}, \call{b'}, \varepsilon, \bar{q}) = \one & %\wei(p', b, \bar{p}) & 
-\mathrm{for~all~} b \in \Omega_{>0},  \bar{p}\in P', b, b' \in \Omega_{>0}\\
+\weic(\bar{q}, {\call{c}}, \bar{p}, \call{c'}, \varepsilon, \bar{q}) = \wei(q', c, c', \bar{q}) &  
+\mathrm{for~all~} c, c' \in \Omega_{>0},  \bar{p}\in P'\\
 %
-\weiec(\bar{q}, \call{b}, \varepsilon, \bar{q}) = \one & %\wei(p', b, \bar{p}) & 
-\mathrm{for~all~} b \in \Omega_{>0}\\
+\weiec(\bar{q}, \call{c}, \varepsilon, \bar{q}) = \wei(q', \varepsilon, c, \bar{q}) & 
+\mathrm{for~all~} c \in \Omega_{>0}\\
 %
 %\weir: Q \times \Omegac \times P \times \Sigmar \times Q \to \Semiring & 
-\weir(\bar{q}, {\call{b}}, \bar{p}, {\return{b}}, \bar{p} q') = \wei(q', b, \bar{q}) & 
+\weir(\bar{q}, {\call{b}}, \bar{p}, {\return{b}}, \bar{p} q') = \one & 
 \mathrm{for~all~}  b \in \Omega_{>0}, \bar{p}\in P'\\
 %
 %\weie: Q \times \Omegar \times Q \to \Semiring & 
