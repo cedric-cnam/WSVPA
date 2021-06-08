@@ -1216,25 +1216,26 @@ by: %also called $\wei$ for simplicity,
 \]
 %
 \noindent
+where $q_1\ldots q_k$ is $\varepsilon$ if $k = 0$.
 The first case deals with a strict subtree, with a parent node labeled by $a$, 
-and the second case with a root tree.
-%
+and the second case is for a root tree.
+
+\noindent
 Every \SWTA %of Definition~\ref{def:SWTA} 
 defines a mapping 
-from trees of $\T(\Omega)$ into the weight values in~$\Semiring$,
-based on an intermediate function
-$\weight_A: Q \times (\Omega \cup \{ \varepsilon \}) \times \T(\Omega) \to \Semiring$
-defined as follows 
+from trees of $\T(\Omega)$ into~$\Semiring$, %the weight values in~$\Semiring$,
+based on the following intermediate function
+$\weight_A: Q \times (\Omega \cup \{ \varepsilon \}) \times \T(\Omega) \to \Semiring$ 
 \begin{equation}
-\begin{array}{rccl}
-\weight_A(q_0, a, t) & = & 
+%\begin{array}{rccl}
+\weight_A(q_0, a, t) =  % & = &
 %   \displaystyle\bigoplus_{q_1 \in Q} &
 %   \wei(q, \varepsilon, q_1) \otimes \weight_A(q_1, t)\\
- \displaystyle\bigoplus_{q_1 \ldots q_k \in Q^k} &
+ \displaystyle\bigoplus_{q_1 \ldots q_k \in Q^k} % &
               \wei(q_0, a, b, q_1 \ldots q_k ) 
    \otimes \displaystyle\bigotimes_{i=1}^{k}
            \weight_A(q_i, b, t_i)
-\end{array}
+%\end{array}
 \end{equation}
 where $q_0 \in Q$, $a \in \Omega_{>0} \cup \{ \varepsilon \}$ and 
 $t = b(t_1,\ldots, t_k) \in \T(\Omega)$,
@@ -1265,14 +1266,14 @@ $[a, b]\, q_0 := q_1 \ldots q_k$ if $k > 0$,
 and $[a]\, q_0 := b$ if $k = 0$. 
 In the first case, $b$ is a label of the rule, 
 and in the second case, it is a terminal symbol.
-And in both cases, $a$ is a constraint on the label of the 
-parent node in the derivation tree.
-This features of observation of parent's label  
+And in both cases, $a$ is a constraint on the label of rule applied 
+on the parent node in the derivation tree.
+This features of observing the parent's label  
 are useful in the case of infinite alphabet, 
 where it is not possible to memorize a label with the states.
 %
 %One can observe that 
-The weight of a labeled derivation tree $t$
+\noindent The weight of a labeled derivation tree $t$
 of the weighted CF grammar associated to~$A$ as above, 
 is $\weight_A(q, t)$, 
 when $q$ is the start non-terminal.
@@ -1317,41 +1318,45 @@ We build
 $A' = \< Q', P', \init', \bar{\wei}', \final' >$,
 %computing over $\hat\Omega = \Omegai \uplus \Omegac \uplus \Omegar$,
 where $Q' = \bigcup_{k=0}^{M} Q^k$ is the set of sequences of state symbols of $A$, 
-of length at most $M$, including the empty sequence denoted by $\varepsilon$, 
+of length at most $M$, including the empty sequence denoted by~$\varepsilon$, 
 and where $P' = Q'$ and $\bar\wei$ is defined by:
 
 \[
-\begin{array}{ll}
-\weii(\bar{q}, {\call{c}}, \bar{p}, a, \bar{q} q') = \wei(q', c, a, \varepsilon) & 
-\mathrm{for~all~} c \in \Omega_{>0}, \bar{p}\in P', a \in \Omega_0\\
+\begin{array}{lcll}
+\weii(q_0\, \bar{u}, {\call{c}}, \bar{p}, a, \bar{u}) & = & \wei(q_0, c, a, \varepsilon) & 
+\mathrm{for~all~} c \in \Omega_{>0}, a \in \Omega_0\\ %\bar{p}\in P', 
 %
-\weiei(\bar{q}, a, \bar{q} q') = \wei(q', \varepsilon, a, \varepsilon) & 
+\weiei(q_0\,\bar{u}, a, \bar{u}) & = & \wei(q_0, \varepsilon, a, \varepsilon) & 
 \mathrm{for~all~} a \in \Omega_0\\
 %
-\weic(\bar{q}, {\call{c}}, \bar{p}, \call{c'}, \varepsilon, \bar{q}) = \wei(q', c, c', \bar{q}) &  
-\mathrm{for~all~} c, c' \in \Omega_{>0},  \bar{p}\in P'\\
+\weic(q_0\,\bar{u}, {\call{c}}, \bar{p}, \call{d}, \bar{u}, \bar{q}) & = & \wei(q_0, c, d, \bar{q}) &  
+\mathrm{for~all~} c, d \in \Omega_{>0}\\ % \bar{p}\in P'
 %
-\weiec(\bar{q}, \call{c}, \varepsilon, \bar{q}) = \wei(q', \varepsilon, c, \bar{q}) & 
+\weiec(q_0\,\bar{u}, \call{c}, \bar{u}, \bar{q}) & = & \wei(q_0, \varepsilon, c, \bar{q}) & 
 \mathrm{for~all~} c \in \Omega_{>0}\\
 %
 %\weir: Q \times \Omegac \times P \times \Sigmar \times Q \to \Semiring & 
-\weir(\bar{q}, {\call{b}}, \bar{p}, {\return{b}}, \bar{p} q') = \one & 
-\mathrm{for~all~}  b \in \Omega_{>0}, \bar{p}\in P'\\
+\weir(\varepsilon, {\call{c}}, \bar{p}, {\return{c}}, \bar{p}) & = & \one & 
+\mathrm{for~all~}  c \in \Omega_{>0}\\ % \bar{p}\in P'
 %
 %\weie: Q \times \Omegar \times Q \to \Semiring & 
-\weier(\bar{p}, {\return{b}}, \bar{q}) = \zero &
-\mathrm{for~all~}  b \in \Omega_{>0}\\
+\weier(\bar{u}, {\return{c}}, \bar{q}) & = & \zero &
+\mathrm{for~all~}  c \in \Omega_{>0}
 \end{array}      
 \]
 \noindent
-It is sufficient to consider in $Q'$ only the prefixes of 
-sequences in transition with a non-null weight.
+All cases not matched by one of the above equations have a weight $\zero$, 
+for instance  %This is in particular the case of
+$\weir(\bar{u}, {\call{c}}, \bar{p}, {\return{d}}, \bar{q}) = \zero$
+if $c \neq d$
+or $\bar{u} \neq \varepsilon$
+or $\bar{q} \neq \bar{p}$.
+%
+%\noindent
+%It is sufficient to consider in $Q'$ only the prefixes of 
+%sequences in transition with a non-null weight.
 \qed
 \end{proof}
-
-
-
-
 
 
 \section{Symbolic Weighted Parsing}
