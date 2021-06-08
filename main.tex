@@ -1400,6 +1400,8 @@ As explained in Section~\ref{sec:trees},
 $A = \< Q, \init, \bar{\wei} >$ can be seen as a weighted regular tree grammar, 
 or a labeled weighted CF grammar whose derivation trees are in $\T(\Omega)$, 
 with weight defined by $A$.
+The purpose of the transducer $T$ is to measure a distance between input and output words, 
+\ie between the word $s$ and the sequence leaves of a derivation tree, in $\Omegai^*$.
 %that generates (weighted) trees by replacement of a state symbol~$q_0$ (non-terminal), 
 %by a tree $a(q_1,\ldots, q_k)$, where $k = \rank(a)$.
 %A replacement rule $q_0 \to a(q_1,\ldots, q_k)$, 
@@ -1485,18 +1487,21 @@ We follow a \emph{Bar-Hillel} construction, also called parsing by intersection.
 We first extend the \SWT $T$ over $\Sigma$, $\Omegai$, $\Semiring$, and $\bar\Phi$, 
 into a \SWT $T'$ over $\Sigma$ and $\hat\Omega$ (and the same semiring and label theory),
 such that for all $s \in \Sigma^*$, and $u \in {\hat\Omega}^*$, 
-$T'(s, u) = T(s, u|_{\Omegai})$. The transducer $T'$ simplify skips every symbol 
-$b \in {\hat\Omega} \setminus \Omegai$ in input, 
-with new transitions of the form $\wei_{01}(q, \varepsilon, b, q')$.
+$T'(s, u) = T(s, u|_{\Omegai})$. The transducer $T'$ simply skips every symbol 
+$b \in {\hat\Omega} \setminus \Omegai$, 
+by the addition to the transition of $T$,
+of new transitions of the form $\wei_{01}(q, \varepsilon, b, q')$.
 
 \noindent
 Then, given an input word $s \in \Sigma^*$, 
 we compute the \SWA $A_{T', s}$, using Proposition~\ref{prop:epsilon}.
 This automaton is such that for all $t \in \T(\Omega)$, 
-$A_{T', s}\bigl(\lin(t)\bigr) 
+\[ 
+   A_{T', s}\bigl(\lin(t)\bigr) 
  = T'\bigl(s, \lin(t)\bigr) 
  = T'\bigl(s, \lin(t)|_{\Omegai}\bigr) 
- = d(s, t)$.
+ = d(s, t).
+\]
 
 \noindent
 Next, we convert the input \SWTA $A$ over $\Omega$
