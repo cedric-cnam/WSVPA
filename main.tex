@@ -7,7 +7,7 @@
 %        (6 kinds of transitions).
 
 % default style article.cls
-\input{main-article}
+%\input{main-article}
 
 % Springer llncs style
 % https://www.springer.com/gp/computer-science/lncs/conference-proceedings-guidelines
@@ -16,11 +16,10 @@
 % EPTCS style
 % http://www.eptcs.org
 %\input{main-eptcs}
- 
 
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
+% LIPICS v.2021 style
+% https://submission.dagstuhl.de/documentation/authors
+\input{main-lipics}
 
 \usepackage{hyperref}
 %\usepackage[bookmarks,bookmarksnumbered,naturalnames,plainpages=false]{hyperref}
@@ -77,6 +76,8 @@
 %% algorithms
 %\usepackage{algorithm} 
 %\usepackage{program} 
+\usepackage[ruled,vlined]{algorithm2e} 
+
 
 %% allows for page break within arrays
 \usepackage{longtable}
@@ -624,13 +625,13 @@ for all $p_2\in P$ and $q_3 \in Q$,
 \wei'_1\bigl( \< p_1, q_2>, \< p_2, q_3>\bigr)
 \]
 and
-\[
+\(
 \final'(p_1, q_1) \opluseq 
 \displaystyle\bigoplus_{\Sigma} \wei_{10}(q_1, q_2) 
 \otimes \final'(p_1, q_2)
-\] 
+\) 
 \marginpar{\tiny proof correctness}
-\qed
+%\qed
 \end{proof}
 
 %The complexity of construction
@@ -1000,28 +1001,29 @@ that converges eventually to $b_\top$ and $b_\bot$.
 %$Q \times \{ \bot, \top \} \times Q$.
 
 
-\begin{algo}[best search for \SWVPA]\label{algo:Dijkstra}
-\textbf{initially} 
-let $\Q = (Q \times Q) \cup (Q \times P \times Q)$, %contains all 
-and let 
-$d_\bot(q_1, q_2) = d_\top(q_1, p, q_2) = \one$ if $q_1 = q_2$ and
-$d_\bot(q_1, q_2) = d_\top(q_1, p, q_2) = \zero$ otherwise.
+\begin{algorithm}
+\SetKw{Extract}{extract}
+\SetKw{Update}{update}
+
+\textbf{initially} let $\Q = (Q \times Q) \cup (Q \times P \times Q)$, %contains all 
+and let $d_\bot(q_1, q_2) = d_\top(q_1, p, q_2) = \one$ if $q_1 = q_2$ and $d_\bot(q_1, q_2) = d_\top(q_1, p, q_2) = \zero$ otherwise$\;$
 
 \smallskip\noindent
-\textbf{while} $\Q$ is not empty
+\While{$\Q \neq \emptyset$}{
 
-\noindent\quad
-\textbf{extract} $\< q_1, q_2>$ or $\< q_1, p, q_2>$ from $\Q$ 
+%\noindent\quad
+\Extract $\< q_1, q_2>$ or $\< q_1, p, q_2>$ from $\Q$
+%
+%\noindent\quad
+such that $d_\bot(q_1, q_2)$, resp. $\bigoplus_{c\in \Omegac} d_\top(q_1, p, q_2)(c)$, is minimal in $\Semiring$ wrt $\leq_\oplus$$\;$
 
-\noindent\quad
-such that $d_\bot(q_1, q_2)$, resp. $\bigoplus_{c\in \Omegac} d_\top(q_1, p, q_2)(c)$,
-is minimal in $\Semiring$ wrt $\leq_\oplus$.
-
-\noindent\quad 
+%\noindent\quad 
 %\textbf{for all} $q_0, q_3 \in Q$ 
-\textbf{update} $d_\bot$ with $\< q_1, q_2>$ or $d_\top$ with $\< q_1, p, q_2>$
-(Figure~\ref{fig:best-update}).
-\end{algo}
+\Update $d_\bot$ with $\< q_1, q_2>$ or $d_\top$ with $\< q_1, p, q_2>$ (Figure~\ref{fig:best-update}).$\;$
+}
+\caption{Best search for \SWVPA}
+\label{algo:Dijkstra}
+\end{algorithm}
 
 
 
@@ -1505,7 +1507,7 @@ This automaton is such that for all $t \in \T(\Omega)$,
 
 \noindent
 Next, we convert the input \SWTA $A$ over $\Omega$
-into a \SWVPA $A'$ over $\hat\Omega$, using Lemma~\ref{lem:SWTA}, 
+into a \SWVPA $A'$ over $\hat\Omega$, using Proposition~\ref{lem:SWTA}, 
 and we compute the \SWVPA $A_{T', s} \otimes A'$, 
 using Proposition~\ref{prop:SWVPA-product}.
 
@@ -1565,10 +1567,10 @@ with an on-the-fly automata construction.
 %% BIBLIO                                                                     %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\bibliographystyle{plain}
-%\bibliographystyle{plainurl} 
-\bibliographystyle{abbrv}
-%\bibliographystyle{splncs04}
-%\bibliographystyle{eptcs}
+%\bibliographystyle{abbrv}
+\bibliographystyle{plainurl}  % LIPICS
+%\bibliographystyle{splncs04} % LLNCS
+%\bibliographystyle{eptcs}    % EPTCS
 %\bibliography{generic}
 
 \bibliography{references}
