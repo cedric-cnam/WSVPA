@@ -136,6 +136,8 @@
 
 \def\SA{\textsf{sA}\xspace}
 \def\WA{\textsf{wA}\xspace}
+\def\SW{\textsf{sw}\xspace}
+\def\swM{\textsf{swM}\xspace}
 \def\SWT{\textsf{swT}\xspace}
 \def\SWA{\textsf{swA}\xspace}
 \def\SWTA{\textsf{swTA}\xspace}
@@ -285,7 +287,12 @@ $\wei_{11}: Q \times Q \to \Phi_{\Sigma, \Delta}$.
 \end{definition}
 %
 \noindent
-For convenience, we shall sometimes present transition functions 
+We call \emph{number of transitions} of $T$ the number of pairs of states 
+$q, q' \in Q$ such that $\wei_{10}$ or $\wei_{01}$ or $\wei_{11}$
+is not the constant $\zero$.
+%
+\noindent
+For convenience, we shall sometimes present transitions 
 as functions of  
 $Q \times (\Sigma \cup \{ \varepsilon \}) \times (\Delta \cup \{ \varepsilon \}) \times Q \to \Semiring$,
 overloading the function names,
@@ -304,34 +311,32 @@ such that, for all $q, q' \in Q$, $a \in \Sigma$,  $b \in \Delta$,
 \noindent 
 % The symbolic-weighted transducer
 The \SWT $T$ computes on pairs of words $\< s, t> \in \Sigma^* \times \Delta^*$,
-$s$ and $t$, being respectively called input and output word.
+$s$ and $t$, being respectively called \emph{input} and \emph{output} word.
 % \noindent
 More precisely, $T$ defines a mapping 
 from $\Sigma^* \times \Delta^*$ into~$\Semiring$,
 based on an intermediate function $\weight_T$
-defined recursively for every states $q, q' \in Q$, 
-and every strings $\< s, t> \in \Sigma^* \times \Delta^* \setminus \{ \< \varepsilon, \varepsilon >\}$ by:
+defined recursively, for every states $q, q' \in Q$, 
+and every strings $\< s, t> \in \Sigma^* \times \Delta^* \setminus \{ \< \varepsilon, \varepsilon >\}$, by:
 %$a \in \Sigma$, $u \in \Sigma^*$, $b\in \Delta$, $v\in \Delta^*$, by:
 %
 \begin{align}
-\weight_T(q, \varepsilon, \varepsilon, q)  & = \one \label{eq:SWT-weight}\\ %\final(q)\\
-\weight_T(q, \varepsilon, \varepsilon, q') & = \zero \quad \mathrm{if~} q \neq q'\nonumber\\
-%\weight_T(q, au, \varepsilon, q') & = \displaystyle\bigoplus_{q'' \in Q} 
-%    \wei_{10}(q, a, \varepsilon, q'') \otimes \weight_T(q'', u, \varepsilon, q')\nonumber\\
-%\weight_T(q, \varepsilon, bv, q') & = \displaystyle\bigoplus_{q'' \in Q} 
-%    \wei_{01}(q, \varepsilon, b, q'') \otimes \weight_T(q'', \varepsilon, v, q')\nonumber\\
+%\weight_T(q, \varepsilon, \varepsilon, q)  & = \one \label{eq:SWT-weight}\\ %\final(q)\\
+%\weight_T(q, \varepsilon, \varepsilon, q') & = \zero \quad \mathrm{if~} q \neq q'\nonumber\\
+\weight_T(q, \varepsilon, \varepsilon, q')  & = \one 
+ \quad \mathrm{if~} q = q' \mathrm{~and~} \zero \mathrm{~otherwise} \label{eq:SWT-weight}\\ 
 \weight_T(q, s, t, q') & = \displaystyle\bigoplus_{\begin{array}{c}
-                                                   \scriptstyle q'' \in Q\\
+                                                   \scriptstyle q'' \in Q\\[-1ex]
                                                    \scriptstyle s = au,\, a \in \Sigma
                                                    \end{array}} 
     \wei_{10}(q, a, \varepsilon, q'') \otimes \weight_T(q'', u, t, q')\nonumber\\
                     & \oplus \displaystyle\bigoplus_{\begin{array}{c}
-                                                     \scriptstyle q'' \in Q\\ 
+                                                     \scriptstyle q'' \in Q\\[-1ex]
                                                      \scriptstyle t = bv,\, b \in \Delta\\
                                                      \end{array}} 
     \wei_{01}(q, \varepsilon, b, q'') \otimes \weight_T(q'', s, v, q')\nonumber\\
                     & \oplus \displaystyle\bigoplus_{\begin{array}{c}
-                                                     \scriptstyle q'' \in Q\\
+                                                     \scriptstyle q'' \in Q\\[-1ex]
                                                      \scriptstyle s = au,\, t = bv\\
                                                      \end{array}} 
     \wei_{11}(q, a, b, q'') \otimes \weight_T(q'', u, v, q')\nonumber
@@ -343,7 +348,7 @@ an empty sum with $\bigoplus$ is equal to~$\zero$.
 Intuitively, using a transition $\wei_{ij}(q, a, b, q')$ means for $T$:
 when reading respectively $a$ and $b$ at the current positions in the input and output words, 
 increment the current position in the input word if and only if $i = 1$, 
-and in the output word iff $j = 1$ (otherwise, do not change it),
+and in the output word iff $j = 1$, %(otherwise, do not change it),
 and change state from $q$ to $q'$.
 When $a = \varepsilon$ (resp. $b = \varepsilon$), the current symbol 
 in the input (resp. output) is not read.
@@ -355,7 +360,7 @@ in the input (resp. output) is not read.
 %order to compare input and output symbols.
 %which cannot be stored in the finite memory of the transducer.
 %
-Since $\zero$ is absorbing for~$\otimes$ in~$\Semiring$,
+Since~$\zero$ is absorbing for~$\otimes$ in~$\Semiring$,
 one term $\wei_{ij}(q, a, b, q'')$ equal to $\zero$ in the above expression 
 will be ignored in the sum, meaning that there is no possible transition
 from state $q$ into state $q'$ while reading $a$ and $b$.
@@ -388,7 +393,7 @@ The cost of a sequence of such operations transforming $s$ into $t$,
 is the product, with $\otimes$, of the individual costs of the operations involved;
 And the distance between $s$ and $t$ is the sum, with $\oplus$,
 of all possible products.
-
+%
 \medskip\noindent
 %Let $\< s, t> \in \Sigma^* \times \Delta^*$, with $s = s_1\ldots s_n$, and $t = t_1\ldots t_m$. 
 Formally, the weight associated by $T$ to $\< s, t> \in \Sigma^* \times \Delta^*$ is: 
@@ -639,7 +644,7 @@ and
 The construction time and size for $B_{T, A}$ are $O(\| T \|^3 . \| A \|^2)$,
 where the sizes $\| T \|$ and $\| A \|$ are their number of states.
 %of~$T$ is its number of states $|Q|$.
-
+\marginpar{\tiny revise with nb of tr. and states}
 
 
 \begin{corollary} \label{cor:epsilon}
@@ -743,7 +748,7 @@ overloading their names: % for simplicity:
 %
 \weiei: Q \times \Omegai \times Q \to \Semiring & 
 \weiei(q, a, q') = \phi_\mathsf{i}(a) &
-\mathrm{where~} \phi_\mathsf{i} = \weiei(q, q').\\[2pt]
+\mathrm{where~} \phi_\mathsf{i} = \weiei(q, q').\\
 %
 \weic: Q \times \Omegac \times P \times  \Omegac \times P \times Q \to \Semiring & 
 \weic(q, c, p, \call{c'}, p', q') = \eta_\mathsf{cc}(c, \call{c'}) & 
@@ -751,7 +756,7 @@ overloading their names: % for simplicity:
 %
 \weiec: Q \times \Omegac \times P \times Q \to \Semiring & 
 \weiec(q, {\call{c}}, p, q') = \phi_\mathsf{c}({\call{c}}) &
-\mathrm{where~} \phi_\mathsf{c} = \weiec(q, p, q').\\[2pt]
+\mathrm{where~} \phi_\mathsf{c} = \weiec(q, p, q').\\
 %
 \weir: Q \times \Omegac \times P \times \Omegar \times Q \to \Semiring & 
 \weir(q, {\call{c}},  p, {\return{r}}, q') = \eta_\mathsf{cr}({\call{c}},  {\return{r}}) & 
@@ -765,27 +770,27 @@ overloading their names: % for simplicity:
 
 \noindent
 The intuition is the following for the above transitions.
-
+%
 \noindent
 $\weii$ and $\weiei$ both read an input internal symbol $a$ and change state from $q$ to $q'$, 
 without changing the stack. 
 Moreover, $\weii$ reads a pair made of 
-${\call{c}} \in \Omegac$ and $p \in P$ at the top of the stack 
+${\call{c}} \in \Omegac$ and $p \in P$ on the top of the stack 
 ($c$ is compared to $a$ by the weight function $\eta_\mathsf{ci} \in \Phici$)
-and $\weiei$ applies if and only if the stack is empty.
-
+and $\weiei$, $\weiec$, $\weier$ apply if and only if the stack is empty.
+%
 \noindent
 $\weic$ and $\weiec$ read the input call symbol $\call{c}'$, 
 push it to the stack along with $p'$, and change state from $q$ to to $q'$.
 Moreover, $\weic$ reads ${\call{c}}$ and $p$ at the top of the stack 
-($c$ is compared to $c'$),
-and $\weiec$ applies iff the stack is empty.
-
+($c$ is compared to $c'$).
+%and $\weiec$ applies iff the stack is empty.
+%
 \noindent
 $\weir$ and $\weier$ read the input return symbol $\return{r}$, and change state from $q$ to to $q'$.
 Moreover, $\weir$ reads and pop from stack a pair made of $\call{c}$ and $p$, 
-($\call{c}$ is compared to $\return{r}$),
-and $\weier$ applies iff the stack is empty.
+($\call{c}$ is compared to $\return{r}$).
+%and $\weier$ applies iff the stack is empty.
 %In this case, the weight function $\phi_\mathsf{r}$ 
 %computes a value of matching between the call and return symbols $c$ and $r$.
 %This value might be set to $\zero$ in order to express that the symbols do not match.
@@ -793,8 +798,9 @@ and $\weier$ applies iff the stack is empty.
 Formally, the transitions of the automaton~$A$ are defined
 in term of %a weight value computed by 
 an intermediate function $\weight_A$, like in Section~\ref{sec:SWT}.
-In the case of a pushdown automaton, a configuration, denoted by $q[\gamma]$ 
-is composed of a state $q \in Q$ 
+%In the case of a pushdown automaton, 
+A configuration, denoted by $q[\gamma]$, 
+is here composed of a state $q \in Q$ 
 and a stack content $\gamma \in \Gamma^*$, 
 where $\Gamma = \Omegac \times P$.
 Hence, $\weight_A$ is a function from 
@@ -802,10 +808,11 @@ $[Q \times \Gamma^*] \times \Omega^* \times [Q \times \Gamma^*]$ into~$\Semiring
 (the empty stack is denoted by $\bot$). 
 %
 \begin{align}
-%\begin{array}[t]{rcl}
-\weight_A\bigl(\config{q}{\bot}, \varepsilon, \config{q}{\bot}) & = \one\label{eq:SWVPA-weight}\\
-\weight_A\bigl(\config{q}{\bot}, \varepsilon, \config{q'}{\gamma}) & = \zero 
-\mathrm{~if~} q \neq q'\nonumber\\
+%\weight_A\bigl(\config{q}{\bot}, \varepsilon, \config{q}{\bot}) & = \one\label{eq:SWVPA-weight}\\
+%\weight_A\bigl(\config{q}{\bot}, \varepsilon, \config{q'}{\gamma}) & = \zero 
+%\mathrm{~if~} q \neq q'\nonumber\\
+\weight_A\bigl(\config{q}{\bot}, \varepsilon, \config{q'}{\bot}) & = \one
+\mathrm{~if~} q = q' \mathrm{~and~} \zero \mathrm{~otherwise}\label{eq:SWVPA-weight}\\
 \weight_A\bigl(\configup{q}{\<{\call{c}}, p>\stackup\gamma}, a\, u, 
                \config{q'}{\gamma'}\bigr) & =  
  {\displaystyle\bigoplus_{q'' \in Q}} \weii(q, c, p, a, q'') 
@@ -820,7 +827,7 @@ $[Q \times \Gamma^*] \times \Omega^* \times [Q \times \Gamma^*]$ into~$\Semiring
 \weight_A\bigl(\configup{q}{\<{\call{c}}, p>\stackup\gamma}, {\call{c}'}\, u, 
                \config{q'}{\gamma'}\bigr) & =  
  {\displaystyle\bigoplus_{\begin{array}{c}
-                          \scriptstyle q'' \in Q\\[-2pt]
+                          \scriptstyle q'' \in Q\\[-1ex]
                           \scriptstyle p' \in P
                           \end{array}}}
  \weic\bigl(q, {\call{c}}, p, {\call{c}'}, p', q''\bigr) 
@@ -830,7 +837,7 @@ $[Q \times \Gamma^*] \times \Omega^* \times [Q \times \Gamma^*]$ into~$\Semiring
 \weight_A\bigl(\config{q}{\bot}, {\call{c}}\, u, 
                \config{q'}{\gamma'}\bigr) & =  
  {\displaystyle\bigoplus_{\begin{array}{c}
-                          \scriptstyle q'' \in Q\\[-2pt]
+                          \scriptstyle q'' \in Q\\[-1ex]
                           \scriptstyle p \in P
                           \end{array}}}
   \weiec(q, {\call{c}}, p, q'') 
@@ -849,7 +856,6 @@ $[Q \times \Gamma^*] \times \Omega^* \times [Q \times \Gamma^*]$ into~$\Semiring
  {\displaystyle\bigoplus_{q'' \in Q}} \weier(q, {\return{r}}, q'') 
   \otimes \weight_A\bigl(\config{q''}{\bot}, u, 
                          \config{q'}{\gamma'}\bigr)\nonumber
-%\end{array}
 \end{align}
 %
 % and ${\call{c}}\, p\stacksep \gamma$ 
@@ -871,6 +877,7 @@ A(s)  =
 
 \begin{example}
 structured words with timed symbols...
+\marginpar{\tiny todo}
 intro language of music notation? (markup = time division, leaves = events etc)
 \end{example}
 
@@ -990,17 +997,6 @@ and may pop $\< c', p'>$ later, following the fifth case of \eqref{eq:SWVPA-weig
 % However, it is possible to apply the two first cases 
 % (internal symbol or call symbol, with a push on the top of $\top$).
 
-Algorithm~\ref{algo:Dijkstra}
-constructs iteratively markings 
-$d_\bot : Q \times Q \to \Semiring$ and 
-$d_\top : Q \times P \times Q \to \Phic$
-%of the triplets $\<q, \sigma, q'>$ 
-%of states of $A$ by weight values in $\Semiring$, 
-that converges eventually to $b_\top$ and $b_\bot$.
-%It uses for that purpose a priority queue $P$ containing triplets of 
-%$Q \times \{ \bot, \top \} \times Q$.
-
-
 \begin{algorithm}
 \SetKw{Extract}{extract}
 \SetKw{Update}{update}
@@ -1025,6 +1021,15 @@ such that $d_\bot(q_1, q_2)$, resp. $\bigoplus_{c\in \Omegac} d_\top(q_1, p, q_2
 \label{algo:Dijkstra}
 \end{algorithm}
 
+Algorithm~\ref{algo:Dijkstra}
+constructs iteratively markings 
+$d_\bot : Q \times Q \to \Semiring$ and 
+$d_\top : Q \times P \times Q \to \Phic$
+%of the triplets $\<q, \sigma, q'>$ 
+%of states of $A$ by weight values in $\Semiring$, 
+that converges eventually to $b_\top$ and $b_\bot$.
+%It uses for that purpose a priority queue $P$ containing triplets of 
+%$Q \times \{ \bot, \top \} \times Q$.
 
 
 \begin{figure}
@@ -1090,13 +1095,14 @@ The infinite sums in the updates of $d$ in Algorithm~\ref{algo:Dijkstra},
 Figure~\ref{fig:best-update}
 are well defined
 since~$\Semiring$ is complete.
+\marginpar{\tiny complete} 
 ** effectively computable by hypothese that the label theory is effective**
 The algorithm performs $2.|Q|^2$ iterations until $P$ is empty, 
 and each iteration has a time complexity $O(|Q|^2 . |P|)$.
 This gives a time complexity $O(|Q|^4 . |P|)$. 
 It can be reduced by implementing $P$ as a priority queue, 
-prioritized by the value returned by $d$
-***complete***. %$|Q|^3.\log(|Q|^2)$
+prioritized by the value returned by $d$.
+%$|Q|^3.\log(|Q|^2)$
 
 The correctness of Algorithm~\ref{algo:Dijkstra} 
 is ensured by the invariant expressed in the following lemma.
@@ -1430,9 +1436,11 @@ in $\hat\Omega \setminus \Omegai$.
 Using this notation
 and the tree linearization operator defined in Section~\ref{sec:trees}, 
 $d$ is defined by:
-\begin{equation}
+%\begin{equation}
+\(
 d(s, t) = T\bigl(s, \lin(t)|_\Omegai \bigr)  \mathrm{~for~} s \in \Sigma^*, t\in \T(\Omega)
-\end{equation}
+\).
+%\end{equation}
 
 \noindent 
 \emph{Symbolic weighted parsing} is the problem, 
@@ -1516,12 +1524,12 @@ It remains to compute a best nested-word $w \in {\hat\Omega}^*$
 using the best-search procedure of Proposition~\ref{th:best-search},
 and convert it into a best tree in $\T(\Omega)$ in order to solve SW parsing
 for~$T$, $A$ and~$s$.
-\qed  
+%\qed  
 \end{proof}
 
-\paragraph{Application to Automated Music Transcription.}
+%\paragraph{Application to Automated Music Transcription.}
 %\input{transcription}
-...
+%...
 
 
 

@@ -24,12 +24,12 @@ of data streams or serialization of structured documents
 or for processing timed execution traces~\cite{Bouyer03algebraic}.
 % algebraic definition of a class of data languages 
 % (notion of monoid recognizability, based on registers, comparable to Bojancszik et al. data words)
-The latter case is related to a case study that motivated the present work: 
+The latter is related to a case study that motivated the present work: 
 automated music transcription.
 In this problem, a symbolic representation of a music performance, % a symbolic representation of a music performance 
 in the form of a sequence of timed musical events, % timestamped
-is converted into a structured score in Common Western Music Notation.
-It can therefore be expressed as a parsing problem~\cite{foscarin:hal-01988990}, 
+is converted into a structured score in Common Western Music Notation~\cite{Gould11Notation}.
+It can therefore be stated as a parsing problem~\cite{foscarin:hal-01988990}, 
 over an infinite alphabet of timed events.
 
 Various extensions of language models for handling infinite alphabets have been studied.
@@ -38,6 +38,7 @@ For instance, some automata with memory extensions
 allow restricted storage and comparison of input symbols, 
 %and correspond with logics, 
 (see~\cite{Segoufin06csl} for a survey),
+\marginpar{\tiny register: skip refs and details, add Mikolaj}
 with pebbles for marking positions~\cite{NevenSchwentickVianu04FSMinfinite}, 
 registers~\cite{KaminskiFrancez94}, 
 or %computations in 2 steps
@@ -82,8 +83,8 @@ by summing the weights of the possibly several (in general exponentially many) A
 associated to a given input word.
 Typically, $\oplus$ will select the best of two weight values.
 %Intuitively,~$\oplus$ selects, or ranking, the syntax trees.
-The weight domain, equipped with these two operators is assumed, at minima, 
-to form a \emph{semiring} %$\Semiring$ 
+The weight domain, equipped with these two operators shall be, at minima, 
+a \emph{semiring} %$\Semiring$ 
 where $\oplus$ can be extended to infinite sums, 
 %\cite{Eilenberg74automata}
 such as the Viterbi semiring and the tropical min-plus algebra, see Figure~\ref{fig:semirings}. 
@@ -102,16 +103,16 @@ such as the Viterbi semiring and the tropical min-plus algebra, see Figure~\ref{
 %of parsing of words over infinite input alphabet.
 
 In this paper, we present a uniform framework for weighted parsing over infinite input alphabets.
-It is based on symbolic weighted  (SW) finite states language models generalizing 
-both~\SA, with functions in an arbitrary semiring instead of Boolean guards, 
-and~\WA, by handling infinite alphabets -- Figure~\ref{fig:hierarchy}.
+It is based on \emph{symbolic weighted} finite states language models (\swM), generalizing 
+both~\SA, with functions into an arbitrary semiring instead of Boolean guards, 
+and~\WA, by handling infinite alphabets, see Figure~\ref{fig:hierarchy}.
 %***
 %some weighted language models
 %model of weighted CFG 
 %computing on words over infinite input alphabets %sets of terminal symbol
 %- but with finite sets of states and transitions rules. 
 % non-terminals and production rules).
-In the transition rules of SW models, input symbols appear as variables %(parameters)
+In the transition rules of \swM models, input symbols appear as variables %(parameters)
 and the weight associated to a transition rule is a function of these variables.
 %
 \begin{figure}
@@ -180,22 +181,22 @@ with a visibly restriction~\cite{AlurMadhusudan09nested} (\SWVPA).
 The latter model of automata computes on \emph{nested words}~\cite{AlurMadhusudan09nested}, 
 a structured form of words parenthesized with markup symbols, 
 corresponding to a linearization of trees.
-In the context of parsing, they are used here to represent (weighted) AST of CF grammars.
+In the context of parsing, they can represent (weighted) AST of CF grammars.
 More precisely, a \SWVPA $A$ associates a weight value $A(t)$ % \in \Semiring$ 
 to a given a nested word $t$, which is the linearization of an AST. %representing a parse tree.
 %
 On the other hand, 
 a \SWT is used to define a distance $T(s, t)$ between two finite words $s$ and $t$
-over an infinite alphabet, following~\cite{Mohri03EDWA}.
+over infinite alphabets. % following~\cite{Mohri03EDWA}.
 Then, the \emph{SW-parsing} problem aims at %computing 
 finding $t$ minimizing 
-$T(s, t) \otimes A(t)$ (\wrt the ranking defined by $\oplus$)
--- this value is called the distance between $s$ and $A$ in~\cite{Mohri03EDWA}.
+$T(s, t) \otimes A(t)$ (\wrt the ranking defined by $\oplus$).
+The latter value is called the distance between $s$ and $A$ in~\cite{Mohri03EDWA}.
 %
-Similarly to weighted-parsing 
+Like weighted-parsing 
 methods~\cite{Goodman99SemiringParsing,Nederhof03weightedParsing,MorbitzVogler19weighted-parsing}, 
 our approach proceeds in two steps, 
-based on properties of the SW models. 
+based on properties of the \swM. 
 The first step is an intersection 
 (Bar-Hillel construction~\cite{GruneJacobs08parsing}) 
 \marginpar{\tiny chap. intersection in~\cite{GruneJacobs08parsing}} 
@@ -232,7 +233,7 @@ generalizing the corresponding classes of symbolic and weighted models,
 % a framework for parsing over infinite alphabets, 
 and ($iii$)~a uniform framework (Section~\ref{sec:parsing}) for parsing over infinite alphabets, 
 the keys to which are 
-($iii.a$)~the \SWT-based definition of generic edit distances between input and output words,
+($iii.a$)~the \SWT-based definition of generic edit distances between input and output (yield) words,
 and ($iii.b$)~the use in this context of nested words, and \SWVPA, 
 instead of syntax trees and grammars. %(\S~\ref{sec:trees}).
 %

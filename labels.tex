@@ -103,20 +103,19 @@ When the semiring $\Semiring$ is complete,
 let us consider the following operators on the functions of a label theory
 (we use overloading to simplify notations):
 \[
-\begin{array}{clclcrcl}
-\bigoplus_\Sigma : 
-  & \Phi_\Sigma & \to & \Semiring, & \  
-  & \phi & \mapsto & \displaystyle\bigoplus_{a \in \Sigma} \phi(a)\\
+\begin{array}{ll}
+\bigoplus_\Sigma : \Phi_\Sigma \to \Semiring,\ 
+  \phi \mapsto \displaystyle\bigoplus_{a \in \Sigma} \phi(a)\\
 \bigoplus^1_\Sigma : 
-  & \Phi_{\Sigma,\Delta} & \to & \Phi_\Delta, & 
-  & \eta & \mapsto & \bigl( y \mapsto \displaystyle\bigoplus_{a \in \Sigma} \eta(a, y) \bigr)\\
+  \Phi_{\Sigma,\Delta} \to \Phi_\Delta,\ 
+  \eta \mapsto \bigl( y \mapsto \displaystyle\bigoplus_{a \in \Sigma} \eta(a, y) \bigr) &
 \bigoplus^2_\Delta : 
-  & \Phi_{\Sigma,\Delta} & \to & \Phi_\Sigma, & 
-  & \eta & \mapsto & \bigl( x \mapsto \displaystyle\bigoplus_{b \in \Delta} \eta(x, b) \bigr)\\
+  \Phi_{\Sigma,\Delta} \to \Phi_\Sigma,\ 
+  \eta \mapsto \bigl( x \mapsto \displaystyle\bigoplus_{b \in \Delta} \eta(x, b) \bigr)\\
 \end{array}
 \]
 %
-Similarly as for the notation of product and sum of functions above, 
+Similarly as in the case of the notation of product and sum of functions above, 
 the superscripts in $\bigoplus^1_\Sigma$ and $\bigoplus^2_\Sigma$
 shall be reserved to the ambiguous case of $\Phi_{\Sigma,\Sigma}$,
 in order to to distinguish between the first and the second argument.
