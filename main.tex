@@ -147,8 +147,6 @@
 \def\mei{\mathsf{m}}
 \def\init{\mathsf{in}}
 \def\final{\mathsf{out}}
-\newcommand{\call}[1]{\ensuremath #1} %{\ensuremath \langle_{#1}}
-\newcommand{\return}[1]{\ensuremath #1} %{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
 \def\Omegai{{\Omega_\mathsf{i}}}
 \def\Omegac{{\Omega_\mathsf{c}}}
 \def\Omegar{{\Omega_\mathsf{r}}}
@@ -177,6 +175,11 @@
 \newcommand{\ioi}[1]{\mathsf{ioi}({#1})}
 \newcommand{\rank}{\mathsf{rk}}
 \newcommand{\lin}{\mathsf{lin}}
+
+\newcommand{\call}[1]{\ensuremath #1} %{\ensuremath \langle_{#1}}
+\newcommand{\return}[1]{\ensuremath #1} %{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
+\newcommand{\ccall}[1]{\ensuremath \langle_{#1}}
+\newcommand{\creturn}[1]{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
 
 
 %\sloppy
@@ -225,12 +228,12 @@
 
 
 
-\subsection{Semirings} 
+\paragraph*{Semirings} 
 \label{section:semiring}\label{sec:semiring}
 \input{semiring}
 
 
-\subsection{Label Theory}
+\paragraph*{Label Theory}
 \label{section:symbols}
 \input{labels}
 
@@ -258,7 +261,7 @@ that takes the input and output symbols as parameters.
 These functions are similar to the guards of symbolic automata~\cite{dAntoniVeanes17CAV,dAntoni21CACM},
 but they can return values in an generic semiring, 
 whereas the latter guards are restricted to the Boolean semiring.
-
+%
 
 %\subsection{Definitions} \label{sec:SWTdef}\label{sec:SWAdef}
 %(SWT)
@@ -679,13 +682,13 @@ The model presented in this section generalizes Symbolic VPA~\cite{dAntonyAlur14
 from Boolean semirings to arbitrary semiring weight domains.
 It will compute on nested words over infinite alphabets, 
 associating to every such word a weight value. 
-Nest words are able to describe structures of labeled trees, 
+Nested words are able to describe structures of labeled trees, 
 and in the context of parsing, they will be useful to 
-represent parse trees.
+represent AST. % parse trees.
 
-
-
-\subsection{Definition}\label{se:SWVPA-def}
+%\subsection{Definition}
+\noindent
+\label{sec:SWVPA-def}
 Let $\Omega$ be a countable alphabet 
 %finite (large) or infinite,
 that we assume partitioned into three 
@@ -893,8 +896,8 @@ $\weiei = \wei_1$ and all the other functions
 of~$\bar\wei$ are the constant~$\zero$.
 
 
-
-\subsection{Properties}
+%\subsection{Properties}
+\medskip\noindent
 Like VPA and symbolic VPA, 
 the class of \SWVPA is closed under the binary operators of the underlying semiring.
 %
@@ -914,8 +917,9 @@ as in the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 \end{proof}
 
 
-\subsection{Best Search} 
+%\subsection{Best Search} 
 \label{sec:best}\label{sec:search}
+\noindent
 %**hypotheses**
 Let us assume that the semiring~$\Semiring$ is
 commutative, bounded, and complete,  
@@ -941,10 +945,10 @@ We propose a Dijkstra algorithm computing, for a $\SWVPA$ $A$
 over~$\Omega$, $\Semiring$ and~$\bar\Phi$, 
 the minimal weight %\wrt~$\leq_\oplus$, 
 for a word in~$\Omega^*$.
-
+%
 \noindent
-More precisely, 
-let $b_\bot : Q \times Q \to \Semiring$ be the function:
+%More precisely, 
+Let $b_\bot : Q \times Q \to \Semiring$ be such that: %the function:
 %
 \begin{equation}\label{eq:bbot}
   b_\bot(q, q') = \bigoplus_{s\in \Omega^*} 
@@ -953,7 +957,7 @@ let $b_\bot : Q \times Q \to \Semiring$ be the function:
 \end{equation}
 %
 Since $\Semiring$ is complete, the infinite sum in \eqref{eq:bbot} is well defined,
-and, roviding that $\Semiring$ is total, it is the minimum in $\Omega^*$,
+and, providing that $\Semiring$ is total, it is the minimum in $\Omega^*$,
 \wrt~$\leq_\oplus$, % this ordering.
 of the fonction 
 $s \mapsto \weight_A(\config{q}{\sigma}, s, \config{q'}{\sigma})$.
@@ -972,21 +976,21 @@ and stack symbol $p \in P$: %and $\sigma \in \{ \bot, \top \}$,
 \begin{equation}\label{eq:btop}
   b_\top(q, p, q') : c \mapsto \bigoplus_{s\in \Omega^*} 
   \textstyle
-  \weight_A\bigl(\configup{q}{\< c, p> \stackup \top }, s, \configup{q'}{\<c, p> \stackup \top}\bigr). 
+  \weight_A\bigl(\configup{q}{\< c, p> \stackup \top }, s, \configup{q'}{\<c, p> \stackup \top}\bigr)
 \end{equation}
 %
 Intuitively, the function defined in \eqref{eq:btop}
-associateds to $c \in \Omegac$ 
+associates to $c \in \Omegac$ 
 the minimum weight of a computation of $A$
 starting in state $q$ with a stack 
-$c p \cdot \gamma \in \Gamma^+$ 
+$\<c, p> \cdot \gamma \in \Gamma^+$ 
 and ending in state $q'$ with the same stack,
-such that the computation does pop 
+such that the computation does not pop 
 the pair made of $c$ and $p$ at the top of this stack,
 but may read these symbols.
 Moreover, $A$ may push another pair $\< c', p'>$ %call symbols 
-on the top of $c p \cdot \gamma$,
-following the the third case of 
+on the top of $\<c, p> \cdot \gamma$,
+following the third case of 
 in the definition \eqref{eq:SWVPA-weight} of $\weight_A$,
 and may pop $\< c', p'>$ later, following the fifth case of \eqref{eq:SWVPA-weight} (return symbol). 
 %However, it cannot apply one of the two last cases (return symbol and empty stack)
@@ -1002,7 +1006,8 @@ and may pop $\< c', p'>$ later, following the fifth case of \eqref{eq:SWVPA-weig
 \SetKw{Update}{update}
 
 \textbf{initially} let $\Q = (Q \times Q) \cup (Q \times P \times Q)$, %contains all 
-and let $d_\bot(q_1, q_2) = d_\top(q_1, p, q_2) = \one$ if $q_1 = q_2$ and $d_\bot(q_1, q_2) = d_\top(q_1, p, q_2) = \zero$ otherwise$\;$
+and let $d_\bot(q_1, q_2) = d_\top(q_1, p, q_2) = \one$ 
+if $q_1 = q_2$ and $d_\bot(q_1, q_2) = d_\top(q_1, p, q_2) = \zero$ otherwise$\;$
 
 \smallskip\noindent
 \While{$\Q \neq \emptyset$}{
@@ -1099,7 +1104,8 @@ since~$\Semiring$ is complete.
 ** effectively computable by hypothese that the label theory is effective**
 The algorithm performs $2.|Q|^2$ iterations until $P$ is empty, 
 and each iteration has a time complexity $O(|Q|^2 . |P|)$.
-This gives a time complexity $O(|Q|^4 . |P|)$. 
+\marginpar{\tiny detail with nb tr. and states}
+That gives a time complexity $O(|Q|^4 . |P|)$. 
 It can be reduced by implementing $P$ as a priority queue, 
 prioritized by the value returned by $d$.
 %$|Q|^3.\log(|Q|^2)$
@@ -1122,11 +1128,11 @@ $d_\top(q_1, p, q_2) =  b_\top(q_1, p, q_2)$,
 For computing the minimal weight of a computation of $A$, we use the fact that,
 at the termination of Algorithm~\ref{algo:Dijkstra}, %it holds that,
 %There exist $q_1, q_2 \in Q$
-\[
+\(
   {\displaystyle \bigoplus_{s \in \Omega^*} A(s)} = 
   {\displaystyle\bigoplus_{q, q' \in Q}} \textstyle
   \mathsf{in}(q) \mathop{\otimes} d_\bot(q, q') \mathop{\otimes} \mathsf{out}(q').
-\]
+\)
 
 %\medskip
 \noindent
@@ -1138,14 +1144,246 @@ we require the additional property of convexity of weight functions.
 For a \SWVPA $A$ 
 over $\Omega$, 
 $\Semiring$ commutative, bounded, total and complete, %semiring 
-and $\bar\Phi$ effective and $k$-convex, % label theory,
-one can construct in PTIME a word $s \in \Omega^*$ 
-such that $A(s)$ is minimal \wrt the natural ordering for $\Semiring$. 
+and $\bar\Phi$ effective, %and $k$-convex, % label theory,
+one can construct in PTIME a word $t \in \Omega^*$ 
+such that $A(t)$ is minimal \wrt the natural ordering for $\Semiring$. 
 \end{proposition} 
 
 
 
-\subsection{Nested-Words and Parse-Trees}
+
+
+\section{Symbolic Weighted Parsing}
+\label{sec:parsing}
+%% see parse-tree.tex for a definition with parse tree (instead of nested words)
+
+Let us now apply the models and results of the previous sections %in order to define 
+to the problem of parsing over infinite alphabet. %appropriate
+%
+%\subsection{Definition}
+%
+Let~$\Sigma$ be a countable input alphabet, 
+and~$\Omega = \Omegai \uplus \Omegac \uplus \Omegar$ be a countable output alphabet.
+%
+Let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a 
+commutative, bounded, and complete \marginpar{\tiny total?} semiring  
+and let $\bar\Phi$ be an effective label theory over $\Semiring$,
+containing $\Phi_\Sigma$, $\Phi_{\Sigma, \Omegai}$, as well as
+$\Phii$, $\Phic$, $\Phir$, $\Phicr$
+(following the notations of Section~\ref{sec:SWVPA-def}).
+%
+\noindent
+We assume given the following input:
+\begin{description}
+\item[--] a \SWT $T$ over $\Sigma$, $\Omegai$, $\Semiring$, and $\bar\Phi$, 
+defining a measure %between words 
+$T: \Sigma^* \times \Omegai^* \to \Semiring$,
+
+\item[--] a \SWVPA $A$ over $\Omega$, $\Semiring$, and $\bar\Phi$,
+defining a measure $A: \Omega^* \to \Semiring$,
+%a \SWVPA $A$ over $\Omega$, and $\Semiring$, defining a series of nested words
+%      $A : \Omega^* \to \Semiring$,
+\item[--] an input word $s \in \Sigma^*$.
+\end{description}
+%
+For all $s \in \Sigma^*$ and $t \in \Omega^*$, let 
+\(d(s, t) = T\bigl(s, t|_\Omegai \bigr)\), 
+where $t|_\Omegai \in \Omegai^*$ is the projection of $t$ onto~$\Omegai$,
+obtained from $t$ by removing all symbols in $\Omega \setminus \Omegai$.
+%\end{equation}
+%
+\noindent 
+\emph{Symbolic weighted parsing} is the problem, 
+given the above input, 
+to find $t \in \Omega^*$ %nested word $t \in \Omega$ 
+minimizing \( d(s, t) \otimes A(t)\)
+\wrt $\leq_\oplus$, 
+\ie s.t. %such that: %Hence, it is the problem of finding 
+%
+\begin{equation}\label{eq:distance-lang}
+d(s, t) \otimes A(t) = \displaystyle\bigoplus_{t' \in \T(\Omega)} d(s, t') \otimes A(t') 
+\end{equation}
+%
+Following the terminology of~\cite{Mohri03EDWA}, 
+$\SW$-parsing is the problem of computing  
+the distance~\eqref{eq:distance-lang} between the input~$s$ and the output weighted language of~$A$,
+and returning a witness $t$. 
+%
+Every labeled tree $t$ can be linearized into a nested word $\lin(t) \in \Omega^*$, 
+assuming \eg that $\Omegai$ contain the symbols labelling the leaves (symbols of rank $0$) 
+and $\Omegac$ and $\Omegar$ contain respectively one left and right parenthesis
+$\ccall{b}$ and $\creturn{b}$ for each symbol $b$ labelling inner nodes (symbols of rank $>0$). 
+%
+With this representation, the projection $\lin(t)|_\Omegai$ is then the 
+sequence of leaves of $t$, enumerated in a \emph{dfs}-traversal. 
+%
+We show in Appendix~\ref{sec:trees} how to convert a ($\SW$) tree automaton~$A$
+into a $\SWVPA$ computing $A(\lin(t))$ for every tree $t$. 
+That also holds, for the set of ASTs of a weighted CF-grammar.
+%The purpose of the transducer $T$ is to measure a distance between input and output words, 
+%\ie between the word $s$ and the sequence leaves of a derivation tree, in $\Omegai^*$.
+%
+%that generates (weighted) trees by replacement of a state symbol~$q_0$ (non-terminal), 
+%by a tree $a(q_1,\ldots, q_k)$, where $k = \rank(a)$.
+%A replacement rule $q_0 \to a(q_1,\ldots, q_k)$, 
+%of weight $\wei(q_0, a, q_1 \ldots q_k) \in \Semiring$ 
+%according to Definition~\ref{def:SWTA}, 
+%corresponds to the production rule $q_0 := a(q_1,\ldots, q_k)$ of a weighted CF grammar,
+%with set non-terminal symbols $Q$ and set of terminal symbols $\Omega_0$.
+%
+%This actually is a slight generalization of CFG since 
+%each such production rule is labelled by  a symbol of $\Omega_{>0}$, 
+%hence parse trees %derivation trees
+%are trees of $\T(\Omega)$.
+%
+%Another (more original) generalization is that the set of terminal symbols 
+%$\Omega_0$ may be infinite.
+%
+%
+%The input language can also be expressed as a \SWTA, or, 
+%as a particular case, as a weighted context-free grammar, 
+%converted in turn into a \SWVPA following Lemma~\ref{lem:SWTA}.
+%
+Therefore, $\SW$-parsing generalizes 
+the problem of searching, the best derivation of a weighted CF-grammar  
+that yields a given input, sometimes referred as~\emph{weighted parsing},
+%corresponds to $\SW$-parsing in the case of finite alphabets
+%and when the transducer $T$ characterizes identity
+see \eg~\cite{Goodman99SemiringParsing} 
+and~\cite{MorbitzVogler19weighted-parsing} for a more general weighted parsing framework.
+%
+%weighted parsing and convention parsing 
+The latter indeed corresponds to the 
+particular case where the alphabet is finite, 
+$T$ computes identity and $A$ is obtained from the weighted CF grammar.
+%Indeed, it corresponds to the case where $T$
+%accepts only the pairs $\<s, t>$ such that 
+%$s$ is the projection of $t$ on $\Omegai$. 
+%This can be done with a single state $q$ and 
+%with transition rules of the form:
+%\begin{description}
+%\item[] $\wei(q, \varepsilon, a, q) = \one$ for all $a \in \Omegac \cup \Omegar$,
+%\item[] $\wei(q, a, a, q) = \one$ for all $a \in \Omegai$,
+%\item[] $\wei(q, a, b, q) = \zero$ for all $a, b \in \Omegai$, $a \neq b$.
+%\end{description}
+
+
+%\subsection{Computation}
+%
+\begin{proposition}
+The problem of Symbolic Weighted  parsing 
+can be solved in PTIME in the size of the input \SWT $T$, \SWVPA $A$
+and input word $s$, 
+and the computation time of the functions of the label theory.
+\end{proposition}
+\begin{proof} (sketch)
+We follow a \emph{Bar-Hillel} construction, also called parsing by intersection.
+
+\noindent
+We first extend the \SWT $T$ over $\Sigma$, $\Omegai$, $\Semiring$, and $\bar\Phi$, 
+into a \SWT $T'$ over $\Sigma$ and $\Omega$ (and the same semiring and label theory),
+such that for all $s \in \Sigma^*$, and $u \in {\Omega}^*$, 
+$T'(s, u) = T(s, u|_{\Omegai})$. The transducer $T'$ simply skips every symbol 
+$b \in {\Omega} \setminus \Omegai$, 
+by the addition to the transition of $T$,
+of new transitions of the form $\wei_{01}(q, \varepsilon, b, q')$.
+%
+\noindent
+Then, given an input word $s \in \Sigma^*$, 
+using Corolary~\ref{cor:epsilon}, 
+we compute the \SWA $B_{T', s}$, 
+such that for all $t \in \Omega^*$, $B_{T', s}(t) = d(s, t)$.
+%
+%This automaton is such that for all $t \in \T(\Omega)$, 
+%\[ 
+%   A_{T', s}\bigl(\lin(t)\bigr) 
+% = T'\bigl(s, \lin(t)\bigr) 
+% = T'\bigl(s, \lin(t)|_{\Omegai}\bigr) 
+% = d(s, t).
+%\]
+
+\noindent
+Next, %we convert the input \SWTA $A$ over $\Omega$
+%into a \SWVPA $A'$ over $\hat\Omega$, using Proposition~\ref{lem:SWTA}, and 
+we compute the \SWVPA $B_{T', s} \otimes A$, 
+using Proposition~\ref{prop:SWVPA-product}.
+%
+\noindent
+It remains to compute a best nested-word $w \in {\Omega}^*$ 
+using the best-search procedure of Proposition~\ref{th:best-search}.
+%and convert it into a best tree in $\T(\Omega)$ in order to solve SW parsing
+%for~$T$, $A$ and~$s$.
+%\qed  
+\end{proof}
+
+%\paragraph{Application to Automated Music Transcription.}
+%\input{transcription}
+%...
+
+
+
+\section*{Conclusion}
+% summary 
+We have introduced weighted language models (SW transducers and visibly pushdown automata)
+computing over infinite alphabets, 
+and applied them to the problem of parsing 
+with infinitely many possible input symbols (typically timed events).
+%handled with suitable language formalisms, 
+%
+This approach extends conventional parsing and weighted parsing
+by computing a derivation tree modulo 
+a generic distance between words,  
+defined by a SW transducer given in input.
+This enables to consider finer word relationships than strict equality, 
+%as in the conventional parsing approach, 
+opening possibilities of quantitative analysis via this method.
+
+% discussion
+\noindent
+Ongoing and future work include 
+
+\noindent
+-- The study of other theoretical properties of SW models, 
+such as the extension of the best search algorithm from $1$-best to $n$-best~\cite{Huang05kbest}, 
+and to $k$-\emph{closed} semirings~\cite{Mohri02semiring}
+(instead of \emph{bounded}, which corresponds to $0$-\emph{closed}).
+
+\noindent
+-- ...there is room to improve the complexity bounds for the algorithms
+... modular approach with oracles ...
+
+\noindent
+-- present here an offline algorithm for best search, 
+semi-online implementation for AMT (bar-by-bar approach)
+with an on-the-fly automata construction.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BIBLIO                                                                     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\bibliographystyle{plain}
+%\bibliographystyle{abbrv}
+\bibliographystyle{plainurl}  % LIPICS
+%\bibliographystyle{splncs04} % LLNCS
+%\bibliographystyle{eptcs}    % EPTCS
+%\bibliography{generic}
+
+\bibliography{references}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% APPENDIX                                                                   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\appendix 
+
+
+
+\section{Nested-Words and Parse-Trees}
 \label{sec:trees}
 The hierarchical structure of nested-words, defined with the \emph{call} and \emph{return} markup symbols  
 suggest a correspondence with trees. 
@@ -1300,7 +1538,7 @@ $\Omegar = \{ \; \return{a} \mid a \in \Omega_{>0} \}$.
 \noindent
 We associate to $\hat\Omega$
 a label theory $\hat{\Phi}$ 
-like in Section~\ref{se:SWVPA-def}, 
+like in Section~\ref{sec:SWVPA-def}, 
 %
 \noindent
 and we define a linearization of trees of $\T(\Omega)$ into 
@@ -1363,235 +1601,8 @@ or $\bar{q} \neq \bar{p}$.
 %\noindent
 %It is sufficient to consider in $Q'$ only the prefixes of 
 %sequences in transition with a non-null weight.
-\qed
+%\qed
 \end{proof}
-
-
-\section{Symbolic Weighted Parsing}
-\label{sec:parsing}
-Let us now apply the models and results of the previous sections %in order to define 
-to the problem of parsing over infinite alphabet. %appropriate
-%
-%\subsection{Definition}
-%
-Let~$\Sigma$ be a countable input alphabet 
-and~$\Omega$ be a countable output ranked alphabet, 
-with maximal rank value~$M$, 
-and let $\hat\Omega = \Omegai \uplus \Omegac \uplus \Omegar$
-be the alphabet with nesting symbols associated to $\Omega$ like in Section~\ref{sec:trees},
-for the linearization of trees of $\T(\Omega)$.
-%(remember that $\Omegai = \Omega_0$).
-%
-Let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a 
-commutative, bounded, and complete \marginpar{\tiny total?} semiring  
-and let $\bar\Phi$ be an effective label theory over $\Semiring$,
-containing $\Phi_\Sigma$, $\Phi_{\Sigma, \Omegai}$, as well as
-$\Phii$, $\Phic$, $\Phir$, $\Phicr$
-(following the notations of Section~\ref{se:SWVPA-def}).
-%It is moreover assumed computable and $k$-convex for some fixed~$k$.
-%
-\noindent
-We assume given the following input:
-\begin{description}
-\item[--] a \SWT $T$ over $\Sigma$, $\Omegai$, $\Semiring$, and $\bar\Phi$, 
-defining a measure %between words 
-$T: \Sigma^* \times \Omegai^* \to \Semiring$,
-
-\item[--] a \SWTA $A$ over $\Omega$, $\Semiring$, and $\bar\Phi$,
-defining a measure $A: \T(\Omega) \to \Semiring$,
-%a \SWVPA $A$ over $\Omega$, and $\Semiring$, defining a series of nested words
-%      $A : \Omega^* \to \Semiring$,
-\item[--] an input word $s \in \Sigma^*$.
-\end{description}
-%
-As explained in Section~\ref{sec:trees}, 
-$A = \< Q, \init, \bar{\wei} >$ can be seen as a weighted regular tree grammar, 
-or a labeled weighted CF grammar whose derivation trees are in $\T(\Omega)$, 
-with weight defined by $A$.
-The purpose of the transducer $T$ is to measure a distance between input and output words, 
-\ie between the word $s$ and the sequence leaves of a derivation tree, in $\Omegai^*$.
-%that generates (weighted) trees by replacement of a state symbol~$q_0$ (non-terminal), 
-%by a tree $a(q_1,\ldots, q_k)$, where $k = \rank(a)$.
-%A replacement rule $q_0 \to a(q_1,\ldots, q_k)$, 
-%of weight $\wei(q_0, a, q_1 \ldots q_k) \in \Semiring$ 
-%according to Definition~\ref{def:SWTA}, 
-%corresponds to the production rule $q_0 := a(q_1,\ldots, q_k)$ of a weighted CF grammar,
-%with set non-terminal symbols $Q$ and set of terminal symbols $\Omega_0$.
-%
-%This actually is a slight generalization of CFG since 
-%each such production rule is labelled by  a symbol of $\Omega_{>0}$, 
-%hence parse trees %derivation trees
-%are trees of $\T(\Omega)$.
-%
-%Another (more original) generalization is that the set of terminal symbols 
-%$\Omega_0$ may be infinite.
-
-\noindent 
-We extend the measure defined by $T$ to 
-$d : \Sigma^* \times \T(\Omega) \to \Semiring$ as follows.
-Given a word $w \in {\hat\Omega}^*$, the projection of $w$ onto $\Omegai$,
-denoted $w|_\Omegai$,
-is the word of $\Omegai^*$ obtained from $w$ by removing all symbols 
-in $\hat\Omega \setminus \Omegai$.
-Using this notation
-and the tree linearization operator defined in Section~\ref{sec:trees}, 
-$d$ is defined by:
-%\begin{equation}
-\(
-d(s, t) = T\bigl(s, \lin(t)|_\Omegai \bigr)  \mathrm{~for~} s \in \Sigma^*, t\in \T(\Omega)
-\).
-%\end{equation}
-
-\noindent 
-\emph{Symbolic weighted parsing} is the problem, 
-given the above input, 
-to find a tree $t \in \T(\Omega)$ %nested word $t \in \Omega$ 
-minimizing \( d(s, t) \otimes A(t)\)
-\wrt $\leq_\oplus$, 
-\ie such that: %Hence, it is the problem of finding 
-%
-\begin{equation}\label{eq:distance-lang}
-d(s, t) \otimes A(t) = \displaystyle\bigoplus_{t' \in \T(\Omega)} d(s, t') \otimes A(t') 
-\end{equation}
-%
-The measure expressed in~\eqref{eq:distance-lang} is called
-called the edit-distance between~$s$ and~$A$ in~\cite{Mohri03EDWA}.
-%
-%The input language can also be expressed as a \SWTA, or, 
-%as a particular case, as a weighted context-free grammar, 
-%converted in turn into a \SWVPA following Lemma~\ref{lem:SWTA}.
-%
-The problem of searching, in a WTA language, 
-the best parse tree matching a given input,  
-sometimes referred as~\emph{weighted parsing},
-corresponds to SW parsing in the case of finite alphabets
-and when the transducer $T$ characterizes identity
-see \eg~\cite{Goodman99SemiringParsing} 
-and~\cite{MorbitzVogler19weighted-parsing} for a more general 
-weighted parsing framework.
-%
-%Indeed, it corresponds to the case where $T$
-%accepts only the pairs $\<s, t>$ such that 
-%$s$ is the projection of $t$ on $\Omegai$. 
-%This can be done with a single state $q$ and 
-%with transition rules of the form:
-%\begin{description}
-%\item[] $\wei(q, \varepsilon, a, q) = \one$ for all $a \in \Omegac \cup \Omegar$,
-%\item[] $\wei(q, a, a, q) = \one$ for all $a \in \Omegai$,
-%\item[] $\wei(q, a, b, q) = \zero$ for all $a, b \in \Omegai$, $a \neq b$.
-%\end{description}
-
-
-%\subsection{Computation}
-%
-\begin{proposition}
-The problem of Symbolic Weighted  parsing 
-can be solved in PTIME in the size of the input \SWT $T$, \SWTA $A$ %\SWVPA (or ) 
-and input word $s$, 
-and the computation time of the functions of the label theory.
-\end{proposition}
-\begin{proof} (sketch)
-We follow a \emph{Bar-Hillel} construction, also called parsing by intersection.
-
-\noindent
-We first extend the \SWT $T$ over $\Sigma$, $\Omegai$, $\Semiring$, and $\bar\Phi$, 
-into a \SWT $T'$ over $\Sigma$ and $\hat\Omega$ (and the same semiring and label theory),
-such that for all $s \in \Sigma^*$, and $u \in {\hat\Omega}^*$, 
-$T'(s, u) = T(s, u|_{\Omegai})$. The transducer $T'$ simply skips every symbol 
-$b \in {\hat\Omega} \setminus \Omegai$, 
-by the addition to the transition of $T$,
-of new transitions of the form $\wei_{01}(q, \varepsilon, b, q')$.
-
-\noindent
-Then, given an input word $s \in \Sigma^*$, 
-we compute the \SWA $A_{T', s}$, using Proposition~\ref{prop:epsilon}.
-This automaton is such that for all $t \in \T(\Omega)$, 
-\[ 
-   A_{T', s}\bigl(\lin(t)\bigr) 
- = T'\bigl(s, \lin(t)\bigr) 
- = T'\bigl(s, \lin(t)|_{\Omegai}\bigr) 
- = d(s, t).
-\]
-
-\noindent
-Next, we convert the input \SWTA $A$ over $\Omega$
-into a \SWVPA $A'$ over $\hat\Omega$, using Proposition~\ref{lem:SWTA}, 
-and we compute the \SWVPA $A_{T', s} \otimes A'$, 
-using Proposition~\ref{prop:SWVPA-product}.
-
-\noindent
-It remains to compute a best nested-word $w \in {\hat\Omega}^*$ 
-using the best-search procedure of Proposition~\ref{th:best-search},
-and convert it into a best tree in $\T(\Omega)$ in order to solve SW parsing
-for~$T$, $A$ and~$s$.
-%\qed  
-\end{proof}
-
-%\paragraph{Application to Automated Music Transcription.}
-%\input{transcription}
-%...
-
-
-
-\section*{Conclusion}
-% summary 
-We have introduced weighted language models (SW transducers and visibly pushdown automata)
-computing over infinite alphabets, 
-and applied them to the problem of parsing 
-with infinitely many possible input symbols (typically timed events).
-%handled with suitable language formalisms, 
-%
-This approach extends conventional parsing and weighted parsing
-by computing a derivation tree modulo 
-a generic distance between words,  
-defined by a SW transducer given in input.
-This enables to consider finer word relationships than strict equality, 
-%as in the conventional parsing approach, 
-opening possibilities of quantitative analysis via this method.
-
-% discussion
-\noindent
-Ongoing and future work include 
-
-\noindent
--- The study of other theoretical properties of SW models, 
-such as the extension of the best search algorithm from $1$-best to $n$-best~\cite{Huang05kbest}, 
-and to $k$-\emph{closed} semirings~\cite{Mohri02semiring}
-(instead of \emph{bounded}, which corresponds to $0$-\emph{closed}).
-
-\noindent
--- ...there is room to improve the complexity bounds for the algorithms
-... modular approach with oracles ...
-
-\noindent
--- present here an offline algorithm for best search, 
-semi-online implementation for AMT (bar-by-bar approach)
-with an on-the-fly automata construction.
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% BIBLIO                                                                     %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\bibliographystyle{plain}
-%\bibliographystyle{abbrv}
-\bibliographystyle{plainurl}  % LIPICS
-%\bibliographystyle{splncs04} % LLNCS
-%\bibliographystyle{eptcs}    % EPTCS
-%\bibliography{generic}
-
-\bibliography{references}
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% APPENDIX                                                                   %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-\appendix 
-
 
 
 

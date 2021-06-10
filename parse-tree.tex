@@ -1,0 +1,50 @@
+
+Let $\Omega$ be a ranked alphabet
+with maximal rank value~$M$, 
+and let $\hat\Omega$
+be the alphabet with nesting symbols associated to $\Omega$ like in Section~\ref{sec:trees},
+for the linearization of trees of $\T(\Omega)$.
+%(remember that $\Omegai = \Omega_0$).
+%...
+%As explained in Section~\ref{sec:trees}, 
+%$A = \< Q, \init, \bar{\wei} >$ can be seen as a weighted regular tree grammar, 
+%or a labeled weighted CF grammar whose derivation trees are in $\T(\Omega)$, 
+%with weight defined by $A$.
+%...
+
+we assume in input
+(...)
+-- a \SWTA $A$ over $\Omega$, $\Semiring$, and $\bar\Phi$,
+defining a measure $A: T(\Omega) \to \Semiring$,
+(...)
+
+\noindent 
+We extend the measure defined by $T$ to 
+$d : \Sigma^* \times \T(\Omega) \to \Semiring$ as follows.
+Given a word $w \in {\hat\Omega}^*$, the projection of $w$ onto $\Omegai$,
+denoted $w|_\Omegai$,
+is the word of $\Omegai^*$ obtained from $w$ by removing all symbols 
+in $\hat\Omega \setminus \Omegai$.
+Using this notation
+and the tree linearization operator defined in Section~\ref{sec:trees}, 
+$d$ is defined by:
+%\begin{equation}
+\(
+d(s, t) = T\bigl(s, \lin(t)|_\Omegai \bigr)  \mathrm{~for~} s \in \Sigma^*, t\in \T(\Omega)
+\).
+%\end{equation}
+
+\noindent 
+\emph{Symbolic weighted parsing} is the problem, 
+given the above input, 
+to find a tree $t \in \T(\Omega)$ %nested word $t \in \Omega$ 
+minimizing \( d(s, t) \otimes A(t)\)
+\wrt $\leq_\oplus$, 
+\ie such that: %Hence, it is the problem of finding 
+%
+\begin{equation}\label{eq:distance-lang}
+d(s, t) \otimes A(t) = \displaystyle\bigoplus_{t' \in \T(\Omega)} d(s, t') \otimes A(t') 
+\end{equation}
+%
+The measure expressed in~\eqref{eq:distance-lang} is called
+called the edit-distance between~$s$ and~$A$ in~\cite{Mohri03EDWA}.
