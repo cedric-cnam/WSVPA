@@ -21,6 +21,16 @@
 % https://submission.dagstuhl.de/documentation/authors
 \input{main-lipics}
 
+
+% comments in margin with \todo command
+\usepackage[colorinlistoftodos]{todonotes} % option disable to hide todos
+% command todo : options
+% - noline: no line connecting the note with the place in the text where the note occurs in the latex code
+% - fancyline : curved arrow from note to inssertion point
+% - inline: place a todonote inside the text instead of in the margin
+% - author=name
+\newcommand{\mynote}[1]{\todo[noline,size=\tiny,color=yellow!40]{#1}}
+
 \usepackage{hyperref}
 %\usepackage[bookmarks,bookmarksnumbered,naturalnames,plainpages=false]{hyperref}
 %usepackage{url}
@@ -280,9 +290,9 @@ is a tuple
 $T = \< Q, \init, \bar{\wei}, \final >$,
 where $Q$ is a finite set of states, 
 $\mathsf{in} : Q \to \Semiring$   %\Phi_{\Sigma, \Delta}
-respectively $\mathsf{out} : Q \to \Semiring$  %\Phi_{\Sigma, \Delta}
-are functions defining the weight for entering, 
-respectively leaving, computation in a state,  
+(respectively $\mathsf{out} : Q \to \Semiring$)  %\Phi_{\Sigma, \Delta}
+are functions defining the weight for entering
+(respectively leaving) computation in a state,  
 and $\bar{\wei}$ is a triplet of transition functions 
 $\wei_{10}: Q \times Q \to \Phi_{\Sigma}$,
 $\wei_{01}: Q \times Q \to \Phi_{\Delta}$, and 
@@ -460,7 +470,7 @@ We consider a \SWT with two states $q_0$ and $q_1$ whose purpose
 is to compare a recorded performance $s \in \Sigma^*$
 with notated music sheet $t \in \Delta^*$.
 One timestamp $d_i \in \Sigma$ may corresponds 
-to one notated event $\<\mathsf{e}, d'_i> \in \Sigma$, in which case 
+to one notated event $\<\mathsf{e}, d'_i> \in \Delta$, in which case 
 the weight value computed by the \SWT is the time distance between both
 (see transitions $\wei_{11}$ below).
 %
@@ -498,9 +508,7 @@ The \emph{Symbolic Weighted Automata} %$A = \< Q, \init, \weight, \final >$
 are defined similarly as the transducers of Definition~\ref{def:SWT}, 
 by simply omitting the output symbols.
 %
-In this case, the label theory $\bar\Phi$ can be reduced to a singleton $\< \Phi_\Sigma>$.
-%over $\Sigma$ is reduced to
-%a set $\Phi_\Sigma$ closed under~$\oplus$ and~$\otimes$.
+%In this case, the label theory $\bar\Phi$ can be reduced to a singleton $\< \Phi_\Sigma>$.
 %
 \begin{definition} \label{def:SWA}
 A \emph{symbolic-weighted automaton} (\SWA)
@@ -509,10 +517,10 @@ over $\Sigma$, $\Semiring$ and $\bar\Phi$
 is a tuple
 $A = \< Q, \init, {\wei_1}, \final >$,
 where $Q$ is a finite set of states, 
-$\mathsf{in} : Q \to \Semiring$, %\Phi_\Sigma$, 
-respectively $\mathsf{out} : Q \to \Semiring$  %\Phi_\Sigma,$
-are functions defining the weight for entering, 
-respectively leaving, computation in a state, 
+$\mathsf{in} : Q \to \Semiring$ %\Phi_\Sigma$, 
+(respectively $\mathsf{out} : Q \to \Semiring$)  %\Phi_\Sigma,$
+are functions defining the weight for entering
+(respectively leaving) computation in a state, 
 and ${\wei_1}$ is a transition functions 
 from $Q \times Q$ into~$\Phi_{\Sigma}$.
 \end{definition}
@@ -564,7 +572,7 @@ symbolic weighted parsing presented in Section~\ref{sec:parsing}.
 Given a \SWT $T$ over $\Sigma$, $\Delta$, 
 $\Semiring$ commutative, bounded and complete,
 and $\bar\Phi$ effective,
-and a $\SWTA$ $A$ over $\Sigma$, $\Semiring$ and $\bar\Phi$,
+and a $\SWA$ $A$ over $\Sigma$, $\Semiring$ and $\bar\Phi$,
 there exists an effectively constructible \SWA 
 $B_{T, A}$ over $\Delta$, $\Semiring$ and $\bar\Phi$,
 such that for all $t \in \Delta^*$, 
@@ -638,7 +646,7 @@ and
 \displaystyle\bigoplus_{\Sigma} \wei_{10}(q_1, q_2) 
 \otimes \final'(p_1, q_2)
 \) 
-\marginpar{\tiny proof correctness}
+\mynote{proof correctness}
 %\qed
 \end{proof}
 
@@ -647,7 +655,7 @@ and
 The construction time and size for $B_{T, A}$ are $O(\| T \|^3 . \| A \|^2)$,
 where the sizes $\| T \|$ and $\| A \|$ are their number of states.
 %of~$T$ is its number of states $|Q|$.
-\marginpar{\tiny revise with nb of tr. and states}
+\mynote{revise with nb of tr. and states}
 
 
 \begin{corollary} \label{cor:epsilon}
@@ -720,10 +728,10 @@ over  $\Omega = \Omegai \uplus \Omegac \uplus \Omegar$, $\Semiring$ and $\bar\Ph
 is a tuple $A = \< Q, P, \init, \bar\wei, \final >$,
 where $Q$ is a finite set of states, 
 $P$ is a finite set of stack symbols, 
-$\mathsf{in} : Q \to \Semiring$, 
-respectively $\mathsf{out} : Q \to \Semiring,$
-are functions defining the weight for entering, 
-respectively leaving, a state, 
+$\mathsf{in} : Q \to \Semiring$ 
+(respectively $\mathsf{out} : Q \to \Semiring$)
+are functions defining the weight for entering
+(respectively leaving) a state, 
 and $\bar\wei$ is a sextuplet composed of the transition functions:
 $\weii : Q \times P \times Q \to \Phici$,  
 $\weiei : Q \times Q \to \Phii$,  
@@ -880,7 +888,7 @@ A(s)  =
 
 \begin{example}
 structured words with timed symbols...
-\marginpar{\tiny todo}
+\mynote{todo example VPA}
 intro language of music notation? (markup = time division, leaves = events etc)
 \end{example}
 
@@ -923,8 +931,8 @@ as in the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 %**hypotheses**
 Let us assume that the semiring~$\Semiring$ is
 commutative, bounded, and complete,  
-\marginpar{\tiny total?}
-and assume an effective label theory.
+\mynote{total?}
+and that $\bar\Phi$ is an effective label theory.
 %s.t. for all $\phi \in \Phii$, 
 %$\psi \in \Phir$, 
 %and $\eta \in \Phicr$, 
@@ -1100,11 +1108,11 @@ The infinite sums in the updates of $d$ in Algorithm~\ref{algo:Dijkstra},
 Figure~\ref{fig:best-update}
 are well defined
 since~$\Semiring$ is complete.
-\marginpar{\tiny complete} 
+\mynote{complete **} 
 ** effectively computable by hypothese that the label theory is effective**
 The algorithm performs $2.|Q|^2$ iterations until $P$ is empty, 
 and each iteration has a time complexity $O(|Q|^2 . |P|)$.
-\marginpar{\tiny detail with nb tr. and states}
+\mynote{detail with nb tr. and states}
 That gives a time complexity $O(|Q|^4 . |P|)$. 
 It can be reduced by implementing $P$ as a priority queue, 
 prioritized by the value returned by $d$.
@@ -1166,7 +1174,7 @@ Let~$\Sigma$ be a countable input alphabet,
 and~$\Omega = \Omegai \uplus \Omegac \uplus \Omegar$ be a countable output alphabet.
 %
 Let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a 
-commutative, bounded, and complete \marginpar{\tiny total?} semiring  
+commutative, bounded, and complete \mynote{total?} semiring  
 and let $\bar\Phi$ be an effective label theory over $\Semiring$,
 containing $\Phi_\Sigma$, $\Phi_{\Sigma, \Omegai}$, as well as
 $\Phii$, $\Phic$, $\Phir$, $\Phicr$
@@ -1606,45 +1614,14 @@ or $\bar{q} \neq \bar{p}$.
 
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TODO                                                                       %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\listoftodos
+
+
 \end{document}
 
 
-
-\section{Edit-Distance}
-
-%\subsection{Distance between words or languages}
-...algebraic definition of edit-distance of Mohri, in \cite{Mohri03EDWA}
-% Mehryar Mohri 
-% Edit-distance of weighted automata: General definitions and algorithms
-% International Journal of Foundations of Computer Science 14.06 (2003): 957-982.
-distance $d$ over $\Sigma^* \times \Sigma^*$ 
-into a semiring  $\Semiring = ( \Semiring, \oplus, \zero, \otimes, \one)$.
-
-%\noindent
-Let $\Omega = \Sigma \cup \{ \varepsilon \} \times \Sigma \cup \{ \varepsilon \} \setminus \{ (\varepsilon, \varepsilon) \}$,
-and let $h$ be the morphism from $\Omega^*$ into $\Sigma^* \times \Sigma^*$  
-defined over the concatenation of strings of $\Sigma^*$ (that removes the $\varepsilon$'s).
-%
-\noindent
-An \emph{alignment} between 2 strings  $s, t \in \Sigma^*$ is an element $\omega \in \Omega^*$ 
-such that $h(\omega) = (s, t)$.
-%
-\noindent
-We assume a base cost function $\Omega$ : $\delta: \Omega \to S$, extended to $\Omega^*$ as follows  
-(for $\omega \in \Omega^*$): 
-\(
-\displaystyle\delta(\omega) = \bigotimes_{0 \leq i < |\omega|} \delta(\omega_i)
-\).
-
-\noindent
-\begin{definition}
-For  $s, t \in \Sigma^*$, the edit-distance between $s$ and $t$ is  
-\( 
-d(s, t) = \displaystyle\bigoplus_{\omega \in \Omega^*\, h(\omega) = (s, t)} \delta(\omega)
-\).
-\end{definition}
-
-e.g. Levenstein edit-distance: $S$ is min-plus and $\delta(a, b) = 1$ for all $(a, b) \in \Omega$.
-
-
-%\paragraph{Distance between a word and a regular language}

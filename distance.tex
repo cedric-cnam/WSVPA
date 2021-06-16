@@ -1,0 +1,38 @@
+\section{Edit-Distance}
+
+%\subsection{Distance between words or languages}
+...algebraic definition of edit-distance of Mohri, in \cite{Mohri03EDWA}
+% Mehryar Mohri 
+% Edit-distance of weighted automata: General definitions and algorithms
+% International Journal of Foundations of Computer Science 14.06 (2003): 957-982.
+distance $d$ over $\Sigma^* \times \Sigma^*$ 
+into a semiring  $\Semiring = ( \Semiring, \oplus, \zero, \otimes, \one)$.
+
+%\noindent
+Let $\Omega = \Sigma \cup \{ \varepsilon \} \times \Sigma \cup \{ \varepsilon \} \setminus \{ (\varepsilon, \varepsilon) \}$,
+and let $h$ be the morphism from $\Omega^*$ into $\Sigma^* \times \Sigma^*$  
+defined over the concatenation of strings of $\Sigma^*$ (that removes the $\varepsilon$'s).
+%
+\noindent
+An \emph{alignment} between 2 strings  $s, t \in \Sigma^*$ is an element $\omega \in \Omega^*$ 
+such that $h(\omega) = (s, t)$.
+%
+\noindent
+We assume a base cost function $\Omega$ : $\delta: \Omega \to S$, extended to $\Omega^*$ as follows  
+(for $\omega \in \Omega^*$): 
+\(
+\displaystyle\delta(\omega) = \bigotimes_{0 \leq i < |\omega|} \delta(\omega_i)
+\).
+
+\noindent
+\begin{definition}
+For  $s, t \in \Sigma^*$, the edit-distance between $s$ and $t$ is  
+\( 
+d(s, t) = \displaystyle\bigoplus_{\omega \in \Omega^*\, h(\omega) = (s, t)} \delta(\omega)
+\).
+\end{definition}
+
+e.g. Levenstein edit-distance: $S$ is min-plus and $\delta(a, b) = 1$ for all $(a, b) \in \Omega$.
+
+
+%\paragraph{Distance between a word and a regular language}

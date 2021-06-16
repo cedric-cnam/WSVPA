@@ -13,11 +13,11 @@ denoted $\Sigma$, $\Delta$,...
 \noindent 
 Given a semiring $\< \Semiring, \oplus, \zero, \otimes, \one>$, 
 a \emph{label theory} over $\Semiring$
-is a tuplet $\bar\Phi$ of recursively enumerable sets denoted
+is a set $\bar\Phi$ of recursively enumerable sets denoted
 %$\Phi_\epsilon \subseteq \Semiring$, % containing constant functions valued in $\Semiring$, 
 $\Phi_\Sigma$, %and $\Phi_\Delta$, 
 containing unary functions of type $\Sigma \to \Semiring$, %resp. $\Delta \to \Semiring$, 
-and $\Phi_{\Sigma, \Delta}$, containing binary functions $\Sigma \times \Delta \to \Semiring$, 
+or $\Phi_{\Sigma, \Delta}$, containing binary functions $\Sigma \times \Delta \to \Semiring$, 
 and such that:
 
 \noindent -- 
@@ -25,7 +25,7 @@ for all $\Phi_{\Sigma, \Delta} \in \bar\Phi$, we have
 $\Phi_{\Sigma} \in \bar\Phi$ and $\Phi_{\Delta} \in \bar\Phi$
 
 \noindent -- 
-every $\Phi_{\Sigma}$ contains all the constant functions from $\Sigma$ into $\Semiring$, 
+every $\Phi_{\Sigma}\in \bar\Phi$ contains all the constant functions from $\Sigma$ into $\Semiring$, 
  
 \noindent -- 
 for all $\alpha \in \Semiring$ and $\phi \in \Phi_\Sigma$,
@@ -55,18 +55,18 @@ $\psi \otimes_2 \eta: x, y \mapsto \psi(y) \otimes \eta(x, y)$ and\\
 belong to $\Phi_{\Sigma, \Delta}$
 
 \noindent -- 
-similar closures hold for $\oplus$
+similar closures hold for $\oplus$.
 
-\noindent -- 
-the partial applications $\eta \in \Phi_{\Sigma, \Delta}$
-and $\eta_a: y \mapsto \eta(a, y)$ for $a \in \Sigma$ %and $y \in \Delta$
-and\\ 
-\phantom{--} $\eta_b: x \mapsto \eta(x, b)$ for $b \in \Delta$ %and $x \in \Sigma$, 
-belong respectively to~$\Phi_\Delta$ and~$\Phi_\Sigma$.
-\marginpar{\tiny partial appli needed?}
+%\noindent -- 
+%the partial applications $\eta \in \Phi_{\Sigma, \Delta}$
+%and $\eta_a: y \mapsto \eta(a, y)$ for $a \in \Sigma$ %and $y \in \Delta$
+%and\\ 
+%\phantom{--} $\eta_b: x \mapsto \eta(x, b)$ for $b \in \Delta$ %and $x \in \Sigma$, 
+%belong respectively to~$\Phi_\Delta$ and~$\Phi_\Sigma$.
+\mynote{partial appli needed?}
 
 \medskip\noindent
-In what follows, we shall omit the subscripts in 
+In what follows, we might omit the subscripts in 
 $\otimes_1$, $\otimes_2$, $\oplus_1$, $\oplus_2$
 when there is no ambiguity, 
 and keep them only for the special case $\Sigma = \Delta$,
@@ -115,7 +115,7 @@ let us consider the following operators on the functions of a label theory.
 \end{array}
 \]
 %
-Similarly as in the case of the notation of product and sum of functions above, 
+Similarly as for the above product and sum of functions, 
 the superscripts in $\bigoplus^1_\Sigma$ and $\bigoplus^2_\Sigma$
 shall be reserved to the ambiguous case of $\Phi_{\Sigma,\Sigma}$,
 in order to to distinguish between the first and the second argument.
@@ -141,7 +141,7 @@ $\eta \in \Phi_{\Sigma, \Delta}$:
 %
 \begin{enumerate}
 \item[$i.$]
-\( \bigoplus_{\Sigma}\bigoplus_{\Delta} \eta = \bigoplus_{\Delta}\bigoplus_{\Sigma} \eta \)
+\( \bigoplus_{\Sigma}\bigoplus^2_{\Delta} \eta = \bigoplus_{\Delta}\bigoplus^1_{\Sigma} \eta \)
 \item[$ii.$] 
 \( \alpha \otimes \bigoplus_{\Sigma} \phi = \bigoplus_{\Sigma} (\alpha \otimes \phi) \) and
 \( \bigl( \bigoplus_{\Sigma} \phi \bigr) \otimes\alpha = \bigoplus_{\Sigma} (\phi \otimes \alpha) \),
@@ -152,19 +152,19 @@ and similarly for~$\oplus$
 \( \bigl(\bigoplus_{\Sigma} \phi\bigr) \otimes \bigl(\bigoplus_{\Sigma} \phi'\bigr) 
    = \bigoplus_{\Sigma} (\phi \otimes \phi') \)
 \item[$iv.$] 
-\( \bigl(\bigoplus_{\Delta} \eta\bigr) \oplus \bigl(\bigoplus_{\Delta} \eta' \bigr) = 
- \bigoplus_{\Delta} (\eta \oplus \eta') \), and
-\( \bigl(\bigoplus_{\Delta} \eta\bigr) \otimes \bigl(\bigoplus_{\Delta} \eta' \bigr) = 
- \bigoplus_{\Delta} (\eta \otimes \eta') \)
+\( \bigl(\bigoplus^2_{\Delta} \eta\bigr) \oplus \bigl(\bigoplus^2_{\Delta} \eta' \bigr) = 
+ \bigoplus^2_{\Delta} (\eta \oplus \eta') \), and
+\( \bigl(\bigoplus^2_{\Delta} \eta\bigr) \otimes \bigl(\bigoplus^2_{\Delta} \eta' \bigr) = 
+ \bigoplus^2_{\Delta} (\eta \otimes \eta') \)
 \item[$v.$] 
 %\( \phi \oplus \bigl(\bigoplus_{\Delta} \eta\bigr) = \bigoplus_{\Delta} (\phi \oplus \eta) \),
-\( \phi \otimes \bigl(\bigoplus_{\Delta} \eta\bigr) = \bigoplus_{\Delta} (\phi \otimes \eta) \), and
-\( \bigl(\bigoplus_{\Delta} \eta\bigr) \otimes \phi = \bigoplus_{\Delta} (\eta \otimes \phi) \),
+\( \phi \otimes \bigl(\bigoplus^2_{\Delta} \eta\bigr) = \bigoplus_{\Delta} (\phi \otimes_1 \eta) \), and
+\( \bigl(\bigoplus^2_{\Delta} \eta\bigr) \otimes \phi = \bigoplus_{\Delta} (\eta \otimes_1 \phi) \),
 and similarly for~$\oplus$
 \item[$vi.$] 
 %\( \psi \oplus \bigl(\bigoplus_{\Sigma} \eta\bigr) = \bigoplus_{\Sigma} (\psi \oplus \eta) \),
-\( \psi \otimes \bigl(\bigoplus_{\Sigma} \eta\bigr) = \bigoplus_{\Sigma} (\psi \otimes \eta) \), and
-\( \bigl(\bigoplus_{\Sigma} \eta\bigr) \otimes \psi = \bigoplus_{\Sigma} (\eta \otimes \psi) \),
+\( \psi \otimes \bigl(\bigoplus^1_{\Sigma} \eta\bigr) = \bigoplus_{\Sigma} (\psi \otimes_2 \eta) \), and
+\( \bigl(\bigoplus^1_{\Sigma} \eta\bigr) \otimes \psi = \bigoplus_{\Sigma} (\eta \otimes_2 \psi) \),
 and similarly for~$\oplus$
 \end{enumerate}
 \end{lemma}
@@ -190,6 +190,7 @@ $\bigoplus_{\Sigma} \phi$,
 $\bigoplus_{\Sigma} \eta$, and
 $\bigoplus_{\Delta} \eta$
 can be effectively computed from $\phi$ and $\eta$.
+\mynote{precise/restrict complexity}
 
 %there is an oracle returning, in constant time,
 %$\bigoplus_{\Sigma} \phi$, 
