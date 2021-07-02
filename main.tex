@@ -838,6 +838,7 @@ The following functions illustrate each of the possible cases, being : reading $
 or $\call{c} \in \Omegac$, or $\return{r} \in \Omegar$ for each possible state of the stack (empty or not), 
 to add to $u \in {\Omega}^*$.
 
+\florent{notation $cp$ for $\< c, p>$ ?}
 %
 \begin{align}
 %\weight_A\bigl(\config{q}{\bot}, \varepsilon, \config{q}{\bot}) & = \one\label{eq:SWVPA-weight}\\
@@ -1001,6 +1002,7 @@ of the function $\weight_A$.
 %
 \noindent
 If the stack is not empty, let $\top$ be a fresh stack symbol which does not belong to $\Gamma$,
+\florent{$b_\top$ : mot bien parenthèsé $c$/$r$}
 and let $b_\top : Q \times P \times Q \to \Phic$ be such that,
 for every two states $q, q' \in Q$ 
 and stack symbol $p \in P$: %and $\sigma \in \{ \bot, \top \}$, 
@@ -1127,6 +1129,7 @@ d_\bot(q_1, q_3) & \opluseq &
 
 
 \noindent
+\florent{explication Fig.~\ref{fig:best-update} suivant cas de \eqref{eq:SWVPA-weight}}
 The infinite sums in the updates of $d$ in Algorithm~\ref{algo:Dijkstra}, 
 Figure~\ref{fig:best-update}
 are well defined
@@ -1350,7 +1353,9 @@ using the best-search procedure of Proposition~\ref{th:best-search}.
 %\paragraph{Application to Automated Music Transcription.}
 %\input{transcription}
 %...
-
+\florent{2 lines Application to Automated Music Transcription: 
+implementation $\neq$ but same principle, on-the-fly automata construction
+during best search, for efficiency.}
 
 
 \section*{Conclusion}
@@ -1372,6 +1377,7 @@ opening possibilities of quantitative analysis via this method.
 % discussion
 \noindent
 Ongoing and future work include 
+\florent{TODO future work}
 
 \noindent
 -- The study of other theoretical properties of SW models, 
