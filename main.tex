@@ -334,7 +334,7 @@ based on an intermediate function $\weight_T$
 defined recursively, for every states $q, q' \in Q$, 
 and every strings $\< s, t> \in \Sigma^* \times \Delta^* \setminus \{ \< \varepsilon, \varepsilon >\}$ considered as concatenation
 of the symbol $a \in \Sigma$ (resp. $b \in \Delta$) with a word $u \in \Sigma^*$ (resp. $v in \Delta^*$), by :
-\lydia{added $u$ and $v$}
+\lydia{added u and v def}
 
 %$a \in \Sigma$, $u \in \Sigma^*$, $b\in \Delta$, $v\in \Delta^*$, by:
 %
@@ -455,11 +455,11 @@ like in $\musQuarter\!\!\!\mathrel{\raisebox{-1.5mm}{$\smile$}}\!\!\!\musEighth$
 and one note can be augmented by half its duration with a dot like in~\musQuarterDotted{}.
 \lydia{modif.}
 These notations are perceived equivalent when played, as their duration is equal, yet the notation is different.
-We thus want to be able to recognize all the possible notations of equivalent durations of notes,
-when comparing a written score and a music performance.
-
+We thus want to be able to compare a music score with music played by a performer. 
+\lydia{changed end}
+%
 \noindent 
-We propose a small weighted transducer model that computes a distance between an input sequence of sounding 
+We propose a small weighted transducer model that calculates the distance bewteen an input sequence of sounding 
 events (music "performance") 
 to an output sequence of written events (music "score").
 % simple pointwise distance between two sequences of timestamped events **
@@ -502,7 +502,8 @@ $\<\mathsf{-}, d'_{i+1}>$..., they are just skipped with no cost (transitions $\
 %
 We also must able to take performing errors into account, while still being able to compare with the score, 
 since a performer could, for example, play an unwritten extra note. 
-\lydia{modif}
+\lydia{reformulated this sentence} 
+%
 This is modelled by the transition $\wei_{10}$ with an arbitrary weight value $\alpha \in \Semiring$, 
 switching from state $q_0$ (normal) to $q_1$ (error).
 The transitions in the second column below switch back to the normal state $q_0$.
@@ -511,6 +512,11 @@ The transitions in the second column below switch back to the normal state $q_0$
 At last, we let $q_0$ be the only initial and final state, with
 $\init(q_0) = \final(q_0) = \one$, and 
 $\init(q_1) = \final(q_1) = \zero$. 
+
+\lydia{ccl to the ex}
+That way, an \SWT is capable of evaluating the differences between a score and a performance, 
+all the while ensuring that performance errors are plausible.
+
 %$\init(q_0, d, b) = \final(q_0, d, b) = \one$, and 
 %$\init(q_1, d, b) = \final(q_1, d, b) = \zero$, 
 %for all $d \in \Sigma$ and $b \in \Delta$.
@@ -796,7 +802,7 @@ overloading their names: % for simplicity:
 
 \noindent
 The intuition is the following for the above transitions. 
-$\weiei$, $\weiec$, $\weier$ describe the cases where the stack is empty. 
+$\weiei$, $\weiec$, and $\weier$ describe the cases where the stack is empty. 
 \lydia{moved this to the beginning}
 %
 \noindent
@@ -837,13 +843,14 @@ The following functions illustrate each of the possible cases, being : reading $
 \lydia{intro to func}
 or $\call{c} \in \Omegac$, or $\return{r} \in \Omegar$ for each possible state of the stack (empty or not), 
 to add to $u \in {\Omega}^*$.
-
+\lydia{introduced the 6 cases}
 \florent{notation $cp$ for $\< c, p>$ ?}
-%
+
 \begin{align}
 %\weight_A\bigl(\config{q}{\bot}, \varepsilon, \config{q}{\bot}) & = \one\label{eq:SWVPA-weight}\\
 %\weight_A\bigl(\config{q}{\bot}, \varepsilon, \config{q'}{\gamma}) & = \zero 
 %\mathrm{~if~} q \neq q'\nonumber\\
+%
 \weight_A\bigl(\config{q}{\bot}, \varepsilon, \config{q'}{\bot}) & = \one
 \mathrm{~if~} q = q' \mathrm{~and~} \zero \mathrm{~otherwise}\label{eq:SWVPA-weight}\\
 \weight_A\bigl(\configup{q}{\<{\call{c}}, p>\stackup\gamma}, a\, u, 
@@ -851,7 +858,7 @@ to add to $u \in {\Omega}^*$.
  {\displaystyle\bigoplus_{q'' \in Q}} \weii(q, c, p, a, q'') 
   \otimes \weight_A\bigl(\configup{q''}{\<{\call{c}}, p> \stackup \gamma}, u, 
                          \config{q'}{\gamma'}\bigr)\nonumber\\
- %
+%
 \weight_A\bigl(\config{q}{\bot}, a\, u, 
                \config{q'}{\gamma'}\bigr) & =  
   {\displaystyle\bigoplus_{q'' \in Q}} \weiei(q, a, q'') 
@@ -874,10 +881,10 @@ to add to $u \in {\Omega}^*$.
                           \scriptstyle p \in P
                           \end{array}}}
   \weiec(q, {\call{c}}, p, q'') 
-  \otimes \weight_A\bigl(\config{q''}{{\call{c}}\, p}, u, 
+  \otimes \weight_A\bigl(\config{q''}{\<{\call{c}}, p>}, u, 
                          \config{q'}{\gamma'}\bigr)\nonumber\\
 %
-\weight_A\bigl(\configup{q}{\<{\call{c}}, p>\stackup \gamma}, {\return{r}}\, u, 
+\weight_A\bigl(\configup{q}{\<{\call{c}}, p>\stackup\gamma}, {\return{r}}\, u, 
                \config{q'}{\gamma'}\bigr) & =  
  {\displaystyle\bigoplus_{q'' \in Q}} 
   \weir\bigl(q, {\call{c}}, p, {\return{r}}, q''\bigr) 
@@ -890,6 +897,7 @@ to add to $u \in {\Omega}^*$.
   \otimes \weight_A\bigl(\config{q''}{\bot}, u, 
                          \config{q'}{\gamma'}\bigr)\nonumber
 \end{align}
+\lydia{c p to <c, p>} 
 %
 % and ${\call{c}}\, p\stacksep \gamma$ 
 %denotes a stack where the pair made of ${\call{c}} \in \Omegac$ and $p \in P$ is the top symbol 
@@ -978,9 +986,10 @@ for a word in~$\Omega^*$.
 %
 \noindent
 %More precisely, 
-We distinguish two cases: when the stack is empty, and when it is not. 
-\lydia{2 cases of $b$}
-In the case of an empty stack, let $b_\bot : Q \times Q \to \Semiring$ be such that: %the function:
+We distinguish two cases : when the stack is empty, and when it is not. 
+\lydia{introduced 2 cases for b}
+%
+In the case of an empty stack, let $b_\bot : Q \times Q \to \Semiring$ be such that : %the function:
 %
 \begin{equation}\label{eq:bbot}
   b_\bot(q, q') = \bigoplus_{s\in \Omega^*} 
@@ -998,6 +1007,7 @@ The term $\config{q}{\bot}, s, \config{q'}{\bot}$
 of this sum is the central expression in 
 the definition \eqref{eq:weightA} of $A(s_0)$, for the minimum $s_0$
 of the function $\weight_A$.
+\lydia{so ?}
 
 %
 \noindent
