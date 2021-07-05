@@ -1,35 +1,43 @@
 \contentsline {todo}{\color@fb@x {}{black}{}{green!30}{\leavevmode {\color {green!30}o}}\ I think that we can make the case for a larger set of situations: given a linear music notation input, for instance elements in an XML file, we we want to structure the input according to a hierarchical rhythmic space. I can elaborate...}{1}{section*.1}
 \contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ register: skip refs and details, add Mikolaj recent}{1}{section*.2}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ chap. intersection in~\cite {GruneJacobs08parsing}}{3}{section*.4}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ expressiveness: VPA have restricted equality test. comparable to pebble automata? $\to $ conclusion}{3}{section*.5}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ The results are established for a general class of semirings. They can be instantiated for concrete cases}{3}{section*.7}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ results of this paper: for semirings commutative, bounded, total and complete}{4}{section*.9}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ partial application is needed?}{5}{section*.11}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ notion of diagram of functions akin BDD for transitions in practice}{5}{section*.12}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ mv appendix?}{5}{section*.13}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ precise/restrict complexity}{5}{section*.14}
-\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ added u and v def}{6}{section*.15}
-\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ unique $\to $ similar}{7}{section*.16}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ similar $\to $ single}{7}{section*.17}
-\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ modif.}{7}{section*.18}
-\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ changed end}{7}{section*.19}
-\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ reformulated this sentence}{7}{section*.20}
-\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ ccl to the ex}{7}{section*.21}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ proof correctness}{8}{section*.22}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ revise with nb of tr. and states}{8}{section*.23}
-\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ moved this to the beginning}{9}{section*.24}
-\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ intro to func}{9}{section*.25}
-\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ introduced the 6 cases}{9}{section*.26}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ notation $cp$ for $\delimiter "426830A c, p \delimiter "526930B $ ?}{9}{section*.27}
-\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ c p to <c, p>}{10}{section*.28}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ todo example VPA}{10}{section*.29}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ total?}{10}{section*.30}
-\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ introduced 2 cases for b}{10}{section*.31}
-\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ so ?}{10}{section*.32}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ $b_\top $ : mot bien parenth\IeC {\`e}s\IeC {\'e} $c$/$r$}{10}{section*.33}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ explication Fig.~\ref {fig:best-update} suivant cas de \textup {\hbox {\mathsurround \z@ \normalfont (\ignorespaces \ref {eq:SWVPA-weight}\unskip \@@italiccorr )}}}{11}{section*.36}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ complete **}{11}{section*.37}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ detail with nb tr. and states}{11}{section*.38}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ total?}{12}{section*.39}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ 2 lines Application to Automated Music Transcription: implementation $\not =$ but same principle, on-the-fly automata construction during best search, for efficiency.}{12}{section*.40}
-\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ TODO future work}{13}{section*.42}
+\contentsline {todo}{\color@fb@x {}{black}{}{green!30}{\leavevmode {\color {green!30}o}}\ This sentence (symbols as variables) is not immediatly clear to me. Maybe a short example or intuition?}{2}{section*.3}
+\contentsline {todo}{\color@fb@x {}{black}{}{green!30}{\leavevmode {\color {green!30}o}}\ The weight is a label on edges in the derivation tree, right? Not sure I understand the sentence}{2}{section*.5}
+\contentsline {todo}{\color@fb@x {}{black}{}{green!30}{\leavevmode {\color {green!30}o}}\ You mean the distance between $s$ and $t$? "The latter value" is a bit ambiguous}{2}{section*.6}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ chap. intersection in~\cite {GruneJacobs08parsing}}{3}{section*.7}
+\contentsline {todo}{\color@fb@x {}{black}{}{green!30}{\leavevmode {\color {green!30}o}}\ The notation $A_{T, s}$ has not been introduced so far. It is not clear why $T$ is a parameter there}{3}{section*.8}
+\contentsline {todo}{\color@fb@x {}{black}{}{green!30}{\leavevmode {\color {green!30}o}}\ OK, \IeC {\`a} quelques d\IeC {\'e}tails (pour moi), tout \IeC {\c c}a est tr\IeC {\`e}s bien expliqu\IeC {\'e}}{3}{section*.9}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ expressiveness: VPA have restricted equality test. comparable to pebble automata? $\to $ conclusion}{3}{section*.10}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ The results are established for a general class of semirings. They can be instantiated for concrete cases}{3}{section*.12}
+\contentsline {todo}{\color@fb@x {}{black}{}{green!30}{\leavevmode {\color {green!30}o}}\ There is sometimes a confusion in the text between the struture and the domain $\mathbb {S}$. Not essential}{3}{section*.13}
+\contentsline {todo}{\color@fb@x {}{black}{}{green!30}{\leavevmode {\color {green!30}o}}\ Here the difference between $\mathbb {S}$ as a structure and as a domain is blurred.}{4}{section*.14}
+\contentsline {todo}{\color@fb@x {}{black}{}{green!30}{\leavevmode {\color {green!30}o}}\ $j\in \mathbb {N}$: $j$ is en element of $\mathbb {N}$, not the same s $j\subset \mathbb {N}$}{4}{section*.15}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ results of this paper: for semirings commutative, bounded, total and complete}{4}{section*.17}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ partial application is needed?}{5}{section*.19}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ notion of diagram of functions akin BDD for transitions in practice}{5}{section*.20}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ mv appendix?}{5}{section*.21}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ precise/restrict complexity}{5}{section*.22}
+\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ added u and v def}{6}{section*.23}
+\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ unique $\to $ similar}{7}{section*.24}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ similar $\to $ single}{7}{section*.25}
+\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ modif.}{7}{section*.26}
+\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ changed end}{7}{section*.27}
+\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ reformulated this sentence}{7}{section*.28}
+\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ ccl to the ex}{7}{section*.29}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ proof correctness}{8}{section*.30}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ revise with nb of tr. and states}{8}{section*.31}
+\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ moved this to the beginning}{9}{section*.32}
+\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ intro to func}{9}{section*.33}
+\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ introduced the 6 cases}{9}{section*.34}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ notation $cp$ for $\delimiter "426830A c, p \delimiter "526930B $ ?}{9}{section*.35}
+\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ c p to <c, p>}{10}{section*.36}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ todo example VPA}{10}{section*.37}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ total?}{10}{section*.38}
+\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ introduced 2 cases for b}{10}{section*.39}
+\contentsline {todo}{\color@fb@x {}{black}{}{red!30}{\leavevmode {\color {red!30}o}}\ so ?}{10}{section*.40}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ $b_\top $ : mot bien parenth\IeC {\`e}s\IeC {\'e} $c$/$r$}{10}{section*.41}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ explication Fig.~\ref {fig:best-update} suivant cas de \textup {\hbox {\mathsurround \z@ \normalfont (\ignorespaces \ref {eq:SWVPA-weight}\unskip \@@italiccorr )}}}{11}{section*.44}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ complete **}{11}{section*.45}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ detail with nb tr. and states}{11}{section*.46}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ total?}{12}{section*.47}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ 2 lines Application to Automated Music Transcription: implementation $\not =$ but same principle, on-the-fly automata construction during best search, for efficiency.}{12}{section*.48}
+\contentsline {todo}{\color@fb@x {}{black}{}{yellow!40}{\leavevmode {\color {yellow!40}o}}\ TODO future work}{13}{section*.50}

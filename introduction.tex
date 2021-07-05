@@ -121,6 +121,7 @@ and~\WA, by handling infinite alphabets, see Figure~\ref{fig:hierarchy}.
 % non-terminals and production rules).
 In the transition rules of \swM models, input symbols appear as variables, %(parameters)
 and the weight associated to a transition rule is a function of these variables.
+\philippe{This sentence (symbols as variables) is not immediatly clear to me. Maybe a short example or intuition?}
 %
 \begin{figure}
 \centering
@@ -185,20 +186,23 @@ The models presented here are finite automata called symbolic-weighted (\SWA),
 transducers (\SWT), and pushdown automata
 with a visibly restriction~\cite{AlurMadhusudan09nested} (\SWVPA).
 %\wrt an edit distance
-The latter model of automata computes on \emph{nested words}~\cite{AlurMadhusudan09nested}, 
+The latter model of automata operates on \emph{nested words}~\cite{AlurMadhusudan09nested}, 
 a structured form of words parenthesized with markup symbols, 
 corresponding to a linearization of trees.
 In the context of parsing, they can represent (weighted) AST of CF grammars.
 More precisely, a \SWVPA $A$ associates a weight value $A(t)$ % \in \Semiring$ 
-to a given a nested word $t$, which is the linearization of an AST. %representing a parse tree.
+to a given nested word $t$, which is the linearization of an AST. %representing a parse tree.
+\philippe{The weight is a label on edges in the derivation tree, right? Not sure I understand 
+the sentence}
 %
 On the other hand, 
 a \SWT can define a distance $T(s, t)$ between finite words $s$ and $t$
 over infinite alphabets. % following~\cite{Mohri03EDWA}.
 Then, the \emph{SW-parsing} problem aims at %computing 
 finding $t$ minimizing 
-$T(s, t) \otimes A(t)$ (\wrt the ranking defined by $\oplus$).
+$T(s, t) \otimes A(t)$ (\wrt the ranking defined by $\oplus$), given an input word $s$.
 The latter value is called the distance between $s$ and $A$ in~\cite{Mohri03EDWA}.
+\philippe{You mean the distance between $s$ and $t$? "The latter value" is a bit ambiguous}
 %
 Like weighted-parsing 
 methods~\cite{Goodman99SemiringParsing,Nederhof03weightedParsing,MorbitzVogler19weighted-parsing}, 
@@ -209,9 +213,11 @@ The first step is an intersection
 \florent{chap. intersection in~\cite{GruneJacobs08parsing}} 
 where, given a \SWT $T$, a \SWVPA $A$, and an input word $s$, 
 a \SWVPA $A_{T, s}$ is built, such that for all $t$, $A_{T, s}(t) = T(s, t) \otimes A(t)$.
+\philippe{The notation  $A_{T, s}$ has  not been introduced so far. It is not clear why $T$ is a parameter there}
 In the second step, a best AST $t$ is found by applying to $A_{T, s}$ 
 a best search algorithm similar to the shortest distance 
 in graphs~\cite{Mohri02semiring,Huang05kbest}.
+\philippe{OK, à quelques détails (pour moi), tout ça est très bien expliqué}
 %In expressiveness, they are equivalent to weighted CFG. 
 %and can be used in a general approach for parsing over infinite input alphabets.
 %
