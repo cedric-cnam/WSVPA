@@ -149,7 +149,8 @@
         ; Article~No.\,\@ArticleNo; pp.\,\@ArticleNo:\thepage--\@ArticleNo:\number\numexpr\getpagerefnumber{TotPages}%
         \\
       \fi
-      \setbox\@tempboxa\hbox{\IfFileExists{lipics-logo-bw.pdf}{\includegraphics[height=14\p@,trim=0 15 0 0]{lipics-logo-bw}}{\includegraphics[height=14\p@, width=62pt]{example-image-plain}}}%
+% Modif Philippe     
+%      \setbox\@tempboxa\hbox{\IfFileExists{lipics-logo-bw.pdf}{\includegraphics[height=14\p@,trim=0 15 0 0]{lipics-logo-bw}}{\includegraphics[height=14\p@, width=62pt]{example-image-plain}}}%
       \hspace*{\wd\@tempboxa}\enskip
       \href{https://www.dagstuhl.de/lipics/}%
            {Leibniz International Proceedings in Informatics}\\
@@ -840,7 +841,7 @@ pdfsubject={LIPIcs, Vol.\@SeriesVolume, \@EventShortTitle; Copyright (C) \ifx\au
 \newcommand*\Copyright[1]{%
   \def\@copyrightholder{#1}
   \def\@Copyright{%
-    \setbox\@tempboxa\hbox{\IfFileExists{cc-by.pdf}{\includegraphics[height=14\p@,clip]{cc-by}}{\includegraphics[height=14\p@, width=40pt]{example-image-plain}}}%
+%    \setbox\@tempboxa\hbox{\IfFileExists{cc-by.pdf}{\includegraphics[height=14\p@,clip]{cc-by}}{\includegraphics[height=14\p@, width=40pt]{example-image-plain}}}%
     \@rightskip\@flushglue \rightskip\@rightskip
     \hangindent\dimexpr\wd\@tempboxa+0.5em\relax
     \href{https://creativecommons.org/licenses/by/4.0/}%

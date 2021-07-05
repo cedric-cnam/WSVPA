@@ -29,9 +29,9 @@
 % - fancyline : curved arrow from note to inssertion point
 % - inline: place a todonote inside the text instead of in the margin
 % - author=name
-\newcommand{\mynote}[1]{\todo[noline,size=\tiny,color=yellow!40]{#1}}
-\newcommand{\lydia}[1]{\todo[noline,size=\tiny,color=red!40]{#1}}
-\newcommand{\philippe}[1]{\todo[noline,size=\tiny,color=blue!40]{#1}}
+\newcommand{\florent}[1]{\todo[noline,size=\tiny,color=yellow!40]{#1}}
+\newcommand{\lydia}[1]{\todo[noline,size=\tiny,color=red!30]{#1}}
+\newcommand{\philippe}[1]{\todo[noline,size=\tiny,color=green!30]{#1}}
 
 \usepackage{hyperref}
 %\usepackage[bookmarks,bookmarksnumbered,naturalnames,plainpages=false]{hyperref}
@@ -268,10 +268,10 @@ and extend it to infinite alphabets.
 The models introduced in this section generalize 
 weighted automata and transducers~\cite{Droste09handbook} 
 %over finite alphabets, see  e.g.~\cite{Mohri03EDWA}, 
-by labelling each transition with a weight function (instead of a simple weight value), 
+by labeling each transition with a weight function (instead of a simple weight value), 
 that takes the input and output symbols as parameters. 
 These functions are similar to the guards of symbolic automata~\cite{dAntoniVeanes17CAV,dAntoni21CACM},
-but they can return values in an generic semiring, 
+but they can return values in a generic semiring, 
 whereas the latter guards are restricted to the Boolean semiring.
 %
 
@@ -332,7 +332,10 @@ More precisely, $T$ defines a mapping
 from $\Sigma^* \times \Delta^*$ into~$\Semiring$,
 based on an intermediate function $\weight_T$
 defined recursively, for every states $q, q' \in Q$, 
-and every strings $\< s, t> \in \Sigma^* \times \Delta^* \setminus \{ \< \varepsilon, \varepsilon >\}$, by:
+and every strings $\< s, t> \in \Sigma^* \times \Delta^* \setminus \{ \< \varepsilon, \varepsilon >\}$ considered as concatenation
+of the symbol $a \in \Sigma$ (resp. $b \in \Delta$) with a word $u \in \Sigma^*$ (resp. $v in \Delta^*$), by :
+\lydia{added u and v def}
+
 %$a \in \Sigma$, $u \in \Sigma^*$, $b\in \Delta$, $v\in \Delta^*$, by:
 %
 \begin{align}
@@ -356,6 +359,8 @@ and every strings $\< s, t> \in \Sigma^* \times \Delta^* \setminus \{ \< \vareps
                                                      \end{array}} 
     \wei_{11}(q, a, b, q'') \otimes \weight_T(q'', u, v, q')\nonumber
 \end{align}
+
+
 %
 We recall that, by convention (Section~\ref{sec:semiring}), 
 an empty sum with $\bigoplus$ is equal to~$\zero$. 
@@ -399,14 +404,14 @@ see also~\cite{Mohri03ijfcs}.
 Intuitively, 
 $\wei_{10}(q, a, \varepsilon, r)$ is the cost of 
 the deletion of the symbol~$a \in \Sigma$ in~$s$, 
-$\wei{01}(q, \varepsilon, b, r)$ is the cost 
+$\wei_{01}(q, \varepsilon, b, r)$ is the cost 
 of the insertion of~$b \in \Delta$ in $t$, 
 and $\wei_{11}(q, a, b, r)$ is the cost 
 of the substitution of  $a \in \Sigma$ by~$b \in \Delta$.
 %
 The cost of a sequence of such operations transforming $s$ into $t$, 
 is the product, with $\otimes$, of the individual costs of the operations involved;
-And the distance between $s$ and $t$ is the sum, with $\oplus$,
+and the distance between $s$ and $t$ is the sum, with $\oplus$,
 of all possible products.
 %
 \medskip\noindent
@@ -442,13 +447,19 @@ T(s, t)  =
 
 \begin{example}
 In Common Western Music Notation~\cite{Gould11Notation}, 
-several symbols may be used to represent a unique sounding event.
+several symbols may be used to represent one single sounding event. 
+\lydia{unique $\to$ similar}
+\florent{similar $\to$ single}
 For instance, several notes can be combined with a tie, 
 like in $\musQuarter\!\!\!\mathrel{\raisebox{-1.5mm}{$\smile$}}\!\!\!\musEighth$,  
-and one note can be augmented by half its duration with a dot like in~\musQuarterDotted{}
-
+and one note can be augmented by half its duration with a dot like in~\musQuarterDotted{}.
+\lydia{modif.}
+These notations are perceived equivalent when played, as their duration is equal, yet the notation is different.
+We thus want to be able to compare a music score with music played by a performer. 
+\lydia{changed end}
+%
 \noindent 
-We propose a small transducer model that compares an input sequence of sounding 
+We propose a small weighted transducer model that calculates the distance bewteen an input sequence of sounding 
 events (music "performance") 
 to an output sequence of written events (music "score").
 % simple pointwise distance between two sequences of timestamped events **
@@ -470,14 +481,14 @@ and $\< \mathsf{-}, d >$ is a continuation of the previous event.
 
 We consider a \SWT with two states $q_0$ and $q_1$ whose purpose 
 is to compare a recorded performance $s \in \Sigma^*$
-with notated music sheet $t \in \Delta^*$.
-One timestamp $d_i \in \Sigma$ may corresponds 
+with a notated music sheet $t \in \Delta^*$.
+One timestamp $d_i \in \Sigma$ may correspond 
 to one notated event $\<\mathsf{e}, d'_i> \in \Delta$, in which case 
 the weight value computed by the \SWT is the time distance between both
 (see transitions $\wei_{11}$ below).
 %
 If $\<\mathsf{e}, d'_i>$ is followed by continuations 
-$\<\mathsf{-}, d'_{i+1}>$..., they are just skip with no cost (transitions $\wei_{01}$ or weight $\one$).
+$\<\mathsf{-}, d'_{i+1}>$..., they are just skipped with no cost (transitions $\wei_{01}$ or weight $\one$).
 %transitions
 \[
 \begin{array}{rclcrcl}
@@ -489,7 +500,10 @@ $\<\mathsf{-}, d'_{i+1}>$..., they are just skip with no cost (transitions $\wei
 \end{array}
 \]
 %
-Moreover, it may happen that the performers plays an extra note accidentally, but only once in a row. 
+We also must able to take performing errors into account, while still being able to compare with the score, 
+since a performer could, for example, play an unwritten extra note. 
+\lydia{reformulated this sentence} 
+%
 This is modelled by the transition $\wei_{10}$ with an arbitrary weight value $\alpha \in \Semiring$, 
 switching from state $q_0$ (normal) to $q_1$ (error).
 The transitions in the second column below switch back to the normal state $q_0$.
@@ -498,6 +512,11 @@ The transitions in the second column below switch back to the normal state $q_0$
 At last, we let $q_0$ be the only initial and final state, with
 $\init(q_0) = \final(q_0) = \one$, and 
 $\init(q_1) = \final(q_1) = \zero$. 
+
+\lydia{ccl to the ex}
+That way, an \SWT is capable of evaluating the differences between a score and a performance, 
+all the while ensuring that performance errors are plausible.
+
 %$\init(q_0, d, b) = \final(q_0, d, b) = \one$, and 
 %$\init(q_1, d, b) = \final(q_1, d, b) = \zero$, 
 %for all $d \in \Sigma$ and $b \in \Delta$.
@@ -604,7 +623,7 @@ $\wei_{01}$ ($T$ reading in output word and not in input word)
 and $\wei_{11}$ ($T$ reading in output word and input word).
 %
 Moreover, $\wei'_1$ also needs to simulate transitions 
-defined by $\wei_{10}$: $T$ reading in intput word and not in output word.
+defined by $\wei_{10}$: $T$ reading in input word and not in output word.
 Since $B_{T, A}$  will read only in the output word, such a transition corresponds
 to an $\varepsilon$-transition of $\SWA$, 
 but $\SWA$ have been defined without $\varepsilon$-transitions.
@@ -648,7 +667,7 @@ and
 \displaystyle\bigoplus_{\Sigma} \wei_{10}(q_1, q_2) 
 \otimes \final'(p_1, q_2)
 \) 
-\mynote{proof correctness}
+\florent{proof correctness}
 %\qed
 \end{proof}
 
@@ -657,7 +676,7 @@ and
 The construction time and size for $B_{T, A}$ are $O(\| T \|^3 . \| A \|^2)$,
 where the sizes $\| T \|$ and $\| A \|$ are their number of states.
 %of~$T$ is its number of states $|Q|$.
-\mynote{revise with nb of tr. and states}
+\florent{revise with nb of tr. and states}
 
 
 \begin{corollary} \label{cor:epsilon}
@@ -702,7 +721,7 @@ represent AST. % parse trees.
 Let $\Omega$ be a countable alphabet 
 %finite (large) or infinite,
 that we assume partitioned into three 
-subsets~$\Omegai$, $\Omegac$, $\Omegac$,
+subsets~$\Omegai$, $\Omegac$, $\Omegar$,
 whose elements are respectively called 
 \emph{internal}, \emph{call} and \emph{return} symbols.
 % names are  coined by application to functional program verification
@@ -734,7 +753,7 @@ $\mathsf{in} : Q \to \Semiring$
 (respectively $\mathsf{out} : Q \to \Semiring$)
 are functions defining the weight for entering
 (respectively leaving) a state, 
-and $\bar\wei$ is a sextuplet composed of the transition functions:
+and $\bar\wei$ is a sextuplet composed of the transition functions :
 $\weii : Q \times P \times Q \to \Phici$,  
 $\weiei : Q \times Q \to \Phii$,  
 $\weic : Q \times P \times Q \times P \to \Phicc$,  
@@ -782,15 +801,16 @@ overloading their names: % for simplicity:
 \]
 
 \noindent
-The intuition is the following for the above transitions.
+The intuition is the following for the above transitions. 
+$\weiei$, $\weiec$, and $\weier$ describe the cases where the stack is empty. 
+\lydia{moved this to the beginning}
 %
 \noindent
 $\weii$ and $\weiei$ both read an input internal symbol $a$ and change state from $q$ to $q'$, 
 without changing the stack. 
 Moreover, $\weii$ reads a pair made of 
 ${\call{c}} \in \Omegac$ and $p \in P$ on the top of the stack 
-($c$ is compared to $a$ by the weight function $\eta_\mathsf{ci} \in \Phici$)
-and $\weiei$, $\weiec$, $\weier$ apply if and only if the stack is empty.
+($c$ is compared to $a$ by the weight function $\eta_\mathsf{ci} \in \Phici$).
 %
 \noindent
 $\weic$ and $\weiec$ read the input call symbol $\call{c}'$, 
@@ -817,13 +837,20 @@ is here composed of a state $q \in Q$
 and a stack content $\gamma \in \Gamma^*$, 
 where $\Gamma = \Omegac \times P$.
 Hence, $\weight_A$ is a function from 
-$[Q \times \Gamma^*] \times \Omega^* \times [Q \times \Gamma^*]$ into~$\Semiring$
-(the empty stack is denoted by $\bot$). 
-%
+$[Q \times \Gamma^*] \times \Omega^* \times [Q \times \Gamma^*]$ into~$\Semiring$.
+The empty stack is denoted by $\bot$, and the upmost symbol is the last pushed content. 
+The following functions illustrate each of the possible cases, being : reading $a \in \Omegai$, 
+\lydia{intro to func}
+or $\call{c} \in \Omegac$, or $\return{r} \in \Omegar$ for each possible state of the stack (empty or not), 
+to add to $u \in {\Omega}^*$.
+\lydia{introduced the 6 cases}
+\florent{notation $cp$ for $\< c, p>$ ?}
+
 \begin{align}
 %\weight_A\bigl(\config{q}{\bot}, \varepsilon, \config{q}{\bot}) & = \one\label{eq:SWVPA-weight}\\
 %\weight_A\bigl(\config{q}{\bot}, \varepsilon, \config{q'}{\gamma}) & = \zero 
 %\mathrm{~if~} q \neq q'\nonumber\\
+%
 \weight_A\bigl(\config{q}{\bot}, \varepsilon, \config{q'}{\bot}) & = \one
 \mathrm{~if~} q = q' \mathrm{~and~} \zero \mathrm{~otherwise}\label{eq:SWVPA-weight}\\
 \weight_A\bigl(\configup{q}{\<{\call{c}}, p>\stackup\gamma}, a\, u, 
@@ -831,7 +858,7 @@ $[Q \times \Gamma^*] \times \Omega^* \times [Q \times \Gamma^*]$ into~$\Semiring
  {\displaystyle\bigoplus_{q'' \in Q}} \weii(q, c, p, a, q'') 
   \otimes \weight_A\bigl(\configup{q''}{\<{\call{c}}, p> \stackup \gamma}, u, 
                          \config{q'}{\gamma'}\bigr)\nonumber\\
- %
+%
 \weight_A\bigl(\config{q}{\bot}, a\, u, 
                \config{q'}{\gamma'}\bigr) & =  
   {\displaystyle\bigoplus_{q'' \in Q}} \weiei(q, a, q'') 
@@ -854,10 +881,10 @@ $[Q \times \Gamma^*] \times \Omega^* \times [Q \times \Gamma^*]$ into~$\Semiring
                           \scriptstyle p \in P
                           \end{array}}}
   \weiec(q, {\call{c}}, p, q'') 
-  \otimes \weight_A\bigl(\config{q''}{{\call{c}}\, p}, u, 
+  \otimes \weight_A\bigl(\config{q''}{\<{\call{c}}, p>}, u, 
                          \config{q'}{\gamma'}\bigr)\nonumber\\
 %
-\weight_A\bigl(\configup{q}{\<{\call{c}}, p>\stackup \gamma}, {\return{r}}\, u, 
+\weight_A\bigl(\configup{q}{\<{\call{c}}, p>\stackup\gamma}, {\return{r}}\, u, 
                \config{q'}{\gamma'}\bigr) & =  
  {\displaystyle\bigoplus_{q'' \in Q}} 
   \weir\bigl(q, {\call{c}}, p, {\return{r}}, q''\bigr) 
@@ -870,6 +897,7 @@ $[Q \times \Gamma^*] \times \Omega^* \times [Q \times \Gamma^*]$ into~$\Semiring
   \otimes \weight_A\bigl(\config{q''}{\bot}, u, 
                          \config{q'}{\gamma'}\bigr)\nonumber
 \end{align}
+\lydia{c p to <c, p>} 
 %
 % and ${\call{c}}\, p\stacksep \gamma$ 
 %denotes a stack where the pair made of ${\call{c}} \in \Omegac$ and $p \in P$ is the top symbol 
@@ -890,7 +918,7 @@ A(s)  =
 
 \begin{example}
 structured words with timed symbols...
-\mynote{todo example VPA}
+\florent{todo example VPA}
 intro language of music notation? (markup = time division, leaves = events etc)
 \end{example}
 
@@ -933,7 +961,7 @@ as in the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 %**hypotheses**
 Let us assume that the semiring~$\Semiring$ is
 commutative, bounded, and complete,  
-\mynote{total?}
+\florent{total?}
 and that $\bar\Phi$ is an effective label theory.
 %s.t. for all $\phi \in \Phii$, 
 %$\psi \in \Phir$, 
@@ -958,12 +986,15 @@ for a word in~$\Omega^*$.
 %
 \noindent
 %More precisely, 
-Let $b_\bot : Q \times Q \to \Semiring$ be such that: %the function:
+We distinguish two cases : when the stack is empty, and when it is not. 
+\lydia{introduced 2 cases for b}
+%
+In the case of an empty stack, let $b_\bot : Q \times Q \to \Semiring$ be such that : %the function:
 %
 \begin{equation}\label{eq:bbot}
   b_\bot(q, q') = \bigoplus_{s\in \Omega^*} 
   \textstyle
-  \weight_A\bigl(\config{q}{\bot}, s, \config{q'}{\bot}\bigr)
+  \weight_A\bigl(\config{q}{\bot}, s, \config{q'}{\bot}\bigr).
 \end{equation}
 %
 Since $\Semiring$ is complete, the infinite sum in \eqref{eq:bbot} is well defined,
@@ -976,10 +1007,12 @@ The term $\config{q}{\bot}, s, \config{q'}{\bot}$
 of this sum is the central expression in 
 the definition \eqref{eq:weightA} of $A(s_0)$, for the minimum $s_0$
 of the function $\weight_A$.
+\lydia{so ?}
 
 %
 \noindent
-Let $\top$ be a fresh stack symbol which does not belong to $\Gamma$,
+If the stack is not empty, let $\top$ be a fresh stack symbol which does not belong to $\Gamma$,
+\florent{$b_\top$ : mot bien parenthèsé $c$/$r$}
 and let $b_\top : Q \times P \times Q \to \Phic$ be such that,
 for every two states $q, q' \in Q$ 
 and stack symbol $p \in P$: %and $\sigma \in \{ \bot, \top \}$, 
@@ -995,9 +1028,9 @@ the minimum weight of a computation of $A$
 starting in state $q$ with a stack 
 $\<c, p> \cdot \gamma \in \Gamma^+$ 
 and ending in state $q'$ with the same stack,
-such that the computation does not pop 
+such that the computation can not pop 
 the pair made of $c$ and $p$ at the top of this stack,
-but may read these symbols.
+but may only read these symbols.
 Moreover, $A$ may push another pair $\< c', p'>$ %call symbols 
 on the top of $\<c, p> \cdot \gamma$,
 following the third case of 
@@ -1026,7 +1059,7 @@ if $q_1 = q_2$ and $d_\bot(q_1, q_2) = d_\top(q_1, p, q_2) = \zero$ otherwise$\;
 \Extract $\< q_1, q_2>$ or $\< q_1, p, q_2>$ from $\Q$
 %
 %\noindent\quad
-such that $d_\bot(q_1, q_2)$, resp. $\bigoplus_{c\in \Omegac} d_\top(q_1, p, q_2)(c)$, is minimal in $\Semiring$ wrt $\leq_\oplus$$\;$
+such that $d_\bot(q_1, q_2)$, resp. $\bigoplus_{c\in \Omegac} d_\top(q_1, p, q_2)(c)$, is minimal in $\Semiring$ \wrt $\leq_\oplus$$\;$
 
 %\noindent\quad 
 %\textbf{for all} $q_0, q_3 \in Q$ 
@@ -1106,15 +1139,16 @@ d_\bot(q_1, q_3) & \opluseq &
 
 
 \noindent
+\florent{explication Fig.~\ref{fig:best-update} suivant cas de \eqref{eq:SWVPA-weight}}
 The infinite sums in the updates of $d$ in Algorithm~\ref{algo:Dijkstra}, 
 Figure~\ref{fig:best-update}
 are well defined
 since~$\Semiring$ is complete.
-\mynote{complete **} 
-** effectively computable by hypothese that the label theory is effective**
+\florent{complete **} 
+** effectively computable by hypothesis that the label theory is effective**
 The algorithm performs $2.|Q|^2$ iterations until $P$ is empty, 
 and each iteration has a time complexity $O(|Q|^2 . |P|)$.
-\mynote{detail with nb tr. and states}
+\florent{detail with nb tr. and states}
 That gives a time complexity $O(|Q|^4 . |P|)$. 
 It can be reduced by implementing $P$ as a priority queue, 
 prioritized by the value returned by $d$.
@@ -1176,7 +1210,7 @@ Let~$\Sigma$ be a countable input alphabet,
 and~$\Omega = \Omegai \uplus \Omegac \uplus \Omegar$ be a countable output alphabet.
 %
 Let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a 
-commutative, bounded, and complete \mynote{total?} semiring  
+commutative, bounded, and complete \florent{total?} semiring  
 and let $\bar\Phi$ be an effective label theory over $\Semiring$,
 containing $\Phi_\Sigma$, $\Phi_{\Sigma, \Omegai}$, as well as
 $\Phii$, $\Phic$, $\Phir$, $\Phicr$
@@ -1329,7 +1363,9 @@ using the best-search procedure of Proposition~\ref{th:best-search}.
 %\paragraph{Application to Automated Music Transcription.}
 %\input{transcription}
 %...
-
+\florent{2 lines Application to Automated Music Transcription: 
+implementation $\neq$ but same principle, on-the-fly automata construction
+during best search, for efficiency.}
 
 
 \section*{Conclusion}
@@ -1351,6 +1387,7 @@ opening possibilities of quantitative analysis via this method.
 % discussion
 \noindent
 Ongoing and future work include 
+\florent{TODO future work}
 
 \noindent
 -- The study of other theoretical properties of SW models, 
