@@ -29,3 +29,4 @@
 *.synctex.gz
 *.toc
 *.vrb
+.project
