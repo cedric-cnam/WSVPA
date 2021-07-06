@@ -334,11 +334,13 @@ More precisely, $T$ defines a mapping
 from $\Sigma^* \times \Delta^*$ into~$\Semiring$,
 based on an intermediate function $\weight_T$
 defined recursively, for every states $q, q' \in Q$, 
-and every pairs of strings $\< s, t> \in \Sigma^* \times \Delta^* \setminus \{ \< \varepsilon, \varepsilon >\}$,
-each  considered as the concatenation
-of the symbol $a \in \Sigma$ (resp. $b \in \Delta$) with a word $u \in \Sigma^*$ (resp. $v \in \Delta^*$), by :
-\lydia{added u and v def}
-
+and every pairs of strings $\< s, t> \in \Sigma^* \times \Delta^*$,
+% \setminus \{ \< \varepsilon, \varepsilon >\}$,
+where $au$, and $bv$, denote the concatenation
+of the symbol $a \in \Sigma$ (resp. $b \in \Delta$) 
+with a word $u \in \Sigma^*$ (resp. $v \in \Delta^*$).
+\lydia{added $u$ and $v$ def}
+%
 %$a \in \Sigma$, $u \in \Sigma^*$, $b\in \Delta$, $v\in \Delta^*$, by:
 %
 \begin{align}

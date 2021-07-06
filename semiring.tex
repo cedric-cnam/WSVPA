@@ -36,14 +36,14 @@ in a chaining of transitions.
 
 \medskip%\noindent
 A semiring $\Semiring$ is \emph{commutative} if $\otimes$ is commutative.
-It is \emph{idempotent} if for each $x \in \dom(\Semiring)$, $x \oplus x = x$.
+It is \emph{idempotent} if for all $x \in \Semiring$, $x \oplus x = x$.
 %
 Every idempotent semiring~$\Semiring$ induces 
 a partial ordering~$\leq_\oplus$ 
 called the \emph{natural ordering} of~$\Semiring$~\cite{Mohri02semiring} 
-and defined,  by: 
+defined,  by: 
 %implicitly defined by the semiring $\Semiring$ 
-for all $x$ and $y$,
+for all $x, y\in \Semiring$,
 $x \leq_\oplus y \;\mbox{iff}\; x \oplus y = x$.
 %(see~\cite{Mohri02semiring} for the proof that it is an ordering).
 %
@@ -56,6 +56,7 @@ that coincides with the usual ordering on the Tropical semiring \emph{min-plus}
 An idempotent semiring $\Semiring$~is called \emph{total} if
 it~$\leq_\oplus$ is total
 \ie when for all $x, y \in \Semiring$, either $x \oplus y = x$ or $x \oplus y = y$.
+\florent{is total necessary?}
 
 \begin{lemma}[Monotony, \cite{Mohri02semiring}] \label{lem:monotonic}
 Let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be an idempotent semiring.
@@ -65,9 +66,10 @@ $x \oplus z \leq_\oplus y \oplus z$,
 $x \otimes z \leq_\oplus y \otimes z$
 and $z \otimes x \leq_\oplus z \otimes y$.
 \end{lemma}   
-When the property of Lemma~\ref{lem:monotonic} holds, 
+%When  holds, 
 %We say in this case that 
-$\Semiring$ is called  \emph{monotonic}. % \wrt $\leq_\oplus$.
+To express the property of Lemma~\ref{lem:monotonic}, we call
+$\Semiring$ \emph{monotonic} \wrt $\leq_\oplus$.
 %A semiring $\Semiring$ 
 %is \emph{monotonic} \wrt a partial ordering~$\leq$ 
 %iff for all $x, y, z  \in \Semiring$,  $x \leq y$ implies
@@ -130,9 +132,9 @@ $\Semiring$ with the property ($ii$) of Lemma~\ref{lem:bounded}
 is called \emph{bounded} -- we shall use this term in the rest of the paper. 
 % \emph{negative boundedness} 
 It implies that, when looking for a best path in a graph whose edges
-are weighted by values of $\Semiring$, the loops can be safely avoided
-(because, for all $x \in \Semiring$ and $n \geq 1$, 
- $x \oplus x^n = x \otimes (\one \oplus x^{n-1}) = x$).
+are weighted by values of $\Semiring$, the loops can be safely avoided,
+because, for all $x \in \Semiring$ and $n \geq 1$, 
+ $x \oplus x^n = x \otimes (\one \oplus x^{n-1}) = x$.
 
 
 \begin{lemma}

@@ -67,14 +67,6 @@ similar closures hold for $\oplus$.
 %belong respectively to~$\Phi_\Delta$ and~$\Phi_\Sigma$.
 \florent{partial application is needed?}
 
-\medskip\noindent
-In what follows, we might omit the subscripts in 
-$\otimes_1$, $\otimes_2$, $\oplus_1$, $\oplus_2$
-when there is no ambiguity, 
-and keep them only for the special case $\Sigma = \Delta$,
-\ie $\eta \in \Phi_{\Sigma, \Sigma}$. % for~$\otimes_1$ above,
-%and $\eta \in \Phi_{\Delta, \Delta}$ for~$\otimes_2$. 
-%
 %Moreover, these sets are required to be closed under the 
 %operators~$\oplus$ and~$\otimes$ of~$\Semiring$:
 %for all $\phi, \phi' \in \Phi_\Sigma$,
@@ -100,9 +92,12 @@ and keep them only for the special case $\Sigma = \Delta$,
 %and  $\eta_b: x \mapsto f(x, b)$ for $b \in \Delta$ and $x \in \Sigma$, 
 %belong resp. to~$\Phi_\Sigma$ and~$\Phi_\Delta$.
 %
-\noindent
-When the semiring $\Semiring$ is complete, 
-let us consider the following operators on the functions of a label theory.
+\noindent 
+Intuitively, the operators $\bigoplus_\Sigma$ 
+return global minimum, \wrt $\leq_\oplus$, of functions of~$\Phi_\Sigma$. 
+%
+When the semiring $\Semiring$ is complete, we 
+consider the following operators on the functions of~$\bar\Phi$. % a label theory.
 %(we use overloading to simplify notations):
 \[
 \begin{array}{ll}
@@ -117,18 +112,26 @@ let us consider the following operators on the functions of a label theory.
 \end{array}
 \]
 %
-Similarly as for the above product and sum of functions, 
-the superscripts in $\bigoplus^1_\Sigma$ and $\bigoplus^2_\Sigma$
-shall be reserved to the ambiguous case of $\Phi_{\Sigma,\Sigma}$,
-in order to to distinguish between the first and the second argument.
+\medskip\noindent
+In what follows, we might omit the sub- and superscripts in 
+$\otimes_1$, $\bigoplus^1_\Sigma$..., 
+%$\otimes_2$, $\oplus_1$, $\oplus_2$
+when there is no ambiguity.
+We shall keep them only for the special case $\Sigma = \Delta$,
+\ie $\eta \in \Phi_{\Sigma, \Sigma}$, % for~$\otimes_1$ above,
+%and $\eta \in \Phi_{\Delta, \Delta}$ for~$\otimes_2$. 
+%Similarly as for the above product and sum of functions, 
+%the superscripts in $\bigoplus^1_\Sigma$ and $\bigoplus^2_\Sigma$
+%shall be reserved to the ambiguous case of $\Phi_{\Sigma,\Sigma}$,
+in order to be able to distinguish between the first and the second argument.
 %
 \begin{definition}\label{def:label-th-complete}
 A label theory~$\bar\Phi$ is \emph{complete} when 
-its underlying semiring~$\Semiring$ is complete, and
+the underlying semiring~$\Semiring$ is complete, and
 for all $\Phi_{\Sigma, \Delta} \in \bar\Phi$ 
 and all $\eta \in \Phi_{\Sigma, \Delta}$,
-$\bigoplus_\Sigma \eta \in \Phi_{\Delta}$ and 
-$\bigoplus_\Delta \eta \in \Phi_{\Sigma}$.
+$\bigoplus^1_\Sigma \eta \in \Phi_{\Delta}$ and 
+$\bigoplus^2_\Delta \eta \in \Phi_{\Sigma}$.
 \end{definition}
 %
 \florent{notion of diagram of functions akin BDD for transitions in practice}
@@ -185,20 +188,19 @@ and similarly for~$\oplus$
 %using the operators of $\Semiring$, 
 %and the same holds for $\Phi_{\Delta}$ and $\Phi_{\Sigma, \Delta}$. 
 
-\noindent 
-Intuitively, the operators $\bigoplus_\Sigma$ 
-return global minimum, \wrt $\leq_\oplus$, of functions of~$\bar\Phi$. 
-%
+
 \philippe{Je trouve qu'il y a beaucoup de notions à retenir (complete, effective) et ça devient
 difficile pour un lecteur non spécialiste. Est-ce que tout est nécessaire (je ne sais plus qui m'avait dit: 
 un concept en plus, un point en moins.}
+
+\noindent
 A label theory is called \emph{effective} when 
 for all $\phi \in \Phi_\Sigma$ and $\eta \in \Phi_{\Sigma, \Delta}$, 
 $\bigoplus_{\Sigma} \phi$, 
-$\bigoplus_{\Sigma} \eta$, and
-$\bigoplus_{\Delta} \eta$
+$\bigoplus_{\Delta}\bigoplus_{\Sigma} \eta$, and
+$\bigoplus_{\Sigma}\bigoplus_{\Delta} \eta$
 can be effectively computed from $\phi$ and $\eta$.
-\florent{precise/restrict complexity}
+\florent{$\exists$ oracle returning ...  in worst time complexity $T$.}
 
 %there is an oracle returning, in constant time,
 %$\bigoplus_{\Sigma} \phi$, 
@@ -215,6 +217,14 @@ can be effectively computed from $\phi$ and $\eta$.
 %\end{definition}
 %A label theory is $k$-convex if all its functions are $k$-convex.
 
+
+Concretely, in one of the language models defined below, 
+we consider a finite number of base functions $\phi, \eta$ of the underlying label theory,
+labelling transitions, and combine them with the above operators for construction of 
+other models.
+The combinations might be represented by dags (diagrams) whose leaves are labeled
+by base functions and inner nodes by operators.
+% we can compute the value of a diagram in time...
 
 
 
