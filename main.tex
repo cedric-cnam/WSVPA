@@ -309,9 +309,11 @@ is not the constant $\zero$.
 \noindent
 For convenience, we shall sometimes present transitions 
 as functions of  
+\philippe{I missed sth: what is this $\varepsilon$? Intuitively clear but not defined?}
 $Q \times (\Sigma \cup \{ \varepsilon \}) \times (\Delta \cup \{ \varepsilon \}) \times Q \to \Semiring$,
 overloading the function names,
 such that, for all $q, q' \in Q$, $a \in \Sigma$,  $b \in \Delta$, 
+
 \[
 \begin{array}{rcll}
 \wei_{10}(q, a, \varepsilon, q') & = & \phi(a) & %\wei_\Sigma(q, q')(a)
@@ -332,8 +334,9 @@ More precisely, $T$ defines a mapping
 from $\Sigma^* \times \Delta^*$ into~$\Semiring$,
 based on an intermediate function $\weight_T$
 defined recursively, for every states $q, q' \in Q$, 
-and every strings $\< s, t> \in \Sigma^* \times \Delta^* \setminus \{ \< \varepsilon, \varepsilon >\}$ considered as concatenation
-of the symbol $a \in \Sigma$ (resp. $b \in \Delta$) with a word $u \in \Sigma^*$ (resp. $v in \Delta^*$), by :
+and every pairs of strings $\< s, t> \in \Sigma^* \times \Delta^* \setminus \{ \< \varepsilon, \varepsilon >\}$,
+each  considered as the concatenation
+of the symbol $a \in \Sigma$ (resp. $b \in \Delta$) with a word $u \in \Sigma^*$ (resp. $v \in \Delta^*$), by :
 \lydia{added u and v def}
 
 %$a \in \Sigma$, $u \in \Sigma^*$, $b\in \Delta$, $v\in \Delta^*$, by:
@@ -365,6 +368,7 @@ of the symbol $a \in \Sigma$ (resp. $b \in \Delta$) with a word $u \in \Sigma^*$
 We recall that, by convention (Section~\ref{sec:semiring}), 
 an empty sum with $\bigoplus$ is equal to~$\zero$. 
 %
+\philippe{OK tout ça se lit bien :-)}
 Intuitively, using a transition $\wei_{ij}(q, a, b, q')$ means for $T$:
 when reading respectively $a$ and $b$ at the current positions in the input and output words, 
 increment the current position in the input word if and only if $i = 1$, 
@@ -445,6 +449,9 @@ T(s, t)  =
 %\endex
 %\end{example}
 
+\philippe{Je crois qu'il faudrait numéroter les exemples indépendamment des définitions. Cet exemple est le premier
+qui donne des détails sur l'application visée. Il arrive peut-être un peu tard et est long. On pourrait introduire
+la motivation dans l'intro, et développer des petits exemples au fur et à mesure.}
 \begin{example}
 In Common Western Music Notation~\cite{Gould11Notation}, 
 several symbols may be used to represent one single sounding event. 
@@ -500,7 +507,7 @@ $\<\mathsf{-}, d'_{i+1}>$..., they are just skipped with no cost (transitions $\
 \end{array}
 \]
 %
-We also must able to take performing errors into account, while still being able to compare with the score, 
+We also must be able to take performing errors into account, while still being able to compare with the score, 
 since a performer could, for example, play an unwritten extra note. 
 \lydia{reformulated this sentence} 
 %
@@ -542,7 +549,7 @@ $\mathsf{in} : Q \to \Semiring$ %\Phi_\Sigma$,
 (respectively $\mathsf{out} : Q \to \Semiring$)  %\Phi_\Sigma,$
 are functions defining the weight for entering
 (respectively leaving) computation in a state, 
-and ${\wei_1}$ is a transition functions 
+and ${\wei_1}$ is a transition function 
 from $Q \times Q$ into~$\Phi_{\Sigma}$.
 \end{definition}
 %      
@@ -619,11 +626,11 @@ for all $p \in P$, $q \in Q$
 by $\init'(p, q) = \init_A(p) \otimes \init_T(q)$.
 The transition function $\wei'_1$ will roughly perform 
 a synchronized product of transitions defined by $\wei_1$, 
-$\wei_{01}$ ($T$ reading in output word and not in input word)
-and $\wei_{11}$ ($T$ reading in output word and input word).
+$\wei_{01}$ ($T$ reading in output word and not an input word)
+and $\wei_{11}$ ($T$ reading both an input word and an output word).
 %
 Moreover, $\wei'_1$ also needs to simulate transitions 
-defined by $\wei_{10}$: $T$ reading in input word and not in output word.
+defined by $\wei_{10}$: $T$ reading in input word and not an output word.
 Since $B_{T, A}$  will read only in the output word, such a transition corresponds
 to an $\varepsilon$-transition of $\SWA$, 
 but $\SWA$ have been defined without $\varepsilon$-transitions.
@@ -724,6 +731,9 @@ that we assume partitioned into three
 subsets~$\Omegai$, $\Omegac$, $\Omegar$,
 whose elements are respectively called 
 \emph{internal}, \emph{call} and \emph{return} symbols.
+\philippe{Là je crois qu'il faudrait expliquer ces Omega, je commence à fatiguer et je suis un
+peu largué par toutes ces définitions. J'intuite qu'il s'agit des symboles, parenthèses ouvrantes
+et fermantes? Pourquoi il faut un alphabet pour les parenthèses?}
 % names are  coined by application to functional program verification
 % \begin{itemize}
 % \item a set $\Omegai$ of \emph{internal symbols} denoted $a$,
@@ -748,6 +758,8 @@ A \emph{Symbolic Weighted Visibly Pushdown Automata} (\SWVPA)
 over  $\Omega = \Omegai \uplus \Omegac \uplus \Omegar$, $\Semiring$ and $\bar\Phi$ 
 is a tuple $A = \< Q, P, \init, \bar\wei, \final >$,
 where $Q$ is a finite set of states, 
+\philippe{Est-ce que tout le monde sait ce qu'est un pushdown automata? Je suppose que c'est
+lié à la pile.}
 $P$ is a finite set of stack symbols, 
 $\mathsf{in} : Q \to \Semiring$ 
 (respectively $\mathsf{out} : Q \to \Semiring$)
@@ -1256,6 +1268,7 @@ and returning a witness $t$.
 Every labeled tree $t$ can be linearized into a nested word $\lin(t) \in \Omega^*$, 
 assuming \eg that $\Omegai$ contain the symbols labelling the leaves (symbols of rank $0$) 
 and $\Omegac$ and $\Omegar$ contain respectively one left and right parenthesis
+\philippe{Ah oui, ça aurait pu être dit avant.}
 $\ccall{b}$ and $\creturn{b}$ for each symbol $b$ labelling inner nodes (symbols of rank $>0$). 
 %
 With this representation, the projection $\lin(t)|_\Omegai$ is then the 
