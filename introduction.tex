@@ -120,7 +120,6 @@ such as the Viterbi semiring and the tropical min-plus algebra% % see Figure~\re
 
 
 In this paper, we present a uniform framework for weighted parsing over infinite input alphabets.
-\philippe{Tu fais une différence entre model et automata?}
 It is based on \emph{symbolic weighted} finite states language models (\swM),
 generalizing the Boolean guards of~\SA %in transitions
 into functions into an arbitrary semiring,
@@ -138,8 +137,6 @@ In short, a transition rule $q \xrightarrow{\phi} q'$ from state $q$ to $q'$ of 
 is labeled by a function $\phi$ associating to every input symbol $a$ a weight value $\phi(a)$
 in a semiring domain.
 %and the weight associated to a transition rule is a function of these variables.
-\philippe{This sentence (symbols as variables) is not immediately clear to me. Maybe a short example or intuition?}
-\florent{modified}
 %
 \begin{figure}
 \centering
@@ -200,8 +197,8 @@ $q \xrightarrow{\dots} q'$ is a transition between states $q$ and $q'$.}
 %like for the guards in the rules of SA,
 %but can be an arbitrary commutative semiring (assuming some restrictions).
 %
-\philippe{Tu veux dire: les modèles formels que tu combines?}
-The models presented here are finite automata called symbolic-weighted (\SWA),
+The framework relies on several language models:
+finite automata called symbolic-weighted (\SWA),
 transducers (\SWT), and pushdown automata
 with a visibly restriction~\cite{AlurMadhusudan09nested} (\SWVPA).
 %\wrt an edit distance
@@ -230,7 +227,6 @@ The first step is an intersection
 \florent{chap. intersection in~\cite{GruneJacobs08parsing}}
 where, given a \SWT $T$, a \SWVPA $A$, and an input word $s$,
 a \SWVPA $A_{T, s}$ is built, such that for all $t$, $A_{T, s}(t) = T(s, t) \otimes A(t)$.
-\philippe{The notation  $A_{T, s}$ has  not been introduced so far. It is not clear why $T$ is a parameter there}
 In the second step, a best AST $t$ is found by applying to $A_{T, s}$
 a best search algorithm similar to the shortest distance
 in graphs~\cite{Mohri02semiring,Huang05kbest}.
