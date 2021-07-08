@@ -1024,7 +1024,32 @@ b_\bot(q, q')
 \).
 
 \noindent
-In order to compute 
+In order to compute the above function $b_\bot : Q \times Q \to \Semiring$, 
+we shall use the auxiliary function $b_\top :  Q \times P \times Q \to \Phic$.
+%
+Intuitively, the function defined in \eqref{eq:btop}
+associates to $c \in \Omegac$ 
+the minimum weight of a computation of $A$
+starting in state $q$ with a stack 
+$\<c, p> \cdot \gamma \in \Gamma^+$ 
+and ending in state $q'$ with the same stack,
+such that the computation can not pop 
+the pair made of $c$ and $p$ at the top of this stack,
+but may only read these symbols.
+Moreover, $A$ may push another pair $\< c', p'>$ %call symbols 
+on the top of $\<c, p> \cdot \gamma$,
+following the third case of 
+in the definition \eqref{eq:SWVPA-weight} of $\weight_A$,
+and may pop $\< c', p'>$ later, following the fifth case of \eqref{eq:SWVPA-weight} (return symbol). 
+%However, it cannot apply one of the two last cases (return symbol and empty stack)
+%when the current stack is $\gamma$.
+%pop symbols in $\gamma$.
+% Note that having a stack reduced to such a symbol makes impossible the application of the 
+% two last cases in the definition of $\weight_A$ (return symbol and empty stack). 
+% However, it is possible to apply the two first cases 
+% (internal symbol or call symbol, with a push on the top of $\top$).
+
+
 
 ****
 
@@ -1074,27 +1099,6 @@ and stack symbol $p \in P$: %and $\sigma \in \{ \bot, \top \}$,
   \weight_A\bigl(\configup{q}{\< c, p> \stackup \top }, s, \configup{q'}{\<c, p> \stackup \top}\bigr)
 \end{equation}
 %
-Intuitively, the function defined in \eqref{eq:btop}
-associates to $c \in \Omegac$ 
-the minimum weight of a computation of $A$
-starting in state $q$ with a stack 
-$\<c, p> \cdot \gamma \in \Gamma^+$ 
-and ending in state $q'$ with the same stack,
-such that the computation can not pop 
-the pair made of $c$ and $p$ at the top of this stack,
-but may only read these symbols.
-Moreover, $A$ may push another pair $\< c', p'>$ %call symbols 
-on the top of $\<c, p> \cdot \gamma$,
-following the third case of 
-in the definition \eqref{eq:SWVPA-weight} of $\weight_A$,
-and may pop $\< c', p'>$ later, following the fifth case of \eqref{eq:SWVPA-weight} (return symbol). 
-%However, it cannot apply one of the two last cases (return symbol and empty stack)
-%when the current stack is $\gamma$.
-%pop symbols in $\gamma$.
-% Note that having a stack reduced to such a symbol makes impossible the application of the 
-% two last cases in the definition of $\weight_A$ (return symbol and empty stack). 
-% However, it is possible to apply the two first cases 
-% (internal symbol or call symbol, with a push on the top of $\top$).
 
 \begin{algorithm}
 \SetKw{Extract}{extract}
