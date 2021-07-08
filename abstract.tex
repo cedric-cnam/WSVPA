@@ -4,23 +4,24 @@
 %
 We propose a framework for weighted parsing over infinite alphabets.
 %
-It is based on language models called Symbolic Weighted Automata (\SWA) 
-at the joint %intersection 
-between Symbolic Automata (\SA) and Weighted Automata (\WA), 
+It is based on language models called Symbolic Weighted Automata (\SWA)
+at the joint %intersection
+between Symbolic Automata (\SA) and Weighted Automata (\WA),
 as well as Transducers (\SWT) and Visibly Pushdown (\SWVPA) variants.
 %
-Like \SA, \SWA deal with large or infinite input alphabets, 
+Like \SA, \SWA deal with large or infinite input alphabets,
 and like \WA, they output a weight value in a semiring domain.
-The transitions of \SWA are labeled by functions from an infinite alphabet into the weight domain. 
-This is unlike \SA whose transitions are guarded by boolean predicates 
-overs symbols in an infinite alphabet 
-and also unlike \WA whose transitions are labeled by constant weight values, 
+The transitions of \SWA are labeled by functions from an infinite alphabet into the weight domain.
+This is unlike \SA whose transitions are guarded by boolean predicates
+overs symbols in an infinite alphabet
+and also unlike \WA whose transitions are labeled by constant weight values,
 and who deal only with finite automata.
 %
-We present some properties of \SWA, \SWT and \SWVPA models, 
-%and show how they can be used 
-that we use to define and solve a variant of parsing 
+We present some properties of \SWA, \SWT and \SWVPA models,
+%and show how they can be used
+that we use to define and solve a variant of parsing
 over infinite alphabets.
 %
-We also briefly describe the application that motivated the introduction of these models: 
+We illustrate the models with examples taken from
+a motivating application, namely
 a parse-based approach to automated music transcription.
