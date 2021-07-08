@@ -458,7 +458,7 @@ T(s, t)  =
 %\end{example}
 
 
-\begin{example}
+\begin{example}\label{ex:SWT}
 Let us develop the example of comparison between music played by a performer,
 represented as a sequence $s \in \Sigma^*$ of events in the MIDI alphabet $\Sigma$,
 and  a music score represented as a sequence $t \in \Delta^*$
@@ -821,6 +821,19 @@ for~$\Phi_\Deltai$, $\Phi_\Deltac$, $\Phi_\Deltar$ and~$\Phi_{\Deltac, \Delta_\m
 %of unary functions in $\Deltai \to \Semiring$,
 %closed under $\oplus$ and $\otimes$.
 
+\begin{example}
+Consider once more the scores of Exemple~\ref{ex:running}.
+$\Deltai$ represents the set of music events of the form $<n, t>$
+where $n$ is either a note (e.g. A4), the continuation symbol $-$, or a
+rest symbol R. $\Deltac$ and  $\Deltar$ are used to encode the score structure:
+Let $\Deltac = \{[, <]\}$ and  $\Deltar = \{], >]\}$ where $[$ (rep. $]$)
+and $<$ (resp. $>$) correspond to start/end of measures, and start/end of
+beams. Then  \includegraphics[scale=0.20]{pictures/score5.png}
+is encoded with the nested word $[0, \frac{3}{4}, \frac{7}{8}>][<1, \frac{4}{3}, \frac{5}{3}]$
+\endex
+\end{example}
+
+
 \begin{definition}
 A \emph{Symbolic Weighted Visibly Pushdown Automata} (\SWVPA)
 over  $\Delta = \Deltai \uplus \Deltac \uplus \Deltar$, $\Semiring$ and $\bar\Phi$
@@ -994,12 +1007,6 @@ A(t)  =
 \label{eq:SWVPA-value}
 \end{equation}
 
-\begin{example}
-structured words with timed symbols...
-\florent{todo example VPA}
-intro language of music notation? (markup = time division, leaves = events etc)
-\end{example}
-
 \noindent
 Every $\SWA$ $A = \< Q, \init, {\wei_1}, \final >$,
 over $\Sigma$, $\Semiring$ and $\bar\Phi$
@@ -1090,11 +1097,11 @@ b_\bot(q, q')
 In order to compute the above function $b_\bot : Q \times Q \to \Semiring$, 
 we shall consider an auxiliary function $b_\top :  Q \times P \times Q \to \Phic$.
 %
-Intuitively, when $b_\top(q, p, q') = \phi \in \Phic$, 
-for all $c \in \Deltac$,  $\phi(c)$ is 
+Intuitively, $b_\top(q, p, q')$ is a function of $\Phic$, 
+mapping every $c \in \Deltac$ to 
 the minimum weight of a computation of~$A$
 starting in state $q$ with a non-empty stack 
-$\gamma' = \<c, p> \, \gamma \in \Gamma^+$ 
+$\gamma' = \<c, p> \, \gamma \in \Gamma^+$, 
 and ending in state $q'$ with the same stack $\gamma'$,
 such that moreover, 
 the computation does not pop the pair $\<c, p>$ at the top of $\gamma'$
@@ -1108,6 +1115,11 @@ following the fifth case of \eqref{eq:SWVPA-weight} (return symbol).
 %However, it cannot apply one of the two last cases (return symbol and empty stack)
 %when the current stack is $\gamma$.
 %pop symbols in $\gamma$.
+%
+% Note that having a stack reduced to such a symbol makes impossible the application of the
+% two last cases in the definition of $\weight_A$ (return symbol and empty stack).
+% However, it is possible to apply the two first cases
+% (internal symbol or call symbol, with a push on the top of $\top$).
 %
 Formally, in order to define $b_\top$, we consider 
 a fresh stack symbol $\top \notin \Gamma$,   %which does not belong to $\Gamma$,
@@ -1332,6 +1344,26 @@ Following the terminology of~\cite{Mohri03EDWA},
 $\SW$-parsing is the problem of computing
 the distance~\eqref{eq:distance-lang} between the input~$s$ and the output weighted language of~$A$,
 and returning a witness $t$.
+
+\begin{example}[Symbolic Weighted Parsing and the transcription problem]
+Applied to the music transcription problem, the above formalism
+is interpreted as follows:
+\begin{enumerate}
+
+  \item The \SWT $T$ evaluates a ``fitness measure''  that expresses
+    a correspondance between a performance and its notation. See Example~\ref{ex:SWT}.
+\item The \SWVPA $A$ expresses a cost related to the music notation. One possibility
+ is to relate this cost to the structural complexity: given a set of equivalent
+ representations, we aim at choosing the simpler one. For instance
+ \includegraphics[scale=0.20]{pictures/score4.png} should be favored
+ on \includegraphics[scale=0.20]{pictures/score5.png}, although both yield
+ a same linearization. Costs  can be expressed
+ in the grammar with weight associated to each production rule. See Example~\ref{rules-division}.
+
+ \end{enumerate}
+Therefore, the framework, applied to the transcription problem, allows to find an optimal
+solution that considers both the fitness of the result to the input, and the complexity of the former.
+\end{example}
 %
 %\subsection{Computation}
 %
@@ -1415,7 +1447,7 @@ $\ccall{b}$ and $\creturn{b}$ for each symbol $b$ labelling inner nodes of $\tau
 %With this representation, the projection $\lin(t)|_\Deltai$ is the
 %sequence of leaves of $\tau$. %, enumerated in a \emph{dfs}-traversal.
 %
-We show in Appendix~\ref{sec:trees} how to construct 
+We show in Appendix~\ref{sec:trees} how to construct
 %($\SW$) tree automaton~$A$ %(in particular the TA computing on the AST of a given CF-grammar)
 a $\SWVPA$ $A$ such that $A(\lin(\tau))$ is the weight the AST $\tau$ of $G$.
 
