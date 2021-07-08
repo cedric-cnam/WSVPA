@@ -978,14 +978,14 @@ to add to $u \in {\Delta}^*$.
 %and $\gamma$ is the rest of stack.
 
 \noindent
-The weight associated by $A$ to $s \in \Delta^*$
+The weight associated by $A$ to $t \in \Delta^*$
 is defined according to empty stack semantics:
 %
 \begin{equation}
-A(s)  =
+A(t)  =
 {\displaystyle\bigoplus_{q, q' \in Q}} \textstyle
 \mathsf{in}(q) \mathop{\otimes}
-\weight_A\bigl(\config{q}{\bot}, s, \config{q'}{\bot}\bigr)
+\weight_A\bigl(\config{q}{\bot}, t, \config{q'}{\bot}\bigr)
 \mathop{\otimes} \mathsf{out}(q').
 \label{eq:SWVPA-value}
 \end{equation}
@@ -1063,15 +1063,13 @@ it holds that:
   \textstyle
   \weight_A\bigl(\config{q}{\bot}, t, \config{q'}{\bot}\bigr).
 \end{equation}
-Since $\Semiring$ is complete, the infinite sum in \eqref{eq:bbot} is well defined,
-and,  it is the minimum in $\Delta^*$,
-\wrt~$\leq_\oplus$, % this ordering.
-of the fonction
-$s \mapsto \weight_A(\config{q}{\sigma}, s, \config{q'}{\sigma})$.
+Since $\Semiring$ is complete, the infinite sum in~\eqref{eq:bbot} is well defined.
 %
-Hence, following~\eqref{eq:SWVPA-value}, and the associativity and commutativity
-and distributivity for~$\otimes$ and~$\oplus$, the minimum of~$A(t)$ is
-\(
+Following~\eqref{eq:SWVPA-value}, and the associativity and commutativity
+and distributivity for~$\otimes$ and~$\oplus$, the minimum of~$A(t)$ is:
+\begin{equation}\label{eq:min}
+{\displaystyle\bigoplus_{t\in \Delta^*}} A(t)
+= 
 {\displaystyle\bigoplus_{t\in \Delta^*}}
 {\displaystyle\bigoplus_{q, q' \in Q}} \textstyle
 \mathsf{in}(q) \mathop{\otimes}
@@ -1082,78 +1080,70 @@ and distributivity for~$\otimes$ and~$\oplus$, the minimum of~$A(t)$ is
 \mathsf{in}(q) \mathop{\otimes}
 b_\bot(q, q')
 \mathop{\otimes} \mathsf{out}(q')
-\).
+\end{equation}
 
 \noindent
 In order to compute the above function $b_\bot : Q \times Q \to \Semiring$, 
-we shall use the auxiliary function $b_\top :  Q \times P \times Q \to \Phic$.
+we shall consider an auxiliary function $b_\top :  Q \times P \times Q \to \Phic$.
 %
-Intuitively, the function defined in \eqref{eq:btop}
-associates to $c \in \Deltac$ 
-the minimum weight of a computation of $A$
-starting in state $q$ with a stack 
-$\<c, p> \cdot \gamma \in \Gamma^+$ 
-and ending in state $q'$ with the same stack,
-such that the computation can not pop 
-the pair made of $c$ and $p$ at the top of this stack,
-but may only read these symbols.
-Moreover, $A$ may push another pair $\< c', p'>$ %call symbols 
-on the top of $\<c, p> \cdot \gamma$,
+Intuitively, when $b_\top(q, p, q') = \phi \in \Phic$, 
+for all $c \in \Deltac$,  $\phi(c)$ is 
+the minimum weight of a computation of~$A$
+starting in state $q$ with a non-empty stack 
+$\gamma' = \<c, p> \, \gamma \in \Gamma^+$ 
+and ending in state $q'$ with the same stack $\gamma'$,
+such that moreover, 
+the computation does not pop the pair $\<c, p>$ at the top of $\gamma'$
+(\ie $\gamma'$ is left untouched during the computation).
+However, the computation can read $\<c, p>$ at the top of $\gamma'$,
+and can also push another pair $\< c', p'> \in \Gamma$ on $\gamma'$,
 following the third case of 
-in the definition \eqref{eq:SWVPA-weight} of $\weight_A$,
-and may pop $\< c', p'>$ later, following the fifth case of \eqref{eq:SWVPA-weight} (return symbol). 
+in the definition \eqref{eq:SWVPA-weight} of $\weight_A$ (call symbol).
+The pair $\< c', p'>$ can be pop later, during the computation from $q$ to $q'$,  
+following the fifth case of \eqref{eq:SWVPA-weight} (return symbol). 
 %However, it cannot apply one of the two last cases (return symbol and empty stack)
 %when the current stack is $\gamma$.
 %pop symbols in $\gamma$.
+%
+Formally, in order to define $b_\top$, we consider 
+a fresh stack symbol $\top \notin \Gamma$,   %which does not belong to $\Gamma$,
+representing the above untouched stack, and let:
+%
+\begin{equation}\label{eq:btop}
+  b_\top(q, p, q') : c \mapsto \bigoplus_{s\in \Delta^*}
+  \textstyle
+  \weight_A\bigl(\configup{q}{\< c, p> \stackup \top }, s, \configup{q'}{\<c, p> \stackup \top}\bigr)
+\quad  
+\mathrm{~for~all~} c \in \Deltac  
+\end{equation}
+%
+By definition of $\weight_A$ in \eqref{eq:SWVPA-weight}, 
+using the symbol $\top$ for the part of the stack below $\<c, p>$
+(\ie the substack $\gamma$ in the above $\gamma' = \<c, p> \, \gamma$)
+ensures that this part $\gamma'$ is not touched during the computation.
+% there cannot be a pop of $\<c, p>$ followed by a push of $\<c, p>$
+% because it is not possible to push over $\top$ (push read the top of stack).
+%
+This ensures in particular that the subword 
+read during the computation is well parenthesized
+(every symbol in $\Deltac$ has a matching symbol in $\Deltar$).
+
 % Note that having a stack reduced to such a symbol makes impossible the application of the 
 % two last cases in the definition of $\weight_A$ (return symbol and empty stack). 
 % However, it is possible to apply the two first cases 
 % (internal symbol or call symbol, with a push on the top of $\top$).
 
+%The term $\config{q}{\bot}, s, \config{q'}{\bot}$
+%of this sum is the central expression in
+%the definition \eqref{eq:weightA} of $A(s_0)$, for the minimum $s_0$
+%of the function $\weight_A$.
 
-
-over~$\Delta$, $\Semiring$ and~$\bar\Phi$,
-the minimal weight %\wrt~$\leq_\oplus$,
-for a word in~$\Delta^*$.
-%
-
-
-
-
-\noindent
-%More precisely,
-We distinguish two cases : when the stack is empty, and when it is not.
-\lydia{introduced 2 cases for b}
-%
-In the case of an empty stack, let $b_\bot : Q \times Q \to \Semiring$ be such that : %the function:
-%
-EQBBOT
-%
-The term $\config{q}{\bot}, s, \config{q'}{\bot}$
-of this sum is the central expression in
-the definition \eqref{eq:weightA} of $A(s_0)$, for the minimum $s_0$
-of the function $\weight_A$.
-\lydia{so ?}
-
-%
-\noindent
-If the stack is not empty, let $\top$ be a fresh stack symbol which does not belong to $\Gamma$,
-\florent{$b_\top$ : mot bien parenthèsé $c$/$r$}
-and let $b_\top : Q \times P \times Q \to \Phic$ be such that,
-for every two states $q, q' \in Q$
-and stack symbol $p \in P$: %and $\sigma \in \{ \bot, \top \}$,
-\begin{equation}\label{eq:btop}
-  b_\top(q, p, q') : c \mapsto \bigoplus_{s\in \Delta^*}
-  \textstyle
-  \weight_A\bigl(\configup{q}{\< c, p> \stackup \top }, s, \configup{q'}{\<c, p> \stackup \top}\bigr)
-\end{equation}
-%
 
 \begin{algorithm}
 \SetKw{Extract}{extract}
 \SetKw{Update}{update}
 
-\textbf{initially} let $\Q = (Q \times Q) \cup (Q \times P \times Q)$, %contains all
+\textbf{initially} let $\Q = (Q \times Q) \cup (Q \times P \times Q)$, 
 and let $d_\bot(q_1, q_2) = d_\top(q_1, p, q_2) = \one$
 if $q_1 = q_2$ and $d_\bot(q_1, q_2) = d_\top(q_1, p, q_2) = \zero$ otherwise$\;$
 
@@ -1175,15 +1165,21 @@ such that $d_\bot(q_1, q_2)$, resp. $\bigoplus_{c\in \Deltac} d_\top(q_1, p, q_2
 \end{algorithm}
 
 Algorithm~\ref{algo:Dijkstra}
-constructs iteratively markings
+constructs iteratively two markings
 $d_\bot : Q \times Q \to \Semiring$ and
-$d_\top : Q \times P \times Q \to \Phic$
+$d_\top : Q \times P \times Q \to \Phic$,
 %of the triplets $\<q, \sigma, q'>$
 %of states of $A$ by weight values in $\Semiring$,
 that converges eventually to $b_\top$ and $b_\bot$.
 %It uses for that purpose a priority queue $P$ containing triplets of
 %$Q \times \{ \bot, \top \} \times Q$.
-
+%
+\noindent
+\florent{explication Fig.~\ref{fig:best-update} suivant cas de \eqref{eq:SWVPA-weight}}
+The infinite sums in the updates of $d$ in Algorithm~\ref{algo:Dijkstra},
+Figure~\ref{fig:best-update}
+are well defined
+since~$\Semiring$ is complete.
 
 \begin{figure}
 For all $q_0, q_3 \in Q$, %$p \in P$,
@@ -1243,50 +1239,26 @@ d_\bot(q_1, q_3) & \opluseq &
 \end{figure}
 
 
-\noindent
-\florent{explication Fig.~\ref{fig:best-update} suivant cas de \eqref{eq:SWVPA-weight}}
-The infinite sums in the updates of $d$ in Algorithm~\ref{algo:Dijkstra},
-Figure~\ref{fig:best-update}
-are well defined
-since~$\Semiring$ is complete.
 \florent{complete **}
 ** effectively computable by hypothesis that the label theory is effective**
-The algorithm performs $2.|Q|^2$ iterations until $P$ is empty,
+termination: The algorithm performs $2.|Q|^2$ iterations until $P$ is empty,
 and each iteration has a time complexity $O(|Q|^2 . |P|)$.
 \florent{detail with nb tr. and states}
 That gives a time complexity $O(|Q|^4 . |P|)$.
 It can be reduced by implementing $P$ as a priority queue,
 prioritized by the value returned by $d$.
 %$|Q|^3.\log(|Q|^2)$
-
-The correctness of Algorithm~\ref{algo:Dijkstra}
-is ensured by the invariant expressed in the following lemma.
-\begin{lemma}\label{lem:bot}
-For all $\< q_1, q_2> \notin \Q$,
-$d_\bot(q_1, q_2) =  b_\bot(q_1, q_2)$/
-\end{lemma}
-The proof is by contradiction,
-assuming a counter-example minimal in the length of the witness word.
-
-\begin{lemma}\label{lem:top}
-For all $\< q_1, p, q_2> \notin \Q$,
-$d_\top(q_1, p, q_2) =  b_\top(q_1, p, q_2)$,
-\end{lemma}
-
-\noindent
-For computing the minimal weight of a computation of $A$, we use the fact that,
-at the termination of Algorithm~\ref{algo:Dijkstra}, %it holds that,
-%There exist $q_1, q_2 \in Q$
-\(
-  {\displaystyle \bigoplus_{s \in \Delta^*} A(s)} =
-  {\displaystyle\bigoplus_{q, q' \in Q}} \textstyle
-  \mathsf{in}(q) \mathop{\otimes} d_\bot(q, q') \mathop{\otimes} \mathsf{out}(q').
-\)
+%
+At termination, $d_\bot = b_\bot$ and $d_\top = b_\top$
+(see Appendix~\ref{sec:bestsearch}).
+With~\eqref{eq:min}, this ensures
+the correctness of Algorithm~\ref{algo:Dijkstra}.
 
 \noindent
 In order to obtain effectively a witness
 (word of $\Delta^*$ with a computation of $A$ of minimal weight),
-we require the additional property of convexity of weight functions.
+we require the additional property of convexity of weight functions.***
+\florent{completer}
 
 \begin{proposition}\label{th:best-search}
 For a \SWVPA $A$
@@ -1542,9 +1514,7 @@ with an on-the-fly automata construction.
 \appendix
 
 
-
-\section{Nested-Words and Parse-Trees}
-\label{sec:trees}
+\section{Nested-Words and Parse-Trees} \label{sec:trees}
 The hierarchical structure of nested-words, defined with the \emph{call} and \emph{return} markup symbols
 suggest a correspondence with trees.
 The lifting of this correspondence to languages, of tree automata and VPA,
@@ -1765,6 +1735,9 @@ or $\bar{q} \neq \bar{p}$.
 \end{proof}
 
 
+
+\section{Correctness of the Best-Search Algorithm} \label{sec:bestsearch}
+\input{app-bestsearch}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
