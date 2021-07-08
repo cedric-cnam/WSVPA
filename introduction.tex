@@ -36,14 +36,17 @@ Such representations ignore the hierarchical structures that frame the
 conception of music, at least in the western area. These structures, on the other hand,
 are present, either explicitly  or implicitly,
 in music notation~\cite{Gould11Notation}: music scores are partitioned in measures, measures
-in beats, and so on so forth. Music events do not occur at arbitrary timestamps,
+in beats, and beats can be further recursively divided.
+It follows that music events do not occur at arbitrary timestamps,
 but respect a discrete division of the  timeline incurred by
 these recursive divisions.
- The \emph{transcription problem} takes
-a linear input (audio or MIDI) and aims at re-constructing these structures
+The \emph{transcription problem} takes
+as input a linear repreentation (audio or MIDI) and aims at re-constructing
+these structures
 by mapping input events to this hierarchical rhythmic space.
 It can therefore be stated as a parsing problem~\cite{foscarin:hal-01988990},
-over an infinite alphabet of timed events.
+over an infinite alphabet of timed events. Throughout the paper we will
+illustrate our framework with examples taken for this motivating application.
 
 Various extensions of language models for handling infinite alphabets have been studied.
 %words carrying data values in an infinite domain (e.g. integers) e.g. data processing
