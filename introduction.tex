@@ -41,12 +41,11 @@ It follows that music events do not occur at arbitrary timestamps,
 but respect a discrete division of the  timeline incurred by
 these recursive divisions.
 The \emph{transcription problem} takes
-as input a linear repreentation (audio or MIDI) and aims at re-constructing
+as input a linear representation (audio or MIDI) and aims at re-constructing
 these structures
 by mapping input events to this hierarchical rhythmic space.
 It can therefore be stated as a parsing problem~\cite{foscarin:hal-01988990},
-over an infinite alphabet of timed events. Throughout the paper we will
-illustrate our framework with examples taken for this motivating application.
+over an infinite alphabet of timed events.
 
 Various extensions of language models for handling infinite alphabets have been studied.
 %words carrying data values in an infinite domain (e.g. integers) e.g. data processing
@@ -270,19 +269,34 @@ the keys to which are
 and ($iii.b$)~the use, convenient in this context,
 of nested words, and \SWVPA,
 instead of syntax trees and grammars. %(\S~\ref{sec:trees}).
-%
-%Finally, Section~\ref{sec:transcription} describes
-%the implemented application %of this approach
-%to automated music transcription
-%that motivated this study.
 
-%based these models and on generic def. of distances;
-%the use of VPA for parsing, word instead of trees, use comparison input-output.
-%and best-search
 
-%In Section~\ref{section:SWA} we introduce \SWA and \SWT.
-%Then \SWVPA are defined in Section~\ref{sec:SWVPA},
-%where a polynomial 1-best algorithm is described that can be use to solve
-%Symbolic Weighted Parsing, as described Section~\ref{sec:parsing}.
-%Finally, in Section~\ref{sec:transcription}, we present an application
-%of this approach to automated music transcription that has been implemented.
+\begin{example}[Running example]
+Throughout the paper we
+illustrate our framework with music transcription examples: Given
+a \emph{timeline} of musical events with arbitrary timestamps as input, parse it
+into a structured music score. In our example, input events
+are pairs $\< \eta, \tau>$ made of
+a symbol $\eta \in \Sigma$, where $\Sigma$ stands for the
+set of MIDI message symbols~\cite{?}
+and  $\tau \in \mathbb{Q}$ is a timestamp. The output of parsing
+is a representation of the sequence in
+Common Western Music Notation (CWMN)~\cite{Gould11Notation}
+where event symbols belong to the domain $\Delta$
+of \emph{pitches} (e.g., A4, G5, etc.), temporal
+information is encoded as \emph{durations} (whole \musWhole$,
+$quarter, $\musQuarter$, eight $\musEighth$, etc), and notes are grouped in
+high-level structures (beams, measures, tuplets). The following inputs
+will be used:
+\begin{enumerate}
+  \item $I_1  = [ <e_1, 0.07>,<e_2, 0.72>,<e_3, 0.91>]$, over interval $[0,1[$
+  \item $I_2  = [ <e_3, 1.05>,<e_4, 1.36>,<e_5, 1.71>]$, over interval $[1,2[$
+\end{enumerate}
+There exists many possible parsings of $I_1 \cup I_2$ in music notation, among
+which
+\includegraphics[scale=0.20]{pictures/score5.png}
+and \includegraphics[scale=0.20]{pictures/score4.png}.  Wheighted
+parsing associates a cost to each solution, and our framework
+aims at selecting the best one with respect to this cost.
+\endex
+\end{example}
