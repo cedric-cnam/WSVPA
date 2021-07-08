@@ -792,17 +792,17 @@ represent AST. % parse trees.
 %\subsection{Definition}
 \noindent
 \label{sec:SWVPA-def}
-Let $\Omega$ be a countable alphabet
+Let $\Delta$ be a countable alphabet
 %finite (large) or infinite,
 that we assume partitioned into three
-subsets~$\Omegai$, $\Omegac$, $\Omegar$,
+subsets~$\Deltai$, $\Deltac$, $\Deltar$,
 whose elements are respectively called
 \emph{internal}, \emph{call} and \emph{return} symbols.
 % names are  coined by application to functional program verification
 % \begin{itemize}
-% \item a set $\Omegai$ of \emph{internal symbols} denoted $a$,
-% \item a set $\Omegac$ of \emph{call symbols} denoted $\call{a}$,
-% \item a set $\Omegar$ of \emph{return symbols} denoted $\return{a}$.
+% \item a set $\Deltai$ of \emph{internal symbols} denoted $a$,
+% \item a set $\Deltac$ of \emph{call symbols} denoted $\call{a}$,
+% \item a set $\Deltar$ of \emph{return symbols} denoted $\return{a}$.
 % \end{itemize}
 Let~$\< \Semiring, \oplus, \zero, \otimes, \one>$ be a commutative and complete semiring and let
 $\bar\Phi = \< \Phii, \Phic, \Phir, \Phici, \Phicc, \Phicr>$
@@ -811,15 +811,15 @@ be a label theory over $\Semiring$
 %we shall write respectively
 where $\Phii$, $\Phic$, $\Phir$ and~$\Phicx$ (with $\mathsf{x} \in \{ \mathsf{i}, \mathsf{c}, \mathsf{r}\}$)
 stand respectively
-for~$\Phi_\Omegai$, $\Phi_\Omegac$, $\Phi_\Omegar$ and~$\Phi_{\Omegac, \Omega_\mathsf{x}}$.
+for~$\Phi_\Deltai$, $\Phi_\Deltac$, $\Phi_\Deltar$ and~$\Phi_{\Deltac, \Delta_\mathsf{x}}$.
 %
 %Moreover, we extend this theory with a set $\Phii$
-%of unary functions in $\Omegai \to \Semiring$,
+%of unary functions in $\Deltai \to \Semiring$,
 %closed under $\oplus$ and $\otimes$.
 
 \begin{definition}
 A \emph{Symbolic Weighted Visibly Pushdown Automata} (\SWVPA)
-over  $\Omega = \Omegai \uplus \Omegac \uplus \Omegar$, $\Semiring$ and $\bar\Phi$
+over  $\Delta = \Deltai \uplus \Deltac \uplus \Deltar$, $\Semiring$ and $\bar\Phi$
 is a tuple $A = \< Q, P, \init, \bar\wei, \final >$,
 where $Q$ is a finite set of states,
 $P$ is a finite set of stack symbols,
@@ -842,33 +842,33 @@ $\weier : Q \times Q \to \Phir$.
 Similarly as in Section~\ref{section:transducer},
 we extend the above transition functions as follows
 for all $q, q' \in Q$, $p \in P$,
-$a \in \Omegai$,
-$\call{c} \in \Omegac$,
-$\return{r} \in \Omegar$,
+$a \in \Deltai$,
+$\call{c} \in \Deltac$,
+$\return{r} \in \Deltar$,
 overloading their names: % for simplicity:
 \[
 \begin{array}{lll}
-\weii: Q \times [\Omegac \times P] \times \Omegai \times Q \to \Semiring &
+\weii: Q \times [\Deltac \times P] \times \Deltai \times Q \to \Semiring &
 \weii(q, c, p, a, q') = \eta_\mathsf{ci}(c, a) &
 \mathrm{where~} \eta_\mathsf{ci} = \weii(q, p, q'),\\
 %
-\weiei: Q \times \Omegai \times Q \to \Semiring &
+\weiei: Q \times \Deltai \times Q \to \Semiring &
 \weiei(q, a, q') = \phi_\mathsf{i}(a) &
 \mathrm{where~} \phi_\mathsf{i} = \weiei(q, q').\\
 %
-\weic: Q \times [\Omegac \times P] \times  [\Omegac \times P] \times Q \to \Semiring &
+\weic: Q \times [\Deltac \times P] \times  [\Deltac \times P] \times Q \to \Semiring &
 \weic(q, c, p, \call{c'}, p', q') = \eta_\mathsf{cc}(c, \call{c'}) &
 \mathrm{where~} \eta_\mathsf{cc} = \weic(q, p, p', q'),\\
 %
-\weiec: Q \times [\Omegac \times P] \times Q \to \Semiring &
+\weiec: Q \times [\Deltac \times P] \times Q \to \Semiring &
 \weiec(q, {\call{c}}, p, q') = \phi_\mathsf{c}({\call{c}}) &
 \mathrm{where~} \phi_\mathsf{c} = \weiec(q, p, q').\\
 %
-\weir: Q \times [\Omegac \times P] \times \Omegar \times Q \to \Semiring &
+\weir: Q \times [\Deltac \times P] \times \Deltar \times Q \to \Semiring &
 \weir(q, {\call{c}},  p, {\return{r}}, q') = \eta_\mathsf{cr}({\call{c}},  {\return{r}}) &
 \mathrm{where~} \eta_\mathsf{cr} = \weir(q, p, q'),\\
 %
-\weier: Q \times \Omegar \times Q \to \Semiring &
+\weier: Q \times \Deltar \times Q \to \Semiring &
 \weier(q, {\return{r}}, q') = \phi_\mathsf{r}({\return{r}}) &
 \mathrm{where~} \phi_\mathsf{r} = \weier(q, q').\\
 \end{array}
@@ -883,7 +883,7 @@ $\weiei$, $\weiec$, and $\weier$ describe the cases where the stack is empty.
 $\weii$ and $\weiei$ both read an input internal symbol $a$ and change state from $q$ to $q'$,
 without changing the stack.
 Moreover, $\weii$ reads a pair made of
-${\call{c}} \in \Omegac$ and $p \in P$ on the top of the stack
+${\call{c}} \in \Deltac$ and $p \in P$ on the top of the stack
 ($c$ is compared to $a$ by the weight function $\eta_\mathsf{ci} \in \Phici$).
 %
 \noindent
@@ -909,14 +909,14 @@ an intermediate function $\weight_A$, like in Section~\ref{sec:SWT}.
 A configuration, denoted by $q[\gamma]$,
 is here composed of a state $q \in Q$
 and a stack content $\gamma \in \Gamma^*$,
-where $\Gamma = \Omegac \times P$.
+where $\Gamma = \Deltac \times P$.
 Hence, $\weight_A$ is a function from
-$[Q \times \Gamma^*] \times \Omega^* \times [Q \times \Gamma^*]$ into~$\Semiring$.
+$[Q \times \Gamma^*] \times \Delta^* \times [Q \times \Gamma^*]$ into~$\Semiring$.
 The empty stack is denoted by $\bot$, and the upmost symbol is the last pushed content.
-The following functions illustrate each of the possible cases, being : reading $a \in \Omegai$,
+The following functions illustrate each of the possible cases, being : reading $a \in \Deltai$,
 \lydia{intro to func}
-or $\call{c} \in \Omegac$, or $\return{r} \in \Omegar$ for each possible state of the stack (empty or not),
-to add to $u \in {\Omega}^*$.
+or $\call{c} \in \Deltac$, or $\return{r} \in \Deltar$ for each possible state of the stack (empty or not),
+to add to $u \in {\Delta}^*$.
 \lydia{introduced the 6 cases}
 \florent{notation $cp$ for $\< c, p>$ ?}
 
@@ -974,11 +974,11 @@ to add to $u \in {\Omega}^*$.
 \lydia{c p to <c, p>}
 %
 % and ${\call{c}}\, p\stacksep \gamma$
-%denotes a stack where the pair made of ${\call{c}} \in \Omegac$ and $p \in P$ is the top symbol
+%denotes a stack where the pair made of ${\call{c}} \in \Deltac$ and $p \in P$ is the top symbol
 %and $\gamma$ is the rest of stack.
 
 \noindent
-The weight associated by $A$ to $s \in \Omega^*$
+The weight associated by $A$ to $s \in \Delta^*$
 is defined according to empty stack semantics:
 %
 \begin{equation}
@@ -1001,8 +1001,8 @@ Every $\SWA$ $A = \< Q, \init, {\wei_1}, \final >$,
 over $\Sigma$, $\Semiring$ and $\bar\Phi$
 is a particular case of $\SWVPA$
 $\< Q, \emptyset, \init, \bar\wei, \final >$
-over $\Omega$, $\Semiring$ and $\bar\Phi$
-with $\Omegai = \Sigma$ and $\Omegac = \Omegar = \emptyset$,
+over $\Delta$, $\Semiring$ and $\bar\Phi$
+with $\Deltai = \Sigma$ and $\Deltac = \Deltar = \emptyset$,
 and computing with an always empty stack:
 $\weiei = \wei_1$ and all the other functions
 of~$\bar\wei$ are the constant~$\zero$.
@@ -1016,10 +1016,10 @@ the class of \SWVPA is closed under the binary operators of the underlying semir
 %
 \begin{proposition}\label{prop:SWVPA-product}
 Let $A_1$ and $A_2$ be two \SWVPA
-over the same $\Omega$, $\Semiring$ and $\bar\Phi$.
+over the same $\Delta$, $\Semiring$ and $\bar\Phi$.
 There exists two effectively constructible $\SWVPA$
 $A_1 \oplus A_2$ and $A_1 \otimes A_2$,
-such that for all $s \in \Omega^*$,
+such that for all $s \in \Delta^*$,
 $(A_1 \oplus A_2)(s) = A_1(s) \oplus A_2(s)$ and
 $(A_1 \otimes A_2)(s) = A_1(s) \otimes A_2(s)$.
 \end{proposition}
@@ -1034,16 +1034,16 @@ as in the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 \label{sec:best}\label{sec:search}
 \noindent
 We shall now present a procedure for searching, for a~$\SWVPA$ $A$,
-a word %$w \in \Omega^*$
+a word %$w \in \Delta^*$
 of minimal weight for~$A$,
 as stated in the following proposition. %\wrt~$\leq_\oplus$,
 %
 \begin{proposition}\label{th:best-search}
 For a \SWVPA $A$
-over $\Omega$,
+over $\Delta$,
 $\Semiring$ commutative, bounded, total and complete, %semiring
 and $\bar\Phi$ effective, %and $k$-convex, % label theory,
-one can construct in PTIME a word $t \in \Omega^*$
+one can construct in PTIME a word $t \in \Delta^*$
 such that $A(t)$ is minimal \wrt the natural ordering for $\Semiring$.
 \end{proposition}
 %\florent{total?}
@@ -1059,12 +1059,12 @@ By definition of $\leq_\oplus$, and since $\Semiring$ is total,
 it holds that:
 %
 \begin{equation}\label{eq:bbot}
-  b_\bot(q, q') = \bigoplus_{t\in \Omega^*}
+  b_\bot(q, q') = \bigoplus_{t\in \Delta^*}
   \textstyle
   \weight_A\bigl(\config{q}{\bot}, t, \config{q'}{\bot}\bigr).
 \end{equation}
 Since $\Semiring$ is complete, the infinite sum in \eqref{eq:bbot} is well defined,
-and,  it is the minimum in $\Omega^*$,
+and,  it is the minimum in $\Delta^*$,
 \wrt~$\leq_\oplus$, % this ordering.
 of the fonction
 $s \mapsto \weight_A(\config{q}{\sigma}, s, \config{q'}{\sigma})$.
@@ -1072,7 +1072,7 @@ $s \mapsto \weight_A(\config{q}{\sigma}, s, \config{q'}{\sigma})$.
 Hence, following~\eqref{eq:SWVPA-value}, and the associativity and commutativity
 and distributivity for~$\otimes$ and~$\oplus$, the minimum of~$A(t)$ is
 \(
-{\displaystyle\bigoplus_{t\in \Omega^*}}
+{\displaystyle\bigoplus_{t\in \Delta^*}}
 {\displaystyle\bigoplus_{q, q' \in Q}} \textstyle
 \mathsf{in}(q) \mathop{\otimes}
 \beta_{q, q'}(t)
@@ -1089,7 +1089,7 @@ In order to compute the above function $b_\bot : Q \times Q \to \Semiring$,
 we shall use the auxiliary function $b_\top :  Q \times P \times Q \to \Phic$.
 %
 Intuitively, the function defined in \eqref{eq:btop}
-associates to $c \in \Omegac$ 
+associates to $c \in \Deltac$ 
 the minimum weight of a computation of $A$
 starting in state $q$ with a stack 
 $\<c, p> \cdot \gamma \in \Gamma^+$ 
@@ -1112,9 +1112,9 @@ and may pop $\< c', p'>$ later, following the fifth case of \eqref{eq:SWVPA-weig
 
 
 
-over~$\Omega$, $\Semiring$ and~$\bar\Phi$,
+over~$\Delta$, $\Semiring$ and~$\bar\Phi$,
 the minimal weight %\wrt~$\leq_\oplus$,
-for a word in~$\Omega^*$.
+for a word in~$\Delta^*$.
 %
 
 
@@ -1143,7 +1143,7 @@ and let $b_\top : Q \times P \times Q \to \Phic$ be such that,
 for every two states $q, q' \in Q$
 and stack symbol $p \in P$: %and $\sigma \in \{ \bot, \top \}$,
 \begin{equation}\label{eq:btop}
-  b_\top(q, p, q') : c \mapsto \bigoplus_{s\in \Omega^*}
+  b_\top(q, p, q') : c \mapsto \bigoplus_{s\in \Delta^*}
   \textstyle
   \weight_A\bigl(\configup{q}{\< c, p> \stackup \top }, s, \configup{q'}{\<c, p> \stackup \top}\bigr)
 \end{equation}
@@ -1164,7 +1164,7 @@ if $q_1 = q_2$ and $d_\bot(q_1, q_2) = d_\top(q_1, p, q_2) = \zero$ otherwise$\;
 \Extract $\< q_1, q_2>$ or $\< q_1, p, q_2>$ from $\Q$
 %
 %\noindent\quad
-such that $d_\bot(q_1, q_2)$, resp. $\bigoplus_{c\in \Omegac} d_\top(q_1, p, q_2)(c)$, is minimal in $\Semiring$ \wrt $\leq_\oplus$$\;$
+such that $d_\bot(q_1, q_2)$, resp. $\bigoplus_{c\in \Deltac} d_\top(q_1, p, q_2)(c)$, is minimal in $\Semiring$ \wrt $\leq_\oplus$$\;$
 
 %\noindent\quad
 %\textbf{for all} $q_0, q_3 \in Q$
@@ -1192,7 +1192,7 @@ For all $q_0, q_3 \in Q$, %$p \in P$,
 %\multicolumn{3}{l}{\mathrm{For~all~} q_0, q_3 \in Q, p \in P,}\\
 d_\top(q_1, p, q_3) & \opluseq &
   d_\top(q_1, p, q_2) \otimes
-  \displaystyle\bigoplus_{\Omegai} \weii(q_2, p, q_3)\\
+  \displaystyle\bigoplus_{\Deltai} \weii(q_2, p, q_3)\\
 %\multicolumn{3}{l}{\quad
 %\mathrm{where~} \weii(q_2, p, q_3)_a \in \Phic
 %\mathrm{~is~the~partial~application~}
@@ -1200,28 +1200,28 @@ d_\top(q_1, p, q_3) & \opluseq &
 %
 d_\bot(q_1, p, q_3) & \opluseq &
   d_\bot(q_1, q_2) \otimes
-  \displaystyle\bigoplus_{\Omegai} \weiei(q_2, q_3)\\
+  \displaystyle\bigoplus_{\Deltai} \weiei(q_2, q_3)\\
 %
 d_\top(q_0, p, q_3) & \opluseq &
-  {\displaystyle\bigoplus_{\Omegac}}^2
+  {\displaystyle\bigoplus_{\Deltac}}^2
   \bigl[ \bigl( \weic(q_0, p, p', q_1) \otimes_2
   d_\top(q_1, p', q_2) \bigr) \otimes_2
-  {\displaystyle\bigoplus_{\Omegar}} \weir(q_2, p', q_3) \bigr]\\
+  {\displaystyle\bigoplus_{\Deltar}} \weir(q_2, p', q_3) \bigr]\\
 %\multicolumn{3}{l}{\quad
 %\mathrm{where~} \weic(q_0, p, p', q_1)_{c'} \in \Phic
 %\mathrm{~is~the~partial~application~}
 %x_c \mapsto \weic(q_0, p, x_c, c', p', q_1)}\\[2pt]
 %
 d_\bot(q_0, q_3) & \opluseq &
-  {\displaystyle\bigoplus_{\Omegac}}
+  {\displaystyle\bigoplus_{\Deltac}}
   \bigl(
   \weiec(q_0, p, q_1) \otimes
    d_\top(q_1, p, q_2) \otimes
-  \displaystyle\bigoplus_{\Omegar} \weir(q_2, p, q_3)\bigr)\\
+  \displaystyle\bigoplus_{\Deltar} \weir(q_2, p, q_3)\bigr)\\
 %
 d_\bot(q_1, q_3) & \opluseq &
   d_\bot(q_1, q_2) \otimes
-  \displaystyle\bigoplus_{\Omegar} \weier(q_2, q_3)\\
+  \displaystyle\bigoplus_{\Deltar} \weier(q_2, q_3)\\
 %
 d_\top(q_1, p, q_3) & \opluseq &
   d_\top(q_1, p, q_2) \otimes d_\top(q_2, p, q_3),
@@ -1231,11 +1231,11 @@ d_\bot(q_1, q_3) & \opluseq &
   d_\bot(q_1, q_2) \otimes d_\bot(q_2, q_3), \mathrm{if~} \< q_2, \bot, q_3> \notin P \\
 \end{array}
 \]
-%$\weii(q_2, p, q_3)_a \in \Phic$, for $a \in \Omegai$,
+%$\weii(q_2, p, q_3)_a \in \Phic$, for $a \in \Deltai$,
 %is the partial application
 %$x_c \mapsto \weii(q_2, x_c, p, a, q_3)$.
 %
-%$\weic(q_0, p, p', q_1)_{c'} \in \Phic$, for $c' \in \Omegac$,
+%$\weic(q_0, p, p', q_1)_{c'} \in \Phic$, for $c' \in \Deltac$,
 %is the partial application
 %$x_c \mapsto \weic(q_0, p, x_c, c', p', q_1)$.
 \caption{Update $d_\bot$ with $\<q_1, q_2>$ or $d_\top$ with $\< q_1, p, q_2>$.}
@@ -1278,22 +1278,22 @@ For computing the minimal weight of a computation of $A$, we use the fact that,
 at the termination of Algorithm~\ref{algo:Dijkstra}, %it holds that,
 %There exist $q_1, q_2 \in Q$
 \(
-  {\displaystyle \bigoplus_{s \in \Omega^*} A(s)} =
+  {\displaystyle \bigoplus_{s \in \Delta^*} A(s)} =
   {\displaystyle\bigoplus_{q, q' \in Q}} \textstyle
   \mathsf{in}(q) \mathop{\otimes} d_\bot(q, q') \mathop{\otimes} \mathsf{out}(q').
 \)
 
 \noindent
 In order to obtain effectively a witness
-(word of $\Omega^*$ with a computation of $A$ of minimal weight),
+(word of $\Delta^*$ with a computation of $A$ of minimal weight),
 we require the additional property of convexity of weight functions.
 
 \begin{proposition}\label{th:best-search}
 For a \SWVPA $A$
-over $\Omega$,
+over $\Delta$,
 $\Semiring$ commutative, bounded, total and complete, %semiring
 and $\bar\Phi$ effective, %and $k$-convex, % label theory,
-one can construct in PTIME a word $t \in \Omega^*$
+one can construct in PTIME a word $t \in \Delta^*$
 such that $A(t)$ is minimal \wrt the natural ordering for $\Semiring$.
 \end{proposition}
 
@@ -1311,45 +1311,45 @@ to the problem of parsing over an infinite alphabet. %appropriate
 %\subsection{Definition}
 %
 Let~$\Sigma$
-and~$\Omega = \Omegai \uplus \Omegac \uplus \Omegar$
+and~$\Delta = \Deltai \uplus \Deltac \uplus \Deltar$
 be countable input and output alphabets,
 let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a
 commutative, bounded, and complete \florent{total?} semiring
 and let $\bar\Phi$ be an effective label theory over $\Semiring$,
-containing $\Phi_\Sigma$, $\Phi_{\Sigma, \Omegai}$, as well as
+containing $\Phi_\Sigma$, $\Phi_{\Sigma, \Deltai}$, as well as
 $\Phii$, $\Phic$, $\Phir$, $\Phicr$
 (following the notations of Section~\ref{sec:SWVPA-def}).
 %
 \noindent
 We assume given the following input:
 \begin{description}
-\item[--] a \SWT $T$ over $\Sigma$, $\Omegai$, $\Semiring$, and $\bar\Phi$,
+\item[--] a \SWT $T$ over $\Sigma$, $\Deltai$, $\Semiring$, and $\bar\Phi$,
 defining a measure %between words
-$T: \Sigma^* \times \Omegai^* \to \Semiring$,
+$T: \Sigma^* \times \Deltai^* \to \Semiring$,
 
-\item[--] a \SWVPA $A$ over $\Omega$, $\Semiring$, and $\bar\Phi$,
-defining a measure $A: \Omega^* \to \Semiring$,
-%a \SWVPA $A$ over $\Omega$, and $\Semiring$, defining a series of nested words
-%      $A : \Omega^* \to \Semiring$,
+\item[--] a \SWVPA $A$ over $\Delta$, $\Semiring$, and $\bar\Phi$,
+defining a measure $A: \Delta^* \to \Semiring$,
+%a \SWVPA $A$ over $\Delta$, and $\Semiring$, defining a series of nested words
+%      $A : \Delta^* \to \Semiring$,
 \item[--] an input word $s \in \Sigma^*$.
 \end{description}
 %
-For all $u \in \Sigma^*$ and $t \in \Omega^*$, let
-\(d(u, t) = T\bigl(u, t|_\Omegai \bigr)\),
-where $t|_\Omegai \in \Omegai^*$ is the projection of $t$ onto~$\Omegai$,
-obtained from $t$ by removing all symbols in $\Omega \setminus \Omegai$.
+For all $u \in \Sigma^*$ and $t \in \Delta^*$, let
+\(d(u, t) = T\bigl(u, t|_\Deltai \bigr)\),
+where $t|_\Deltai \in \Deltai^*$ is the projection of $t$ onto~$\Deltai$,
+obtained from $t$ by removing all symbols in $\Delta \setminus \Deltai$.
 %\end{equation}
 %
 \noindent
 \emph{Symbolic weighted parsing} is the problem,
 given the above input,
-to find $t \in \Omega^*$ %nested word $t \in \Omega$
+to find $t \in \Delta^*$ %nested word $t \in \Delta$
 minimizing \( d(s, t) \otimes A(t)\)
 \wrt $\leq_\oplus$,
 \ie s.t. %such that: %Hence, it is the problem of finding
 %
 \begin{equation}\label{eq:distance-lang}
-d(s, t) \otimes A(t) = \displaystyle\bigoplus_{t' \in \T(\Omega)} d(s, t') \otimes A(t')
+d(s, t) \otimes A(t) = \displaystyle\bigoplus_{t' \in \Delta^*} d(s, t') \otimes A(t')
 \end{equation}
 %
 Following the terminology of~\cite{Mohri03EDWA},
@@ -1370,14 +1370,14 @@ and the computation time of the functions and operators of the label theory.
 We follow a \emph{Bar-Hillel} construction, for parsing by intersection.
 %
 \noindent
-Let us first extend the \SWT $T$ over $\Sigma$, $\Omegai$
-into a \SWT $T'$ over $\Sigma$ and $\Omega$
+Let us first extend the \SWT $T$ over $\Sigma$, $\Deltai$
+into a \SWT $T'$ over $\Sigma$ and $\Delta$
 (and the same semiring and label theory $\Semiring$ and $\bar\Phi$),
-such that for all $u \in \Sigma^*$, and $t \in {\Omega}^*$,
-$T'(u, u) = T(u, t|_{\Omegai})$.
+such that for all $u \in \Sigma^*$, and $t \in {\Delta}^*$,
+$T'(u, u) = T(u, t|_{\Deltai})$.
 %
 The transducer $T'$ simply skips every symbol
-$b \in {\Omega} \setminus \Omegai$,
+$b \in {\Delta} \setminus \Deltai$,
 by the addition to $T$,
 of new transitions of the form $\wei_{01}(q, \varepsilon, b, q')$.
 %
@@ -1385,26 +1385,26 @@ of new transitions of the form $\wei_{01}(q, \varepsilon, b, q')$.
 Then, using Corolary~\ref{cor:epsilon},
 we construct from the input word $s \in \Sigma^*$ and $T'$
 a \SWA $B_{s, T'}$,
-such that for all $t \in \Omega^*$, $B_{s, T'}(t) = d(s, t)$.
+such that for all $t \in \Delta^*$, $B_{s, T'}(t) = d(s, t)$.
 %
-%This automaton is such that for all $t \in \T(\Omega)$,
+%This automaton is such that for all $t \in \Delta^*$,
 %\[
 %   A_{T', s}\bigl(\lin(t)\bigr)
 % = T'\bigl(s, \lin(t)\bigr)
-% = T'\bigl(s, \lin(t)|_{\Omegai}\bigr)
+% = T'\bigl(s, \lin(t)|_{\Deltai}\bigr)
 % = d(s, t).
 %\]
 %
 \noindent
-Next, %we convert the input \SWTA $A$ over $\Omega$
-%into a \SWVPA $A'$ over $\hat\Omega$, using Proposition~\ref{lem:SWTA}, and
+Next, %we convert the input \SWTA $A$ over $\Delta$
+%into a \SWVPA $A'$ over $\hat\Delta$, using Proposition~\ref{lem:SWTA}, and
 we compute the \SWVPA $B_{s, T'} \otimes A$,
 using Proposition~\ref{prop:SWVPA-product}.
 %
 \noindent
-It remains to compute a best nested-word $t \in {\Omega}^*$
+It remains to compute a best nested-word $t \in {\Delta}^*$
 using the best-search procedure of Proposition~\ref{th:best-search}.
-%and convert it into a best tree in $\T(\Omega)$ in order to solve SW parsing
+%and convert it into a best tree in $\T_\Delta$ in order to solve SW parsing
 %for~$T$, $A$ and~$s$.
 %\qed
 \end{proof}
@@ -1420,32 +1420,32 @@ obtained from $G$. %the weighted CF grammar.
 %
 %Indeed, it corresponds to the case where $T$
 %accepts only the pairs $\<s, t>$ such that
-%$s$ is the projection of $t$ on $\Omegai$.
+%$s$ is the projection of $t$ on $\Deltai$.
 %This can be done with a single state $q$ and
 %with transition rules of the form:
 %\begin{description}
-%\item[] $\wei(q, \varepsilon, a, q) = \one$ for all $a \in \Omegac \cup \Omegar$,
-%\item[] $\wei(q, a, a, q) = \one$ for all $a \in \Omegai$,
-%\item[] $\wei(q, a, b, q) = \zero$ for all $a, b \in \Omegai$, $a \neq b$.
+%\item[] $\wei(q, \varepsilon, a, q) = \one$ for all $a \in \Deltac \cup \Deltar$,
+%\item[] $\wei(q, a, a, q) = \one$ for all $a \in \Deltai$,
+%\item[] $\wei(q, a, b, q) = \zero$ for all $a, b \in \Deltai$, $a \neq b$.
 %\end{description}
 %
 Indeed, the \emph{depth-first} traversal of an AST $\tau$
 yields a well-parenthesised word $\lin(\tau)$ over an alphabet
-$\Omega = \Omegai \uplus \Omegac \uplus \Omegar$,
-assuming \eg that $\Omegai$ contains the symbols labelling the leaves of $\tau$ (symbols of rank $0$),
-and $\Omegac$ and $\Omegar$ contain respectively one left and right parenthesis
+$\Delta = \Deltai \uplus \Deltac \uplus \Deltar$,
+assuming \eg that $\Deltai$ contains the symbols labelling the leaves of $\tau$ (symbols of rank $0$),
+and $\Deltac$ and $\Deltar$ contain respectively one left and right parenthesis
 $\ccall{b}$ and $\creturn{b}$ for each symbol $b$ labelling inner nodes of $\tau$ (symbols of rank $>0$).
 %
-%With this representation, the projection $\lin(t)|_\Omegai$ is the
+%With this representation, the projection $\lin(t)|_\Deltai$ is the
 %sequence of leaves of $\tau$. %, enumerated in a \emph{dfs}-traversal.
 %
-We show in Appendix~\ref{sec:trees} how to construct a
+We show in Appendix~\ref{sec:trees} how to construct 
 %($\SW$) tree automaton~$A$ %(in particular the TA computing on the AST of a given CF-grammar)
 a $\SWVPA$ $A$ such that $A(\lin(\tau))$ is the weight the AST $\tau$ of $G$.
 
 %That also holds for the set of ASTs of a weighted CF-grammar.
 %The purpose of the transducer $T$ is to measure a distance between input and output words,
-%\ie between the word $s$ and the sequence leaves of a derivation tree, in $\Omegai^*$.
+%\ie between the word $s$ and the sequence leaves of a derivation tree, in $\Deltai^*$.
 %
 %that generates (weighted) trees by replacement of a state symbol~$q_0$ (non-terminal),
 %by a tree $a(q_1,\ldots, q_k)$, where $k = \rank(a)$.
@@ -1453,15 +1453,15 @@ a $\SWVPA$ $A$ such that $A(\lin(\tau))$ is the weight the AST $\tau$ of $G$.
 %of weight $\wei(q_0, a, q_1 \ldots q_k) \in \Semiring$
 %according to Definition~\ref{def:SWTA},
 %corresponds to the production rule $q_0 := a(q_1,\ldots, q_k)$ of a weighted CF grammar,
-%with set non-terminal symbols $Q$ and set of terminal symbols $\Omega_0$.
+%with set non-terminal symbols $Q$ and set of terminal symbols $\Delta_0$.
 %
 %This actually is a slight generalization of CFG since
-%each such production rule is labelled by  a symbol of $\Omega_{>0}$,
+%each such production rule is labelled by  a symbol of $\Delta_{>0}$,
 %hence parse trees %derivation trees
-%are trees of $\T(\Omega)$.
+%are trees of $\T_\Delta)$.
 %
 %Another (more original) generalization is that the set of terminal symbols
-%$\Omega_0$ may be infinite.
+%$\Delta_0$ may be infinite.
 %
 %
 %The input language can also be expressed as a \SWTA, or,
@@ -1562,10 +1562,10 @@ and $\Omega_{>0} = \Omega \setminus \Omega_0$.
 %
 \noindent
 The free $\Omega$-algebra of finite, ordered,
-$\Omega$-labeled trees is denoted by $\T(\Omega)$.
-It is the smallest set such that  $\Omega_0 \subset \T(\Omega)$
+$\Omega$-labeled trees is denoted by $\T_\Omega$.
+It is the smallest set such that  $\Omega_0 \subset \T_\Omega$
 and for all $1 \leq k \leq M$, all $a \in \Omega_k$,
-and all $t_1, \ldots, t_k \in \T(\Omega)$, $a(t_1, \ldots, t_k) \in \T(\Omega)$.
+and all $t_1, \ldots, t_k \in \T_\Omega$, $a(t_1, \ldots, t_k) \in \T_\Omega$.
 %
 % tree = single node (leave) labeled with a symbol of $a \in \Omegai$
 % (such a tree is simply denoted by $a$)
@@ -1587,7 +1587,7 @@ containing one set~$\Phi_{\Omega_k}$ for each $k \in [0..M]$.
 % $q_0 \to a(q_1\ldots q_k)$ where
 % $q_0, q_1, \ldots, q_k \in N$
 % $a \in \Omega_k$.
-% A tree $t \in \T(\Omega)$ is in the language of $G$
+% A tree $t \in \T_\Omega$ is in the language of $G$
 % if it can be generated from $q_\mathsf{i}$ by
 % non terminal replacement following the rules of $R$.
 %
@@ -1629,9 +1629,9 @@ and the second case is for a root tree.
 \noindent
 Every \SWTA %of Definition~\ref{def:SWTA}
 defines a mapping
-from trees of $\T(\Omega)$ into~$\Semiring$, %the weight values in~$\Semiring$,
+from trees of $\T_\Omega$ into~$\Semiring$, %the weight values in~$\Semiring$,
 based on the following intermediate function
-$\weight_A: Q \times (\Omega \cup \{ \varepsilon \}) \times \T(\Omega) \to \Semiring$
+$\weight_A: Q \times (\Omega \cup \{ \varepsilon \}) \times \T_\Omega \to \Semiring$
 \begin{equation}
 %\begin{array}{rccl}
 \weight_A(q_0, a, t) =  % & = &
@@ -1644,11 +1644,11 @@ $\weight_A: Q \times (\Omega \cup \{ \varepsilon \}) \times \T(\Omega) \to \Semi
 %\end{array}
 \end{equation}
 where $q_0 \in Q$, $a \in \Omega_{>0} \cup \{ \varepsilon \}$ and
-$t = b(t_1,\ldots, t_k) \in \T(\Omega)$,
+$t = b(t_1,\ldots, t_k) \in \T_\Omega$,
 $0 \leq k \leq M$.
 
 \medskip\noindent
-Finally, the weight associated by $A$ to  $t \in \T(\Omega)$ is
+Finally, the weight associated by $A$ to  $t \in \T_\Omega$ is
 \begin{equation}
 A(t)  =
 \displaystyle\bigoplus_{q \in Q} \mathsf{in}(q) \mathop{\otimes} \weight_A(q, \varepsilon, t)
@@ -1684,25 +1684,25 @@ of the weighted CF grammar associated to~$A$ as above,
 is $\weight_A(q, t)$,
 when $q$ is the start non-terminal.
 %
-We shall now establish a correspondence between such derivation tree $t$
+We shall now establish a correspondence between such a derivation tree $t$
 and some word describing a linearization of $t$,
 in a way that $\weight_A(q, t)$ can be computed by a $\SWVPA$.
 
-Let $\hat\Omega$ be the countable (unranked) alphabet obtained
+Let $\Delta$ be the countable (unranked) alphabet obtained
 from $\Omega$ by:
-$\hat\Omega = \Omegai \uplus \Omegac \uplus \Omegar$, with
-$\Omegai = \Omega_0$,
-$\Omegac = \{ \; \call{a} \mid a \in \Omega_{>0} \}$,
-$\Omegar = \{ \; \return{a} \mid a \in \Omega_{>0} \}$.
+$\Delta = \Deltai \uplus \Deltac \uplus \Deltar$, with
+$\Deltai = \Delta_0$,
+$\Deltac = \{ \; \call{a} \mid a \in \Omega_{>0} \}$,
+$\Deltar = \{ \; \return{a} \mid a \in \Omega_{>0} \}$.
 
 \noindent
-We associate to $\hat\Omega$
+We associate to $\Delta$
 a label theory $\hat{\Phi}$
 like in Section~\ref{sec:SWVPA-def},
 %
 \noindent
-and we define a linearization of trees of $\T(\Omega)$ into
-words of $\hat{\Omega}^*$ as follows:
+and we define a linearization of trees of $\T_\Omega$ into
+words of $\Delta^*$ as follows:
 \begin{description}
 \item $\lin(a) = a$ for all $a \in \Omega_0$,
 \item $\lin\bigl( b(t_1, \ldots, t_k)\bigr) =
@@ -1713,8 +1713,8 @@ words of $\hat{\Omega}^*$ as follows:
 \begin{proposition}\label{lem:SWTA}
 For all \SWTA $A$ over~$\Omega$, $\Semiring$ commutative, and $\bar\Phi$,
 there exists an effectively constructible \SWVPA $A'$ over
-$\hat\Omega$, $\Semiring$ and $\hat\Phi$
-such that for all $t \in \T(\Omega)$, $A'\bigl(\lin(t)\bigr) = A(t)$.
+$\Delta$, $\Semiring$ and $\hat\Phi$
+such that for all $t \in \T_\Omega$, $A'\bigl(\lin(t)\bigr) = A(t)$.
 \end{proposition}
 %
 \begin{proof}
@@ -1722,7 +1722,7 @@ Let $A = \< Q, \init, \bar{\wei} >$ where $\bar{\wei}$ is presented as above by 
     %
 We build
 $A' = \< Q', P', \init', \bar{\wei}', \final' >$,
-%computing over $\hat\Omega = \Omegai \uplus \Omegac \uplus \Omegar$,
+%computing over $\Delta = \Omegai \uplus \Omegac \uplus \Omegar$,
 where $Q' = \bigcup_{k=0}^{M} Q^k$ is the set of sequences of state symbols of $A$,
 of length at most $M$, including the empty sequence denoted by~$\varepsilon$,
 and where $P' = Q'$ and $\bar\wei$ is defined by:
