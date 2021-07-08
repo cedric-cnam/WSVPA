@@ -1688,21 +1688,21 @@ We shall now establish a correspondence between such a derivation tree $t$
 and some word describing a linearization of $t$,
 in a way that $\weight_A(q, t)$ can be computed by a $\SWVPA$.
 
-Let $\Delta$ be the countable (unranked) alphabet obtained
+Let $\hat\Omega$ be the countable (unranked) alphabet obtained
 from $\Omega$ by:
-$\Delta = \Deltai \uplus \Deltac \uplus \Deltar$, with
-$\Deltai = \Delta_0$,
+$\hat\Omega = \Deltai \uplus \Deltac \uplus \Deltar$, with
+$\Deltai = \Omega_0$,
 $\Deltac = \{ \; \call{a} \mid a \in \Omega_{>0} \}$,
 $\Deltar = \{ \; \return{a} \mid a \in \Omega_{>0} \}$.
 
 \noindent
-We associate to $\Delta$
+We associate to $\hat\Omega$
 a label theory $\hat{\Phi}$
 like in Section~\ref{sec:SWVPA-def},
 %
 \noindent
 and we define a linearization of trees of $\T_\Omega$ into
-words of $\Delta^*$ as follows:
+words of ${\hat\Omega}^*$ as follows:
 \begin{description}
 \item $\lin(a) = a$ for all $a \in \Omega_0$,
 \item $\lin\bigl( b(t_1, \ldots, t_k)\bigr) =
@@ -1713,7 +1713,7 @@ words of $\Delta^*$ as follows:
 \begin{proposition}\label{lem:SWTA}
 For all \SWTA $A$ over~$\Omega$, $\Semiring$ commutative, and $\bar\Phi$,
 there exists an effectively constructible \SWVPA $A'$ over
-$\Delta$, $\Semiring$ and $\hat\Phi$
+$\hat\Omega$, $\Semiring$ and $\hat\Phi$
 such that for all $t \in \T_\Omega$, $A'\bigl(\lin(t)\bigr) = A(t)$.
 \end{proposition}
 %
