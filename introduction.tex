@@ -117,19 +117,28 @@ such as the Viterbi semiring and the tropical min-plus algebra, see Figure~\ref{
 %the problem: quantitative parsing or symbolic parsing
 %of parsing of words over infinite input alphabet.
 
-In this paper, we present a framework for weighted parsing over infinite input alphabets.
+
+In this paper, we present a uniform framework for weighted parsing over infinite input alphabets.
 \philippe{Tu fais une différence entre model et automata?}
 It is based on \emph{symbolic weighted} finite states language models (\swM),
-generalizing both~\SA, with functions into an arbitrary semiring instead of Boolean guards,
-and~\WA, by handling infinite alphabets, see Figure~\ref{fig:hierarchy}.
+generalizing the Boolean guards of~\SA %in transitions
+into functions into an arbitrary semiring,
+and generalizing also~\WA, by handling infinite alphabets, see Figure~\ref{fig:hierarchy}.
+
 %***
 %some weighted language models
 %model of weighted CFG
 %computing on words over infinite input alphabets %sets of terminal symbol
 %- but with finite sets of states and transitions rules.
 % non-terminals and production rules).
-In the transition rules of \swM models, input symbols appear as variables, %(parameters)
-and the weight associated to a transition rule is a function of these variables.
+
+In short, a transition rule $q \xrightarrow{\phi} q'$ from state $q$ to $q'$ of a \swM,
+%input symbols are variables, %(parameters)
+is labeled by a function $\phi$ associating to every input symbol $a$ a weight value $\phi(a)$
+in a semiring domain.
+%and the weight associated to a transition rule is a function of these variables.
+\philippe{This sentence (symbols as variables) is not immediately clear to me. Maybe a short example or intuition?}
+\florent{modified}
 %
 \begin{figure}
 \centering
