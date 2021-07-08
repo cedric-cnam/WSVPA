@@ -1046,7 +1046,7 @@ and $\bar\Phi$ effective, %and $k$-convex, % label theory,
 one can construct in PTIME a word $t \in \Omega^*$
 such that $A(t)$ is minimal \wrt the natural ordering for $\Semiring$.
 \end{proposition}
-\florent{total?}
+%\florent{total?}
 %
 Let $A = \< Q, P, \init, \bar\wei, \final >$.
 %
@@ -1055,13 +1055,20 @@ for every $q, q' \in Q$,
 the minimum, \wrt $\leq_\oplus$, of the function
 $\beta_{q, q'} : t \mapsto \weight_A(\config{q}{\bot}, t, \config{q'}{\bot})$.
 Let us denote by $b_\bot(q, q')$ this minimum.
-By definition of $\leq_\oplus$ it holds that:
+By definition of $\leq_\oplus$, and since $\Semiring$ is total,
+it holds that:
 %
 \begin{equation}\label{eq:bbot}
   b_\bot(q, q') = \bigoplus_{t\in \Omega^*}
   \textstyle
   \weight_A\bigl(\config{q}{\bot}, t, \config{q'}{\bot}\bigr).
 \end{equation}
+Since $\Semiring$ is complete, the infinite sum in \eqref{eq:bbot} is well defined,
+and,  it is the minimum in $\Omega^*$,
+\wrt~$\leq_\oplus$, % this ordering.
+of the fonction
+$s \mapsto \weight_A(\config{q}{\sigma}, s, \config{q'}{\sigma})$.
+%
 Hence, following~\eqref{eq:SWVPA-value}, and the associativity and commutativity
 and distributivity for~$\otimes$ and~$\oplus$, the minimum of~$A(t)$ is
 \(
@@ -1120,17 +1127,7 @@ We distinguish two cases : when the stack is empty, and when it is not.
 %
 In the case of an empty stack, let $b_\bot : Q \times Q \to \Semiring$ be such that : %the function:
 %
-\begin{equation}\label{eq:bbot}
-  b_\bot(q, q') = \bigoplus_{s\in \Omega^*}
-  \textstyle
-  \weight_A\bigl(\config{q}{\bot}, s, \config{q'}{\bot}\bigr).
-\end{equation}
-%
-Since $\Semiring$ is complete, the infinite sum in \eqref{eq:bbot} is well defined,
-and, providing that $\Semiring$ is total, it is the minimum in $\Omega^*$,
-\wrt~$\leq_\oplus$, % this ordering.
-of the fonction
-$s \mapsto \weight_A(\config{q}{\sigma}, s, \config{q'}{\sigma})$.
+EQBBOT
 %
 The term $\config{q}{\bot}, s, \config{q'}{\bot}$
 of this sum is the central expression in
