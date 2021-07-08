@@ -4,139 +4,125 @@
 %
 Parsing %variant of membership problem for formal languages
 %- given a language model and an input word $s$, compute a derivation of the model that yields $s$.
-is the problem %process
+is the problem %process 
 of structuring a linear representation on input %typically
 (a finite word), according to a language model. % (a formal grammar).
-% natural language, programming language,
+% natural language, programming language, 
 %
-Most of the context-free parsing approaches~\cite{GruneJacobs08parsing}
-assume a finite and reasonably small input alphabet. %models and algorithms
-Such a restriction makes perfect sense in the context of
-NLP tasks such as constituency parsing,
+Most of the context-free parsing approaches~\cite{GruneJacobs08parsing}  
+assume a finite and reasonably small input alphabet. %models and algorithms 
+Such a restriction makes perfect sense in the context of NLP tasks such as constituency parsing,
 or of programming languages compilers or interpreters.
-Considering large or infinite alphabets can however be of
-practical interest, %in other cases.
+Considering large or infinite alphabets can however be of practical interest, %in other cases.
 %
-for instance, when dealing with large characters encodings such as UTF-16, % processing strings in
-\eg for vulnerability detection in Web-applications~\cite{dAntoni21CACM},
+for instance, when dealing with large characters encodings such as UTF-16, % processing strings in 
+\eg for vulnerability detection in Web-applications~\cite{dAntoni21CACM}, 
 %
-for the analysis (\eg validation or filtering)
-of data streams or serialization of structured documents
-(with textual or numerical attributes)~\cite{Segoufin06csl},
+for the analyse (\eg validation or filtering) 
+of data streams or serialization of structured documents 
+(with textual or numerical attributes)~\cite{Segoufin06csl}, 
 or for processing timed execution traces~\cite{Bouyer03algebraic}.
-% algebraic definition of a class of data languages
+% algebraic definition of a class of data languages 
 % (notion of monoid recognizability, based on registers, comparable to Bojancszik et al. data words)
 %
-
-The latter case is related to a study that motivated the present work:
-automated music transcription. Most representations of music are
-essentially linear. This is true for audio files,
-but also for widely used symbolic representations like MIDI.
-Such representations ignore the hierarchical structures that frame the
-conception of music, at least in the western area. These structures, on the other hand,
-are present, either explicitly  or implicitly,
-in music notation~\cite{Gould11Notation}: music scores are partitioned in measures, measures
-in beats, and beats can be further recursively divided.
-It follows that music events do not occur at arbitrary timestamps,
-but respect a discrete division of the  timeline incurred by
-these recursive divisions.
-The \emph{transcription problem} takes
-as input a linear representation (audio or MIDI) and aims at re-constructing
-these structures
-by mapping input events to this hierarchical rhythmic space.
-It can therefore be stated as a parsing problem~\cite{foscarin:hal-01988990},
+The latter case is related to a study that motivated the present work: 
+automated music transcription.
+\philippe{I think that we can make the case for a larger set of situations: given a linear 
+music notation input, for instance elements in an XML file, we we want to structure
+the input according to a hierarchical rhythmic space. I can elaborate...}
+In this problem, a music performance, % a symbolic representation of a music performance 
+represented symbolically in the form of a sequence of timed musical events, % timestamped
+is converted into a score in Common Western Music Notation~\cite{Gould11Notation},
+structured according to nested grouping and metric strength of events.
+%(the structure represents hierarchical  grouping of events, and their relative temporal positions)
+It can therefore be stated as a parsing problem~\cite{foscarin:hal-01988990}, 
 over an infinite alphabet of timed events.
 
 Various extensions of language models for handling infinite alphabets have been studied.
-%words carrying data values in an infinite domain (e.g. integers) e.g. data processing
-For instance, some automata with memory extensions
-allow restricted storage and comparison of input symbols,
-%and correspond with logics,
+%words carrying data values in an infinite domain (e.g. integers) e.g. data processing 
+For instance, some automata with memory extensions 
+allow restricted storage and comparison of input symbols, 
+%and correspond with logics, 
 (see~\cite{Segoufin06csl} for a survey),
 \florent{register: skip refs and details, add Mikolaj recent}
-with pebbles for marking positions~\cite{NevenSchwentickVianu04FSMinfinite},
-registers~\cite{KaminskiFrancez94},
+with pebbles for marking positions~\cite{NevenSchwentickVianu04FSMinfinite}, 
+registers~\cite{KaminskiFrancez94}, 
 or %computations in 2 steps
-the possibility to compute on subsequences
+the possibility to compute on subsequences 
 with the same attribute values~\cite{Bojanczyk11FO2}. % data words automata.
 %
-%for the and verification of infinite state systems
+%for the and verification of infinite state systems 
 %(model checkers: alphabet = long bit-vectors)
-%...For the representation of  in model checking, verification and
+%...For the representation of  in model checking, verification and 
 %
 The automata at the core of model checkers
 compute on input symbols represented by large bitvectors~\cite{Vardi07ciaa} %\cite{BaierKatoen08MC}
 (sets of assignments of Boolean variables) %propositional variables)
 and in practice,  %implementation
-each transition accepts a set of such symbols (instead of an individual symbol),
+each transition accepts a set of such symbols (instead of an individual symbol), 
 represented by Boolean formula or Binary Decision Diagrams.
 %
 Following a similar idea, % and generalizing,
-in symbolic automata (\SA)~\cite{dAntoniVeanes17CAV,dAntoni21CACM},
+in symbolic automata (\SA)~\cite{dAntoniVeanes17CAV,dAntoni21CACM}, 
 the transitions are guarded by predicates over infinite alphabet domains.
-With appropriate closure conditions on the sets of such predicates, % (alphabet theories),
+With appropriate closure conditions on the sets of such predicates, % (alphabet theories), 
 all the good properties enjoyed by automata over finite alphabets are preserved.
 
-Other extensions of language models  %(automata and grammars)
-help in dealing with non-determinism, by the computation of weight values.
-With an ambiguous grammar, there may exist several derivations
+Other extensions of language models  %(automata and grammars) 
+help in dealing with non-determinism, by the computation of weight values. 
+With an ambiguous grammar, there may exist several derivations 
 (\emph{abstract syntax trees} -- AST) % \ie the result of an analyze.
-yielding one input word. % structuring a word,
+yielding one input word. % structuring a word, 
 The association of one weight value %in semiring domain
-to each AST permits to select a best one (or $n$ bests). % a fixed number of bests
-% = ...a ranking of ASTs
+to each AST permits to select a best one (or $n$ bests). % a fixed number of bests 
+% = ...a ranking of ASTs 
 This is roughly the principle of \emph{weighted parsing}
 approaches~\cite{Goodman99SemiringParsing,Nederhof03weightedParsing,MorbitzVogler19weighted-parsing}.
-In \emph{weighted language models},
+In \emph{weighted language models}, 
 like \eg probabilistic context-free grammars % (CFG),
 and weighted automata (\WA) \cite{Droste09handbook},
 a weight value is associated to each transition rule, % production rule
-and the rule's weights can be combined with an
-associative product operator~$\otimes$ into the weight of an AST.
-A second operator~$\oplus$, associative and commutative,
-is moreover used to resolve the ambiguity raised by the existence
-of several (in general exponentially many) AST
+and the rule's weights can be combined with a associative product operator~$\otimes$ into 
+the weight of an AST.
+A second operator~$\oplus$, associative and commutative, 
+is moreover used to handle the ambiguity of the model, 
+by summing the weights of the possibly several (in general exponentially many) AST %syntax trees 
 associated to a given input word.
 Typically, $\oplus$ will select the best of two weight values.
 %Intuitively,~$\oplus$ selects, or ranking, the syntax trees.
-The weight domain, equipped with these two operators shall be, at minima,
-a \emph{semiring} %$\Semiring$
-where $\oplus$ can be extended to infinite sums,
+The weight domain, equipped with these two operators shall be, at minima, 
+a \emph{semiring} %$\Semiring$ 
+where $\oplus$ can be extended to infinite sums, 
 %\cite{Eilenberg74automata}
-such as the Viterbi semiring and the tropical min-plus algebra, see Figure~\ref{fig:semirings}.
-\philippe{La figure 2 est citée avant la figure 1 mais apparait longtemps après. A corriger.}
-%of domain $\mathbb{R}^+ \cup \{ +\infty\}$,
+such as the Viterbi semiring and the tropical min-plus algebra, see Figure~\ref{fig:semirings}. 
+%of domain $\mathbb{R}^+ \cup \{ +\infty\}$, 
 %where $\oplus$ is min and $\otimes$ is plus .
-%by ranking
+%by ranking 
 %making the weight domain a semiring.
-%Some efficient specialized parsing algorithms~\cite{Huang05kbest} have been proposed in this context
+%Some efficient specialized parsing algorithms~\cite{Huang05kbest} have been proposed in this context 
 %% models represented as hypergraphs \cite{Huang05kbest}
 %in order to compute the $n$ best syntax trees of a given input word without having to enumerate them all.
-%Generally based on dynamic programming, these algorithms rely on
+%Generally based on dynamic programming, these algorithms rely on 
 %additional algebraic properties of~$\Semiring$.
 %-- see \eg~\cite{Huang05kbest} for some NLP applications.
-%The extraction of $n$ best list is useful
+%The extraction of $n$ best list is useful 
 %the problem: quantitative parsing or symbolic parsing
 %of parsing of words over infinite input alphabet.
 
-
 In this paper, we present a uniform framework for weighted parsing over infinite input alphabets.
-\philippe{Tu fais une différence entre model et automata?}
-It is based on \emph{symbolic weighted} finite states language models (\swM),
-generalizing the Boolean guards of~\SA %in transitions
-into functions into an arbitrary semiring,
+It is based on \emph{symbolic weighted} finite states language models (\swM), 
+generalizing the Boolean guards of~\SA %in transitions 
+into functions into an arbitrary semiring, 
 and generalizing also~\WA, by handling infinite alphabets, see Figure~\ref{fig:hierarchy}.
-
 %***
 %some weighted language models
-%model of weighted CFG
+%model of weighted CFG 
 %computing on words over infinite input alphabets %sets of terminal symbol
-%- but with finite sets of states and transitions rules.
+%- but with finite sets of states and transitions rules. 
 % non-terminals and production rules).
-
-In short, a transition rule $q \xrightarrow{\phi} q'$ from state $q$ to $q'$ of a \swM,
-%input symbols are variables, %(parameters)
-is labeled by a function $\phi$ associating to every input symbol $a$ a weight value $\phi(a)$
+In short, a transition rule $q \xrightarrow{\phi} q'$ from state $q$ to $q'$ of a \swM, 
+%input symbols are variables, %(parameters) 
+is labeled by a function $\phi$ associating to every input symbol $a$ a weight value $\phi(a)$ 
 in a semiring domain.
 %and the weight associated to a transition rule is a function of these variables.
 \philippe{This sentence (symbols as variables) is not immediately clear to me. Maybe a short example or intuition?}
@@ -147,156 +133,144 @@ in a semiring domain.
 \begin{tikzpicture}
 \node (NFA) at (0,4) {%
   \(
-  \begin{array}{c}
+  \begin{array}{c} 
   \mathsf{FA} : \Sigma_{\mathsf{fin}}^* \to \mathbb{B}\\
   q \xrightarrow{a} q' \quad  a \in \Sigma_\mathsf{fin}
-  \end{array}
+  \end{array} 
   \)
 };
 %
 \node (WA) at (-2.5,2) {%
   \(
-  \begin{array}{c}
+  \begin{array}{c} 
   \mathsf{WA} : \Sigma_{\mathsf{fin}}^* \to \mathbb{S}\\
   q \xrightarrow{a, w} q' \quad  a \in \Sigma_\mathsf{fin}, w \in \mathbb{S}
-  \end{array}
+  \end{array} 
   \)
 };
 %
 \node (SA) at (2.5,2) {%
   \(
-  \begin{array}{c}
+  \begin{array}{c} 
   \mathsf{SA} : \Sigma_{\mathsf{inf}}^* \to \mathbb{B}\\
   q \xrightarrow{\phi} q' \quad \phi : \Sigma_\mathsf{inf} \to \mathbb{B}
-  \end{array}
+  \end{array} 
   \)
 };
 %
 \node (SWA) at (0,0) {%
   \(
-  \begin{array}{c}
+  \begin{array}{c} 
   \mathsf{SWA} : \Sigma_{\mathsf{inf}}^* \to \mathbb{S}\\
   q \xrightarrow{\phi} q' \quad \phi : \Sigma_\mathsf{inf} \to \mathbb{S}
-  \end{array}
+  \end{array} 
   \)
 };
 \draw[->] (NFA)--(WA);
 \draw[->] (NFA)--(SA);
 \draw[->] (WA)--(SWA);
 \draw[->] (SA)--(SWA);
-%\begin{array}{c} \mathsf{NFA} : \Sigma^* \to \mathbb{B} \end{array}
+%\begin{array}{c} \mathsf{NFA} : \Sigma^* \to \mathbb{B} \end{array} 
 \end{tikzpicture}
-\caption{Classes of Symbolic/Weighted Automata.
-$\Sigma_\mathsf{fin}$ is a finite alphabet,
-$\Sigma_\mathsf{inf}$ is a countable alphabet,
-$\mathbb{B}$ is the Boolean algebra,
-$\mathbb{S}$ is a commutative semiring,
+\caption{Classes of Symbolic/Weighted Automata. 
+$\Sigma_\mathsf{fin}$ is a finite alphabet, 
+$\Sigma_\mathsf{inf}$ is a countable alphabet, 
+$\mathbb{B}$ is the Boolean algebra, 
+$\mathbb{S}$ is a commutative semiring, 
 $q \xrightarrow{\dots} q'$ is a transition between states $q$ and $q'$.}
-\label{fig:hierarchy}
+\label{fig:hierarchy}  
 \end{figure}
 %
-%This approach is close to the case of
-%Symbolic Automata (SA)~\cite{dAntoniVeanes17CAV,dAntoni21CACM},
-%except that the domain for weight values is not restricted to be Boolean,
-%like for the guards in the rules of SA,
+%This approach is close to the case of 
+%Symbolic Automata (SA)~\cite{dAntoniVeanes17CAV,dAntoni21CACM}, 
+%except that the domain for weight values is not restricted to be Boolean, 
+%like for the guards in the rules of SA, 
 %but can be an arbitrary commutative semiring (assuming some restrictions).
 %
-\philippe{Tu veux dire: les modèles formels que tu combines?}
 The models presented here are finite automata called symbolic-weighted (\SWA),
 transducers (\SWT), and pushdown automata
 with a visibly restriction~\cite{AlurMadhusudan09nested} (\SWVPA).
 %\wrt an edit distance
-The latter model of automata operates on \emph{nested words}~\cite{AlurMadhusudan09nested},
-a structured form of words parenthesized with markup symbols,
+The latter model of automata operates on \emph{nested words}~\cite{AlurMadhusudan09nested}, 
+a structured form of words parenthesized with markup symbols, 
 corresponding to a linearization of trees.
 In the context of parsing, they can represent (weighted) AST of CF grammars.
-More precisely, a \SWVPA $A$ associates a weight value $A(t)$ % \in \Semiring$
+More precisely, a \SWVPA $A$ associates a weight value $A(t)$ % \in \Semiring$ 
 to a given nested word $t$, which is the linearization of an AST. %representing a parse tree.
+\philippe{The weight is a label on edges in the derivation tree, right? Not sure I understand 
+the sentence}
 %
-On the other hand,
+On the other hand, 
 a \SWT can define a distance $T(s, t)$ between finite words $s$ and $t$
 over infinite alphabets. % following~\cite{Mohri03EDWA}.
-Then, the \emph{SW-parsing} problem aims at %computing
-finding $t$ minimizing
+Then, the \emph{SW-parsing} problem aims at %computing 
+finding $t$ minimizing 
 $T(s, t) \otimes A(t)$ (\wrt the ranking defined by $\oplus$), given an input word $s$.
 The latter value is called the distance between $s$ and $A$ in~\cite{Mohri03EDWA}.
+\philippe{You mean the distance between $s$ and $t$? "The latter value" is a bit ambiguous}
 %
-
-Like weighted-parsing
-methods~\cite{Goodman99SemiringParsing,Nederhof03weightedParsing,MorbitzVogler19weighted-parsing},
-our approach proceeds in two steps,
-based on properties of the \swM.
-The first step is an intersection
-(Bar-Hillel construction~\cite{GruneJacobs08parsing})
-\florent{chap. intersection in~\cite{GruneJacobs08parsing}}
-where, given a \SWT $T$, a \SWVPA $A$, and an input word $s$,
+Like weighted-parsing 
+methods~\cite{Goodman99SemiringParsing,Nederhof03weightedParsing,MorbitzVogler19weighted-parsing}, 
+our approach proceeds in two steps, 
+based on properties of the \swM. 
+The first step is an intersection 
+(Bar-Hillel construction~\cite{GruneJacobs08parsing}) 
+\florent{chap. intersection in~\cite{GruneJacobs08parsing}} 
+where, given a \SWT $T$, a \SWVPA $A$, and an input word $s$, 
 a \SWVPA $A_{T, s}$ is built, such that for all $t$, $A_{T, s}(t) = T(s, t) \otimes A(t)$.
 \philippe{The notation  $A_{T, s}$ has  not been introduced so far. It is not clear why $T$ is a parameter there}
-In the second step, a best AST $t$ is found by applying to $A_{T, s}$
-a best search algorithm similar to the shortest distance
+In the second step, a best AST $t$ is found by applying to $A_{T, s}$ 
+a best search algorithm similar to the shortest distance 
 in graphs~\cite{Mohri02semiring,Huang05kbest}.
-%In expressiveness, they are equivalent to weighted CFG.
+\philippe{OK, à quelques détails (pour moi), tout ça est très bien expliqué}
+%In expressiveness, they are equivalent to weighted CFG. 
 %and can be used in a general approach for parsing over infinite input alphabets.
 %
-%Let $A$ be a \SWVPA, associating $A(w) \in \Semiring$
+%Let $A$ be a \SWVPA, associating $A(w) \in \Semiring$ 
 %to a given a nested word $w$ (representing a parse tree),
-%and let a \SWT compute a distance $d$, in $\Semiring$,
-%between 2 strings over respectively an infinite input alphabet and the
+%and let a \SWT compute a distance $d$, in $\Semiring$, 
+%between 2 strings over respectively an infinite input alphabet and the 
 %same (infinite) alphabet of $A$.
-%Then, the problem of Symbolic Weighted Parsing is,
-%given an input string $s$, to find a nested word $w$ minimizing
+%Then, the problem of Symbolic Weighted Parsing is, 
+%given an input string $s$, to find a nested word $w$ minimizing 
 %(according to the ranking defined by $\oplus$)
-%the distance $d(s, w) \otimes A(w)$ between $s$ and $A$,
+%the distance $d(s, w) \otimes A(w)$ between $s$ and $A$, 
 %as defined in~\cite{Mohri03EDWA}.
 
-% First one general edit-distance is defined by a weighted word
+% First one general edit-distance is defined by a weighted word 
 % transducer~\cite{Mohri}
 % %Symbolic automata transducers are extended models~\cite{VeanesdAntoniJACM}
 % %dealing with infinite set of input symbols...
 % value in a semiring...
-\florent{expressiveness: VPA have restricted equality test.
+\florent{expressiveness: VPA have restricted equality test. 
         comparable to pebble automata? $\to$ conclusion}
-The main contributions of the paper are:
+
+The main contributions of the paper are: 
 ($i$)~the introduction of automata, \SWA, transducers, \SWT (Section~\ref{section:SWA}),
 and visibly pushdown automata \SWVPA (Section~\ref{sec:SWVPA}),
-generalizing the corresponding classes of symbolic and weighted models,
-%for the weighted computation on (nested) words over infinite alphabets;
+generalizing the corresponding classes of symbolic and weighted models, 
+%for the weighted computation on (nested) words over infinite alphabets;  
 ($ii$)~a polynomial best-search algorithm for \SWVPA, %(Section~\ref{sec:best})
-% a framework for parsing over infinite alphabets,
-and ($iii$)~a uniform framework (Section~\ref{sec:parsing}) for parsing over infinite alphabets,
-the keys to which are
+% a framework for parsing over infinite alphabets, 
+and ($iii$)~a uniform framework (Section~\ref{sec:parsing}) for parsing over infinite alphabets, 
+the keys to which are 
 ($iii.a$)~the \SWT-based definition of generic edit distances between input and output (yield) words,
-and ($iii.b$)~the use, convenient in this context,
-of nested words, and \SWVPA,
+and ($iii.b$)~the use, convenient in this context, 
+of nested words, and \SWVPA, 
 instead of syntax trees and grammars. %(\S~\ref{sec:trees}).
+%
+%Finally, Section~\ref{sec:transcription} describes
+%the implemented application %of this approach 
+%to automated music transcription
+%that motivated this study.
 
+%based these models and on generic def. of distances;
+%the use of VPA for parsing, word instead of trees, use comparison input-output.
+%and best-search
 
-\begin{example}[Running example]
-Throughout the paper we
-illustrate our framework with music transcription examples: Given
-a \emph{timeline} of musical events with arbitrary timestamps as input, parse it
-into a structured music score. In our example, input events
-are pairs $\< \eta, \tau>$ made of
-a symbol $\eta \in \Sigma$, where $\Sigma$ stands for the
-set of MIDI message symbols~\cite{?}
-and  $\tau \in \mathbb{Q}$ is a timestamp. The output of parsing
-is a representation of the sequence in
-Common Western Music Notation (CWMN)~\cite{Gould11Notation}
-where event symbols belong to the domain $\Delta$
-of \emph{pitches} (e.g., A4, G5, etc.), temporal
-information is encoded as \emph{durations} (whole \musWhole$,
-$quarter, $\musQuarter$, eight $\musEighth$, etc), and notes are grouped in
-high-level structures (beams, measures, tuplets). The following inputs
-will be used:
-\begin{enumerate}
-  \item $I_1  = [ <e_1, 0.07>,<e_2, 0.72>,<e_3, 0.91>]$, over interval $[0,1[$
-  \item $I_2  = [ <e_3, 1.05>,<e_4, 1.36>,<e_5, 1.71>]$, over interval $[1,2[$
-\end{enumerate}
-There exists many possible parsings of $I_1 \cup I_2$ in music notation, among
-which
-\includegraphics[scale=0.20]{pictures/score5.png}
-and \includegraphics[scale=0.20]{pictures/score4.png}.  Wheighted
-parsing associates a cost to each solution, and our framework
-aims at selecting the best one with respect to this cost.
-\endex
-\end{example}
+%In Section~\ref{section:SWA} we introduce \SWA and \SWT.
+%Then \SWVPA are defined in Section~\ref{sec:SWVPA}, 
+%where a polynomial 1-best algorithm is described that can be use to solve
+%Symbolic Weighted Parsing, as described Section~\ref{sec:parsing}.
+%Finally, in Section~\ref{sec:transcription}, we present an application 
+%of this approach to automated music transcription that has been implemented.
