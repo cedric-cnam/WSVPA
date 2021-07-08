@@ -220,11 +220,11 @@ Tropical min-plus & $\mathbb{R}_+ \cup \{ \infty\}$ & $\mathit{min}$ & $+$ & $\i
 \end{figure}
 \florent{results of this paper: for semirings commutative, bounded, total and complete}
 
-\begin{example}
+\begin{example}\label{rules-division}
 The recursive subdivision of time that leads to hierarchichal
 structures of music notation can be modeled as
 production rules. Since there exists several possible division,
-rules can be weighted 
+rules can be weighted
 in the tropical semiring whose domain $\mathbb{R}_+ \cup \{ +\infty\}$,
 $\oplus$ is min, $\zero = +\infty$, $\otimes$ is sum, and $\one = 0$.
 For instance, the following production rules define two possible divisions
@@ -233,6 +233,14 @@ of a bounded time interval into respectively a duplet and a triplet.
 \rho_1: q_0 \xrightarrow{0.06} \< q_{1}, q_{2}>,\
 \rho_2: q_0 \xrightarrow{0.12} \< q_{1}, q_{2}, q_{2}>.
 \]
+Further binary divisions of time sub-intervals %represented respectively by~$q_2$ and~$q_3$
+are possible with:
+
+\[
+\rho_3:\,q_2 \xrightarrow{0.1} \< q_{3}, q_{3}>, \
+\rho_4:\,q_3 \xrightarrow{0.11} \< q_{4}, q_{4}>. \
+\]
+
 \endex
 \end{example}
 %%% semiring properties used in paper

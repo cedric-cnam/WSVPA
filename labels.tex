@@ -258,5 +258,16 @@ $$\delta(<e_1, t1_>, <e_2, t_2>) =
    \zero  & otherwise
 \end{array}
 \right.$$
+For the sake of concreteness, consider our running example \ref{ex:running} with $s = I_1 \cup I_2 =
+ [ <e_1, 0.07>,<e_2, 0.72>,<e_3, 0.91>] \cup [ <e_3, 1.05>,<e_4, 1.36>,<e_5, 1.71>]$
+ and the music notation $t =$ \includegraphics[scale=0.20]{pictures/score5.png}.
+ The latter shows a subdivision of the temporal interval $[1, 2[$
+ based on the rules from Example~\ref{rules-division}. The first measure ($I_1$)
+ results from the successive applications of  rules $\rho_1$ (division in two)
+and rules $\rho_3$ (division of the second half) in two. The second measure
+is a division in three obtained by rule $\rho_3$. It follows that the notation
+defines the sequence of timestamps $0, \frac{3}{4}, \frac{7}{8}, 1, \frac{4}{3}, \frac{5}{3}$.
+The distance between $s$ and $t$ is the  pairwise difference between the
+timestamps from $s$ and $t$, 0.255.
 \endex
 \end{example}
