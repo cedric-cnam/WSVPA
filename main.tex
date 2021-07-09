@@ -276,8 +276,7 @@ weighted automata and transducers~\cite{Droste09handbook}
 by labeling each transition with a weight function (instead of a simple weight value),
 that takes the input and output symbols as parameters.
 These functions are similar to the guards of symbolic automata~\cite{dAntoniVeanes17CAV,dAntoni21CACM},
-but they can return values in a generic semiring,
-whereas the latter guards are restricted to the Boolean semiring.
+but the latter guards are restricted to the Boolean semiring.
 %
 
 %\subsection{Definitions} \label{sec:SWTdef}\label{sec:SWAdef}
@@ -317,7 +316,6 @@ as functions of
 $Q \times (\Sigma \cup \{ \varepsilon \}) \times (\Delta \cup \{ \varepsilon \}) \times Q \to \Semiring$,
 overloading the function names,
 such that, for all $q, q' \in Q$, $a \in \Sigma$,  $b \in \Delta$:
-
 \[
 \begin{array}{rcll}
 \wei_{10}(q, a, \varepsilon, q') & = & \phi(a) & %\wei_\Sigma(q, q')(a)
@@ -333,7 +331,7 @@ such that, for all $q, q' \in Q$, $a \in \Sigma$,  $b \in \Delta$:
 % The symbolic-weighted transducer
 The \SWT $T$ computes on pairs of words $\< s, t> \in \Sigma^* \times \Delta^*$,
 $s$ and $t$, being respectively called \emph{input} and \emph{output} word.
-\florent{It compute asynchronously: advance in $s$ and not in $t$ ($\wei_{10}$), 
+\florent{It compute asynchronously: advance in $s$ and not in $t$ ($\wei_{10}$),
 or the opposite ($\wei_{01}$),
 or advance in both $s$ and $t$ ($\wei_{11}$).}
 % \noindent
@@ -459,7 +457,7 @@ T(s, t)  =
 
 
 \begin{example}\label{ex:SWT}
-Let us develop the example of comparison between music played by a performer,
+We develop the example of comparison between music played by a performer,
 represented as a sequence $s \in \Sigma^*$ of events in the MIDI alphabet $\Sigma$,
 and  a music score represented as a sequence $t \in \Delta^*$
 in the CWMN alphabet $\Delta$. We build a small weighted transducer model
@@ -467,7 +465,7 @@ in the CWMN alphabet $\Delta$. We build a small weighted transducer model
 calculates the distance between $s$ and $t$.
 
 If one performed event $s_i$  corresponds
-to one notated event $t_1$ (for instance MIDI code 61 and pitch A4),
+to one notated event $t_j$ (for instance MIDI code 61 and pitch A4),
 the weight value computed by the \SWT is the time distance between both,
 as in Example~\ref{distance-time}, and is modeled by
 transitions $\wei_{11}$ below.
@@ -487,7 +485,7 @@ or \emph{dots} \musQuarterDotted{}), it is  skipped with no cost (transitions $\
 \end{array}
 \]
 %
-We also must be able to take performing errors into account, while still being able to compare with the score,
+We also want to take performing errors into account, while still being able to compare with the score,
 since a performer could, for example, play an unwritten extra note.
 \lydia{reformulated this sentence}
 %
@@ -500,16 +498,13 @@ The transitions in the second column below switch back to the normal state $q_0$
 At last, we let $q_0$ be the only initial and final state, with
 $\init(q_0) = \final(q_0) = \one$, and
 $\init(q_1) = \final(q_1) = \zero$.
-
-\lydia{ccl to the ex}
-That way, an \SWT is capable of evaluating the differences between a score and a performance,
+This \SWT is capable of evaluating the differences between a score and a performance,
 all the while ensuring that performance errors are plausible.
 %$\init(q_0, d, b) = \final(q_0, d, b) = \one$, and
 %$\init(q_1, d, b) = \final(q_1, d, b) = \zero$,
 %for all $d \in \Sigma$ and $b \in \Delta$.
 \endex
 \end{example}
-
 
 \begin{comment}
 \begin{example}
@@ -657,12 +652,6 @@ A(s)  =
 
 %\subsection{Properties}
 \noindent
-\philippe{Il me manque une explication:  on construit un automate
-qui, étant donnée une partition $t$, renvoie la distance minimale
-avec n'importe quelle performance (distance donnée par un transducer)?
-Quel est le rôle de A(s)?
-}
-\florent{ajout d'une explication avant le Corrolaire}
 The following property will be useful to the approach on
 symbolic weighted parsing presented in Section~\ref{sec:parsing}.
 
@@ -721,7 +710,7 @@ following the algorithm of~\cite{LombardySakarovitch12ciaa}.
 Initially, for all $p_1, p_2 \in P$, and $q_1, q_2 \in Q$, let
 \[
 \begin{array}{rcl}
-\wei'_1\bigl( \< p_1, q_1>, \< p_2, q_2>\bigr) & = & 
+\wei'_1\bigl( \< p_1, q_1>, \< p_2, q_2>\bigr) & = &
 \wei_1(p_1, p_2) \otimes
 \bigl[
 \wei_{01}(q_1, q_2)
@@ -738,11 +727,11 @@ Then, we iterate the following for all $p_1\in P$ and $q_1, q_2 \in Q$:
 for all $p_2\in P$ and $q_3 \in Q$,
 \[
 \begin{array}{rcl}
-\wei'_1\bigl( \< p_1, q_1>, \< p_2, q_3>\bigr) & \opluseq & 
+\wei'_1\bigl( \< p_1, q_1>, \< p_2, q_3>\bigr) & \opluseq &
 \displaystyle\bigoplus_{\Sigma} \wei_{10}(q_1, q_2)
 \otimes
 \wei'_1\bigl( \< p_1, q_2>, \< p_2, q_3>\bigr)\\
-\final'(p_1, q_1) & \opluseq & 
+\final'(p_1, q_1) & \opluseq &
 \displaystyle\bigoplus_{\Sigma} \wei_{10}(q_1, q_2)
 \otimes \final'(p_1, q_2)
 \end{array}
@@ -759,8 +748,8 @@ where the sizes $\| T \|$ and $\| A \|$ are their number of states.
 \florent{revise complexity with nb. of tr. and states}
 %
 The particular case of Proposition~\ref{prop:epsilon} for a singleton $A$,
-\ie $A(s) = \one$ for a given $s$ and $A(s') = \zero$ for all $s' \neq s$, 
-corresponds to a construction of a \SWA for the partial application of a \SWT, 
+\ie $A(s) = \one$ for a given $s$ and $A(s') = \zero$ for all $s' \neq s$,
+corresponds to a construction of a \SWA for the partial application of a \SWT,
 fixing the first argument $s$.
 \begin{corollary} \label{cor:epsilon}
 Given a \SWT $T$ over $\Sigma$, $\Delta$,
@@ -809,7 +798,7 @@ Let $\Delta$ be a countable alphabet
 that we assume partitioned into three
 subsets~$\Deltai$, $\Deltac$, $\Deltar$,
 whose elements are respectively called
-\emph{internal}, \emph{call} and \emph{return} symbols, 
+\emph{internal}, \emph{call} and \emph{return} symbols,
 following~\cite{AlurMadhusudan09nested}.
 % names are  coined by application to functional program verification
 % \begin{itemize}
@@ -831,7 +820,7 @@ for~$\Phi_\Deltai$, $\Phi_\Deltac$, $\Phi_\Deltar$ and~$\Phi_{\Deltac, \Delta_\m
 %closed under $\oplus$ and $\otimes$.
 
 \begin{example}
-Consider once more the scores of Exemple~\ref{ex:running}.
+Consider once more the scores of Example~\ref{ex:running}.
 $\Deltai$ represents the set of music events of the form $<n, t>$
 where $n$ is either a note (e.g. A4), the continuation symbol $-$, or a
 rest symbol R. $\Deltac$ and  $\Deltar$ are used to encode the score structure:
@@ -938,11 +927,11 @@ and a stack content $\gamma \in \Gamma^*$,
 where $\Gamma = \Deltac \times P$.
 Hence, $\weight_A$ is a function from
 $[Q \times \Gamma^*] \times \Delta^* \times [Q \times \Gamma^*]$ into~$\Semiring$.
-The empty stack is denoted by $\bot$, and the first %upmost 
+The empty stack is denoted by $\bot$, and the first %upmost
 symbol is the last pushed content.
 %
 The recursive definition of $\weight_A$
-enumerates each of the six possible cases: 
+enumerates each of the six possible cases:
 reading $a \in \Deltai$,
 %\lydia{intro to func}
 or $\call{c} \in \Deltac$, or $\return{r} \in \Deltar$,
@@ -1050,13 +1039,10 @@ $(A_1 \otimes A_2)(s) = A_1(s) \otimes A_2(s)$.
 \end{proposition}
 %
 \begin{proof}
-The construction is essentially the same
-as in the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
+The construction is similar
+to that of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 \florent{complete proof (app)}
 \end{proof}
-
-%\subsection{Best Search}
-\label{sec:best}\label{sec:search}
 \noindent
 We shall now present a procedure for searching, for a~$\SWVPA$ $A$,
 a word %$w \in \Delta^*$
@@ -1094,7 +1080,7 @@ Following~\eqref{eq:SWVPA-value}, and the associativity and commutativity
 and distributivity for~$\otimes$ and~$\oplus$, the minimum of~$A(t)$ is:
 \begin{equation}\label{eq:min}
 {\displaystyle\bigoplus_{t\in \Delta^*}} A(t)
-= 
+=
 {\displaystyle\bigoplus_{t\in \Delta^*}}
 {\displaystyle\bigoplus_{q, q' \in Q}} \textstyle
 \mathsf{in}(q) \mathop{\otimes}
@@ -1108,24 +1094,24 @@ b_\bot(q, q')
 \end{equation}
 
 \noindent
-In order to compute the above function $b_\bot : Q \times Q \to \Semiring$, 
+In order to compute the above function $b_\bot : Q \times Q \to \Semiring$,
 we shall consider an auxiliary function $b_\top :  Q \times P \times Q \to \Phic$.
 %
-Intuitively, $b_\top(q, p, q')$ is a function of $\Phic$, 
-mapping every $c \in \Deltac$ to 
+Intuitively, $b_\top(q, p, q')$ is a function of $\Phic$,
+mapping every $c \in \Deltac$ to
 the minimum weight of a computation of~$A$
-starting in state $q$ with a non-empty stack 
-$\gamma' = \<c, p> \, \gamma \in \Gamma^+$, 
+starting in state $q$ with a non-empty stack
+$\gamma' = \<c, p> \, \gamma \in \Gamma^+$,
 and ending in state $q'$ with the same stack $\gamma'$,
-such that moreover, 
+such that moreover,
 the computation does not pop the pair $\<c, p>$ at the top of $\gamma'$
 (\ie $\gamma'$ is left untouched during the computation).
 However, the computation can read $\<c, p>$ at the top of $\gamma'$,
 and can also push another pair $\< c', p'> \in \Gamma$ on $\gamma'$,
-following the third case of 
+following the third case of
 in the definition \eqref{eq:SWVPA-weight} of $\weight_A$ (call symbol).
-The pair $\< c', p'>$ can be pop later, during the computation from $q$ to $q'$,  
-following the fifth case of \eqref{eq:SWVPA-weight} (return symbol). 
+The pair $\< c', p'>$ can be pop later, during the computation from $q$ to $q'$,
+following the fifth case of \eqref{eq:SWVPA-weight} (return symbol).
 %However, it cannot apply one of the two last cases (return symbol and empty stack)
 %when the current stack is $\gamma$.
 %pop symbols in $\gamma$.
@@ -1135,7 +1121,7 @@ following the fifth case of \eqref{eq:SWVPA-weight} (return symbol).
 % However, it is possible to apply the two first cases
 % (internal symbol or call symbol, with a push on the top of $\top$).
 %
-Formally, in order to define $b_\top$, we consider 
+Formally, in order to define $b_\top$, we consider
 a fresh stack symbol $\top \notin \Gamma$,   %which does not belong to $\Gamma$,
 representing the above untouched stack, and let:
 %
@@ -1143,24 +1129,24 @@ representing the above untouched stack, and let:
   b_\top(q, p, q') : c \mapsto \bigoplus_{s\in \Delta^*}
   \textstyle
   \weight_A\bigl(\configup{q}{\< c, p> \stackup \top }, s, \configup{q'}{\<c, p> \stackup \top}\bigr)
-\quad  
-\mathrm{~for~all~} c \in \Deltac  
+\quad
+\mathrm{~for~all~} c \in \Deltac
 \end{equation}
 %
-By definition of $\weight_A$ in \eqref{eq:SWVPA-weight}, 
+By definition of $\weight_A$ in \eqref{eq:SWVPA-weight},
 using the symbol $\top$ for the part of the stack below $\<c, p>$
 (\ie the substack $\gamma$ in the above $\gamma' = \<c, p> \, \gamma$)
 ensures that this part $\gamma'$ is not touched during the computation.
 % there cannot be a pop of $\<c, p>$ followed by a push of $\<c, p>$
 % because it is not possible to push over $\top$ (push read the top of stack).
 %
-This ensures in particular that the subword 
+This ensures in particular that the subword
 read during the computation is well parenthesized
 (every symbol in $\Deltac$ has a matching symbol in $\Deltar$).
 
-% Note that having a stack reduced to such a symbol makes impossible the application of the 
-% two last cases in the definition of $\weight_A$ (return symbol and empty stack). 
-% However, it is possible to apply the two first cases 
+% Note that having a stack reduced to such a symbol makes impossible the application of the
+% two last cases in the definition of $\weight_A$ (return symbol and empty stack).
+% However, it is possible to apply the two first cases
 % (internal symbol or call symbol, with a push on the top of $\top$).
 
 %The term $\config{q}{\bot}, s, \config{q'}{\bot}$
@@ -1173,7 +1159,7 @@ read during the computation is well parenthesized
 \SetKw{Extract}{extract}
 \SetKw{Update}{update}
 
-\textbf{initially} let $\Q = (Q \times Q) \cup (Q \times P \times Q)$, 
+\textbf{initially} let $\Q = (Q \times Q) \cup (Q \times P \times Q)$,
 and let $d_\bot(q_1, q_2) = d_\top(q_1, p, q_2) = \one$
 if $q_1 = q_2$ and $d_\bot(q_1, q_2) = d_\top(q_1, p, q_2) = \zero$ otherwise$\;$
 
@@ -1375,7 +1361,7 @@ is interpreted as follows:
 
  \end{enumerate}
 Therefore, the framework, applied to the transcription problem, allows to find an optimal
-solution that considers both the fitness of the result to the input, and the complexity of the former.
+solution that considers both the fitness of the result, and its structural complexity.
 \end{example}
 %
 %\subsection{Computation}
