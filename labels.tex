@@ -254,15 +254,15 @@ results in small time shifts between an input event and the corresponding
 notation event.  These shifts can be weighted as the time distance between both,
 computed in the tropical semiring with a base function
 based on a given $\delta \in \Phi_{\Sigma, \Delta}$.
-$$\delta(<e_1, t1_>, <e_2, t_2>) =
+$$\delta\bigl(\<e_1, t_1>, \<e_2, t_2>\bigr) =
 \left\{
 \begin{array}{ll}
-   | t_1 - t_2 | & if e_1 = e_2 \\
-   \zero  & otherwise
+   | t_1 - t_2 | & \mathrm{if}\  e_1 = e_2 \\
+   \zero  & \mathrm{otherwise}
 \end{array}
 \right.$$
 For the sake of concreteness, consider our running example \ref{ex:running} with $s = I_1 \cup I_2 =
- [ <e_1, 0.07>,<e_2, 0.72>,<e_3, 0.91>] \cup [ <e_3, 1.05>,<e_4, 1.36>,<e_5, 1.71>]$
+ [ \<e_1, 0.07>, \<e_2, 0.72>, \<e_3, 0.91>] \cup [ \<e_3, 1.05>, \<e_4, 1.36>, \<e_5, 1.71>]$
  and the music notation $t =$ \includegraphics[scale=0.20]{pictures/score5.png}.
  The latter shows a subdivision of the temporal interval $[1, 2[$
  based on the rules from Example~\ref{rules-division}. The first measure ($I_1$)

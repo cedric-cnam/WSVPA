@@ -661,6 +661,7 @@ qui, étant donnée une partition $t$, renvoie la distance minimale
 avec n'importe quelle performance (distance donnée par un transducer)?
 Quel est le rôle de A(s)?
 }
+\florent{ajout d'une explication avant le Corrolaire}
 The following property will be useful to the approach on
 symbolic weighted parsing presented in Section~\ref{sec:parsing}.
 
@@ -717,32 +718,33 @@ following the algorithm of~\cite{LombardySakarovitch12ciaa}.
 \noindent
 Initially, for all $p_1, p_2 \in P$, and $q_1, q_2 \in Q$, let
 \[
-\wei'_1\bigl( \< p_1, q_1>, \< p_2, q_2>\bigr) =
+\begin{array}{rcl}
+\wei'_1\bigl( \< p_1, q_1>, \< p_2, q_2>\bigr) & = & 
 \wei_1(p_1, p_2) \otimes
 \bigl[
 \wei_{01}(q_1, q_2)
 \oplus
 \displaystyle\bigoplus_{\Sigma}
 \wei_{11}(q_1, q_2)
-\bigr].
+\bigr]\\
+\final'(p_1, q_1) & = & \final_A(p_1) \otimes \final_T(q_1)
+\end{array}
 \]
-\florent{init. $\final'$}
 
 \noindent
-Iterate the following for all $p_1\in P$ and $q_1, q_2 \in Q$:
+Then, we iterate the following for all $p_1\in P$ and $q_1, q_2 \in Q$:
 for all $p_2\in P$ and $q_3 \in Q$,
 \[
-\wei'_1\bigl( \< p_1, q_1>, \< p_2, q_3>\bigr) \opluseq
+\begin{array}{rcl}
+\wei'_1\bigl( \< p_1, q_1>, \< p_2, q_3>\bigr) & \opluseq & 
 \displaystyle\bigoplus_{\Sigma} \wei_{10}(q_1, q_2)
 \otimes
-\wei'_1\bigl( \< p_1, q_2>, \< p_2, q_3>\bigr)
-\]
-and
-\(
-\final'(p_1, q_1) \opluseq
+\wei'_1\bigl( \< p_1, q_2>, \< p_2, q_3>\bigr)\\
+\final'(p_1, q_1) & \opluseq & 
 \displaystyle\bigoplus_{\Sigma} \wei_{10}(q_1, q_2)
 \otimes \final'(p_1, q_2)
-\)
+\end{array}
+\]
 \florent{proof correctness (app)}
 %\qed
 \end{proof}
@@ -1201,7 +1203,7 @@ that converges eventually to $b_\top$ and $b_\bot$.
 %$Q \times \{ \bot, \top \} \times Q$.
 %
 \noindent
-\florent{explication Fig.~\ref{fig:best-update} suivant cas de \eqref{eq:SWVPA-weight}}
+\florent{explication Fig.~\ref{fig:best-update} (update) suivant cas de \eqref{eq:SWVPA-weight}?}
 The infinite sums in the updates of $d$ in Algorithm~\ref{algo:Dijkstra},
 Figure~\ref{fig:best-update}
 are well defined
@@ -1265,11 +1267,9 @@ d_\bot(q_1, q_3) & \opluseq &
 \end{figure}
 
 
-\florent{complete **}
-** effectively computable by hypothesis that the label theory is effective**
-termination: The algorithm performs $2.|Q|^2$ iterations until $P$ is empty,
+Termination: the algorithm performs $2.|Q|^2$ iterations until $P$ is empty,
 and each iteration has a time complexity $O(|Q|^2 . |P|)$.
-\florent{detail with nb tr. and states}
+\florent{complexity: detail with nb tr. and states?}
 That gives a time complexity $O(|Q|^4 . |P|)$.
 It can be reduced by implementing $P$ as a priority queue,
 prioritized by the value returned by $d$.
@@ -1281,10 +1281,11 @@ With~\eqref{eq:min}, this ensures
 the correctness of Algorithm~\ref{algo:Dijkstra}.
 
 \noindent
+** effectively computable by hypothesis that the label theory is effective**
+\florent{REVOIR}
 In order to obtain effectively a witness
 (word of $\Delta^*$ with a computation of $A$ of minimal weight),
 we require the additional property of convexity of weight functions.***
-\florent{completer}
 
 \begin{proposition}\label{th:best-search}
 For a \SWVPA $A$
