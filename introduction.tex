@@ -2,11 +2,9 @@
 %
 % Introduction
 %
-Parsing %variant of membership problem for formal languages
-%- given a language model and an input word $s$, compute a derivation of the model that yields $s$.
-is the problem %process
-of structuring a linear representation on input %typically
-(a finite word), according to a language model. % (a formal grammar).
+Parsing is the problem
+of structuring a linear representation
+(a finite word) according to a language model. % (a formal grammar).
 % natural language, programming language,
 %
 Most of the context-free parsing approaches~\cite{GruneJacobs08parsing}
@@ -15,23 +13,19 @@ Such a restriction makes perfect sense in the context of
 NLP tasks such as constituency parsing,
 or of programming languages compilers or interpreters.
 Considering large or infinite alphabets can however be of
-practical interest, %in other cases.
+practical interest, when dealing with large characters encodings such as UTF-16,
+% processing strings in \eg for vulnerability detection in Web-applications~\cite{dAntoni21CACM},
 %
-for instance, when dealing with large characters encodings such as UTF-16, % processing strings in
-\eg for vulnerability detection in Web-applications~\cite{dAntoni21CACM},
-%
-for the analysis (\eg validation or filtering)
-of data streams or serialization of structured documents
-(with textual or numerical attributes)~\cite{Segoufin06csl},
-or for processing timed execution traces~\cite{Bouyer03algebraic}.
+analysis of data streams or serialization of structured documents~\cite{Segoufin06csl},
+or processing timed execution traces~\cite{Bouyer03algebraic}.
 % algebraic definition of a class of data languages
 % (notion of monoid recognizability, based on registers, comparable to Bojancszik et al. data words)
 %
 
-The latter case is related to a study that motivated the present work:
-automated music transcription. Most representations of music are
-essentially linear. This is true for audio files,
-but also for widely used symbolic representations like MIDI.
+The latter case is related to a motivation  of  the present work:
+automated music transcription. Representations that capture  music performances
+are
+essentially linear:   audio files, or the widely used MIDI format~\cite{?}.
 Such representations ignore the hierarchical structures that frame the
 conception of music, at least in the western area. These structures, on the other hand,
 are present, either explicitly  or implicitly,
@@ -85,10 +79,9 @@ yielding one input word. % structuring a word,
 The association of one weight value %in semiring domain
 to each AST permits to select a best one (or $n$ bests). % a fixed number of bests
 % = ...a ranking of ASTs
-This is roughly the principle of \emph{weighted parsing}
-approaches~\cite{Goodman99SemiringParsing,Nederhof03weightedParsing,MorbitzVogler19weighted-parsing}.
+%This is roughly the principle of \emph{weighted parsing} approaches
 \florent{WARNING: \cite{MorbitzVogler19weighted-parsing} much is more general that weighted parsing}
-In \emph{weighted language models},
+In \emph{weighted language models}~\cite{Goodman99SemiringParsing,Nederhof03weightedParsing,MorbitzVogler19weighted-parsing},
 like \eg probabilistic context-free grammars % (CFG),
 and weighted automata (\WA) \cite{Droste09handbook},
 a weight value is associated to each transition rule, % production rule
@@ -123,7 +116,7 @@ such as the Viterbi semiring and the tropical min-plus algebra% % see Figure~\re
 In this paper, we present a uniform framework for weighted parsing over infinite input alphabets.
 It is based on \emph{symbolic weighted} finite states language models (\swM),
 generalizing the Boolean guards of~\SA %in transitions
-into functions into an arbitrary semiring,
+to functions into an arbitrary semiring,
 and generalizing also~\WA, by handling infinite alphabets, see Figure~\ref{fig:hierarchy}.
 
 %***
@@ -184,10 +177,9 @@ in a semiring domain.
 %\begin{array}{c} \mathsf{NFA} : \Sigma^* \to \mathbb{B} \end{array}
 \end{tikzpicture}
 \caption{Classes of Symbolic/Weighted Automata.
-$\Sigma_\mathsf{fin}$ is a finite alphabet,
-$\Sigma_\mathsf{inf}$ is a countable alphabet,
-$\mathbb{B}$ is the Boolean algebra,
-$\mathbb{S}$ is a commutative semiring,
+$\Sigma_\mathsf{fin}$ and $\Sigma_\mathsf{inf}$ denote finite/countable alphabets,
+$\mathbb{B}$  the Boolean algebra,
+$\mathbb{S}$ a commutative semiring.
 $q \xrightarrow{\dots} q'$ is a transition between states $q$ and $q'$.}
 \label{fig:hierarchy}
 \end{figure}
@@ -227,8 +219,9 @@ The first step is an intersection
 (Bar-Hillel construction~\cite{GruneJacobs08parsing})
 \florent{chap. intersection in~\cite{GruneJacobs08parsing}}
 where, given a \SWT $T$, a \SWVPA $A$, and an input word $s$,
-a \SWVPA $B$ %$A_{T, s}$ 
-is built, such that for all~$t$,  $B(t) = T(s, t) \otimes A(t)$.% $A_{T, s}(t) = T(s, t) \otimes A(t)$.
+a \SWVPA $B$ %$A_{T, s}$
+is built, such that for all~$t$,
+$B(t) = T(s, t) \otimes A(t)$.% $A_{T, s}(t) = T(s, t) \otimes A(t)$.
 In the second step, a best AST $t$ is found by applying to $B$ %$A_{T, s}$
 a best search algorithm similar to the shortest distance
 in graphs~\cite{Mohri02semiring,Huang05kbest}.
@@ -292,8 +285,8 @@ will be used:
 There exists many possible parsings of $I_1 \cup I_2$ in music notation, among
 which
 \includegraphics[scale=0.20]{pictures/score5.png}
-and \includegraphics[scale=0.20]{pictures/score4.png}.  
-SW-parsing associates a cost 
+and \includegraphics[scale=0.20]{pictures/score4.png}.
+SW-parsing associates a cost
 \florent{weight value}
 to each solution, and our framework
 aims at selecting the best one with respect to this cost.
