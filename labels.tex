@@ -3,8 +3,8 @@
 % Label Theory
 %
 We shall now define the functions labeling the transitions of SW automata and transducers,
-generalizing the Boolean algebras of~\cite{dAntoniVeanes17CAV}
-from Boolean to other semiring domains.
+generalizing the Boolean algebras of~\cite{dAntoniVeanes17CAV}.
+%from Boolean to other semiring domains.
 %
 We consider \emph{alphabets}, which are countable sets of symbols
 denoted $\Sigma$, $\Delta$,...
@@ -20,8 +20,8 @@ $\Phi_\Sigma$, %and $\Phi_\Delta$,
 containing unary functions of type $\Sigma \to \Semiring$, %resp. $\Delta \to \Semiring$,
 or $\Phi_{\Sigma, \Delta}$, containing binary functions $\Sigma \times \Delta \to \Semiring$,
 and such that:
-\florent{unary for \SWA (weight depends on input symbol) 
-         and binary for transducers and VPA (weight depends on input symbol AND output or stack symbol)} 
+\florent{unary for \SWA (weight depends on input symbol)
+         and binary for transducers and VPA (weight depends on input symbol AND output or stack symbol)}
 
 \noindent --
 for all $\Phi_{\Sigma, \Delta} \in \bar\Phi$, we have
@@ -115,6 +115,7 @@ consider the following operators on the functions of~$\bar\Phi$. % a label theor
 %
 \medskip\noindent
 In what follows, we might omit the sub- and superscripts in
+\philippe{On peut simplifier la notation et supprimer cette discussion?}
 $\otimes_1$, $\bigoplus^1_\Sigma$...,
 %$\otimes_2$, $\oplus_1$, $\oplus_2$
 when there is no ambiguity.
@@ -134,10 +135,7 @@ and all $\eta \in \Phi_{\Sigma, \Delta}$,
 $\bigoplus^1_\Sigma \eta \in \Phi_{\Delta}$ and
 $\bigoplus^2_\Delta \eta \in \Phi_{\Sigma}$.
 \end{definition}
-%
-\florent{notion of diagram of functions akin BDD for transitions in practice}
 
-\noindent
 The following facts are immediate.
 \florent{mv appendix?}
 %
@@ -188,11 +186,6 @@ and similarly for~$\oplus$
 %can be computed from $\alpha \in \Semiring$ and summaries of $\phi$ and $\phi'$ in $\Phi_{\Sigma}$,
 %using the operators of $\Semiring$,
 %and the same holds for $\Phi_{\Delta}$ and $\Phi_{\Sigma, \Delta}$.
-
-
-\philippe{Je trouve qu'il y a beaucoup de notions à retenir (complete, effective) et ça devient
-difficile pour un lecteur non spécialiste. Est-ce que tout est nécessaire (je ne sais plus qui m'avait dit:
-un concept en plus, un point en moins.}
 
 \noindent
 A label theory is called \emph{effective} when
@@ -246,14 +239,13 @@ can be effectively computed from $\phi$ and $\eta$.
 % we can compute the value of a diagram in time...
 
 \begin{example}\label{distance-time}
-Consider the music transcription problem, with an input  representing
+We return to the music transcription problem, with an input  representing
 a music performance. In order to align the
 input with a music score, we must take into consideration
 the expressive timing of human performance that
 results in small time shifts between an input event and the corresponding
 notation event.  These shifts can be weighted as the time distance between both,
-computed in the tropical semiring with a base function
-based on a given $\delta \in \Phi_{\Sigma, \Delta}$.
+computed in the tropical semiring as follows.
 $$\delta\bigl(\<e_1, t_1>, \<e_2, t_2>\bigr) =
 \left\{
 \begin{array}{ll}
@@ -261,10 +253,11 @@ $$\delta\bigl(\<e_1, t_1>, \<e_2, t_2>\bigr) =
    \zero  & \mathrm{otherwise}
 \end{array}
 \right.$$
-For the sake of concreteness, consider our running example \ref{ex:running} with $s = I_1 \cup I_2 =
+From Example~\ref{ex:running}, $s = I_1 \cup I_2 =
  [ \<e_1, 0.07>, \<e_2, 0.72>, \<e_3, 0.91>] \cup [ \<e_3, 1.05>, \<e_4, 1.36>, \<e_5, 1.71>]$
- and the music notation $t =$ \includegraphics[scale=0.20]{pictures/score5.png}.
- The latter shows a subdivision of the temporal interval $[1, 2[$
+ is a sequence of MIDI events, and $t =$ \includegraphics[scale=0.20]{pictures/score5.png}
+ is a sequence in music notation .
+ The latter shows a subdivision 
  based on the rules from Example~\ref{rules-division}. The first measure ($I_1$)
  results from the successive applications of  rules $\rho_1$ (division in two)
 and rules $\rho_3$ (division of the second half) in two. The second measure

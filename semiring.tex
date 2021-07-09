@@ -1,8 +1,8 @@
 % !TEX root = main.tex
 %
 % Semiring basics
-%
-We shall consider semirings for the weight values of our language models.
+%%
+%We shall consider semirings for the weight values of our language models.
 %\florent{The results are established for a general class of semirings. They can be instantiated for concrete cases}
 A \emph{semiring} $\< \Semiring, \oplus, \zero, \otimes, \one>$
 is a structure with a domain~$\Semiring$,
@@ -27,10 +27,9 @@ $\forall x\in \mathbb{S}$, $\zero \otimes x = x \otimes \zero = \zero$.
 Intuitively, in the models presented in this paper,
 $\oplus$ selects an optimal value from two given values,
 in order to handle non-determinism,
-and $\otimes$ combines two values into a single value.
+and $\otimes$ combines two values into a single one.
 %and let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a {semiring},
 
-\medskip%\noindent
 A semiring $\Semiring$ is \emph{commutative} if $\otimes$ is commutative.
 It is \emph{idempotent} if for all $x \in \Semiring$, $x \oplus x = x$.
 %
@@ -63,9 +62,9 @@ $x \otimes z \leq_\oplus y \otimes z$
 and $z \otimes x \leq_\oplus z \otimes y$.
 \end{lemma}
 %When  holds,
-%We say in this case that
-To express the property of Lemma~\ref{lem:monotonic}, we call
-$\Semiring$ \emph{monotonic} \wrt $\leq_\oplus$.
+
+We then say the
+$\Semiring$ is \emph{monotonic} \wrt $\leq_\oplus$.
 %A semiring $\Semiring$
 %is \emph{monotonic} \wrt a partial ordering~$\leq$
 %iff for all $x, y, z  \in \Semiring$,  $x \leq y$ implies
@@ -146,8 +145,7 @@ both sides by $x$ and distributing.
 
 %\medskip
 \noindent
-\philippe{Here the difference between $\Semiring$ as a structure and as a domain is blurred.}
-We shall need below infinite sums with~$\oplus$.
+We  need infinite sums with~$\oplus$.
 A semiring~$\Semiring$ is called \emph{complete}~\cite{Droste09handbook}
 %(\cite{Droste09handbook} chapter 1) %\cite{Kuich97semirings}
 if it has an %infinite sum
@@ -155,8 +153,6 @@ operation $\bigoplus_{i \in I} x_i$
 for every family
 $(x_i)_{i \in I}$ %$\{ x_i \mid i \in I \}$
 of elements of $\dom(\Semiring)$ over an index set $I \subset \mathbb{N}$, such that:
-\philippe{$j\in \mathbb{N}$: $j$ is en element of $\mathbb{N}$, not the same s $j\subset \mathbb{N}$}
-%the following holds: %properties
 \begin{description}
 \item[$i.$]
 \emph{infinite sums extend finite sums:}\\
@@ -224,24 +220,19 @@ Tropical min-plus & $\mathbb{R}_+ \cup \{ \infty\}$ & $\mathit{min}$ & $+$ & $\i
 The recursive subdivision of time that leads to hierarchichal
 structures of music notation can be modeled as
 production rules. Since there exists several possible division,
-rules can be weighted
-in the tropical semiring whose domain $\mathbb{R}_+ \cup \{ +\infty\}$,
-$\oplus$ is min, $\zero = +\infty$, $\otimes$ is sum, and $\one = 0$.
+rules can be weighted in the tropical semiring.
 For instance, the following production rules define two possible divisions
-of a bounded time interval into respectively a duplet and a triplet.
+of a time interval into respectively a duplet and a triplet.
 \[
 \rho_1: q_0 \xrightarrow{0.06} \< q_{1}, q_{2}>,\
 \rho_2: q_0 \xrightarrow{0.12} \< q_{1}, q_{2}, q_{2}>.
 \]
 Further binary divisions of time sub-intervals %represented respectively by~$q_2$ and~$q_3$
 are possible with:
-
 \[
 \rho_3:\,q_2 \xrightarrow{0.1} \< q_{3}, q_{3}>, \
 \rho_4:\,q_3 \xrightarrow{0.11} \< q_{4}, q_{4}>. \
 \]
-
-\endex
 \end{example}
 %%% semiring properties used in paper
 % - commutative
