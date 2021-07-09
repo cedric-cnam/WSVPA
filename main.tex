@@ -1074,7 +1074,7 @@ it holds that:
   \textstyle
   \weight_A\bigl(\config{q}{\bot}, t, \config{q'}{\bot}\bigr).
 \end{equation}
-Since $\Semiring$ is complete, the infinite sum in~\eqref{eq:bbot} is well defined.
+The infinite sum in~\eqref{eq:bbot} is well defined since $\Semiring$ is complete.
 %
 Following~\eqref{eq:SWVPA-value}, and the associativity and commutativity
 and distributivity for~$\otimes$ and~$\oplus$, the minimum of~$A(t)$ is:
@@ -1189,9 +1189,10 @@ $d_\top : Q \times P \times Q \to \Phic$,
 that converges eventually to $b_\top$ and $b_\bot$.
 %It uses for that purpose a priority queue $P$ containing triplets of
 %$Q \times \{ \bot, \top \} \times Q$.
-%
-\noindent
 \florent{explication Fig.~\ref{fig:best-update} (update) suivant cas de \eqref{eq:SWVPA-weight}?}
+
+
+\noindent
 The infinite sums in the updates of $d$ in Algorithm~\ref{algo:Dijkstra},
 Figure~\ref{fig:best-update}
 are well defined
@@ -1275,14 +1276,6 @@ In order to obtain effectively a witness
 (word of $\Delta^*$ with a computation of $A$ of minimal weight),
 we require the additional property of convexity of weight functions.***
 
-\begin{proposition}\label{th:best-search}
-For a \SWVPA $A$
-over $\Delta$,
-$\Semiring$ commutative, bounded, total and complete, %semiring
-and $\bar\Phi$ effective, %and $k$-convex, % label theory,
-one can construct in PTIME a word $t \in \Delta^*$
-such that $A(t)$ is minimal \wrt the natural ordering for $\Semiring$.
-\end{proposition}
 
 
 
