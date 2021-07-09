@@ -187,15 +187,7 @@ and similarly for~$\oplus$
 %using the operators of $\Semiring$,
 %and the same holds for $\Phi_{\Delta}$ and $\Phi_{\Sigma, \Delta}$.
 
-\noindent
-A label theory is called \emph{effective} when
-for all $\phi \in \Phi_\Sigma$ and $\eta \in \Phi_{\Sigma, \Delta}$,
-$\bigoplus_{\Sigma} \phi$,
-$\bigoplus_{\Delta}\bigoplus_{\Sigma} \eta$, and
-$\bigoplus_{\Sigma}\bigoplus_{\Delta} \eta$
-can be effectively computed from $\phi$ and $\eta$.
-\florent{$\exists$ oracle returning ...  in worst time complexity $T$.}
-
+\florent{moved def. effective}
 
 %there is an oracle returning, in constant time,
 %$\bigoplus_{\Sigma} \phi$,
@@ -256,7 +248,7 @@ $$\delta\bigl(\<e_1, t_1>, \<e_2, t_2>\bigr) =
 From Example~\ref{ex:running}, $s = I_1 \cup I_2 =
  [ \<e_1, 0.07>, \<e_2, 0.72>, \<e_3, 0.91>] \cup [ \<e_3, 1.05>, \<e_4, 1.36>, \<e_5, 1.71>]$
  is a sequence of MIDI events, and $t =$ \includegraphics[scale=0.20]{pictures/score5.png}
- is a sequence in music notation .
+ is a sequence in music notation.
  The latter shows a subdivision 
  based on the rules from Example~\ref{rules-division}. The first measure ($I_1$)
  results from the successive applications of  rules $\rho_1$ (division in two)

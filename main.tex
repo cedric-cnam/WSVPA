@@ -658,85 +658,18 @@ symbolic weighted parsing presented in Section~\ref{sec:parsing}.
 \begin{proposition} \label{prop:epsilon}
 Given a \SWT $T$ over $\Sigma$, $\Delta$,
 $\Semiring$ commutative, bounded and complete,
-and $\bar\Phi$ effective,
+and $\bar\Phi$, %effective,
 and a $\SWA$ $A$ over $\Sigma$, $\Semiring$ and $\bar\Phi$,
 there exists an effectively constructible \SWA
 $B_{A, T}$ over $\Delta$, $\Semiring$ and $\bar\Phi$,
 such that for all $t \in \Delta^*$,
 $B_{A, T}(t) = \displaystyle\bigoplus_{s\in \Sigma^*} A(s) \otimes T(s, t)$.
 \end{proposition}
+\florent{AV: not needed $\bar\Phi$ effective}
 %
 \begin{proof}
 \florent{proof: sketch and mv to app.?}
-Let $T = \< Q, \init_T, \bar{\wei}, \final_T >$,
-where $\bar{\wei}$ contains $\wei_{10}$, $\wei_{01}$, and $\wei_{11}$,
-from $Q \times Q$ into respectively
-$\Phi_{\Sigma}$, $\Phi_{\Delta}$, and $\Phi_{\Sigma, \Delta}$,
-and let $A = \< P, \init_A, \wei_1, \final_A >$
-with $\wei_1: Q \times Q \to \Phi_{\Sigma}$.
-%
-\noindent
-The state set of $B_{A, T}$ will be $Q' = P \times Q$.
-The entering, leaving and transition functions of $B_{A, T}$ will
-simulate synchronized computations of $A$ and $T$,
-while reading an output word of $\Delta^*$.
-%
-Its state entering functions is defined
-for all $p \in P$, $q \in Q$
-by $\init'(p, q) = \init_A(p) \otimes \init_T(q)$.
-The transition function $\wei'_1$ will roughly perform
-a synchronized product of transitions defined by $\wei_1$,
-$\wei_{01}$ ($T$ reading in output word and not an input word)
-and $\wei_{11}$ ($T$ reading both an input word and an output word).
-%
-Moreover, $\wei'_1$ also needs to simulate transitions
-defined by $\wei_{10}$: $T$ reading in input word and not an output word.
-Since $B_{A, T}$  will read only in the output word, such a transition corresponds
-to an $\varepsilon$-transition of $\SWA$.
-But $\SWA$ have been defined without $\varepsilon$-transitions.
-Therefore, in order to take care of this case, we perform an on-the-fly
-suppression of $\varepsilon$-transition in the $\SWA$ in construction,
-following the algorithm of~\cite{LombardySakarovitch12ciaa}.
-%
-% Initialize state leaving functions i
-%and $\final'(p, q) = \final_A(p) \otimes \final_T(q)$.
-
-%Every transition of $B_{A, T}$ will
-%simulate a sequence of transitions of $T$ performing the following steps:
-%advance in the input word while staying immobile in the output word,
-%and then make one step in the output word (and advance in the input word or not).
-
-\noindent
-Initially, for all $p_1, p_2 \in P$, and $q_1, q_2 \in Q$, let
-\[
-\begin{array}{rcl}
-\wei'_1\bigl( \< p_1, q_1>, \< p_2, q_2>\bigr) & = &
-\wei_1(p_1, p_2) \otimes
-\bigl[
-\wei_{01}(q_1, q_2)
-\oplus
-\displaystyle\bigoplus_{\Sigma}
-\wei_{11}(q_1, q_2)
-\bigr]\\
-\final'(p_1, q_1) & = & \final_A(p_1) \otimes \final_T(q_1)
-\end{array}
-\]
-
-\noindent
-Then, we iterate the following for all $p_1\in P$ and $q_1, q_2 \in Q$:
-for all $p_2\in P$ and $q_3 \in Q$,
-\[
-\begin{array}{rcl}
-\wei'_1\bigl( \< p_1, q_1>, \< p_2, q_3>\bigr) & \opluseq &
-\displaystyle\bigoplus_{\Sigma} \wei_{10}(q_1, q_2)
-\otimes
-\wei'_1\bigl( \< p_1, q_2>, \< p_2, q_3>\bigr)\\
-\final'(p_1, q_1) & \opluseq &
-\displaystyle\bigoplus_{\Sigma} \wei_{10}(q_1, q_2)
-\otimes \final'(p_1, q_2)
-\end{array}
-\]
-\florent{proof correctness (app)}
+\input{app-closure}
 %\qed
 \end{proof}
 
@@ -918,11 +851,10 @@ Moreover, $\weir$ reads and pop from stack a pair made of $\call{c}$ and $p$,
 %This value might be set to $\zero$ in order to express that the symbols do not match.
 
 Formally, the transitions of the automaton~$A$ are defined
-in term of %a weight value computed by
-an intermediate function $\weight_A$, like in Section~\ref{sec:SWT}.
-%In the case of a pushdown automaton,
-A configuration, denoted by $q[\gamma]$,
-is here composed of a state $q \in Q$
+with an intermediate function $\weight_A$, like in Section~\ref{sec:SWT}.
+%
+A configuration $q[\gamma]$
+is composed of a state $q \in Q$
 and a stack content $\gamma \in \Gamma^*$,
 where $\Gamma = \Deltac \times P$.
 Hence, $\weight_A$ is a function from
@@ -935,7 +867,7 @@ enumerates each of the six possible cases:
 reading $a \in \Deltai$,
 %\lydia{intro to func}
 or $\call{c} \in \Deltac$, or $\return{r} \in \Deltar$,
-for each possible state of the stack (empty or not).
+and for each possible state of the stack (empty or not).
 %to add to $u \in {\Delta}^*$.
 %\lydia{introduced the 6 cases}
 \florent{shorter notation $cp$ for $\< c, p>$ ?}
@@ -991,7 +923,7 @@ for each possible state of the stack (empty or not).
   \otimes \weight_A\bigl(\config{q''}{\bot}, u,
                          \config{q'}{\gamma'}\bigr)\nonumber
 \end{align}
-\lydia{c p to <c, p>}
+%\lydia{c p to <c, p>}
 %
 % and ${\call{c}}\, p\stacksep \gamma$
 %denotes a stack where the pair made of ${\call{c}} \in \Deltac$ and $p \in P$ is the top symbol
@@ -1046,8 +978,20 @@ to that of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 \noindent
 We shall now present a procedure for searching, for a~$\SWVPA$ $A$,
 a word %$w \in \Delta^*$
-of minimal weight for~$A$,
-as stated in the following proposition. %\wrt~$\leq_\oplus$,
+of minimal weight for~$A$.
+%as stated in the following proposition. %\wrt~$\leq_\oplus$,
+It requires the following property of label theories.
+%
+\begin{definition}\label{def:effective}
+A label theory is called \emph{effective} when
+for all $\phi \in \Phi_\Sigma$ and $\eta \in \Phi_{\Sigma, \Delta}$,
+$\bigoplus_{\Sigma} \phi$,
+$\bigoplus_{\Delta}\bigoplus_{\Sigma} \eta$, and
+$\bigoplus_{\Sigma}\bigoplus_{\Delta} \eta$
+can be effectively computed from $\phi$ and $\eta$, 
+and moreover, the number of symbols reaching these bounds is finite 
+and can be effectively computed.
+\end{definition}
 %
 \begin{proposition}\label{th:best-search}
 For a \SWVPA $A$
@@ -1262,6 +1206,8 @@ and each iteration has a time complexity $O(|Q|^2 . |P|)$.
 That gives a time complexity $O(|Q|^4 . |P|)$.
 It can be reduced by implementing $P$ as a priority queue,
 prioritized by the value returned by $d$.
+** where  $T$ is the worst time complexity for an oracle computing the values
+of Definition~\ref{def:effective}.
 %$|Q|^3.\log(|Q|^2)$
 %
 At termination, $d_\bot = b_\bot$ and $d_\top = b_\top$
@@ -1273,9 +1219,9 @@ the correctness of Algorithm~\ref{algo:Dijkstra}.
 ** effectively computable by hypothesis that the label theory is effective**
 \florent{REVOIR}
 In order to obtain effectively a witness
-(word of $\Delta^*$ with a computation of $A$ of minimal weight),
-we require the additional property of convexity of weight functions.***
-
+(word of $\Delta^*$ with a computation of $A$ of minimal weight),...
+%we require the additional property of convexity of weight functions.***
+using the second requirement in Definition~\ref{def:effective}. 
 
 
 
