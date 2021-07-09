@@ -8,6 +8,7 @@ from Boolean to other semiring domains.
 %
 We consider \emph{alphabets}, which are countable sets of symbols
 denoted $\Sigma$, $\Delta$,...
+\florent{ADD: notations $\Sigma^*$, $\varepsilon$...}
 %Let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a commutative, complete semiring.
 %
 \noindent
@@ -19,6 +20,8 @@ $\Phi_\Sigma$, %and $\Phi_\Delta$,
 containing unary functions of type $\Sigma \to \Semiring$, %resp. $\Delta \to \Semiring$,
 or $\Phi_{\Sigma, \Delta}$, containing binary functions $\Sigma \times \Delta \to \Semiring$,
 and such that:
+\florent{unary for \SWA (weight depends on input symbol) 
+         and binary for transducers and VPA (weight depends on input symbol AND output or stack symbol)} 
 
 \noindent --
 for all $\Phi_{\Sigma, \Delta} \in \bar\Phi$, we have

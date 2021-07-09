@@ -1,0 +1,35 @@
+% !TEX root = main.tex
+%
+% Proof of best-search algo
+
+
+The correctness of Algorithm~\ref{algo:Dijkstra}
+is stated by the following lemma.
+
+\begin{lemma}\label{lem:bot}
+At the termination of Algorithm~\ref{algo:Dijkstra}, 
+for all $\< q_1, q_2> \notin \Q$,
+$d_\bot(q_1, q_2) =  b_\bot(q_1, q_2)$.
+\end{lemma}
+
+The proof is by contradiction,
+assuming a counter-example minimal in the length of the witness word.
+
+is ensured by the invariant... expressed in the following lemma.
+
+\begin{lemma}\label{lem:top}
+At every step of Algorithm~\ref{algo:Dijkstra}, 
+for all $\< q_1, p, q_2> \notin \Q$,
+$d_\top(q_1, p, q_2) = b_\top(q_1, p, q_2)$.
+\end{lemma}
+
+\noindent
+For computing the minimal weight of a computation of $A$, we use the equality~\eqref{eq:min}, 
+which, with Lemma~\ref{lem:bot} implies that
+at the termination of Algorithm~\ref{algo:Dijkstra}, %it holds that,
+%There exist $q_1, q_2 \in Q$
+\(
+  {\displaystyle \bigoplus_{s \in \Delta^*} A(s)} =
+  {\displaystyle\bigoplus_{q, q' \in Q}} \textstyle
+  \mathsf{in}(q) \mathop{\otimes} d_\bot(q, q') \mathop{\otimes} \mathsf{out}(q').
+\)
