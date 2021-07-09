@@ -700,8 +700,8 @@ and $\wei_{11}$ ($T$ reading both an input word and an output word).
 Moreover, $\wei'_1$ also needs to simulate transitions
 defined by $\wei_{10}$: $T$ reading in input word and not an output word.
 Since $B_{A, T}$  will read only in the output word, such a transition corresponds
-to an $\varepsilon$-transition of $\SWA$,
-but $\SWA$ have been defined without $\varepsilon$-transitions.
+to an $\varepsilon$-transition of $\SWA$.
+But $\SWA$ have been defined without $\varepsilon$-transitions.
 Therefore, in order to take care of this case, we perform an on-the-fly
 suppression of $\varepsilon$-transition in the $\SWA$ in construction,
 following the algorithm of~\cite{LombardySakarovitch12ciaa}.
@@ -726,6 +726,7 @@ Initially, for all $p_1, p_2 \in P$, and $q_1, q_2 \in Q$, let
 \wei_{11}(q_1, q_2)
 \bigr].
 \]
+\florent{init. $\final'$}
 
 \noindent
 Iterate the following for all $p_1\in P$ and $q_1, q_2 \in Q$:
@@ -742,7 +743,7 @@ and
 \displaystyle\bigoplus_{\Sigma} \wei_{10}(q_1, q_2)
 \otimes \final'(p_1, q_2)
 \)
-\florent{proof correctness}
+\florent{proof correctness (app)}
 %\qed
 \end{proof}
 
@@ -751,9 +752,12 @@ and
 The construction time and size for $B_{A, T}$ are $O(\| T \|^3 . \| A \|^2)$,
 where the sizes $\| T \|$ and $\| A \|$ are their number of states.
 %of~$T$ is its number of states $|Q|$.
-\florent{revise with nb of tr. and states}
-
-
+\florent{revise complexity with nb. of tr. and states}
+%
+The particular case of Proposition~\ref{prop:epsilon} for a singleton $A$,
+\ie $A(s) = \one$ for a given $s$ and $A(s') = \zero$ for all $s' \neq s$, 
+corresponds to a construction of a \SWA for the partial application of a \SWT, 
+fixing the first argument $s$.
 \begin{corollary} \label{cor:epsilon}
 Given a \SWT $T$ over $\Sigma$, $\Delta$,
 $\Semiring$ commutative, bounded and complete,
@@ -801,7 +805,8 @@ Let $\Delta$ be a countable alphabet
 that we assume partitioned into three
 subsets~$\Deltai$, $\Deltac$, $\Deltar$,
 whose elements are respectively called
-\emph{internal}, \emph{call} and \emph{return} symbols.
+\emph{internal}, \emph{call} and \emph{return} symbols, 
+following~\cite{AlurMadhusudan09nested}.
 % names are  coined by application to functional program verification
 % \begin{itemize}
 % \item a set $\Deltai$ of \emph{internal symbols} denoted $a$,
@@ -929,13 +934,18 @@ and a stack content $\gamma \in \Gamma^*$,
 where $\Gamma = \Deltac \times P$.
 Hence, $\weight_A$ is a function from
 $[Q \times \Gamma^*] \times \Delta^* \times [Q \times \Gamma^*]$ into~$\Semiring$.
-The empty stack is denoted by $\bot$, and the upmost symbol is the last pushed content.
-The following functions illustrate each of the possible cases, being : reading $a \in \Deltai$,
-\lydia{intro to func}
-or $\call{c} \in \Deltac$, or $\return{r} \in \Deltar$ for each possible state of the stack (empty or not),
-to add to $u \in {\Delta}^*$.
-\lydia{introduced the 6 cases}
-\florent{notation $cp$ for $\< c, p>$ ?}
+The empty stack is denoted by $\bot$, and the first %upmost 
+symbol is the last pushed content.
+%
+The recursive definition of $\weight_A$
+enumerates each of the six possible cases: 
+reading $a \in \Deltai$,
+%\lydia{intro to func}
+or $\call{c} \in \Deltac$, or $\return{r} \in \Deltar$,
+for each possible state of the stack (empty or not).
+%to add to $u \in {\Delta}^*$.
+%\lydia{introduced the 6 cases}
+\florent{shorter notation $cp$ for $\< c, p>$ ?}
 
 \begin{align}
 %\weight_A\bigl(\config{q}{\bot}, \varepsilon, \config{q}{\bot}) & = \one\label{eq:SWVPA-weight}\\
@@ -1038,7 +1048,7 @@ $(A_1 \otimes A_2)(s) = A_1(s) \otimes A_2(s)$.
 \begin{proof}
 The construction is essentially the same
 as in the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
-\florent{complete proof}
+\florent{complete proof (app)}
 \end{proof}
 
 %\subsection{Best Search}
@@ -1484,6 +1494,8 @@ Algebraic Decision Diagrams~\cite{Bahar97ADD}.}
 %\paragraph{Application to Automated Music Transcription.}
 %\input{transcription}
 %...
+
+
 \florent{2 lines Application to Automated Music Transcription:
 implementation $\neq$ but same principle, on-the-fly automata construction
 during best search, for efficiency.}
