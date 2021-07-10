@@ -149,7 +149,7 @@
         ; Article~No.\,\@ArticleNo; pp.\,\@ArticleNo:\thepage--\@ArticleNo:\number\numexpr\getpagerefnumber{TotPages}%
         \\
       \fi
-% Modif Philippe     
+% Modif Philippe
 %      \setbox\@tempboxa\hbox{\IfFileExists{lipics-logo-bw.pdf}{\includegraphics[height=14\p@,trim=0 15 0 0]{lipics-logo-bw}}{\includegraphics[height=14\p@, width=62pt]{example-image-plain}}}%
       \hspace*{\wd\@tempboxa}\enskip
       \href{https://www.dagstuhl.de/lipics/}%
@@ -748,7 +748,8 @@ pdfsubject={LIPIcs, Vol.\@SeriesVolume, \@EventShortTitle; Copyright (C) \ifx\au
 \def\ArticleNo#1{\gdef\@ArticleNo{#1}}
 \ArticleNo{}
 \def\DOIPrefix#1{\gdef\@DOIPrefix{#1}}
-\DOIPrefix{10.4230/LIPIcs}
+% Philippe: à définir
+\DOIPrefix{}
 \def\@lipicsdoi{\@DOIPrefix.\@EventAcronym.\@EventYear.\@ArticleNo}
 \def\and{\newline}
 \let\orig@author\@author
@@ -932,7 +933,7 @@ pdfsubject={LIPIcs, Vol.\@SeriesVolume, \@EventShortTitle; Copyright (C) \ifx\au
   \textcolor{lipicsGray}{\fontsize{9}{12}\sffamily\bfseries
                        Related Version\enskip}}
 \def\supplement#1{\def\@supplement{#1}}
-\let\@supplement\@empty 
+\let\@supplement\@empty
 \define@key{supplementdetails}{linktext}{\def\supplementdetails@linktext{#1}}
 \define@key{supplementdetails}{cite}{\def\supplementdetails@cite{#1}}
 \define@key{supplementdetails}{subcategory}{\def\supplementdetails@subcategory{#1}}
@@ -1053,7 +1054,7 @@ pdfsubject={LIPIcs, Vol.\@SeriesVolume, \@EventShortTitle; Copyright (C) \ifx\au
 		\kern0.05em{\color{lipicsYellow}\rule{0.73em}{0.73em}}%
 		\hspace*{0.67em}\small%
 \ProcSty{\ProcFnt\algocf@procname\ifthenelse{\boolean{algocf@procnumbered}}{\nobreakspace\thealgocf\algocf@typo\algocf@capseparator}{\relax}}%
-    \nobreakspace\ProcNameSty{\ProcNameFnt\algocf@captname #2@}% Name of the procedure in ProcName Style. 
+    \nobreakspace\ProcNameSty{\ProcNameFnt\algocf@captname #2@}% Name of the procedure in ProcName Style.
     \ifthenelse{\equal{\algocf@captparam #2@}{\arg@e}}{}{% if no argument, write nothing
       \ProcNameSty{\ProcNameFnt(}\ProcArgSty{\ProcArgFnt\algocf@captparam #2@}\ProcNameSty{\ProcNameFnt)}%else put arguments in ProcArgSty:
     }% endif
