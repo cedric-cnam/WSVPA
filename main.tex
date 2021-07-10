@@ -243,12 +243,9 @@
 %notations: for set $S$ : sets of sequences $S^*$ and $S^+$...
 %interval $[i..j]$ of natural numbers
 
-
-
 \paragraph*{Semirings}
 \label{section:semiring}\label{sec:semiring}
 \input{semiring}
-
 
 \paragraph*{Label Theory}
 \label{section:symbols}
@@ -656,18 +653,31 @@ symbolic weighted parsing presented in Section~\ref{sec:parsing}.
 \begin{proposition} \label{prop:epsilon}
 Given a \SWT $T$ over $\Sigma$, $\Delta$,
 $\Semiring$ commutative, bounded and complete,
-and $\bar\Phi$, %effective,
+and $\bar\Phi$ effective,
 and a $\SWA$ $A$ over $\Sigma$, $\Semiring$ and $\bar\Phi$,
 there exists an effectively constructible \SWA
 $B_{A, T}$ over $\Delta$, $\Semiring$ and $\bar\Phi$,
 such that for all $t \in \Delta^*$,
 $B_{A, T}(t) = \displaystyle\bigoplus_{s\in \Sigma^*} A(s) \otimes T(s, t)$.
 \end{proposition}
-\florent{AV: not needed $\bar\Phi$ effective}
 %
 \begin{proof}
-\florent{proof: sketch and mv to app.?}
-\input{app-closure}
+(sketch, see Appendix~\ref{sec:closure} for details).
+The state set of $B_{A, T}$ is the Cartesian product of 
+the state sets of $A$ and $T$ and its transitions simulate,
+while reading an output word $t \in \Delta^*$, the
+synchronized behaviour of $A$ and $T$ on $t$ 
+and some input word $s \in \Sigma^*$. 
+The weight for reading of the input is summarized using the operator
+$\bigoplus^1_\Sigma$.
+%
+The main difficulty comes from the transitions of $T$
+of the form $\wei_{10}$, who read in input and ignore the output.
+Such transition shall be simulated by $\varepsilon$-transitions in $B_{A, T}$,
+but $\varepsilon$-transitions are not defined for $\SWA$.
+Therefore, the $\varepsilon$-transitions
+are eliminated on-the-fly during the construction of~$B_{A, T}$,
+following a procedure of~\cite{LombardySakarovitch12ciaa}.
 %\qed
 \end{proof}
 
@@ -972,7 +982,7 @@ $(A_1 \otimes A_2)(s) = A_1(s) \otimes A_2(s)$.
 %
 \begin{proof}
 The construction is similar
-to that of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
+to the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 \florent{complete proof (app)}
 \end{proof}
 \noindent
@@ -980,18 +990,7 @@ We shall now present a procedure for searching, for a~$\SWVPA$ $A$,
 a word %$w \in \Delta^*$
 of minimal weight for~$A$.
 %as stated in the following proposition. %\wrt~$\leq_\oplus$,
-It requires the following property of label theories.
-%
-\begin{definition}\label{def:effective}
-A label theory is called \emph{effective} when
-for all $\phi \in \Phi_\Sigma$ and $\eta \in \Phi_{\Sigma, \Delta}$,
-$\bigoplus_{\Sigma} \phi$,
-$\bigoplus_{\Delta}\bigoplus_{\Sigma} \eta$, and
-$\bigoplus_{\Sigma}\bigoplus_{\Delta} \eta$
-can be effectively computed from $\phi$ and $\eta$,
-and moreover, the number of symbols reaching these bounds is finite
-and can be effectively computed.
-\end{definition}
+%It requires the following property of label theories.
 %
 \begin{proposition}\label{th:best-search}
 For a \SWVPA $A$
@@ -1508,13 +1507,18 @@ with an on-the-fly automata construction.
 \newpage
 \appendix
 
+\section{Properties of Label Theory Operators} \label{sec:closure}
+\input{app-labels}
 
-\section{Nested-Words and Parse-Trees} \label{sec:trees}
-\input{app-trees}
-
+\section{Proof of Proposition~\ref{prop:epsilon}} \label{sec:closure}
+\input{app-closure}
 
 \section{Correctness of the Best-Search Algorithm} \label{sec:bestsearch}
 \input{app-bestsearch}
+
+
+\section{Nested-Words and Parse-Trees} \label{sec:trees}
+\input{app-trees}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

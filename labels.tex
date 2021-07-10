@@ -8,10 +8,11 @@ generalizing the Boolean algebras of~\cite{dAntoniVeanes17CAV}.
 %
 We consider \emph{alphabets}, which are countable sets of symbols
 denoted $\Sigma$, $\Delta$,...
-\florent{ADD: notations $\Sigma^*$, $\varepsilon$...}
-%Let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a commutative, complete semiring.
-%
-\noindent
+The set of finite sequences (\emph{words}) of symbols of $\Sigma$
+is denoted by $\Sigma^*$, and $\Sigma^+$ for the non-empty words.
+The empty word is denoted $\varepsilon$.
+
+%\noindent
 Given a semiring $\< \Semiring, \oplus, \zero, \otimes, \one>$,
 a \emph{label theory} over $\Semiring$
 is a set $\bar\Phi$ of recursively enumerable sets denoted
@@ -136,45 +137,51 @@ $\bigoplus^1_\Sigma \eta \in \Phi_{\Delta}$ and
 $\bigoplus^2_\Delta \eta \in \Phi_{\Sigma}$.
 %\end{definition}
 
-The following facts are immediate.
-\florent{mv appendix?}
+
+\begin{example}\label{distance-time}
+We return to the music transcription problem (Exemple~\ref{ex:running}). In order to align the
+input with a music score, we must take into consideration
+the expressive timing of human performance that
+results in small time shifts between an input event and the corresponding
+notation event.  These shifts can be weighted as the time distance between both,
+computed in the tropical semiring as follows.
+$$\delta\bigl(\<\mu, \tau>, \<\nu, \tau'>\bigr) =
+\left\{
+\begin{array}{ll}
+   | \tau_1 - \tau_2 | & \mathrm{if}\  \mu \rm{\ corresponds\  to\ } \nu \\
+   \zero  & \mathrm{otherwise}
+\end{array}
+\right.$$
+The performance is
+$I = [ \<\mu_1, 0.07>, \<\mu_2, 0.72>, \<\mu_3, 0.91>, \<\mu_4, 1.05>, \<\mu_5, 1.36>, \<\mu_6, 1.71>]$,
+and the (linearized) score is
+$[\<\nu_1,0>, \<\nu_2,\frac{3}{4}>, \<\nu_3,\frac{7}{8}>, \<\nu_4,1>, \<\nu_5,\frac{4}{3}>, \<\nu_6\frac{5}{3}>]$
+Assuming the pairwise correspondence of MIDI symbols
+$\mu_i$ and notation symbols $\nu_i$, for $i \in [1, 6]$,
+the distance between $I$ and $O$ is the  aggregation with $\otimes$
+of the pairwise differences between the
+timestamps. In the tropical semiring, this yields
+$|0.07 - 0| + |0.72 - \frac{3}{4}| + |0.91- \frac{7}{8} | +
+|1.05-1| + |1.36-\frac{4}{3}| + |1.71-\frac{5}{3}|= 0.255$.
+\endex
+\end{example}
+
+
+In the algorithms of the following section, 
+we will need guarantees on the calculability 
+of the above infinite sum operators.
 %
-\begin{lemma}
-For $\bar\Phi$ complete %label theory for all
-$\alpha \in \Semiring$,
-$\phi, \phi' \in \Phi_{\Sigma}$,
-$\psi \in \Phi_{\Delta}$, and
-$\eta \in \Phi_{\Sigma, \Delta}$:
-%
-\begin{enumerate}
-\item[$i.$]
-\( \bigoplus_{\Sigma}\bigoplus^2_{\Delta} \eta = \bigoplus_{\Delta}\bigoplus^1_{\Sigma} \eta \)
-\item[$ii.$]
-\( \alpha \otimes \bigoplus_{\Sigma} \phi = \bigoplus_{\Sigma} (\alpha \otimes \phi) \) and
-\( \bigl( \bigoplus_{\Sigma} \phi \bigr) \otimes\alpha = \bigoplus_{\Sigma} (\phi \otimes \alpha) \),
-and similarly for~$\oplus$
-\item[$iii.$]
-\( \bigl(\bigoplus_{\Sigma} \phi\bigr) \oplus \bigl(\bigoplus_{\Sigma} \phi'\bigr)
-   = \bigoplus_{\Sigma} (\phi \oplus \phi') \) and
-\( \bigl(\bigoplus_{\Sigma} \phi\bigr) \otimes \bigl(\bigoplus_{\Sigma} \phi'\bigr)
-   = \bigoplus_{\Sigma} (\phi \otimes \phi') \)
-\item[$iv.$]
-\( \bigl(\bigoplus^2_{\Delta} \eta\bigr) \oplus \bigl(\bigoplus^2_{\Delta} \eta' \bigr) =
- \bigoplus^2_{\Delta} (\eta \oplus \eta') \), and
-\( \bigl(\bigoplus^2_{\Delta} \eta\bigr) \otimes \bigl(\bigoplus^2_{\Delta} \eta' \bigr) =
- \bigoplus^2_{\Delta} (\eta \otimes \eta') \)
-\item[$v.$]
-%\( \phi \oplus \bigl(\bigoplus_{\Delta} \eta\bigr) = \bigoplus_{\Delta} (\phi \oplus \eta) \),
-\( \phi \otimes \bigl(\bigoplus^2_{\Delta} \eta\bigr) = \bigoplus_{\Delta} (\phi \otimes_1 \eta) \), and
-\( \bigl(\bigoplus^2_{\Delta} \eta\bigr) \otimes \phi = \bigoplus_{\Delta} (\eta \otimes_1 \phi) \),
-and similarly for~$\oplus$
-\item[$vi.$]
-%\( \psi \oplus \bigl(\bigoplus_{\Sigma} \eta\bigr) = \bigoplus_{\Sigma} (\psi \oplus \eta) \),
-\( \psi \otimes \bigl(\bigoplus^1_{\Sigma} \eta\bigr) = \bigoplus_{\Sigma} (\psi \otimes_2 \eta) \), and
-\( \bigl(\bigoplus^1_{\Sigma} \eta\bigr) \otimes \psi = \bigoplus_{\Sigma} (\eta \otimes_2 \psi) \),
-and similarly for~$\oplus$
-\end{enumerate}
-\end{lemma}
+\begin{definition}\label{def:effective}
+A label theory is called \emph{effective} when
+for all $\phi \in \Phi_\Sigma$ and $\eta \in \Phi_{\Sigma, \Delta}$,
+$\bigoplus_{\Sigma} \phi$,
+$\bigoplus_{\Delta}\bigoplus_{\Sigma} \eta$, and
+$\bigoplus_{\Sigma}\bigoplus_{\Delta} \eta$
+can be effectively computed from $\phi$ and $\eta$,
+and moreover, the number of symbols reaching these bounds is finite
+and can be effectively computed.
+\end{definition}
+
 
 %we call \emph{summary} of a function
 %$\phi \in \Phi_\Sigma$,
@@ -187,7 +194,6 @@ and similarly for~$\oplus$
 %using the operators of $\Semiring$,
 %and the same holds for $\Phi_{\Delta}$ and $\Phi_{\Sigma, \Delta}$.
 
-\florent{moved def. effective}
 
 %there is an oracle returning, in constant time,
 %$\bigoplus_{\Sigma} \phi$,
@@ -230,30 +236,3 @@ and similarly for~$\oplus$
 %by base functions and inner nodes by operators.
 % we can compute the value of a diagram in time...
 
-\begin{example}\label{distance-time}
-We return to the music transcription problem (Exemple~\ref{ex:running}). In order to align the
-input with a music score, we must take into consideration
-the expressive timing of human performance that
-results in small time shifts between an input event and the corresponding
-notation event.  These shifts can be weighted as the time distance between both,
-computed in the tropical semiring as follows.
-$$\delta\bigl(\<\mu, \tau>, \<\nu, \tau'>\bigr) =
-\left\{
-\begin{array}{ll}
-   | \tau_1 - \tau_2 | & \mathrm{if}\  \mu \rm{\ corresponds\  to\ } \nu \\
-   \zero  & \mathrm{otherwise}
-\end{array}
-\right.$$
-The performance is
-$I = [ \<\mu_1, 0.07>, \<\mu_2, 0.72>, \<\mu_3, 0.91>, \<\mu_4, 1.05>, \<\mu_5, 1.36>, \<\mu_6, 1.71>]$,
-and the (linearized) score is
-$[\<\nu_1,0>, \<\nu_2,\frac{3}{4}>, \<\nu_3,\frac{7}{8}>, \<\nu_4,1>, \<\nu_5,\frac{4}{3}>, \<\nu_6\frac{5}{3}>]$
-Assuming the pairwise correspondence of MIDI symbols
-$\mu_i$ and notation symbols $\nu_i$, for $i \in [1, 6]$,
-the distance between $I$ and $O$ is the  aggregation with $\otimes$
-of the pairwise differences between the
-timestamps. In the tropical semiring, this yields
-$|0.07 - 0| + |0.72 - \frac{3}{4}| + |0.91- \frac{7}{8} | +
-|1.05-1| + |1.36-\frac{4}{3}| + |1.71-\frac{5}{3}|= 0.255$.
-\endex
-\end{example}
