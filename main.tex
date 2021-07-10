@@ -457,31 +457,29 @@ T(s, t)  =
 
 
 \begin{example}\label{ex:SWT}
-We develop the example of comparison between music played by a performer,
-represented as a sequence $s \in \Sigma^*$ of events in the MIDI alphabet $\Sigma$,
-and  a music score represented as a sequence $t \in \Delta^*$
-in the CWMN alphabet $\Delta$. We build a small weighted transducer model
- with two states $q_0$ and $q_1$ that
-calculates the distance between $s$ and $t$.
+We build a small weighted transducer model
+with two states $q_0$ and $q_1$ that
+calculates the distance between the performance $I$ and
+the score $O$ of Example~\ref{ex:running}.
 
-If one performed event $s_i$  corresponds
-to one notated event $t_j$ (for instance MIDI code 61 and pitch A4),
+If one performed event $\mu_i$  corresponds
+to one notated event $\nu_j$ (for instance MIDI code 61 and pitch A4),
 the weight value computed by the \SWT is the time distance between both,
-as in Example~\ref{distance-time}, and is modeled by
+(see Example~\ref{distance-time}), and is modeled by
 transitions $\wei_{11}$ below.
 %
 If we meet the music notation symbol '-' that
-represents continuation (such as instance in \emph{ties}
+represents continuation (this occurs for instance in \emph{ties}
 $\musQuarter\!\!\!\mathrel{\raisebox{-1.5mm}{$\smile$}}\!\!\!\musEighth$,
 or \emph{dots} \musQuarterDotted{}), it is  skipped with no cost (transitions $\wei_{01}$ or weight $\one$).
 %transitions
 \[
 \begin{array}{rclcrcl}
-\wei_{11}(q_0, d, \< \mathsf{e}, d'>, q_0) & = & |d' - d| & \quad &
-\wei_{11}(q_1, d, \< \mathsf{e}, d'>, q_0) & = & |d' - d|\\
-\wei_{01}(q_0, \varepsilon, \< \mathsf{-}, d'>, q_0) & = & \one & &
-\wei_{01}(q_1, \varepsilon, \< \mathsf{-}, d'>, q_0) & = & \one\\
-\wei_{10}(q_0, d, \varepsilon, q_1) & = & \alpha & & %\multicolumn{3}{l}{\mathrm{for~all~} b \in \Delta}
+\wei_{11}(q_0, \<\mu, \tau>, \<\nu, \tau'>, q_0) & = & |\tau' - \tau| & \quad &
+\wei_{11}(q_1, \<\mu, \tau>, \<\nu, \tau'>, q_0) & = & |\tau' - \tau|\\
+\wei_{01}(q_0, \varepsilon, \< \mathsf{-}, \tau'>, q_0) & = & \one & &
+\wei_{01}(q_1, \varepsilon, \< \mathsf{-}, \tau'>, q_0) & = & \one\\
+\wei_{10}(q_0, \<\mu, \tau>, \varepsilon, q_1) & = & \alpha & & %\multicolumn{3}{l}{\mathrm{for~all~} b \in \Delta}
 \end{array}
 \]
 %
@@ -753,14 +751,16 @@ for~$\Phi_\Deltai$, $\Phi_\Deltac$, $\Phi_\Deltar$ and~$\Phi_{\Deltac, \Delta_\m
 %closed under $\oplus$ and $\otimes$.
 
 \begin{example}
+
 Consider once more the scores of Example~\ref{ex:running}.
-$\Deltai$ represents the set of music events of the form $<n, t>$
-where $n$ is either a note (e.g. A4), the continuation symbol $-$, or a
+$\Deltai$ represents the set of music events of the form $<\nu, \tau>$
+where $\nu$ is either a note (e.g. A4), the continuation symbol $-$, or a
 rest symbol R. $\Deltac$ and  $\Deltar$ are used to encode the score structure:
-Let $\Deltac = \{[, <]\}$ and  $\Deltar = \{], >]\}$ where $[$ (rep. $]$)
-and $<$ (resp. $>$) correspond to start/end of measures, and start/end of
-beams. Then  \includegraphics[scale=0.20]{pictures/score5.png}
-is encoded with the nested word $[0, \frac{3}{4}, \frac{7}{8}>][<1, \frac{4}{3}, \frac{5}{3}]$
+Let $\Deltac = \{\langle, \prec\}$ and  $\Deltar = \{\rangle, \succ\}$ where $\langle$
+(resp. $\rangle$)
+and $\prec$ (resp. $\succ$) correspond to start/end of measures, and start/end of
+tuplets. Then  \includegraphics[scale=0.20]{pictures/score5.png}
+is encoded with the nested word $\langle \prec 0, \frac{3}{4}, \frac{7}{8} \succ \rangle \langle \prec 1, \frac{4}{3}, \frac{5}{3}  \succ \rangle$
 \endex
 \end{example}
 
@@ -988,8 +988,8 @@ for all $\phi \in \Phi_\Sigma$ and $\eta \in \Phi_{\Sigma, \Delta}$,
 $\bigoplus_{\Sigma} \phi$,
 $\bigoplus_{\Delta}\bigoplus_{\Sigma} \eta$, and
 $\bigoplus_{\Sigma}\bigoplus_{\Delta} \eta$
-can be effectively computed from $\phi$ and $\eta$, 
-and moreover, the number of symbols reaching these bounds is finite 
+can be effectively computed from $\phi$ and $\eta$,
+and moreover, the number of symbols reaching these bounds is finite
 and can be effectively computed.
 \end{definition}
 %
@@ -1221,12 +1221,12 @@ the correctness of Algorithm~\ref{algo:Dijkstra}.
 In order to obtain effectively a witness
 (word of $\Delta^*$ with a computation of $A$ of minimal weight),...
 %we require the additional property of convexity of weight functions.***
-using the second requirement in Definition~\ref{def:effective}. 
+using the second requirement in Definition~\ref{def:effective}.
 
 
 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Symbolic Weighted Parsing}
 \label{sec:parsing}
 %% see parse-tree.tex for a definition with parse tree (instead of nested words)
@@ -1302,6 +1302,34 @@ is interpreted as follows:
 Therefore, the framework, applied to the transcription problem, allows to find an optimal
 solution that considers both the fitness of the result, and its structural complexity.
 \end{example}
+
+
+\begin{example}\label{rules-division}
+The recursive subdivision of time that leads to hierarchichal
+structures of music notation can be modeled as
+production rules. Since there exists several possible division,
+rules can be weighted in the tropical semiring.
+For instance, the following production rules define two possible divisions
+of a time interval into respectively a duplet and a triplet.
+\[
+\rho_1: q_0 \xrightarrow{0.06} \< q_{1}, q_{2}>,\
+\rho_2: q_0 \xrightarrow{0.12} \< q_{1}, q_{2}, q_{2}>.
+\]
+Further binary divisions of time sub-intervals %represented respectively by~$q_2$ and~$q_3$
+are possible with:
+\[
+\rho_3:\,q_2 \xrightarrow{0.1} \< q_{3}, q_{3}>, \
+\rho_4:\,q_3 \xrightarrow{0.11} \< q_{4}, q_{4}>. \
+\]
+
+The latter shows a subdivision
+based on the rules from Example~\ref{rules-division}. The first measure ($I_1$)
+results from the successive applications of  rules $\rho_1$ (division in two)
+and rules $\rho_3$ (division of the second half) in two. The second measure
+is a division in three obtained by rule $\rho_3$. It follows that the notation
+defines the sequence of timestamps $0, \frac{3}{4}, \frac{7}{8}, 1, \frac{4}{3}, \frac{5}{3}$.
+\end{example}
+
 %
 %\subsection{Computation}
 %

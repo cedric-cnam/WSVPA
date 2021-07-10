@@ -231,31 +231,29 @@ and similarly for~$\oplus$
 % we can compute the value of a diagram in time...
 
 \begin{example}\label{distance-time}
-We return to the music transcription problem, with an input  representing
-a music performance. In order to align the
+We return to the music transcription problem (Exemple~\ref{ex:running}). In order to align the
 input with a music score, we must take into consideration
 the expressive timing of human performance that
 results in small time shifts between an input event and the corresponding
 notation event.  These shifts can be weighted as the time distance between both,
 computed in the tropical semiring as follows.
-$$\delta\bigl(\<e_1, t_1>, \<e_2, t_2>\bigr) =
+$$\delta\bigl(\<\mu, \tau>, \<\nu, \tau'>\bigr) =
 \left\{
 \begin{array}{ll}
-   | t_1 - t_2 | & \mathrm{if}\  e_1 = e_2 \\
+   | \tau_1 - \tau_2 | & \mathrm{if}\  \mu \rm{\ corresponds\  to\ } \nu \\
    \zero  & \mathrm{otherwise}
 \end{array}
 \right.$$
-From Example~\ref{ex:running}, $s = I_1 \cup I_2 =
- [ \<e_1, 0.07>, \<e_2, 0.72>, \<e_3, 0.91>] \cup [ \<e_3, 1.05>, \<e_4, 1.36>, \<e_5, 1.71>]$
- is a sequence of MIDI events, and $t =$ \includegraphics[scale=0.20]{pictures/score5.png}
- is a sequence in music notation.
- The latter shows a subdivision 
- based on the rules from Example~\ref{rules-division}. The first measure ($I_1$)
- results from the successive applications of  rules $\rho_1$ (division in two)
-and rules $\rho_3$ (division of the second half) in two. The second measure
-is a division in three obtained by rule $\rho_3$. It follows that the notation
-defines the sequence of timestamps $0, \frac{3}{4}, \frac{7}{8}, 1, \frac{4}{3}, \frac{5}{3}$.
-The distance between $s$ and $t$ is the  pairwise difference between the
-timestamps from $s$ and $t$, 0.255.
+The performance is
+$I = [ \<\mu_1, 0.07>, \<\mu_2, 0.72>, \<\mu_3, 0.91>, \<\mu_4, 1.05>, \<\mu_5, 1.36>, \<\mu_6, 1.71>]$,
+and the (linearized) score is
+$[\<\nu_1,0>, \<\nu_2,\frac{3}{4}>, \<\nu_3,\frac{7}{8}>, \<\nu_4,1>, \<\nu_5,\frac{4}{3}>, \<\nu_6\frac{5}{3}>]$
+Assuming the pairwise correspondence of MIDI symbols
+$\mu_i$ and notation symbols $\nu_i$, for $i \in [1, 6]$,
+the distance between $I$ and $O$ is the  aggregation with $\otimes$
+of the pairwise differences between the
+timestamps. In the tropical semiring, this yields
+$|0.07 - 0| + |0.72 - \frac{3}{4}| + |0.91- \frac{7}{8} | +
+|1.05-1| + |1.36-\frac{4}{3}| + |1.71-\frac{5}{3}|= 0.255$.
 \endex
 \end{example}
