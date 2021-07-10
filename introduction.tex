@@ -24,8 +24,8 @@ or processing timed execution traces~\cite{Bouyer03algebraic}.
 
 The latter case is related to a motivation  of  the present work:
 automated music transcription. Representations that capture  music performances
-are
-essentially linear:   audio files, or the widely used MIDI format~\cite{?}.
+are essentially linear:   
+audio files, or the widely used MIDI file format~\cite{?}.
 Such representations ignore the hierarchical structures that frame the
 conception of music, at least in the western area. These structures, on the other hand,
 are present, either explicitly  or implicitly,
@@ -117,13 +117,14 @@ It is based on \emph{symbolic weighted} finite states language models (\swM),
 generalizing the Boolean guards of~\SA %in transitions
 to functions into an arbitrary semiring,
 and generalizing also~\WA, by handling infinite alphabets (see Figure~\ref{fig:hierarchy}).
-
-In short, a transition rule $q \xrightarrow{\phi} q'$ from state $q$ to $q'$ of a \SWA,
+%
+In short, a transition rule $q \xrightarrow{\phi} q'$, from state $q$ to $q'$,
 \philippe{Je ne comprends pas très ce que cette première phrase fait là. Je commencerais
 directement le paragraphe avec "This framework relies..."}
+\florent{c'est un résumé de la Fig. \ref{fig:hierarchy}}
 %input symbols are variables, %(parameters)
-is labeled by a function $\phi$ associating to every input symbol $a$ a weight value $\phi(a)$
-in a semiring domain.
+is labeled by a function~$\phi$ associating to every input symbol $a$ a weight value $\phi(a)$
+in a semiring domain $\Semiring$.
 %and the weight associated to a transition rule is a function of these variables.
 %
 \begin{figure}
@@ -183,7 +184,7 @@ $q \xrightarrow{\dots} q'$ is a transition between states $q$ and $q'$.}
 %except that the domain for weight values is not restricted to be Boolean,
 %like for the guards in the rules of SA,
 %but can be an arbitrary commutative semiring (assuming some restrictions).
-%
+
 The framework relies on several language models:
 finite automata called symbolic-weighted (\SWA),
 transducers (\SWT), and pushdown automata
