@@ -680,9 +680,10 @@ where the sizes $\| T \|$ and $\| A \|$ are their number of states.
 %of~$T$ is its number of states $|Q|$.
 \florent{revise complexity with nb. of tr. and states}
 %
-The particular case of Proposition~\ref{prop:epsilon} for a singleton $A$,
-\ie $A(s) = \one$ for a given $s$ and $A(s') = \zero$ for all $s' \neq s$,
-corresponds to a construction of a \SWA for the partial application of a \SWT,
+The particular case of Proposition~\ref{prop:epsilon} with a singleton $A$,
+\ie such that $A(s) = \one$ for a given $s \in \Sigma^*$ 
+and $A(s') = \zero$ for all $s' \neq s$,
+corresponds to a construction of a \SWA for the partial application of the \SWT $T$,
 fixing the first argument $s$.
 \begin{corollary} \label{cor:epsilon}
 Given a \SWT $T$ over $\Sigma$, $\Delta$,
