@@ -26,5 +26,5 @@ That's it.  For more information, visit http://lilypond.org .
 
 \relative c'' {
   \time 1/4
-  a8. b32 c \tuplet 3/2 { d8 e f } 
+  a8. b32 cis \tuplet 3/2 { d8 e f } 
 }

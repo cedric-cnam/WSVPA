@@ -191,11 +191,14 @@
 \newcommand{\ioi}[1]{\mathsf{ioi}({#1})}
 \newcommand{\rank}{\mathsf{rk}}
 \newcommand{\lin}{\mathsf{lin}}
+\newcommand{\ts}[1]{\mathop{:}{#1}} % timestamp marker
+%\newcommand{\ts}[1]{^{#1}} % timestamp marker
 
 \newcommand{\call}[1]{\ensuremath #1} %{\ensuremath \langle_{#1}}
 \newcommand{\return}[1]{\ensuremath #1} %{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
 \newcommand{\ccall}[1]{\ensuremath \langle_{#1}}
-\newcommand{\creturn}[1]{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
+\newcommand{\creturn}[1]{\ensuremath \rangle_{#1}} 
+%\newcommand{\creturn}[1]{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
 
 
 %\sloppy
@@ -454,45 +457,61 @@ T(s, t)  =
 
 
 \begin{example}\label{ex:SWT}
-We build a small weighted transducer model
+We build a small \SWT over the alphabets $\Sigma$ and $\Deltai$ of 
+Examples~\ref{ex:running} and \ref{distance-time},
+%weighted transducer model
 with two states $q_0$ and $q_1$ that
-calculates the distance between the performance $I$ and
-the score $O$ of Example~\ref{ex:running}.
-
-If one performed event $\mu_i$  corresponds
-to one notated event $\nu_j$ (for instance MIDI code 61 and pitch A4),
-the weight value computed by the \SWT is the time distance between both,
-(see Example~\ref{distance-time}), and is modeled by
-transitions $\wei_{11}$ below.
+calculates the temporal distance between an input performance in~$\Sigma^*$
+and the subsequence 
+of the events of $\Deltai$ in a score.
+%the performance $I$ and
+%the score $O$ of Example~\ref{ex:running}.
 %
-If we meet the music notation symbol '-' that
-represents continuation (this occurs for instance in \emph{ties}
+When reading one performed event $\mu$ 
+and the corresponding notated event $\nu$ 
+(for instance MIDI pitch 69 and note name $\mbox{\footnotesize A4}$),
+the weight value computed by the \SWT is the time distance between both,
+(see Example~\ref{distance-time}), as modeled by transitions $\wei_{11}$ below.
+%
+If we meet the continuation symbol $'-'$ 
+(this occurs for instance in \emph{ties}
 $\musQuarter\!\!\!\mathrel{\raisebox{-1.5mm}{$\smile$}}\!\!\!\musEighth$,
-or \emph{dots} \musQuarterDotted{}), it is  skipped with no cost (transitions $\wei_{01}$ or weight $\one$).
-%transitions
+or \emph{dots} \musQuarterDotted{}),
+%that represents continuation 
+it is  skipped with no cost (transitions $\wei_{01}$ or weight $\one$).
+%Likewise, the markups are ignored.
 \[
-\begin{array}{rclcrcl}
-\wei_{11}(q_0, \<\mu, \tau>, \<\nu, \tau'>, q_0) & = & |\tau' - \tau| & \quad &
-\wei_{11}(q_1, \<\mu, \tau>, \<\nu, \tau'>, q_0) & = & |\tau' - \tau|\\
-\wei_{01}(q_0, \varepsilon, \< \mathsf{-}, \tau'>, q_0) & = & \one & &
-\wei_{01}(q_1, \varepsilon, \< \mathsf{-}, \tau'>, q_0) & = & \one\\
-\wei_{10}(q_0, \<\mu, \tau>, \varepsilon, q_1) & = & \alpha & & %\multicolumn{3}{l}{\mathrm{for~all~} b \in \Delta}
+\begin{array}{lclclcll}
+\wei_{11}(q_0, \mu\ts{\tau}, \nu\ts{\tau'}, q_0) & = & 
+     \delta(\mu\ts{\tau}, \nu\ts{\tau'}) & \quad & %|\tau' - \tau| & \quad &
+\wei_{11}(q_1, \mu\ts{\tau}, \nu\ts{\tau'}, q_0) & = & 
+     \delta(\mu\ts{\tau}, \nu\ts{\tau'}) & 
+     \mbox{if~} \nu \neq - \\ %|\tau' - \tau| & \quad &
+\wei_{01}(q_0, \varepsilon, \mathsf{-}\ts{\tau'}, q_0) & = & \one & &
+\wei_{01}(q_1, \varepsilon, \mathsf{-}\ts{\tau'}, q_0) & = & \one\\
+\wei_{10}(q_0, \mu\ts{\tau}, \varepsilon, q_1) & = & \alpha & & %\multicolumn{3}{l}{\mathrm{for~all~} b \in \Delta}
 \end{array}
 \]
 %
-We also want to take performing errors into account, while still being able to compare with the score,
+We also want to take performing errors into account, 
+while still being able to compare with the score,
 since a performer could, for example, play an unwritten extra note.
-\lydia{reformulated this sentence}
+%\lydia{reformulated this sentence}
 %
-This is modelled by the transition $\wei_{10}$ with an arbitrary weight value $\alpha \in \Semiring$,
-switching from state $q_0$ (normal) to $q_1$ (error).
+%Reading such a note is modelled by 
+The transition $\wei_{10}$, 
+with an fixed weight value $\alpha \in \Semiring$,
+switches from state $q_0$ (normal) to $q_1$ (error)
+when reading an extra note $\mu$.
 \philippe{Comprends pas cette phrase}
+\florent{$\to$ reformulation}
 The transitions in the second column below switch back to the normal state $q_0$.
 % the metric computed by the \SWT is the smallest sum of point wise distances
 % between dates of input and output events.
 At last, we let $q_0$ be the only initial and final state, with
 $\init(q_0) = \final(q_0) = \one$, and
 $\init(q_1) = \final(q_1) = \zero$.
+\florent{dernière phrase utile?}
 This \SWT is capable of evaluating the differences between a score and a performance,
 all the while ensuring that performance errors are plausible.
 %$\init(q_0, d, b) = \final(q_0, d, b) = \one$, and
@@ -762,15 +781,49 @@ for~$\Phi_\Deltai$, $\Phi_\Deltac$, $\Phi_\Deltar$ and~$\Phi_{\Deltac, \Delta_\m
 %closed under $\oplus$ and $\otimes$.
 
 \begin{example}\label{ex:nested-word}
-Consider once more the scores of Example~\ref{ex:running}.
-$\Deltai$ represents the set of music events of the form $<\nu, \tau>$
-where $\nu$ is either a note (e.g. A4), the continuation symbol $-$, or a
-rest symbol R. $\Deltac$ and  $\Deltar$ are used to encode the score structure:
-Let $\Deltac = \{\langle, \prec\}$ and  $\Deltar = \{\rangle, \succ\}$ where $\langle$
-(resp. $\rangle$)
-and $\prec$ (resp. $\succ$) correspond to start/end of measures, and start/end of
-tuplets. Then  \includegraphics[scale=0.20]{pictures/score5.png}
-is encoded with the nested word $\langle \prec 0, \frac{3}{4}, \frac{7}{8} \succ \rangle \langle \prec 1, \frac{4}{3}, \frac{5}{3}  \succ \rangle$
+Consider once more the linearized score of Example~\ref{ex:running},
+with $\Deltai$ representing timed notes and continuations.
+%the set of music events of the form $<\nu, \tau>$
+%where $\nu$ is either a note (e.g. A4), the continuation symbol $-$, or a
+%rest symbol R. 
+The subset $\Delta \setminus \Deltai$ is partitioned into 
+$\Deltac$ and $\Deltar$, containing respectively opening and closing parentheses.
+%are used to encode the score structure:
+%Let $\Deltac = \{\langle, \prec\}$ and  $\Deltar = \{\rangle, \succ\}$ where $\langle$
+%(resp. $\rangle$)
+%and $\prec$ (resp. $\succ$) correspond to start/end of measures, and start/end of
+%tuplets. Then  \includegraphics[scale=0.20]{pictures/score5.png}
+%is encoded with the nested word $\langle \prec 0, \frac{3}{4}, \frac{7}{8} \succ \rangle %\langle \prec 1, \frac{4}{3}, \frac{5}{3}  \succ \rangle$
+The score representation $O$ in Example~\ref{ex:running}
+% score: \includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex1.pdf},
+is a nested-word of~$\Delta^*$. 
+%
+Another example is the second candidate 
+\includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex2.pdf}
+of transcription of~$I$,
+linearized into
+$O' =$ 
+$\ccall{\mathsf{m}}\ts{0}$,
+$\ccall{2}\ts{0}$,
+$\mbox{\footnotesize A4}\ts{0}$, 
+$\ccall{2}\ts{\frac{1}{2}}$,
+$-\ts{\frac{1}{2}}$,
+$\mbox{\footnotesize B4}\ts{\frac{3}{4}}$, 
+$\creturn{2}\ts{1}$,
+$\creturn{2}\ts{1}$,
+$\ccall{\mathsf{m}}\ts{1}$,
+$\ccall{3}\ts{1}$,
+$\mbox{\footnotesize `C$\sharp$5`}\ts{1}$, 
+$\mbox{\footnotesize D5}\ts{1}$, 
+$\mbox{\footnotesize E5}\ts{\frac{4}{3}}$, 
+$\mbox{\footnotesize F5}\ts{\frac{5}{3}}$,
+$\creturn{3}\ts{2}$,
+$\creturn{\mathsf{m}}\ts{2}$,
+$\creturn{\mathsf{m}}\ts{2}$
+(see also Figure~\ref{fig:score-tree}).
+The symbol between quotes $\mbox{\footnotesize `C$\sharp$5`}$
+represents an \emph{appogiatura}, %(grace-note),
+that is an ornemental note with theoretical duration zero.
 \endex
 \end{example}
 
@@ -819,7 +872,7 @@ overloading their names: % for simplicity:
 \mathrm{where~} \eta_\mathsf{cc} = \weic(q, p, p', q'),\\
 %
 \weiec: Q \times [\Deltac \times P] \times Q \to \Semiring &
-\weiec(q, {\call{c}}, p, q') = \phi_\mathsf{c}({\call{c}}) &
+\weiec(q, {\call{c}}, p', q') = \phi_\mathsf{c}({\call{c}}) &
 \mathrm{where~} \phi_\mathsf{c} = \weiec(q, p, q').\\
 %
 \weir: Q \times [\Deltac \times P] \times \Deltar \times Q \to \Semiring &
@@ -963,6 +1016,44 @@ and computing with an always empty stack:
 $\weiei = \wei_1$ and all the other functions
 of~$\bar\wei$ are the constant~$\zero$.
 
+\begin{example}
+... \SWVPA over the alphabet of Example~\ref{ex:nested-word}
+that expresses a weight related to the music notation,
+more precisely to its structural complexity: 
+given a set of equivalent representations, we aim at choosing the simpler one. 
+... 
+
+
+
+*** SUPPR ***
+For instance
+\includegraphics[scale=0.20]{pictures/score5.png} will be favored
+on \includegraphics[scale=0.20]{pictures/score4.png}. 
+%
+Costs  can be expressed
+in the grammar as weights associated to each production rule.
+For instance, the following production rules define two possible divisions
+of a time interval into respectively a duplet and a triplet. Each comes with
+a specific cost.
+\[
+\rho_1: q_0 \xrightarrow{0.06} \< q_{1}, q_{2}>,\
+\rho_2: q_0 \xrightarrow{0.12} \< q_{1}, q_{2}, q_{2}>.
+\]
+Further binary divisions of time sub-intervals %represented respectively by~$q_2$ and~$q_3$
+are possible with:
+\[
+\rho_3:\,q_2 \xrightarrow{0.1} \< q_{3}, q_{3}>, \
+\rho_4:\,q_3 \xrightarrow{0.11} \< q_{4}, q_{4}>. \
+\]
+
+Score \includegraphics[scale=0.20]{pictures/score5.png} is obtained as follows:
+the first measure
+results from the successive applications of  rules $\rho_1$ (division in two)
+and rules $\rho_3$ (division of the second half) in two. The second measure
+is a division in three obtained by rule $\rho_3$. One obtains a parse tree
+that can be linearized in the nested word of Example~\ref{ex:nested-word}.
+...
+\end{example}
 
 %\subsection{Properties}
 \medskip\noindent
@@ -1283,37 +1374,42 @@ and returning a witness $t$.
 \begin{example}[Symbolic Weighted Parsing and the transcription problem]
 Applied to the music transcription problem, the above formalism
 is interpreted as follows:
-\begin{enumerate}
-
-  \item The \SWT $T$ evaluates a ``fitness measure''  that expresses
-    a correspondance between a performance and its notation. See Example~\ref{ex:SWT}.
-\item The \SWVPA $A$ expresses a cost related to the music notation. One possibility
- is to relate this cost to the structural complexity: given a set of equivalent
- representations, we aim at choosing the simpler one. For instance
- \includegraphics[scale=0.20]{pictures/score5.png} should be favored
- on \includegraphics[scale=0.20]{pictures/score4.png}. Costs  can be expressed
- in the grammar as weights associated to each production rule.
- For instance, the following production rules define two possible divisions
- of a time interval into respectively a duplet and a triplet. Each comes with
- a specific cost.
- \[
- \rho_1: q_0 \xrightarrow{0.06} \< q_{1}, q_{2}>,\
- \rho_2: q_0 \xrightarrow{0.12} \< q_{1}, q_{2}, q_{2}>.
- \]
- Further binary divisions of time sub-intervals %represented respectively by~$q_2$ and~$q_3$
- are possible with:
- \[
- \rho_3:\,q_2 \xrightarrow{0.1} \< q_{3}, q_{3}>, \
- \rho_4:\,q_3 \xrightarrow{0.11} \< q_{4}, q_{4}>. \
- \]
+%
+\begin{itemize}
+\item The input word is $I$ of Example~\ref{ex:running}.
+\item The \SWT $T$ evaluates a ``fitness measure''  that expresses
+    a correspondance between a performance and notation events. See Example~\ref{ex:SWT}.
+\item The \SWVPA $A$ expresses a cost related to the music notation. 
+\end{itemize}
+One possibility is to relate this cost to the structural complexity: 
+given a set of equivalent representations, 
+we aim at choosing the simpler one. 
+% 
+For instance
+\includegraphics[scale=0.20]{pictures/score5.png} will be favored
+on \includegraphics[scale=0.20]{pictures/score4.png}. Costs  can be expressed
+in the grammar as weights associated to each production rule.
+For instance, the following production rules define two possible divisions
+of a time interval into respectively a duplet and a triplet. Each comes with
+a specific cost.
+\[
+\rho_1: q_0 \xrightarrow{0.06} \< q_{1}, q_{2}>,\
+\rho_2: q_0 \xrightarrow{0.12} \< q_{1}, q_{2}, q_{2}>.
+\]
+Further binary divisions of time sub-intervals %represented respectively by~$q_2$ and~$q_3$
+are possible with:
+\[
+\rho_3:\,q_2 \xrightarrow{0.1} \< q_{3}, q_{3}>, \
+\rho_4:\,q_3 \xrightarrow{0.11} \< q_{4}, q_{4}>. \
+\]
 
 Score \includegraphics[scale=0.20]{pictures/score5.png} is obtained as follows:
 the first measure
- results from the successive applications of  rules $\rho_1$ (division in two)
- and rules $\rho_3$ (division of the second half) in two. The second measure
- is a division in three obtained by rule $\rho_3$. One obtains a parse tree
- that can be linearized in the nested word of Example~\ref{ex:nested-word}.
- \end{enumerate}
+results from the successive applications of  rules $\rho_1$ (division in two)
+and rules $\rho_3$ (division of the second half) in two. The second measure
+is a division in three obtained by rule $\rho_3$. One obtains a parse tree
+that can be linearized in the nested word of Example~\ref{ex:nested-word}.
+
 Therefore, the framework, applied to the transcription problem, allows to find an optimal
 solution that considers both the fitness of the result, and its structural complexity.
 \end{example}

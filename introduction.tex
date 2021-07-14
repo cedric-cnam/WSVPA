@@ -25,7 +25,8 @@ or processing timed execution traces~\cite{Bouyer03algebraic}.
 The latter case is related to a motivation  of  the present work:
 automated music transcription. Representations that capture  music performances
 are essentially linear:   
-audio files, or the widely used MIDI file format~\cite{MIDIfile}.
+audio files, or the widely used 
+MIDI format~\cite{Selfridge-Field97beyondMIDI}. %\cite{MIDIfile}.
 Such representations ignore the hierarchical structures that frame the
 conception of music, at least in the western area. These structures, on the other hand,
 are present, either explicitly  or implicitly,
@@ -253,41 +254,79 @@ of nested words, and \SWVPA,
 instead of syntax trees and grammars. %(\S~\ref{sec:trees}).
 
 
-\begin{example}[Running example]\label{ex:running}
-We illustrate our framework with music transcription: given
-a \emph{timeline} of timestamped musical events from an infinite
-alphabet $\Sigma$ as input, 
-parse it into a structured music score. 
+\begin{example}%[Running example]
+\label{ex:running}
+We illustrate our framework with a very simplified %toy
+running example of \emph{music transcription}: 
+a given \emph{timeline} of timestamped musical events 
+from an infinite alphabet $\Sigma$ as input, 
+is parsed into a structured music score. 
 Input events of $\Sigma$
-are pairs $\< \mu, \tau>$, were $\mu$ is a MIDI message symbol~\cite{MIDIfile}
-and $\tau \in \mathbb{Q}$ is a timestamp. Such inputs typically correspond
-to the recording of a live performance. The output of parsing
-is a sequence of events (or \emph{notes}) $\< \nu, \tau'>$ 
-in an alphabet $\Delta$
-%in Common Western Music Notation (CWMN)~\cite{Gould11Notation}
-where event symbols $\nu$ are \emph{pitch names} (e.g., A4, G5, \etc.), 
-and timestamp $\tau'$ belongs to a rhythmic ``grid'' obtained from recursive divisions:
-whole notes ($\musWhole$) splitted in halves ($\musHalf$), halves
-in quarters ($\musQuarter$), eights ($\musEighth$), etc.
-The following concrete sequences
-will be used:
-\begin{enumerate}
-  \item A performance  $I = [ \<49, 0.07>, \<51, 0.72>, \<52, 0.91>, \<54, 1.05>, \<56, 1.36>, \<57, 1.71>]$, % over interval $[0,2[$,
-  \item A score $O =$ 
-  \includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex1.pdf},
-  %\includegraphics[scale=0.20]{pictures/score5.png}, 
-  corresponding to a hierarchical structures (measures, tuplets) 
-  that can be linearized as a sequence of events
-      $[\<\mathrm{A}4, 0>, 
-        \<\mathrm{B}4, \frac{3}{4}>, 
-        \<\mathrm{C}5, \frac{7}{8}>, 
-        \<\mathrm{D}5, 1>, 
-        \<\mathrm{E}5,\frac{4}{3}>, 
-        \<\mathrm{F}5\frac{5}{3}>]$
-\end{enumerate}
-\smallskip
+are pairs $\mu \ts{\tau}$, where $\mu$ is a 
+MIDI pitch~\cite{Selfridge-Field97beyondMIDI}, %\cite{MIDIfile}
+and $\tau \in \mathbb{Q}$ is a timestamp in seconds. 
+Such inputs typically correspond
+to the recording of a live performance, \eg
+$I = 69\ts{0.07}, 
+     71\ts{0.72}, 
+     72\ts{0.91}, 
+     74\ts{1.05}, 
+     76\ts{1.36}, 
+     77\ts{1.71}$. % over interval $[0,2[$,
 
-We will show that $O$ is a soution for the
+The output of parsing is a sequence of 
+timed symbols $\nu\ts{\tau'}$ in an alphabet $\Delta$,
+%events (or \emph{notes}) 
+%in Common Western Music Notation (CWMN)~\cite{Gould11Notation}
+where every symbol $\nu$ may represent 
+an \emph{event} (or \emph{note}), 
+specified by its \emph{pitch name} 
+(\eg, $\mbox{\footnotesize A4}$, $\mbox{\footnotesize G5}$, \etc.), 
+an event \emph{continuation} (symbol `$-$`, see Ex.~\ref{ex:SWT}),
+or a \emph{markup}. %(\emph{parenthesis}),
+The timestamp $\tau'$, expressed in number of \emph{measures},
+belongs to a rhythmic ``grid'' obtained from recursive divisions:
+whole notes ($\musWhole$) split in halves ($\musHalf$), halves
+in quarters ($\musQuarter$), eights ($\musEighth$), \etc.
+%
+For instance, the output score 
+\includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex1.pdf},
+  %\includegraphics[scale=0.20]{pictures/score5.png}, 
+corresponds to a hierarchical structure 
+(measures, tuplets..., see Figure~\ref{fig:score-tree}) 
+that can be linearized as the sequence
+$O =$ 
+$\ccall{\mathsf{m}}\ts{0}$,
+$\ccall{2}\ts{0}$,
+$\mbox{\footnotesize A4}\ts{0}$, 
+$\ccall{2}\ts{\frac{1}{2}}$,
+$-\ts{\frac{1}{2}}$,
+$\ccall{2}\ts{\frac{3}{4}}$,
+$\mbox{\footnotesize B4}\ts{\frac{3}{4}}$, 
+$\mbox{\footnotesize C$\sharp$5}\ts{\frac{7}{8}}$, 
+$\creturn{2}\ts{1}$,
+$\creturn{2}\ts{1}$,
+$\creturn{2}\ts{1}$,
+$\ccall{\mathsf{m}}\ts{1}$,
+$\ccall{3}\ts{1}$,
+$\mbox{\footnotesize D5}\ts{1}$, 
+$\mbox{\footnotesize E5}\ts{\frac{4}{3}}$, 
+$\mbox{\footnotesize F5}\ts{\frac{5}{3}}$,
+$\creturn{3}\ts{2}$,
+$\creturn{\mathsf{m}}\ts{2}$,
+$\creturn{\mathsf{m}}\ts{2}$.
+%\end{enumerate}
+The opening markups $\ccall{\mathsf{m}}$ %and $\creturn{\mathsf{m}}$
+delimit \emph{measures}, 
+which are time intervals of duration 1 in this example, 
+while the subsequences of $O$ between markups 
+$\ccall{d}$ and $\creturn{d}$,
+for some natural number $d$, 
+represent a division of the current 
+time interval into $d$ sub-intervals of equal length.
+
+\smallskip
+We will show that $O$ is a solution for the
 parsing of $I$. Note that several other parsings (e.g.,
 \includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex2.pdf}) are possible.
 SW-parsing associates a weight value

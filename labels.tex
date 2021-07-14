@@ -139,26 +139,36 @@ $\bigoplus^2_\Delta \eta \in \Phi_{\Sigma}$.
 
 
 \begin{example}\label{distance-time}
-We return to the music transcription problem (Exemple~\ref{ex:running}). In order to align the
-input with a music score, we must take into consideration
+We return to the music transcription problem of Example~\ref{ex:running}. 
+Let $\Deltai$ be the subset of $\Delta$ without the markup symbols.
+In order to align the input in $\Sigma^*$ %sequence 
+with a music score v, we must take into consideration
 the expressive timing of human performance that
-results in small time shifts between an input event and the corresponding
-notation event.  These shifts can be weighted as the time distance between both,
-computed in the tropical semiring as follows.
-$$\delta\bigl(\<\mu, \tau>, \<\nu, \tau'>\bigr) =
+results in small time shifts between an input event of $\Sigma$ and the corresponding
+notation event in $\Deltai$.  
+These shifts can be weighted as the time distance between both,
+computed in the tropical semiring by $\delta \in \Phi_{\Sigma, \Deltai}$,
+defined as follows:
+\[
+%\mbox{for~all}\, 
+%\mu\ts{\tau} \in \Sigma, 
+%\nu\ts{\tau'} \in \Deltai, 
+\delta(\mu\ts{\tau}, \nu\ts{\tau'}) =
 \left\{
 \begin{array}{ll}
-   | \tau_1 - \tau_2 | & \mathrm{if}\  \mu \rm{\ corresponds\  to\ } \nu \\
+   | \tau' - \tau | & \mathrm{if}\  \nu \rm{\ corresponds\ to\ } \mu,\\
    \zero  & \mathrm{otherwise}
 \end{array}
-\right.$$
-The performance is
-$I = [ \<\mu_1, 0.07>, \<\mu_2, 0.72>, \<\mu_3, 0.91>, \<\mu_4, 1.05>, \<\mu_5, 1.36>, \<\mu_6, 1.71>]$,
-and the (linearized) score is
-$[\<\nu_1,0>, \<\nu_2,\frac{3}{4}>, \<\nu_3,\frac{7}{8}>, \<\nu_4,1>, \<\nu_5,\frac{4}{3}>, \<\nu_6\frac{5}{3}>]$
-Assuming the pairwise correspondence of MIDI symbols
-$\mu_i$ and notation symbols $\nu_i$, for $i \in [1, 6]$,
-the distance between $I$ and $O$ is the  aggregation with $\otimes$
+\right.
+\]
+%The performance is
+%$I = [ \mu_1\ts{0.07}, \mu_2, 0.72>, \<\mu_3, 0.91>, \<\mu_4, 1.05>, \<\mu_5, 1.36>, \<\mu_6, 1.71>]$,
+%and the (linearized) score is
+%$[\<\nu_1,0>, \<\nu_2,\frac{3}{4}>, \<\nu_3,\frac{7}{8}>, \<\nu_4,1>, \<\nu_5,\frac{4}{3}>, \<\nu_6\frac{5}{3}>]$
+%Assuming the pairwise correspondence of MIDI symbols
+%$\mu_i$ and notation symbols $\nu_i$, for $i \in [1, 6]$,
+\florent{$I$ et $O$ deja donnés dans ex.\ref{ex:running}}
+The distance between $I$ and $O$ is the  aggregation with $\otimes$
 of the pairwise differences between the
 timestamps. In the tropical semiring, this yields
 $|0.07 - 0| + |0.72 - \frac{3}{4}| + |0.91- \frac{7}{8} | +
