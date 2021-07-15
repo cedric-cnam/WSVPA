@@ -1016,43 +1016,58 @@ and computing with an always empty stack:
 $\weiei = \wei_1$ and all the other functions
 of~$\bar\wei$ are the constant~$\zero$.
 
-\begin{example}
-... \SWVPA over the alphabet of Example~\ref{ex:nested-word}
+\begin{example} \label{ex:SWVPA}
+We consider a \SWVPA over the alphabet of Example~\ref{ex:nested-word}
 that expresses a weight related to the music notation,
 more precisely to its structural complexity: 
 given a set of equivalent representations, we aim at choosing the simpler one. 
-... 
+This si specified by the weights associated to the transition.
 
-
-
-*** SUPPR ***
-For instance
-\includegraphics[scale=0.20]{pictures/score5.png} will be favored
-on \includegraphics[scale=0.20]{pictures/score4.png}. 
+Let us assume a third component in the symbols of $\Deltac$ 
+which is the duration of the associated time interval.
+It is used to check the timestamps in the symbols.
 %
-Costs  can be expressed
-in the grammar as weights associated to each production rule.
-For instance, the following production rules define two possible divisions
-of a time interval into respectively a duplet and a triplet. Each comes with
-a specific cost.
-\[
-\rho_1: q_0 \xrightarrow{0.06} \< q_{1}, q_{2}>,\
-\rho_2: q_0 \xrightarrow{0.12} \< q_{1}, q_{2}, q_{2}>.
-\]
-Further binary divisions of time sub-intervals %represented respectively by~$q_2$ and~$q_3$
-are possible with:
-\[
-\rho_3:\,q_2 \xrightarrow{0.1} \< q_{3}, q_{3}>, \
-\rho_4:\,q_3 \xrightarrow{0.11} \< q_{4}, q_{4}>. \
-\]
+For instance, the following call transition starts in state
+$q_{{i}/{c}}$, meaning that the current interval is number~$i$ 
+amongst $c$ sub-intervals of duration~$\ell$ (as indicated by the stack top).
+It reads a new time-division symbol~$\ccall{d}$.
+The date for this symbol has to be the time $\tau$ 
+for the previous time-division symbol read~$\ccall{c}$ (found on the stack)
+plus the total duration of intervals read so far, $i \ell$.
+The new current interval duration is~$\frac{\ell}{d}$.
 
-Score \includegraphics[scale=0.20]{pictures/score5.png} is obtained as follows:
-the first measure
-results from the successive applications of  rules $\rho_1$ (division in two)
-and rules $\rho_3$ (division of the second half) in two. The second measure
-is a division in three obtained by rule $\rho_3$. One obtains a parse tree
-that can be linearized in the nested word of Example~\ref{ex:nested-word}.
-...
+\(
+\weic\bigl(q_{{i}/{c}}, 
+           [\ccall{c}\ts{\tau}\ts{\ell}], q, 
+           [\ccall{d}\ts{\tau + i\ell}\ts{\frac{\ell}{d}}], q_{{i+1}/{c}},
+           q_{{0}/{d}} \bigr) = \alpha_d
+\).
+
+\noindent
+The weight of this transition is $\alpha_d$. 
+We can penalize triplets compared to duplets with $\alpha_2 < \alpha_3$.
+%
+\noindent 
+Along with $\ccall{d}$, 
+the above transition pushes
+the state $q_{{i+1}/{c}}$ on the stack,  
+to start the next sub-interval after reading $\creturn{d}$, 
+with:
+\(
+\weir\bigl(q_{{d}/{d}}, 
+           [\ccall{d}\ts{\tau}\ts{\ell}], q_{{i}/{c}}, 
+           [\,\creturn{d}\ts{\tau + d\ell}], q_{{i}/{c}} \bigr) = \one
+\).
+
+\noindent
+Reading an event is done with:
+\(
+\weii\bigl(q_{{i}/{d}}, 
+           [\ccall{d}\ts{\tau}\ts{\ell}], q_{{j}/{c}}, 
+           [\mu\ts{\tau + i\ell}], q_{{i+1}/{d}} \bigr) = \alpha_\mu
+\).
+% cas des barres de mesure?
+\endex
 \end{example}
 
 %\subsection{Properties}
@@ -1381,37 +1396,26 @@ is interpreted as follows:
     a correspondance between a performance and notation events. See Example~\ref{ex:SWT}.
 \item The \SWVPA $A$ expresses a cost related to the music notation. 
 \end{itemize}
-One possibility is to relate this cost to the structural complexity: 
-given a set of equivalent representations, 
-we aim at choosing the simpler one. 
+%One possibility is to relate this cost to the structural complexity: 
+%given a set of equivalent representations, 
+%we aim at choosing the simpler one. 
 % 
-For instance
-\includegraphics[scale=0.20]{pictures/score5.png} will be favored
-on \includegraphics[scale=0.20]{pictures/score4.png}. Costs  can be expressed
-in the grammar as weights associated to each production rule.
-For instance, the following production rules define two possible divisions
-of a time interval into respectively a duplet and a triplet. Each comes with
-a specific cost.
-\[
-\rho_1: q_0 \xrightarrow{0.06} \< q_{1}, q_{2}>,\
-\rho_2: q_0 \xrightarrow{0.12} \< q_{1}, q_{2}, q_{2}>.
-\]
-Further binary divisions of time sub-intervals %represented respectively by~$q_2$ and~$q_3$
-are possible with:
-\[
-\rho_3:\,q_2 \xrightarrow{0.1} \< q_{3}, q_{3}>, \
-\rho_4:\,q_3 \xrightarrow{0.11} \< q_{4}, q_{4}>. \
-\]
+As seen in Example~\ref{ex:SWVPA}, 
+\includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex1.pdf},
+%\includegraphics[scale=0.20]{pictures/score5.png} 
+will be favored on 
+\includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex2.pdf}
+%\includegraphics[scale=0.20]{pictures/score4.png}. 
+when the weight a second time division with $\ccall{2}$ is less
+than the difference of weight between 
+$\mbox{`\footnotesize C$\sharp$5`}$
+and $\mbox{\footnotesize C$\sharp$5}$.
 
-Score \includegraphics[scale=0.20]{pictures/score5.png} is obtained as follows:
-the first measure
-results from the successive applications of  rules $\rho_1$ (division in two)
-and rules $\rho_3$ (division of the second half) in two. The second measure
-is a division in three obtained by rule $\rho_3$. One obtains a parse tree
-that can be linearized in the nested word of Example~\ref{ex:nested-word}.
-
-Therefore, the framework, applied to the transcription problem, allows to find an optimal
-solution that considers both the fitness of the result, and its structural complexity.
+\noindent
+The SW-parsing framework, applied to the transcription problem, 
+allows to find an optimal solution 
+that considers both the fitness of the result, 
+and its structural complexity.
 \end{example}
 
 
