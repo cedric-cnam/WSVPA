@@ -25,7 +25,8 @@
 % comments in margin with \todo command
 \usepackage[colorinlistoftodos]{todonotes} % option disable to hide todos
 % command todo : options
-% - noline: no line connecting the note with the place in the text where the note occurs in the latex code
+% - noline: no line connecting the note with the place in the text 
+%   where the note occurs in the latex code
 % - fancyline : curved arrow from note to inssertion point
 % - inline: place a todonote inside the text instead of in the margin
 % - author=name
@@ -1028,18 +1029,18 @@ which is the duration of the associated time interval.
 It is used to check the timestamps in the symbols.
 %
 For instance, the following call transition starts in state
-$q_{{i}/{c}}$, meaning that the current interval is number~$i$ 
+$q_{{i}/{c}}$, meaning that the current interval has number~$i$ 
 amongst $c$ sub-intervals of duration~$\ell$ (as indicated by the stack top).
 It reads a new time-division symbol~$\ccall{d}$.
 The date for this symbol has to be the time $\tau$ 
 for the previous time-division symbol read~$\ccall{c}$ (found on the stack)
 plus the total duration of intervals read so far, $i \ell$.
 The new current interval duration is~$\frac{\ell}{d}$.
-
+%
 \(
 \weic\bigl(q_{{i}/{c}}, 
-           [\ccall{c}\ts{\tau}\ts{\ell}], q, 
-           [\ccall{d}\ts{\tau + i\ell}\ts{\frac{\ell}{d}}], q_{{i+1}/{c}},
+           \ccall{c}\ts{\tau}\ts{\ell}, q, 
+           \ccall{d}\ts{\tau + i\ell}\ts{\frac{\ell}{d}}, q_{{i+1}/{c}},
            q_{{0}/{d}} \bigr) = \alpha_d
 \).
 
@@ -1067,6 +1068,20 @@ Reading an event is done with:
            [\mu\ts{\tau + i\ell}], q_{{i+1}/{d}} \bigr) = \alpha_\mu
 \).
 % cas des barres de mesure?
+** case of new measure symbol: $q_0$ is a special (initial) state.
+first measure:
+\(
+\weiec\bigl(q_0, 
+           \ccall{\mathsf{m}}\ts{0}\ts{1}, q_0, 
+           q_0 \bigr) = \alpha_d
+\).
+new measure:
+\(
+\weic\bigl(q_{{c}/{c}}, 
+           \ccall{\mathsf{m}}\ts{\tau}\ts{1}, q_0, 
+           \ccall{\mathsf{m}}\ts{\tau + 1}\ts{1}, q_0,
+           q_0 \bigr) = \alpha_d
+\).
 \endex
 \end{example}
 
