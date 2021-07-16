@@ -1034,8 +1034,8 @@ amongst $c$ sub-intervals of duration~$\ell$ (as indicated by the stack top).
 It reads a new time-division symbol~$\ccall{d}$.
 The date for this symbol has to be the time $\tau$ 
 for the previous time-division symbol read~$\ccall{c}$ (found on the stack)
-plus the total duration of intervals read so far, $i \ell$.
-The new current interval duration is~$\frac{\ell}{d}$.
+plus the total duration of intervals read so far, $i \ell$, and
+the new current interval duration is~$\frac{\ell}{d}$:
 %
 \(
 \weic\bigl(q_{{i}/{c}}, 
@@ -1046,7 +1046,7 @@ The new current interval duration is~$\frac{\ell}{d}$.
 
 \noindent
 The weight of this transition is $\alpha_d$. 
-We can penalize triplets compared to duplets with $\alpha_2 < \alpha_3$.
+We can penalize \eg triplets compared to duplets with $\alpha_2 < \alpha_3$.
 %
 \noindent 
 Along with $\ccall{d}$, 
@@ -1056,31 +1056,32 @@ to start the next sub-interval after reading $\creturn{d}$,
 with:
 \(
 \weir\bigl(q_{{d}/{d}}, 
-           [\ccall{d}\ts{\tau}\ts{\ell}], q_{{i}/{c}}, 
-           [\,\creturn{d}\ts{\tau + d\ell}], q_{{i}/{c}} \bigr) = \one
+           \ccall{d}\ts{\tau}\ts{\ell}, q_{{i}/{c}}, 
+           \,\creturn{d}\ts{\tau + d\ell}, q_{{i}/{c}} \bigr) = \one
 \).
 
 \noindent
 Reading an event is done with:
 \(
 \weii\bigl(q_{{i}/{d}}, 
-           [\ccall{d}\ts{\tau}\ts{\ell}], q_{{j}/{c}}, 
-           [\mu\ts{\tau + i\ell}], q_{{i+1}/{d}} \bigr) = \alpha_\mu
+           \ccall{d}\ts{\tau}\ts{\ell}, q_{{j}/{c}}, 
+           \mu\ts{\tau + i\ell}, q_{{i+1}/{d}} \bigr) = \alpha_\mu
 \).
 % cas des barres de mesure?
-** case of new measure symbol: $q_0$ is a special (initial) state.
-first measure:
+%For the case of a new measure symbol,
+%$q_{1/1}$ is a special (initial) state.
+The transition for starting to read the first measure is:
 \(
-\weiec\bigl(q_0, 
-           \ccall{\mathsf{m}}\ts{0}\ts{1}, q_0, 
-           q_0 \bigr) = \alpha_d
-\).
-new measure:
+\weiec\bigl(q_{1/1}, 
+           \ccall{\mathsf{m}}\ts{0}\ts{1}, q_{1/1}, 
+           q_{1/1} \bigr) = \one
+\),
+and for a new measure:
 \(
-\weic\bigl(q_{{c}/{c}}, 
-           \ccall{\mathsf{m}}\ts{\tau}\ts{1}, q_0, 
-           \ccall{\mathsf{m}}\ts{\tau + 1}\ts{1}, q_0,
-           q_0 \bigr) = \alpha_d
+\weic\bigl(q_{1/1}, 
+           \ccall{\mathsf{m}}\ts{\tau}\ts{1}, q_{1/1}, 
+           \ccall{\mathsf{m}}\ts{\tau + 1}\ts{1}, q_{1/1},
+           q_{1/1} \bigr) = \one
 \).
 \endex
 \end{example}
