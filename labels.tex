@@ -2,17 +2,15 @@
 %
 % Label Theory
 %
-We shall now define the functions labeling the transitions of SW automata and transducers,
+\noindent
+\textbf{Label theory}. We  now define the functions labeling the transitions of SW automata and transducers,
 generalizing the Boolean algebras of~\cite{dAntoniVeanes17CAV}.
 %from Boolean to other semiring domains.
 %
 We consider \emph{alphabets}, which are countable sets of symbols
 denoted $\Sigma$, $\Delta$,...
-The set of finite sequences (\emph{words}) of symbols of $\Sigma$
-is denoted by $\Sigma^*$, and $\Sigma^+$ for the non-empty words.
-The empty word is denoted $\varepsilon$.
-
-%\noindent
+$\Sigma^*$ is the set of finite sequences (\emph{words}) over
+ $\Sigma$, $\varepsilon$ the empty word, and $\Sigma^+ = \Sigma^* \\ \varepsilon$ .
 Given a semiring $\< \Semiring, \oplus, \zero, \otimes, \one>$,
 a \emph{label theory} over $\Semiring$
 is a set $\bar\Phi$ of recursively enumerable sets denoted
@@ -139,20 +137,20 @@ $\bigoplus^2_\Delta \eta \in \Phi_{\Sigma}$.
 
 
 \begin{example}\label{distance-time}
-We return to the music transcription problem of Example~\ref{ex:running}. 
-Let $\Deltai$ be the subset of $\Delta$ without the markup symbols.
-In order to align the input in $\Sigma^*$ %sequence 
-with a music score v, we must take into consideration
+We return to Example~\ref{ex:running}.
+Let $\Deltai$ be the subset of $\Delta$ without markup symbols.
+In order to align the input in $\Sigma^*$ %sequence
+with a music score v, we must account for
 the expressive timing of human performance that
 results in small time shifts between an input event of $\Sigma$ and the corresponding
-notation event in $\Deltai$.  
+notation event in $\Deltai$.
 These shifts can be weighted as the time distance between both,
 computed in the tropical semiring by $\delta \in \Phi_{\Sigma, \Deltai}$,
 defined as follows:
 \[
-%\mbox{for~all}\, 
-%\mu\ts{\tau} \in \Sigma, 
-%\nu\ts{\tau'} \in \Deltai, 
+%\mbox{for~all}\,
+%\mu\ts{\tau} \in \Sigma,
+%\nu\ts{\tau'} \in \Deltai,
 \delta(\mu\ts{\tau}, \nu\ts{\tau'}) =
 \left\{
 \begin{array}{ll}
@@ -177,8 +175,7 @@ $|0.07 - 0| + |0.72 - \frac{3}{4}| + |0.91- \frac{7}{8} | +
 \end{example}
 
 
-In the algorithms of the following section, 
-we will need guarantees on the calculability 
+We will need guarantees on the calculability
 of the above infinite sum operators.
 %
 \begin{definition}\label{def:effective}
@@ -245,4 +242,3 @@ and can be effectively computed.
 %The combinations might be represented by dags (diagrams) whose leaves are labeled
 %by base functions and inner nodes by operators.
 % we can compute the value of a diagram in time...
-

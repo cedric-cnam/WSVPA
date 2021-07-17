@@ -25,7 +25,7 @@
 % comments in margin with \todo command
 \usepackage[colorinlistoftodos]{todonotes} % option disable to hide todos
 % command todo : options
-% - noline: no line connecting the note with the place in the text 
+% - noline: no line connecting the note with the place in the text
 %   where the note occurs in the latex code
 % - fancyline : curved arrow from note to inssertion point
 % - inline: place a todonote inside the text instead of in the margin
@@ -198,7 +198,7 @@
 \newcommand{\call}[1]{\ensuremath #1} %{\ensuremath \langle_{#1}}
 \newcommand{\return}[1]{\ensuremath #1} %{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
 \newcommand{\ccall}[1]{\ensuremath \langle_{#1}}
-\newcommand{\creturn}[1]{\ensuremath \rangle_{#1}} 
+\newcommand{\creturn}[1]{\ensuremath \rangle_{#1}}
 %\newcommand{\creturn}[1]{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
 
 
@@ -247,12 +247,12 @@
 %notations: for set $S$ : sets of sequences $S^*$ and $S^+$...
 %interval $[i..j]$ of natural numbers
 
-\paragraph*{Semirings}
-\label{section:semiring}\label{sec:semiring}
+%\paragraph*{Semirings}
+%\label{section:semiring}\label{sec:semiring}
 \input{semiring}
 
-\paragraph*{Label Theory}
-\label{section:symbols}
+%\paragraph*{Label Theory}
+%\label{section:symbols}
 \input{labels}
 
 
@@ -266,15 +266,15 @@
 \label{section:SWA}\label{sec:SWA}
 \label{section:SWT}\label{sec:SWT}
 
-We follow the approach of~\cite{Mohri03EDWA} for the computation of distances,
-between words and languages, using weighted transducers,
+We follow the approach of~\cite{Mohri03EDWA} for the computation of distances
+between words and languages
 and extend it to infinite alphabets.
 % with models of symbolic weighted automata and transducers.
 %
 The models introduced in this section generalize
 weighted automata and transducers~\cite{Droste09handbook}
 %over finite alphabets, see  e.g.~\cite{Mohri03EDWA},
-by labeling each transition with a weight function (instead of a simple weight value),
+by labeling each transition with a weight function 
 that takes the input and output symbols as parameters.
 These functions are similar to the guards of symbolic automata~\cite{dAntoniVeanes17CAV,dAntoni21CACM},
 but the latter guards are restricted to the Boolean semiring.
@@ -330,14 +330,13 @@ such that, for all $q, q' \in Q$, $a \in \Sigma$,  $b \in \Delta$:
 %
 \noindent
 % The symbolic-weighted transducer
-The \SWT $T$ computes on pairs of words $\< s, t> \in \Sigma^* \times \Delta^*$,
+The \SWT $T$ computes on pairs $\< s, t> \in \Sigma^* \times \Delta^*$,
 $s$ and $t$, being respectively called \emph{input} and \emph{output} word.
 \florent{It compute asynchronously: advance in $s$ and not in $t$ ($\wei_{10}$),
 or the opposite ($\wei_{01}$),
 or advance in both $s$ and $t$ ($\wei_{11}$).}
 % \noindent
-More precisely, $T$ defines a mapping
-from $\Sigma^* \times \Delta^*$ into~$\Semiring$,
+$T$ is
 based on an intermediate function $\weight_T$
 defined recursively, for every states $q, q' \in Q$,
 and every pairs of strings $\< s, t> \in \Sigma^* \times \Delta^*$,
@@ -373,11 +372,11 @@ with a word $u \in \Sigma^*$ (resp. $v \in \Delta^*$).
 
 
 %
-We recall that, by convention (Section~\ref{sec:semiring}),
+We recall that, by convention (Section~\ref{sec:prelim}),
 an empty sum with $\bigoplus$ is equal to~$\zero$.
 %
-Intuitively, using a transition $\wei_{ij}(q, a, b, q')$ means for $T$:
-when reading respectively $a$ and $b$ at the current positions in the input and output words,
+Intuitively,  a transition $\wei_{ij}(q, a, b, q')$ is interpreted as follows:
+when reading  $a$ and $b$ the input and output words,
 increment the current position in the input word if and only if $i = 1$,
 and in the output word iff $j = 1$, %(otherwise, do not change it),
 and change state from $q$ to $q'$.
@@ -458,35 +457,35 @@ T(s, t)  =
 
 
 \begin{example}\label{ex:SWT}
-We build a small \SWT over the alphabets $\Sigma$ and $\Deltai$ of 
+We build a small \SWT over the alphabets $\Sigma$ and $\Deltai$ of
 Examples~\ref{ex:running} and \ref{distance-time},
 %weighted transducer model
 with two states $q_0$ and $q_1$ that
 calculates the temporal distance between an input performance in~$\Sigma^*$
-and the subsequence 
+and the subsequence
 of the events of $\Deltai$ in a score.
 %the performance $I$ and
 %the score $O$ of Example~\ref{ex:running}.
 %
-When reading one performed event $\mu$ 
-and the corresponding notated event $\nu$ 
+When reading one performed event $\mu$
+and the corresponding notated event $\nu$
 (for instance MIDI pitch 69 and note name $\mbox{\footnotesize A4}$),
 the weight value computed by the \SWT is the time distance between both,
 (see Example~\ref{distance-time}), as modeled by transitions $\wei_{11}$ below.
 %
-If we meet the continuation symbol $'-'$ 
+If we meet the continuation symbol $'-'$
 (this occurs for instance in \emph{ties}
 $\musQuarter\!\!\!\mathrel{\raisebox{-1.5mm}{$\smile$}}\!\!\!\musEighth$,
 or \emph{dots} \musQuarterDotted{}),
-%that represents continuation 
+%that represents continuation
 it is  skipped with no cost (transitions $\wei_{01}$ or weight $\one$).
 %Likewise, the markups are ignored.
 \[
 \begin{array}{lclclcll}
-\wei_{11}(q_0, \mu\ts{\tau}, \nu\ts{\tau'}, q_0) & = & 
+\wei_{11}(q_0, \mu\ts{\tau}, \nu\ts{\tau'}, q_0) & = &
      \delta(\mu\ts{\tau}, \nu\ts{\tau'}) & \quad & %|\tau' - \tau| & \quad &
-\wei_{11}(q_1, \mu\ts{\tau}, \nu\ts{\tau'}, q_0) & = & 
-     \delta(\mu\ts{\tau}, \nu\ts{\tau'}) & 
+\wei_{11}(q_1, \mu\ts{\tau}, \nu\ts{\tau'}, q_0) & = &
+     \delta(\mu\ts{\tau}, \nu\ts{\tau'}) &
      \mbox{if~} \nu \neq - \\ %|\tau' - \tau| & \quad &
 \wei_{01}(q_0, \varepsilon, \mathsf{-}\ts{\tau'}, q_0) & = & \one & &
 \wei_{01}(q_1, \varepsilon, \mathsf{-}\ts{\tau'}, q_0) & = & \one\\
@@ -494,13 +493,12 @@ it is  skipped with no cost (transitions $\wei_{01}$ or weight $\one$).
 \end{array}
 \]
 %
-We also want to take performing errors into account, 
-while still being able to compare with the score,
+We also want to take performing errors into account,
 since a performer could, for example, play an unwritten extra note.
 %\lydia{reformulated this sentence}
 %
-%Reading such a note is modelled by 
-The transition $\wei_{10}$, 
+%Reading such a note is modelled by
+The transition $\wei_{10}$,
 with an fixed weight value $\alpha \in \Semiring$,
 switches from state $q_0$ (normal) to $q_1$ (error)
 when reading an extra note $\mu$.
@@ -512,9 +510,9 @@ The transitions in the second column below switch back to the normal state $q_0$
 At last, we let $q_0$ be the only initial and final state, with
 $\init(q_0) = \final(q_0) = \one$, and
 $\init(q_1) = \final(q_1) = \zero$.
-\florent{dernière phrase utile?}
-This \SWT is capable of evaluating the differences between a score and a performance,
-all the while ensuring that performance errors are plausible.
+%\florent{dernière phrase utile?}
+%This \SWT is capable of evaluating the differences between a score and a performance,
+%all the while ensuring that performance errors are plausible.
 %$\init(q_0, d, b) = \final(q_0, d, b) = \one$, and
 %$\init(q_1, d, b) = \final(q_1, d, b) = \zero$,
 %for all $d \in \Sigma$ and $b \in \Delta$.
@@ -604,9 +602,9 @@ all the while ensuring that performance errors are plausible.
 
 
 \noindent
-The \emph{Symbolic Weighted Automata} %$A = \< Q, \init, \weight, \final >$
+ \emph{Symbolic Weighted Automata} %$A = \< Q, \init, \weight, \final >$
 %over $\Sigma$,  $\Semiring$ and $\bar\Phi$
-are defined similarly as the transducers of Definition~\ref{def:SWT},
+are defined  as the transducers of Definition~\ref{def:SWT},
 by simply omitting the output symbols.
 %
 %In this case, the label theory $\bar\Phi$ can be reduced to a singleton $\< \Phi_\Sigma>$.
@@ -667,8 +665,8 @@ A(s)  =
 
 %\subsection{Properties}
 \noindent
-The following property will be useful to the approach on
-symbolic weighted parsing presented in Section~\ref{sec:parsing}.
+The following property will be useful for
+symbolic weighted parsing (Section~\ref{sec:parsing}).
 
 \begin{proposition} \label{prop:epsilon}
 Given a \SWT $T$ over $\Sigma$, $\Delta$,
@@ -683,16 +681,16 @@ $B_{A, T}(t) = \displaystyle\bigoplus_{s\in \Sigma^*} A(s) \otimes T(s, t)$.
 %
 \begin{proof}
 (sketch, see Appendix~\ref{sec:closure} for details).
-The state set of $B_{A, T}$ is the Cartesian product of 
+The state set of $B_{A, T}$ is the Cartesian product of
 the state sets of $A$ and $T$ and its transitions simulate,
 while reading an output word $t \in \Delta^*$, the
-synchronized behaviour of $A$ and $T$ on $t$ 
-and some input word $s \in \Sigma^*$. 
-The weight for reading of the input is summarized using the operator
+synchronized behaviour of $A$ and $T$ on $t$
+and some input word $s \in \Sigma^*$.
+The weight for reading of the input is obtained with
 $\bigoplus^1_\Sigma$.
 %
-The main difficulty comes from the transitions of $T$
-of the form $\wei_{10}$, who read in input and ignore the output.
+The main difficulty comes from the transitions
+of the form $\wei_{10}$, which read in input and ignore the output.
 Such transition shall be simulated by $\varepsilon$-transitions in $B_{A, T}$,
 but $\varepsilon$-transitions are not defined for $\SWA$.
 Therefore, the $\varepsilon$-transitions
@@ -786,8 +784,8 @@ Consider once more the linearized score of Example~\ref{ex:running},
 with $\Deltai$ representing timed notes and continuations.
 %the set of music events of the form $<\nu, \tau>$
 %where $\nu$ is either a note (e.g. A4), the continuation symbol $-$, or a
-%rest symbol R. 
-The subset $\Delta \setminus \Deltai$ is partitioned into 
+%rest symbol R.
+The subset $\Delta \setminus \Deltai$ is partitioned into
 $\Deltac$ and $\Deltar$, containing respectively opening and closing parentheses.
 %are used to encode the score structure:
 %Let $\Deltac = \{\langle, \prec\}$ and  $\Deltar = \{\rangle, \succ\}$ where $\langle$
@@ -797,26 +795,26 @@ $\Deltac$ and $\Deltar$, containing respectively opening and closing parentheses
 %is encoded with the nested word $\langle \prec 0, \frac{3}{4}, \frac{7}{8} \succ \rangle %\langle \prec 1, \frac{4}{3}, \frac{5}{3}  \succ \rangle$
 The score representation $O$ in Example~\ref{ex:running}
 % score: \includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex1.pdf},
-is a nested-word of~$\Delta^*$. 
+is a nested-word of~$\Delta^*$.
 %
-Another example is the second candidate 
+Another example is the second candidate
 \includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex2.pdf}
 of transcription of~$I$,
 linearized into
-$O' =$ 
+$O' =$
 $\ccall{\mathsf{m}}\ts{0}$,
 $\ccall{2}\ts{0}$,
-$\mbox{\footnotesize A4}\ts{0}$, 
+$\mbox{\footnotesize A4}\ts{0}$,
 $\ccall{2}\ts{\frac{1}{2}}$,
 $-\ts{\frac{1}{2}}$,
-$\mbox{\footnotesize B4}\ts{\frac{3}{4}}$, 
+$\mbox{\footnotesize B4}\ts{\frac{3}{4}}$,
 $\creturn{2}\ts{1}$,
 $\creturn{2}\ts{1}$,
 $\ccall{\mathsf{m}}\ts{1}$,
 $\ccall{3}\ts{1}$,
-$\mbox{\footnotesize `C$\sharp$5`}\ts{1}$, 
-$\mbox{\footnotesize D5}\ts{1}$, 
-$\mbox{\footnotesize E5}\ts{\frac{4}{3}}$, 
+$\mbox{\footnotesize `C$\sharp$5`}\ts{1}$,
+$\mbox{\footnotesize D5}\ts{1}$,
+$\mbox{\footnotesize E5}\ts{\frac{4}{3}}$,
 $\mbox{\footnotesize F5}\ts{\frac{5}{3}}$,
 $\creturn{3}\ts{2}$,
 $\creturn{\mathsf{m}}\ts{2}$,
@@ -1020,51 +1018,50 @@ of~$\bar\wei$ are the constant~$\zero$.
 \begin{example} \label{ex:SWVPA}
 We consider a \SWVPA over the alphabet of Example~\ref{ex:nested-word}
 that expresses a weight related to the music notation,
-more precisely to its structural complexity: 
-given a set of equivalent representations, we aim at choosing the simpler one. 
-This si specified by the weights associated to the transition.
+more precisely to its structural complexity:
+given a set of equivalent representations, we aim at choosing the simpler one.
 
-Let us assume a third component in the symbols of $\Deltac$ 
+Let us assume a third component in the symbols of $\Deltac$
 which is the duration of the associated time interval.
 It is used to check the timestamps in the symbols.
 %
 For instance, the following call transition starts in state
-$q_{{i}/{c}}$, meaning that the current interval has number~$i$ 
+$q_{{i}/{c}}$, meaning that the current interval has number~$i$
 amongst $c$ sub-intervals of duration~$\ell$ (as indicated by the stack top).
 It reads a new time-division symbol~$\ccall{d}$.
-The date for this symbol has to be the time $\tau$ 
+The date for this symbol has to be the time $\tau$
 for the previous time-division symbol read~$\ccall{c}$ (found on the stack)
 plus the total duration of intervals read so far, $i \ell$, and
 the new current interval duration is~$\frac{\ell}{d}$:
 %
 \(
-\weic\bigl(q_{{i}/{c}}, 
-           \ccall{c}\ts{\tau}\ts{\ell}, q, 
+\weic\bigl(q_{{i}/{c}},
+           \ccall{c}\ts{\tau}\ts{\ell}, q,
            \ccall{d}\ts{\tau + i\ell}\ts{\frac{\ell}{d}}, q_{{i+1}/{c}},
            q_{{0}/{d}} \bigr) = \alpha_d
 \).
 
 \noindent
-The weight of this transition is $\alpha_d$. 
+The weight of this transition is $\alpha_d$.
 We can penalize \eg triplets compared to duplets with $\alpha_2 < \alpha_3$.
 %
-\noindent 
-Along with $\ccall{d}$, 
+\noindent
+Along with $\ccall{d}$,
 the above transition pushes
-the state $q_{{i+1}/{c}}$ on the stack,  
-to start the next sub-interval after reading $\creturn{d}$, 
+the state $q_{{i+1}/{c}}$ on the stack,
+to start the next sub-interval after reading $\creturn{d}$,
 with:
 \(
-\weir\bigl(q_{{d}/{d}}, 
-           \ccall{d}\ts{\tau}\ts{\ell}, q_{{i}/{c}}, 
+\weir\bigl(q_{{d}/{d}},
+           \ccall{d}\ts{\tau}\ts{\ell}, q_{{i}/{c}},
            \,\creturn{d}\ts{\tau + d\ell}, q_{{i}/{c}} \bigr) = \one
 \).
 
 \noindent
 Reading an event is done with:
 \(
-\weii\bigl(q_{{i}/{d}}, 
-           \ccall{d}\ts{\tau}\ts{\ell}, q_{{j}/{c}}, 
+\weii\bigl(q_{{i}/{d}},
+           \ccall{d}\ts{\tau}\ts{\ell}, q_{{j}/{c}},
            \mu\ts{\tau + i\ell}, q_{{i+1}/{d}} \bigr) = \alpha_\mu
 \).
 % cas des barres de mesure?
@@ -1072,14 +1069,14 @@ Reading an event is done with:
 %$q_{1/1}$ is a special (initial) state.
 The transition for starting to read the first measure is:
 \(
-\weiec\bigl(q_{1/1}, 
-           \ccall{\mathsf{m}}\ts{0}\ts{1}, q_{1/1}, 
+\weiec\bigl(q_{1/1},
+           \ccall{\mathsf{m}}\ts{0}\ts{1}, q_{1/1},
            q_{1/1} \bigr) = \one
 \),
 and for a new measure:
 \(
-\weic\bigl(q_{1/1}, 
-           \ccall{\mathsf{m}}\ts{\tau}\ts{1}, q_{1/1}, 
+\weic\bigl(q_{1/1},
+           \ccall{\mathsf{m}}\ts{\tau}\ts{1}, q_{1/1},
            \ccall{\mathsf{m}}\ts{\tau + 1}\ts{1}, q_{1/1},
            q_{1/1} \bigr) = \one
 \).
@@ -1108,7 +1105,7 @@ to the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 \florent{complete proof (app)}
 \end{proof}
 \noindent
-We shall now present a procedure for searching, for a~$\SWVPA$ $A$,
+We now present a procedure for searching, for a~$\SWVPA$ $A$,
 a word %$w \in \Delta^*$
 of minimal weight for~$A$.
 %as stated in the following proposition. %\wrt~$\leq_\oplus$,
@@ -1254,14 +1251,11 @@ that converges eventually to $b_\top$ and $b_\bot$.
 %It uses for that purpose a priority queue $P$ containing triplets of
 %$Q \times \{ \bot, \top \} \times Q$.
 \florent{explication Fig.~\ref{fig:best-update} (update) suivant cas de \eqref{eq:SWVPA-weight}?}
-
 The infinite sums in the updates of $d$ in Algorithm~\ref{algo:Dijkstra},
 Figure~\ref{fig:best-update}
 are well defined
 since~$\Semiring$ is complete.
-
-
-Termination: the algorithm performs $2.|Q|^2$ iterations until $P$ is empty,
+The algorithm performs $2.|Q|^2$ iterations until $P$ is empty,
 and each iteration has a time complexity $O(|Q|^2 . |P|)$.
 \florent{complexity: detail with nb tr. and states?}
 That gives a time complexity $O(|Q|^4 . |P|)$.
@@ -1410,27 +1404,27 @@ is interpreted as follows:
 \item The input word is $I$ of Example~\ref{ex:running}.
 \item The \SWT $T$ evaluates a ``fitness measure''  that expresses
     a correspondance between a performance and notation events. See Example~\ref{ex:SWT}.
-\item The \SWVPA $A$ expresses a cost related to the music notation. 
+\item The \SWVPA $A$ expresses a cost related to the music notation.
 \end{itemize}
-%One possibility is to relate this cost to the structural complexity: 
-%given a set of equivalent representations, 
-%we aim at choosing the simpler one. 
-% 
-As seen in Example~\ref{ex:SWVPA}, 
+%One possibility is to relate this cost to the structural complexity:
+%given a set of equivalent representations,
+%we aim at choosing the simpler one.
+%
+As seen in Example~\ref{ex:SWVPA},
 \includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex1.pdf},
-%\includegraphics[scale=0.20]{pictures/score5.png} 
-will be favored on 
+%\includegraphics[scale=0.20]{pictures/score5.png}
+will be favored on
 \includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex2.pdf}
-%\includegraphics[scale=0.20]{pictures/score4.png}. 
+%\includegraphics[scale=0.20]{pictures/score4.png}.
 when the weight a second time division with $\ccall{2}$ is less
-than the difference of weight between 
+than the difference of weight between
 $\mbox{`\footnotesize C$\sharp$5`}$
 and $\mbox{\footnotesize C$\sharp$5}$.
 
 \noindent
-The SW-parsing framework, applied to the transcription problem, 
-allows to find an optimal solution 
-that considers both the fitness of the result, 
+The SW-parsing framework, applied to the transcription problem,
+allows to find an optimal solution
+that considers both the fitness of the result,
 and its structural complexity.
 \end{example}
 
@@ -1447,23 +1441,23 @@ and the computation time of the functions and operators of the label theory.
 \end{proposition}
 %
 \begin{proof} (sketch)
-We follow a \emph{Bar-Hillel} construction, for parsing by intersection.
+We follow a \emph{Bar-Hillel} construction for parsing by intersection.
 %
 \noindent
-Let us first extend the \SWT $T$ over $\Sigma$, $\Deltai$
+We first extend the \SWT $T$ over $\Sigma$, $\Deltai$
 into a \SWT $T'$ over $\Sigma$ and $\Delta$
 (and the same semiring and label theory $\Semiring$ and $\bar\Phi$),
 such that for all $u \in \Sigma^*$, and $t \in {\Delta}^*$,
 $T'(u, t) = T(u, t|_{\Deltai})$.
 %
-The transducer $T'$ simply skips every symbol
-$b \in {\Delta} \setminus \Deltai$,
+$T'$ simply skips every symbol
+$b \in {\Delta} \setminus \Deltai$
 by the addition to $T$,
 of new transitions of the form $\wei_{01}(q, \varepsilon, b, q')$.
 %
 \noindent
 Then, using Corolary~\ref{cor:epsilon},
-we construct from the input word $s \in \Sigma^*$ and $T'$
+we construct from $s \in \Sigma^*$ and $T'$
 a \SWA $B_{s, T'}$,
 such that for all $t \in \Delta^*$, $B_{s, T'}(t) = d(s, t)$.
 %
@@ -1483,17 +1477,18 @@ using Proposition~\ref{prop:SWVPA-product}.
 %
 \noindent
 It remains to compute a best nested-word $t \in {\Delta}^*$
-using the best-search procedure of Proposition~\ref{th:best-search}.
+using the procedure of Proposition~\ref{th:best-search}.
 %and convert it into a best tree in $\T_\Delta$ in order to solve SW parsing
 %for~$T$, $A$ and~$s$.
 %\qed
 \end{proof}
+
 The $\SW$-parsing generalizes
 the problem of searching the best derivation (AST) of a weighted CF-grammar $G$
-that yields a given input word $w$.
-The latter problem, sometimes called~\emph{weighted parsing},
+that yields a given input word $w$,   called~\emph{weighted parsing},
 (see \eg~\cite{Goodman99SemiringParsing}
- and~\cite{MorbitzVogler19weighted-parsing} for general weighted parsing frameworks)
+ and~\cite{MorbitzVogler19weighted-parsing}).
+Weighted parsing
 corresponds to $\SW$-parsing in the case of finite alphabets,
 a transducer $T$ computing the identity and some \SWVPA~$A$
 obtained from $G$. %the weighted CF grammar.
@@ -1548,19 +1543,15 @@ a $\SWVPA$ $A$ such that $A(\lin(\tau))$ is the weight the AST $\tau$ of $G$.
 %as a particular case, as a weighted context-free grammar,
 %converted in turn into a \SWVPA following Lemma~\ref{lem:SWTA}.
 %
-
-\florent{In practice,
-the functions in transition might be represented by diagram such as
-Algebraic Decision Diagrams~\cite{Bahar97ADD}.}
-
+%\florent{In practice,
+%the functions in transition might be represented by diagram such as
+%Algebraic Decision Diagrams~\cite{Bahar97ADD}.}
 %\paragraph{Application to Automated Music Transcription.}
 %\input{transcription}
 %...
-
-\florent{2 lines Application to Automated Music Transcription:
-implementation $\neq$ but same principle, on-the-fly automata construction
-during best search, for efficiency.}
-
+%\florent{2 lines Application to Automated Music Transcription:
+%implementation $\neq$ but same principle, on-the-fly automata construction
+%during best search, for efficiency.}
 
 \section*{Conclusion}
 % summary
