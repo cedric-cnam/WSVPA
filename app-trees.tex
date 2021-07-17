@@ -167,6 +167,13 @@ words of ${\hat\Omega}^*$ as follows:
        \call{b} \; \lin(t_1) \ldots \lin(t_k) \; \return{b}$
        when $b \in \Omega_k$ for $1 \leq k \leq M$.
 \end{description}
+%
+\begin{example}
+The trees in Figure~\ref{fig:score-tree}
+represent the two scores in Examples~\ref{ex:running},\ref{ex:nested-word}, 
+and their linearization are respectively~$O$ and~$O'$ inn the same examples.
+\end{example}
+
 
 \begin{proposition}\label{lem:SWTA}
 For all \SWTA $A$ over~$\Omega$, $\Semiring$ commutative, and $\bar\Phi$,
@@ -221,3 +228,56 @@ or $\bar{q} \neq \bar{p}$.
 %sequences in transition with a non-null weight.
 %\qed
 \end{proof}
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture} [-,thick]
+\tikzstyle{level 1}=[level distance=9mm,sibling distance=24mm]
+\tikzstyle{level 2}=[level distance=8mm,sibling distance=6mm]
+\tikzstyle{level 3}=[level distance=8mm,sibling distance=6mm]
+\node {$\mathsf{m}$}
+  child { node {$2$}
+    child { node {$\mbox{\footnotesize A4}$} }
+    child { node {$2$}
+      child { node {$-$} }
+      child { node {$2$}
+        child { node {$\mbox{\footnotesize B4}$} }
+        child { node {$\mbox{\footnotesize C$\sharp$5}$} }}}}
+  child { node {$\mathsf{m}$}
+    child { node {$3$}
+      child { node {$\mbox{\footnotesize D5}$} }
+      child { node {$\mbox{\footnotesize E5}$} }
+      child { node {$\mbox{\footnotesize F5}$} }}
+    child { node {$\varepsilon$} }};        
+\end{tikzpicture}
+%
+\quad 
+%
+\begin{tikzpicture} [-,thick]
+\tikzstyle{level 1}=[level distance=9mm,sibling distance=30mm]
+\tikzstyle{level 2}=[level distance=8mm,sibling distance=8mm]
+\tikzstyle{level 3}=[level distance=8mm,sibling distance=8mm]
+\node {$\mathsf{m}$}
+  child { node {$2$}
+    child { node {$\mbox{\footnotesize A4}$} }
+    child { node {$2$}
+      child { node {$-$} }
+      child { node {$\mbox{\footnotesize B4}$} } } }
+  child { node {$\mathsf{m}$}
+    child { node {$3$}
+      child { node {$`\mbox{\footnotesize C$\sharp$5}`\,\mbox{\footnotesize D5}$} }
+%                   {$\begin{array}{c}
+%                     \mbox{\footnotesize C5}\\
+%                     \mbox{\footnotesize D5}
+%                     \end{array}$} }
+      child { node {$\mbox{\footnotesize E5}$} }
+      child { node {$\mbox{\footnotesize F5}$} } }
+    child { node {$\varepsilon$} } };        
+\end{tikzpicture}
+\end{center}
+\caption{Tree representation of scores 
+of Examples~\ref{ex:running},\ref{ex:nested-word}, 
+linearized respectively into~$O$ and~$O'$.}
+\label{fig:score-tree}
+\end{figure}
+

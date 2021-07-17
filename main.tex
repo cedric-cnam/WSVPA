@@ -25,7 +25,8 @@
 % comments in margin with \todo command
 \usepackage[colorinlistoftodos]{todonotes} % option disable to hide todos
 % command todo : options
-% - noline: no line connecting the note with the place in the text where the note occurs in the latex code
+% - noline: no line connecting the note with the place in the text 
+%   where the note occurs in the latex code
 % - fancyline : curved arrow from note to inssertion point
 % - inline: place a todonote inside the text instead of in the margin
 % - author=name
@@ -191,11 +192,14 @@
 \newcommand{\ioi}[1]{\mathsf{ioi}({#1})}
 \newcommand{\rank}{\mathsf{rk}}
 \newcommand{\lin}{\mathsf{lin}}
+\newcommand{\ts}[1]{\mathop{:}{#1}} % timestamp marker
+%\newcommand{\ts}[1]{^{#1}} % timestamp marker
 
 \newcommand{\call}[1]{\ensuremath #1} %{\ensuremath \langle_{#1}}
 \newcommand{\return}[1]{\ensuremath #1} %{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
 \newcommand{\ccall}[1]{\ensuremath \langle_{#1}}
-\newcommand{\creturn}[1]{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
+\newcommand{\creturn}[1]{\ensuremath \rangle_{#1}} 
+%\newcommand{\creturn}[1]{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
 
 
 %\sloppy
@@ -243,12 +247,9 @@
 %notations: for set $S$ : sets of sequences $S^*$ and $S^+$...
 %interval $[i..j]$ of natural numbers
 
-
-
 \paragraph*{Semirings}
 \label{section:semiring}\label{sec:semiring}
 \input{semiring}
-
 
 \paragraph*{Label Theory}
 \label{section:symbols}
@@ -457,45 +458,61 @@ T(s, t)  =
 
 
 \begin{example}\label{ex:SWT}
-We build a small weighted transducer model
+We build a small \SWT over the alphabets $\Sigma$ and $\Deltai$ of 
+Examples~\ref{ex:running} and \ref{distance-time},
+%weighted transducer model
 with two states $q_0$ and $q_1$ that
-calculates the distance between the performance $I$ and
-the score $O$ of Example~\ref{ex:running}.
-
-If one performed event $\mu_i$  corresponds
-to one notated event $\nu_j$ (for instance MIDI code 61 and pitch A4),
-the weight value computed by the \SWT is the time distance between both,
-(see Example~\ref{distance-time}), and is modeled by
-transitions $\wei_{11}$ below.
+calculates the temporal distance between an input performance in~$\Sigma^*$
+and the subsequence 
+of the events of $\Deltai$ in a score.
+%the performance $I$ and
+%the score $O$ of Example~\ref{ex:running}.
 %
-If we meet the music notation symbol '-' that
-represents continuation (this occurs for instance in \emph{ties}
+When reading one performed event $\mu$ 
+and the corresponding notated event $\nu$ 
+(for instance MIDI pitch 69 and note name $\mbox{\footnotesize A4}$),
+the weight value computed by the \SWT is the time distance between both,
+(see Example~\ref{distance-time}), as modeled by transitions $\wei_{11}$ below.
+%
+If we meet the continuation symbol $'-'$ 
+(this occurs for instance in \emph{ties}
 $\musQuarter\!\!\!\mathrel{\raisebox{-1.5mm}{$\smile$}}\!\!\!\musEighth$,
-or \emph{dots} \musQuarterDotted{}), it is  skipped with no cost (transitions $\wei_{01}$ or weight $\one$).
-%transitions
+or \emph{dots} \musQuarterDotted{}),
+%that represents continuation 
+it is  skipped with no cost (transitions $\wei_{01}$ or weight $\one$).
+%Likewise, the markups are ignored.
 \[
-\begin{array}{rclcrcl}
-\wei_{11}(q_0, \<\mu, \tau>, \<\nu, \tau'>, q_0) & = & |\tau' - \tau| & \quad &
-\wei_{11}(q_1, \<\mu, \tau>, \<\nu, \tau'>, q_0) & = & |\tau' - \tau|\\
-\wei_{01}(q_0, \varepsilon, \< \mathsf{-}, \tau'>, q_0) & = & \one & &
-\wei_{01}(q_1, \varepsilon, \< \mathsf{-}, \tau'>, q_0) & = & \one\\
-\wei_{10}(q_0, \<\mu, \tau>, \varepsilon, q_1) & = & \alpha & & %\multicolumn{3}{l}{\mathrm{for~all~} b \in \Delta}
+\begin{array}{lclclcll}
+\wei_{11}(q_0, \mu\ts{\tau}, \nu\ts{\tau'}, q_0) & = & 
+     \delta(\mu\ts{\tau}, \nu\ts{\tau'}) & \quad & %|\tau' - \tau| & \quad &
+\wei_{11}(q_1, \mu\ts{\tau}, \nu\ts{\tau'}, q_0) & = & 
+     \delta(\mu\ts{\tau}, \nu\ts{\tau'}) & 
+     \mbox{if~} \nu \neq - \\ %|\tau' - \tau| & \quad &
+\wei_{01}(q_0, \varepsilon, \mathsf{-}\ts{\tau'}, q_0) & = & \one & &
+\wei_{01}(q_1, \varepsilon, \mathsf{-}\ts{\tau'}, q_0) & = & \one\\
+\wei_{10}(q_0, \mu\ts{\tau}, \varepsilon, q_1) & = & \alpha & & %\multicolumn{3}{l}{\mathrm{for~all~} b \in \Delta}
 \end{array}
 \]
 %
-We also want to take performing errors into account, while still being able to compare with the score,
+We also want to take performing errors into account, 
+while still being able to compare with the score,
 since a performer could, for example, play an unwritten extra note.
-\lydia{reformulated this sentence}
+%\lydia{reformulated this sentence}
 %
-This is modelled by the transition $\wei_{10}$ with an arbitrary weight value $\alpha \in \Semiring$,
-switching from state $q_0$ (normal) to $q_1$ (error).
+%Reading such a note is modelled by 
+The transition $\wei_{10}$, 
+with an fixed weight value $\alpha \in \Semiring$,
+switches from state $q_0$ (normal) to $q_1$ (error)
+when reading an extra note $\mu$.
 \philippe{Comprends pas cette phrase}
+\florent{$\to$ reformulation}
 The transitions in the second column below switch back to the normal state $q_0$.
 % the metric computed by the \SWT is the smallest sum of point wise distances
 % between dates of input and output events.
 At last, we let $q_0$ be the only initial and final state, with
 $\init(q_0) = \final(q_0) = \one$, and
 $\init(q_1) = \final(q_1) = \zero$.
+\florent{dernière phrase utile?}
 This \SWT is capable of evaluating the differences between a score and a performance,
 all the while ensuring that performance errors are plausible.
 %$\init(q_0, d, b) = \final(q_0, d, b) = \one$, and
@@ -656,18 +673,31 @@ symbolic weighted parsing presented in Section~\ref{sec:parsing}.
 \begin{proposition} \label{prop:epsilon}
 Given a \SWT $T$ over $\Sigma$, $\Delta$,
 $\Semiring$ commutative, bounded and complete,
-and $\bar\Phi$, %effective,
+and $\bar\Phi$ effective,
 and a $\SWA$ $A$ over $\Sigma$, $\Semiring$ and $\bar\Phi$,
 there exists an effectively constructible \SWA
 $B_{A, T}$ over $\Delta$, $\Semiring$ and $\bar\Phi$,
 such that for all $t \in \Delta^*$,
 $B_{A, T}(t) = \displaystyle\bigoplus_{s\in \Sigma^*} A(s) \otimes T(s, t)$.
 \end{proposition}
-\florent{AV: not needed $\bar\Phi$ effective}
 %
 \begin{proof}
-\florent{proof: sketch and mv to app.?}
-\input{app-closure}
+(sketch, see Appendix~\ref{sec:closure} for details).
+The state set of $B_{A, T}$ is the Cartesian product of 
+the state sets of $A$ and $T$ and its transitions simulate,
+while reading an output word $t \in \Delta^*$, the
+synchronized behaviour of $A$ and $T$ on $t$ 
+and some input word $s \in \Sigma^*$. 
+The weight for reading of the input is summarized using the operator
+$\bigoplus^1_\Sigma$.
+%
+The main difficulty comes from the transitions of $T$
+of the form $\wei_{10}$, who read in input and ignore the output.
+Such transition shall be simulated by $\varepsilon$-transitions in $B_{A, T}$,
+but $\varepsilon$-transitions are not defined for $\SWA$.
+Therefore, the $\varepsilon$-transitions
+are eliminated on-the-fly during the construction of~$B_{A, T}$,
+following a procedure of~\cite{LombardySakarovitch12ciaa}.
 %\qed
 \end{proof}
 
@@ -752,15 +782,49 @@ for~$\Phi_\Deltai$, $\Phi_\Deltac$, $\Phi_\Deltar$ and~$\Phi_{\Deltac, \Delta_\m
 %closed under $\oplus$ and $\otimes$.
 
 \begin{example}\label{ex:nested-word}
-Consider once more the scores of Example~\ref{ex:running}.
-$\Deltai$ represents the set of music events of the form $<\nu, \tau>$
-where $\nu$ is either a note (e.g. A4), the continuation symbol $-$, or a
-rest symbol R. $\Deltac$ and  $\Deltar$ are used to encode the score structure:
-Let $\Deltac = \{\langle, \prec\}$ and  $\Deltar = \{\rangle, \succ\}$ where $\langle$
-(resp. $\rangle$)
-and $\prec$ (resp. $\succ$) correspond to start/end of measures, and start/end of
-tuplets. Then  \includegraphics[scale=0.20]{pictures/score5.png}
-is encoded with the nested word $\langle \prec 0, \frac{3}{4}, \frac{7}{8} \succ \rangle \langle \prec 1, \frac{4}{3}, \frac{5}{3}  \succ \rangle$
+Consider once more the linearized score of Example~\ref{ex:running},
+with $\Deltai$ representing timed notes and continuations.
+%the set of music events of the form $<\nu, \tau>$
+%where $\nu$ is either a note (e.g. A4), the continuation symbol $-$, or a
+%rest symbol R. 
+The subset $\Delta \setminus \Deltai$ is partitioned into 
+$\Deltac$ and $\Deltar$, containing respectively opening and closing parentheses.
+%are used to encode the score structure:
+%Let $\Deltac = \{\langle, \prec\}$ and  $\Deltar = \{\rangle, \succ\}$ where $\langle$
+%(resp. $\rangle$)
+%and $\prec$ (resp. $\succ$) correspond to start/end of measures, and start/end of
+%tuplets. Then  \includegraphics[scale=0.20]{pictures/score5.png}
+%is encoded with the nested word $\langle \prec 0, \frac{3}{4}, \frac{7}{8} \succ \rangle %\langle \prec 1, \frac{4}{3}, \frac{5}{3}  \succ \rangle$
+The score representation $O$ in Example~\ref{ex:running}
+% score: \includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex1.pdf},
+is a nested-word of~$\Delta^*$. 
+%
+Another example is the second candidate 
+\includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex2.pdf}
+of transcription of~$I$,
+linearized into
+$O' =$ 
+$\ccall{\mathsf{m}}\ts{0}$,
+$\ccall{2}\ts{0}$,
+$\mbox{\footnotesize A4}\ts{0}$, 
+$\ccall{2}\ts{\frac{1}{2}}$,
+$-\ts{\frac{1}{2}}$,
+$\mbox{\footnotesize B4}\ts{\frac{3}{4}}$, 
+$\creturn{2}\ts{1}$,
+$\creturn{2}\ts{1}$,
+$\ccall{\mathsf{m}}\ts{1}$,
+$\ccall{3}\ts{1}$,
+$\mbox{\footnotesize `C$\sharp$5`}\ts{1}$, 
+$\mbox{\footnotesize D5}\ts{1}$, 
+$\mbox{\footnotesize E5}\ts{\frac{4}{3}}$, 
+$\mbox{\footnotesize F5}\ts{\frac{5}{3}}$,
+$\creturn{3}\ts{2}$,
+$\creturn{\mathsf{m}}\ts{2}$,
+$\creturn{\mathsf{m}}\ts{2}$
+(see also Figure~\ref{fig:score-tree}).
+The symbol between quotes $\mbox{\footnotesize `C$\sharp$5`}$
+represents an \emph{appogiatura}, %(grace-note),
+that is an ornemental note with theoretical duration zero.
 \endex
 \end{example}
 
@@ -809,7 +873,7 @@ overloading their names: % for simplicity:
 \mathrm{where~} \eta_\mathsf{cc} = \weic(q, p, p', q'),\\
 %
 \weiec: Q \times [\Deltac \times P] \times Q \to \Semiring &
-\weiec(q, {\call{c}}, p, q') = \phi_\mathsf{c}({\call{c}}) &
+\weiec(q, {\call{c}}, p', q') = \phi_\mathsf{c}({\call{c}}) &
 \mathrm{where~} \phi_\mathsf{c} = \weiec(q, p, q').\\
 %
 \weir: Q \times [\Deltac \times P] \times \Deltar \times Q \to \Semiring &
@@ -953,6 +1017,74 @@ and computing with an always empty stack:
 $\weiei = \wei_1$ and all the other functions
 of~$\bar\wei$ are the constant~$\zero$.
 
+\begin{example} \label{ex:SWVPA}
+We consider a \SWVPA over the alphabet of Example~\ref{ex:nested-word}
+that expresses a weight related to the music notation,
+more precisely to its structural complexity: 
+given a set of equivalent representations, we aim at choosing the simpler one. 
+This si specified by the weights associated to the transition.
+
+Let us assume a third component in the symbols of $\Deltac$ 
+which is the duration of the associated time interval.
+It is used to check the timestamps in the symbols.
+%
+For instance, the following call transition starts in state
+$q_{{i}/{c}}$, meaning that the current interval has number~$i$ 
+amongst $c$ sub-intervals of duration~$\ell$ (as indicated by the stack top).
+It reads a new time-division symbol~$\ccall{d}$.
+The date for this symbol has to be the time $\tau$ 
+for the previous time-division symbol read~$\ccall{c}$ (found on the stack)
+plus the total duration of intervals read so far, $i \ell$, and
+the new current interval duration is~$\frac{\ell}{d}$:
+%
+\(
+\weic\bigl(q_{{i}/{c}}, 
+           \ccall{c}\ts{\tau}\ts{\ell}, q, 
+           \ccall{d}\ts{\tau + i\ell}\ts{\frac{\ell}{d}}, q_{{i+1}/{c}},
+           q_{{0}/{d}} \bigr) = \alpha_d
+\).
+
+\noindent
+The weight of this transition is $\alpha_d$. 
+We can penalize \eg triplets compared to duplets with $\alpha_2 < \alpha_3$.
+%
+\noindent 
+Along with $\ccall{d}$, 
+the above transition pushes
+the state $q_{{i+1}/{c}}$ on the stack,  
+to start the next sub-interval after reading $\creturn{d}$, 
+with:
+\(
+\weir\bigl(q_{{d}/{d}}, 
+           \ccall{d}\ts{\tau}\ts{\ell}, q_{{i}/{c}}, 
+           \,\creturn{d}\ts{\tau + d\ell}, q_{{i}/{c}} \bigr) = \one
+\).
+
+\noindent
+Reading an event is done with:
+\(
+\weii\bigl(q_{{i}/{d}}, 
+           \ccall{d}\ts{\tau}\ts{\ell}, q_{{j}/{c}}, 
+           \mu\ts{\tau + i\ell}, q_{{i+1}/{d}} \bigr) = \alpha_\mu
+\).
+% cas des barres de mesure?
+%For the case of a new measure symbol,
+%$q_{1/1}$ is a special (initial) state.
+The transition for starting to read the first measure is:
+\(
+\weiec\bigl(q_{1/1}, 
+           \ccall{\mathsf{m}}\ts{0}\ts{1}, q_{1/1}, 
+           q_{1/1} \bigr) = \one
+\),
+and for a new measure:
+\(
+\weic\bigl(q_{1/1}, 
+           \ccall{\mathsf{m}}\ts{\tau}\ts{1}, q_{1/1}, 
+           \ccall{\mathsf{m}}\ts{\tau + 1}\ts{1}, q_{1/1},
+           q_{1/1} \bigr) = \one
+\).
+\endex
+\end{example}
 
 %\subsection{Properties}
 \medskip\noindent
@@ -972,7 +1104,7 @@ $(A_1 \otimes A_2)(s) = A_1(s) \otimes A_2(s)$.
 %
 \begin{proof}
 The construction is similar
-to that of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
+to the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 \florent{complete proof (app)}
 \end{proof}
 \noindent
@@ -980,18 +1112,7 @@ We shall now present a procedure for searching, for a~$\SWVPA$ $A$,
 a word %$w \in \Delta^*$
 of minimal weight for~$A$.
 %as stated in the following proposition. %\wrt~$\leq_\oplus$,
-It requires the following property of label theories.
-%
-\begin{definition}\label{def:effective}
-A label theory is called \emph{effective} when
-for all $\phi \in \Phi_\Sigma$ and $\eta \in \Phi_{\Sigma, \Delta}$,
-$\bigoplus_{\Sigma} \phi$,
-$\bigoplus_{\Delta}\bigoplus_{\Sigma} \eta$, and
-$\bigoplus_{\Sigma}\bigoplus_{\Delta} \eta$
-can be effectively computed from $\phi$ and $\eta$,
-and moreover, the number of symbols reaching these bounds is finite
-and can be effectively computed.
-\end{definition}
+%It requires the following property of label theories.
 %
 \begin{proposition}\label{th:best-search}
 For a \SWVPA $A$
@@ -1284,39 +1405,33 @@ and returning a witness $t$.
 \begin{example}[Symbolic Weighted Parsing and the transcription problem]
 Applied to the music transcription problem, the above formalism
 is interpreted as follows:
-\begin{enumerate}
+%
+\begin{itemize}
+\item The input word is $I$ of Example~\ref{ex:running}.
+\item The \SWT $T$ evaluates a ``fitness measure''  that expresses
+    a correspondance between a performance and notation events. See Example~\ref{ex:SWT}.
+\item The \SWVPA $A$ expresses a cost related to the music notation. 
+\end{itemize}
+%One possibility is to relate this cost to the structural complexity: 
+%given a set of equivalent representations, 
+%we aim at choosing the simpler one. 
+% 
+As seen in Example~\ref{ex:SWVPA}, 
+\includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex1.pdf},
+%\includegraphics[scale=0.20]{pictures/score5.png} 
+will be favored on 
+\includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex2.pdf}
+%\includegraphics[scale=0.20]{pictures/score4.png}. 
+when the weight a second time division with $\ccall{2}$ is less
+than the difference of weight between 
+$\mbox{`\footnotesize C$\sharp$5`}$
+and $\mbox{\footnotesize C$\sharp$5}$.
 
-  \item The \SWT $T$ evaluates a ``fitness measure''  that expresses
-    a correspondance between a performance and its notation. See Example~\ref{ex:SWT}.
-\item The \SWVPA $A$ expresses a cost related to the music notation. One possibility
- is to relate this cost to the structural complexity: given a set of equivalent
- representations, we aim at choosing the simpler one. For instance
- \includegraphics[scale=0.20]{pictures/score5.png} should be favored
- on \includegraphics[scale=0.20]{pictures/score4.png}. Costs  can be expressed
- in the grammar as weights associated to each production rule.
- For instance, the following production rules define two possible divisions
- of a time interval into respectively a duplet and a triplet. Each comes with
- a specific cost.
- \[
- \rho_1: q_0 \xrightarrow{0.06} \< q_{1}, q_{2}>,\
- \rho_2: q_0 \xrightarrow{0.12} \< q_{1}, q_{2}, q_{2}>.
- \]
- Further binary divisions of time sub-intervals %represented respectively by~$q_2$ and~$q_3$
- are possible with:
- \[
- \rho_3:\,q_2 \xrightarrow{0.1} \< q_{3}, q_{3}>, \
- \rho_4:\,q_3 \xrightarrow{0.11} \< q_{4}, q_{4}>. \
- \]
-
-Score \includegraphics[scale=0.20]{pictures/score5.png} is obtained as follows:
-the first measure
- results from the successive applications of  rules $\rho_1$ (division in two)
- and rules $\rho_3$ (division of the second half) in two. The second measure
- is a division in three obtained by rule $\rho_3$. One obtains a parse tree
- that can be linearized in the nested word of Example~\ref{ex:nested-word}.
- \end{enumerate}
-Therefore, the framework, applied to the transcription problem, allows to find an optimal
-solution that considers both the fitness of the result, and its structural complexity.
+\noindent
+The SW-parsing framework, applied to the transcription problem, 
+allows to find an optimal solution 
+that considers both the fitness of the result, 
+and its structural complexity.
 \end{example}
 
 
@@ -1442,7 +1557,6 @@ Algebraic Decision Diagrams~\cite{Bahar97ADD}.}
 %\input{transcription}
 %...
 
-
 \florent{2 lines Application to Automated Music Transcription:
 implementation $\neq$ but same principle, on-the-fly automata construction
 during best search, for efficiency.}
@@ -1508,13 +1622,18 @@ with an on-the-fly automata construction.
 \newpage
 \appendix
 
+\section{Properties of Label Theory Operators} \label{sec:closure}
+\input{app-labels}
 
-\section{Nested-Words and Parse-Trees} \label{sec:trees}
-\input{app-trees}
-
+\section{Proof of Proposition~\ref{prop:epsilon}} \label{sec:closure}
+\input{app-closure}
 
 \section{Correctness of the Best-Search Algorithm} \label{sec:bestsearch}
 \input{app-bestsearch}
+
+
+\section{Nested-Words and Parse-Trees} \label{sec:trees}
+\input{app-trees}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -29,7 +29,7 @@ Since $B_{A, T}$  will read only in the output word, such a transition correspon
 to an $\varepsilon$-transition of $\SWA$.
 But $\SWA$ have been defined without $\varepsilon$-transitions.
 Therefore, in order to take care of this case, we perform an on-the-fly
-suppression of $\varepsilon$-transition in the $\SWA$ in construction,
+elimination of $\varepsilon$-transition in the $\SWA$ in construction,
 following the algorithm~1 of~\cite{LombardySakarovitch12ciaa}.
 %
 % Initialize state leaving functions i
@@ -45,8 +45,9 @@ Initially, for all $p_1, p_2 \in P$, and $q_1, q_2 \in Q$, let
 \[
 \begin{array}{rcl}
 \wei'_1\bigl( \< p_1, q_1>, \< p_2, q_2>\bigr) & = &
-{\displaystyle\bigoplus_{p_1 = p_2}} \wei_{01}(q_1, q_2)
-\oplus \wei_1(p_1, p_2) \otimes_1 \wei_{11}(q_1, q_2)\\
+\bigl({\displaystyle\bigoplus_{p_1 = p_2}} \wei_{01}(q_1, q_2)\;\bigr)
+\oplus
+\bigoplus^1_\Sigma \bigl(\wei_1(p_1, p_2) \otimes_1 \wei_{11}(q_1, q_2)\bigr)\\
 %
 \final'(p_1, q_1) & = & \final_A(p_1) \otimes \final_T(q_1)
 \end{array}
@@ -62,27 +63,26 @@ Then, we iterate the following updates for all $p_1, p_2, p_3\in P$ and $q_1, q_
 \begin{array}{rcl}
 \wei'_1\bigl( \< p_1, q_1>, \< p_3, q_3>\bigr) & \opluseq &
 %\displaystyle\bigoplus_{\Sigma} 
-\wei_{1}(p_1, p_2)
-\otimes \wei_{10}(q_1, q_2)
+\bigoplus_\Sigma \bigl(\wei_{1}(p_1, p_2) \otimes \wei_{10}(q_1, q_2)\bigr)
 \otimes \wei'_1\bigl( \< p_2, q_2>, \< p_3, q_3>\bigr)\\
 %
 \final'(p_2, q_2) & \opluseq &
 %\displaystyle\bigoplus_{\Sigma} 
-\wei_{1}(p_1, p_2)
-\otimes \wei_{10}(q_1, q_2)
+\bigoplus_\Sigma \bigl(\wei_{1}(p_1, p_2)\otimes \wei_{10}(q_1, q_2)\bigr)
 \otimes \final'(p_1, q_1)
 \end{array}
 \]
 In both cases, 
-the weight $\wei_{1}(p_1, p_2) \otimes \wei_{10}(q_1, q_2)$
-corresponds to the weight of an $\varepsilon$-transition 
-that reads a symbol $a$ in the input word and does not move in the output word,
+$\wei_{1}(p_1, p_2) \otimes \wei_{10}(q_1, q_2)$ 
+is the weight of an $\varepsilon$-transition.
+It corresponds to the reading, by $A$ and $T$, 
+of a symbol $a$ in the input word without move in the output word,
 i.e. the synchronization of 
 a transition $\wei_{1}(p_1, a, p_2)$ of $A$ and 
 a transition $\wei_{10}(q_1, a, \varepsilon, q_2)$ of $T$.
 
 The iteration stops when it does not change the value of $\wei'_1$.
-\florent{proof correctness (app)}
+\florent{complete \& proof correctness (app)}
 %
 %
 % old version
