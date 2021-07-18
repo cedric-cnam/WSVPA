@@ -254,7 +254,7 @@ instead of syntax trees and grammars. %(\S~\ref{sec:trees}).
 \label{ex:running}
 We illustrate our framework with a very simplified %toy
 running example of \emph{music transcription}:
-a given \emph{timeline} of timestamped musical events
+a given \emph{timeline} of musical events
 from an infinite alphabet $\Sigma$ as input,
 is parsed into a structured music score.
 Input events of $\Sigma$
@@ -274,13 +274,13 @@ The output of parsing is a sequence of
 timed symbols $\nu\ts{\tau'}$ in an alphabet $\Delta$,
 %events (or \emph{notes})
 %in Common Western Music Notation (CWMN)~\cite{Gould11Notation}
-where every symbol $\nu$ may represent
+where $\nu$  represents
 an \emph{event} (or \emph{note}),
 specified by its \emph{pitch name}
 (\eg, $\mbox{\footnotesize A4}$, $\mbox{\footnotesize G5}$, \etc.),
 an event \emph{continuation} (symbol `$-$`, see Ex.~\ref{ex:SWT}),
 or a \emph{markup}. %(\emph{parenthesis}),
-The timestamp $\tau'$, expressed in number of \emph{measures},
+The timestamp $\tau'$
 belongs to a rhythmic ``grid'' obtained from recursive divisions:
 whole notes ($\musWhole$) split in halves ($\musHalf$), halves
 in quarters ($\musQuarter$), eights ($\musEighth$), \etc.
@@ -289,7 +289,6 @@ For instance, the output score
 \includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex1.pdf},
   %\includegraphics[scale=0.20]{pictures/score5.png},
 corresponds to a hierarchical structure
-(measures, tuplets..., see Figure~\ref{fig:score-tree})
 that can be linearized as the sequence
 $O =$
 $\ccall{\mathsf{m}}\ts{0}$,

@@ -25,12 +25,11 @@ $\forall x\in \mathbb{S}$, $\zero \otimes x = x \otimes \zero = \zero$.
 %Components of a semiring~$\Semiring$ may be subscripted by~$\Semiring$ when needed.
 %We simply write $x \in \Semiring$ to mean $x \in \mathbb{S}$.
 %
-Intuitively, in the models presented in this paper,
+In the models presented in this paper,
 $\oplus$ selects an optimal value from two given values,
 in order to handle non-determinism,
 and $\otimes$ combines two values into a single one.
 %and let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a {semiring},
-
 A semiring $\Semiring$ is \emph{commutative} if $\otimes$ is commutative.
 It is \emph{idempotent} if for all $x \in \Semiring$, $x \oplus x = x$.
 %
@@ -108,9 +107,10 @@ by definition of $\leq_\oplus$, $\one \oplus x = \one$.
 %\qed
 \end{proof}
 
-In~\cite{Huang08advanceddynamic}, when the property~$(i)$ holds,
-$\Semiring$ is called \emph{superior} \wrt the ordering~$\leq_\oplus$.
-We have seen in the proof of Lemma~\ref{lem:bounded} that it implies that
+In~\cite{Huang08advanceddynamic}, when  property~$(i)$ holds,
+$\Semiring$ is called \emph{superior} \wrt~$\leq_\oplus$.
+It implies (proof of Lemma~\ref{lem:bounded})
+that
 $\one \leq_\oplus x$ for all $x \in \Semiring$.
 Similarly, by the first inequality of ($i$) with $y = \zero$,
 $x \leq_\oplus x \otimes \zero = \zero$.
@@ -118,7 +118,7 @@ $x \leq_\oplus x \otimes \zero = \zero$.
 Hence, in a superior semiring,
 for all $x \in \Semiring$, $\one \leq_\oplus x \leq_\oplus \zero$.
 %
-Intuitively, from an optimization point of view,
+From an optimization point of view,
 it means that $\one$ is the best value, and $\zero$ the worst.
 %** superior implies $\Semiring$ bounded~\cite{Mohri02semiring} see **
 %

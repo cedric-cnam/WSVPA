@@ -274,7 +274,7 @@ and extend it to infinite alphabets.
 The models introduced in this section generalize
 weighted automata and transducers~\cite{Droste09handbook}
 %over finite alphabets, see  e.g.~\cite{Mohri03EDWA},
-by labeling each transition with a weight function 
+by labeling each transition with a weight function
 that takes the input and output symbols as parameters.
 These functions are similar to the guards of symbolic automata~\cite{dAntoniVeanes17CAV,dAntoni21CACM},
 but the latter guards are restricted to the Boolean semiring.
@@ -885,7 +885,7 @@ overloading their names: % for simplicity:
 \]
 
 \noindent
-The intuition is the following for the above transitions.
+%The intuition is the following for the above transitions.
 $\weiei$, $\weiec$, and $\weier$ describe the cases where the stack is empty.
 \lydia{moved this to the beginning}
 %
@@ -1553,43 +1553,25 @@ a $\SWVPA$ $A$ such that $A(\lin(\tau))$ is the weight the AST $\tau$ of $G$.
 %during best search, for efficiency.}
 
 \section*{Conclusion}
-% summary
-We have introduced weighted language models (SW transducers and visibly pushdown automata)
-computing over infinite alphabets,
+
+We  introduced weighted language models over infinite alphabets,
 and applied them to the problem of parsing
 with infinitely many possible input symbols (typically timed events).
-%handled with suitable language formalisms,
-%
-This approach extends conventional parsing and weighted parsing
+Our approach extends conventional parsing and weighted parsing
 by computing a derivation tree modulo
-a generic distance between words,
+a distance between words
 defined by a SW transducer given in input.
-This enables to consider finer word relationships than strict equality,
-%as in the conventional parsing approach,
-opening possibilities of quantitative analysis via this method.
+This allows to consider finer word relationships than strict equality.
 
-% discussion
-\noindent
-Ongoing and future work include
-\florent{TODO future work}
-
-\noindent
--- The study of other theoretical properties of SW models,
-such as the extension of the best search algorithm from $1$-best to $n$-best~\cite{Huang05kbest},
+This work can be extended in several directions. First, the
+the best search algorithm could bbe generalized from $1$-best to $n$-best~\cite{Huang05kbest},
 and to $k$-\emph{closed} semirings~\cite{Mohri02semiring}
-(instead of \emph{bounded}, which corresponds to $0$-\emph{closed}).
-
-\noindent
--- ...there is room to improve the complexity bounds for the algorithms
-... modular approach with oracles ...
-
-\noindent
--- present here an offline algorithm for best search,
-semi-online implementation for AMT (bar-by-bar approach)
-with an on-the-fly automata construction.
-
-
-
+(instead of \emph{bounded}, which corresponds to $0$-\emph{closed}). Second,
+we believe that
+the complexity bounds of the algorithms can be more precisely characterized.
+Finally, the  best search algorithm presented here offline, whereas
+an on-the-fly automata construction would allow for online parsing,
+a suitable feature in the context of applications such as, e.g., automatic music transcription.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% BIBLIO                                                                     %%
