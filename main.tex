@@ -457,28 +457,28 @@ T(s, t)  =
 
 
 \begin{example}\label{ex:SWT}
-We build a small \SWT over the alphabets $\Sigma$ and $\Deltai$ of
-Examples~\ref{ex:running} and \ref{distance-time},
+We build a small \SWT over  alphabets $\Sigma$ and $\Deltai$
+(Ex.~\ref{ex:running} and \ref{distance-time}),
 %weighted transducer model
-with two states $q_0$ and $q_1$ that
+with two states $q_0$ and $q_1$, that
 calculates the temporal distance between an input performance in~$\Sigma^*$
 and the subsequence
-of the events of $\Deltai$ in a score.
+of $\Deltai$ events in a score.
 %the performance $I$ and
 %the score $O$ of Example~\ref{ex:running}.
 %
-When reading one performed event $\mu$
+Given  a performed event $\mu$
 and the corresponding notated event $\nu$
-(for instance MIDI pitch 69 and note name $\mbox{\footnotesize A4}$),
-the weight value computed by the \SWT is the time distance between both,
-(see Example~\ref{distance-time}), as modeled by transitions $\wei_{11}$ below.
+(e.g., MIDI pitch 69 and note $\mbox{\footnotesize A4}$),
+the weight  computed by the \SWT is the time distance between both,
+as modeled by transitions $\wei_{11}$ below.
 %
-If we meet the continuation symbol $'-'$
-(this occurs for instance in \emph{ties}
+The continuation symbol $'-'$
+(met for instance in \emph{ties}
 $\musQuarter\!\!\!\mathrel{\raisebox{-1.5mm}{$\smile$}}\!\!\!\musEighth$,
 or \emph{dots} \musQuarterDotted{}),
 %that represents continuation
-it is  skipped with no cost (transitions $\wei_{01}$ or weight $\one$).
+is  skipped with no cost (transitions $\wei_{01}$).
 %Likewise, the markups are ignored.
 \[
 \begin{array}{lclclcll}
@@ -739,14 +739,13 @@ such that for all $t \in \Delta^*$, $B_{s, T}(t) = T(s, t)$.
 
 \section{SW Visibly Pushdown Automata}
 \label{section:SWVPA}\label{sec:SWVPA}
-The model presented in this section generalizes symbolic \VPA
+The model presented now generalizes symbolic \VPA
 (\SVPA~\cite{dAntonyAlur14SVPDA},
  generalizing themselves \VPA~\cite{AlurMadhusudan09nested} to infinite alphabets)
-from Boolean semirings to arbitrary semiring weight domains.
-It will compute on nested words over infinite alphabets,
-associating to every such word a weight value.
-Nested words are able to describe structures of labeled trees,
-and in the context of parsing, they will be useful to
+from Boolean semirings to arbitrary semiring domains.
+It associates to every nested words over infinite alphabets a weight value.
+Nested words can describe structures of labeled trees.
+In the context of parsing, they will be useful to
 represent AST. % parse trees.
 \florent{see \S 5 and App.A}
 
@@ -755,11 +754,10 @@ represent AST. % parse trees.
 \label{sec:SWVPA-def}
 Let $\Delta$ be a countable alphabet
 %finite (large) or infinite,
-that we assume partitioned into three
+artitioned into three
 subsets~$\Deltai$, $\Deltac$, $\Deltar$,
 whose elements are respectively called
-\emph{internal}, \emph{call} and \emph{return} symbols,
-following~\cite{AlurMadhusudan09nested}.
+\emph{internal}, \emph{call} and \emph{return} symbols~\cite{AlurMadhusudan09nested}.
 % names are  coined by application to functional program verification
 % \begin{itemize}
 % \item a set $\Deltai$ of \emph{internal symbols} denoted $a$,
@@ -780,23 +778,19 @@ for~$\Phi_\Deltai$, $\Phi_\Deltac$, $\Phi_\Deltar$ and~$\Phi_{\Deltac, \Delta_\m
 %closed under $\oplus$ and $\otimes$.
 
 \begin{example}\label{ex:nested-word}
-Consider once more the linearized score of Example~\ref{ex:running},
-with $\Deltai$ representing timed notes and continuations.
+The score representation $O$ in Example~\ref{ex:running}
+is a nested-word of~$\Delta^*$.
+$\Deltai$ corresponds to timed notes and continuations.
 %the set of music events of the form $<\nu, \tau>$
 %where $\nu$ is either a note (e.g. A4), the continuation symbol $-$, or a
 %rest symbol R.
-The subset $\Delta \setminus \Deltai$ is partitioned into
-$\Deltac$ and $\Deltar$, containing respectively opening and closing parentheses.
+$\Deltac$ and $\Deltar$ contain respectively opening and closing parentheses.
 %are used to encode the score structure:
 %Let $\Deltac = \{\langle, \prec\}$ and  $\Deltar = \{\rangle, \succ\}$ where $\langle$
 %(resp. $\rangle$)
 %and $\prec$ (resp. $\succ$) correspond to start/end of measures, and start/end of
 %tuplets. Then  \includegraphics[scale=0.20]{pictures/score5.png}
 %is encoded with the nested word $\langle \prec 0, \frac{3}{4}, \frac{7}{8} \succ \rangle %\langle \prec 1, \frac{4}{3}, \frac{5}{3}  \succ \rangle$
-The score representation $O$ in Example~\ref{ex:running}
-% score: \includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex1.pdf},
-is a nested-word of~$\Delta^*$.
-%
 Another example is the second candidate
 \includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex2.pdf}
 of transcription of~$I$,
@@ -819,10 +813,10 @@ $\mbox{\footnotesize F5}\ts{\frac{5}{3}}$,
 $\creturn{3}\ts{2}$,
 $\creturn{\mathsf{m}}\ts{2}$,
 $\creturn{\mathsf{m}}\ts{2}$
-(see also Figure~\ref{fig:score-tree}).
+(see also Fig.~\ref{fig:score-tree}).
 The symbol between quotes $\mbox{\footnotesize `C$\sharp$5`}$
 represents an \emph{appogiatura}, %(grace-note),
-that is an ornemental note with theoretical duration zero.
+i.e., an ornemental note with theoretical duration zero.
 \endex
 \end{example}
 
@@ -849,7 +843,7 @@ $\weier : Q \times Q \to \Phir$.
 %with $\mathsf{x} \in \{ \mathsf{i}, \mathsf{c}, \mathsf{r}\}$.
 \end{definition}
 %
-Similarly as in Section~\ref{section:transducer},
+As in Section~\ref{section:transducer},
 we extend the above transition functions as follows
 for all $q, q' \in Q$, $p \in P$,
 $a \in \Deltai$,
@@ -1016,12 +1010,16 @@ $\weiei = \wei_1$ and all the other functions
 of~$\bar\wei$ are the constant~$\zero$.
 
 \begin{example} \label{ex:SWVPA}
-We consider a \SWVPA over the alphabet of Example~\ref{ex:nested-word}
+We consider a \SWVPA over the alphabet of Ex.~\ref{ex:nested-word}
 that expresses a weight related to the music notation,
-more precisely to its structural complexity:
-given a set of equivalent representations, we aim at choosing the simpler one.
+more precisely to its structural complexity.
+Given a set of equivalent representations, we aim at choosing the simpler one.
 
 Let us assume a third component in the symbols of $\Deltac$
+\philippe{Je trouve l'exemple un peu confus. Je ne sais pas
+quel est "l'associate time interval" d'un symbole. Je ne sais
+pas à quoi fait référence "the following call transition". Je
+n'ose pas trop toucher mais je crois qu'il faut revoir.}
 which is the duration of the associated time interval.
 It is used to check the timestamps in the symbols.
 %
