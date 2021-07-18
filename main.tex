@@ -160,7 +160,6 @@
 \def\VPA{\textsf{VPA}\xspace}
 \def\SVPA{\textsf{sVPA}\xspace}
 \def\weight{\mathsf{weight}}
-\def\wei{\mathsf{w}}
 \def\mei{\mathsf{m}}
 \def\init{\mathsf{in}}
 \def\final{\mathsf{out}}
@@ -181,6 +180,7 @@
 \def\Phicc{{\Phi_\mathsf{cc}}}
 \def\Phicr{{\Phi_\mathsf{cr}}}
 \def\Phicx{{\Phi_\mathsf{cx}}}
+\def\wei{\mathsf{w}}
 \def\weii{{\wei_\mathsf{i}}}
 \def\weic{{\wei_\mathsf{c}}}
 \def\weir{{\wei_\mathsf{r}}}
@@ -1103,9 +1103,8 @@ $(A_1 \otimes A_2)(s) = A_1(s) \otimes A_2(s)$.
 \end{proposition}
 %
 \begin{proof}
-The construction is similar
-to the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
-\florent{complete proof (app)}
+We do a classical product construction, see Appendix~\ref{sec:product} for details.
+%similar to the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 \end{proof}
 \noindent
 We shall now present a procedure for searching, for a~$\SWVPA$ $A$,
@@ -1627,6 +1626,9 @@ with an on-the-fly automata construction.
 
 \section{Proof of Proposition~\ref{prop:epsilon}} \label{sec:closure}
 \input{app-closure}
+
+\section{Proof of Proposition~\ref{prop:SWVPA-product}} \label{sec:product}
+\input{app-product}
 
 \section{Correctness of the Best-Search Algorithm} \label{sec:bestsearch}
 \input{app-bestsearch}
