@@ -21,7 +21,6 @@
 % https://submission.dagstuhl.de/documentation/authors
 \input{main-lipics}
 
-
 % comments in margin with \todo command
 \usepackage[colorinlistoftodos]{todonotes} % option disable to hide todos
 % command todo : options
@@ -31,8 +30,11 @@
 % - inline: place a todonote inside the text instead of in the margin
 % - author=name
 \newcommand{\florent}[1]{\todo[noline,size=\tiny,color=yellow!40]{#1}}
+\renewcommand{\florent}[1]{} % uncomment for final
 \newcommand{\lydia}[1]{\todo[noline,size=\tiny,color=red!30]{#1}}
+\renewcommand{\lydia}[1]{} % uncomment for final
 \newcommand{\philippe}[1]{\todo[noline,size=\tiny,color=green!30]{#1}}
+\renewcommand{\philippe}[1]{} % uncomment for final
 
 \usepackage{hyperref}
 %\usepackage[bookmarks,bookmarksnumbered,naturalnames,plainpages=false]{hyperref}
@@ -91,7 +93,6 @@
 %\usepackage{algorithm}
 %\usepackage{program}
 \usepackage[ruled,vlined]{algorithm2e}
-
 
 %% allows for page break within arrays
 \usepackage{longtable}
@@ -203,7 +204,6 @@
 \newcommand{\creturn}[1]{\ensuremath \rangle_{#1}}
 %\newcommand{\creturn}[1]{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
 
-
 %\sloppy
 
 % Parsing over infinite alphabet as optimal alignment computation
@@ -232,8 +232,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% intro
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\florent{indep. counters Def. Prop. Ex...}
 
 \section{Introduction} \label{sec:intro}
 \input{introduction}
@@ -275,7 +273,7 @@ and extend it to infinite alphabets.
 %
 The models introduced in this section generalize
 weighted automata and transducers~\cite{Droste09handbook}
-%over finite alphabets, see  e.g.~\cite{Mohri03EDWA},
+%over finite alphabets, see \eg~\cite{Mohri03EDWA},
 by labeling each transition with a weight function
 that takes the input and output symbols as parameters.
 These functions are similar to the guards of symbolic automata~\cite{dAntoniVeanes17CAV,dAntoni21CACM},
@@ -471,7 +469,7 @@ of $\Deltai$ events in a score.
 %
 Given  a performed event $\mu$
 and the corresponding notated event $\nu$
-(e.g., MIDI pitch 69 and note $\mbox{\footnotesize A4}$),
+(\eg MIDI pitch 69 and note $\mbox{\footnotesize A4}$),
 the weight  computed by the \SWT is the time distance between both,
 as modeled by transitions $\wei_{11}$ below.
 %
@@ -639,8 +637,9 @@ is based with an intermediate function $\weight_A$,
 defined as follows for $q, q' \in Q$, $a \in \Sigma$, $u \in \Sigma^*$
 %
 \begin{align}
-\weight_A(q, \varepsilon, q) & = \one\\ %\final(q)\\
-\weight_A(q, \varepsilon, q') & = \zero \quad \mathrm{if~} q \neq q'\nonumber\\
+\weight_A(q, \varepsilon, q') & = \one\ \mathrm{if}\  q = q',\ 
+          \mathrm{or}\  \zero\  \mathrm{otherwise}\\
+%\weight_A(q, \varepsilon, q') & = \zero \quad \mathrm{if~} q \neq q'\nonumber\\
 \weight_A(q, au, q') & =  \displaystyle\bigoplus_{q'' \in Q}
     \wei_{1}(q, a, q'') \otimes \weight_A(q'', u, q')\nonumber
 \label{eq:SWA-weight}
@@ -820,7 +819,7 @@ $\creturn{\mathsf{m}}\ts{2}$
 (see also Fig.~\ref{fig:score-tree}).
 The symbol between quotes $\mbox{\footnotesize `C$\sharp$5`}$
 represents an \emph{appogiatura}, %(grace-note),
-i.e., an ornemental note with theoretical duration~0.
+\ie an ornemental note with theoretical duration~0.
 \endex
 \end{example}
 
@@ -1436,8 +1435,14 @@ The SW-parsing framework, applied to the transcription problem,
 allows to find an optimal solution
 that considers both the fitness of the result,
 and its structural complexity.
+\endex
 \end{example}
-
+The application to music transcription suggested briefly in the examples
+has been implemented in a C++ tool~\cite{qparse}, %\footnote{https://qparse.gitlabpages.inria.fr}.
+following the principles of the present SW-parsing framework, 
+although it differs in several points.
+In particular, the automata constructions are performed on the on-the-fly
+during the search of a best AST, for efficiency reasons.
 
 
 %
@@ -1495,13 +1500,15 @@ using the procedure of Proposition~\ref{th:best-search}.
 
 The $\SW$-parsing generalizes
 the problem of searching the best derivation (AST) of a weighted CF-grammar $G$
-that yields a given input word $w$,   called~\emph{weighted parsing},
+that yields a given input word $w$, called~\emph{weighted parsing},
 (see \eg~\cite{Goodman99SemiringParsing}
- and~\cite{MorbitzVogler19weighted-parsing}).
-Weighted parsing
-corresponds to $\SW$-parsing in the case of finite alphabets,
-a transducer $T$ computing the identity and some \SWVPA~$A$
-obtained from $G$. %the weighted CF grammar.
+ and the more general framework~\cite{MorbitzVogler19weighted-parsing}),
+with infinite input alphabet instead of a finite one and
+transducer-defined distances instead of equality. 
+%
+See Appendix~\ref{sec:trees} for more details on the correspondence between 
+nested words $t \in \Delta^*$ and AST and CF grammars and \SWVPA.
+
 %
 %Indeed, it corresponds to the case where $T$
 %accepts only the pairs $\<s, t>$ such that
@@ -1514,19 +1521,26 @@ obtained from $G$. %the weighted CF grammar.
 %\item[] $\wei(q, a, b, q) = \zero$ for all $a, b \in \Deltai$, $a \neq b$.
 %\end{description}
 %
-Indeed, the \emph{depth-first} traversal of an AST $\tau$
-yields a well-parenthesised word $\lin(\tau)$ over an alphabet
-$\Delta = \Deltai \uplus \Deltac \uplus \Deltar$,
-assuming \eg that $\Deltai$ contains the symbols labelling the leaves of $\tau$ (symbols of rank $0$),
-and $\Deltac$ and $\Deltar$ contain respectively one left and right parenthesis
-$\ccall{b}$ and $\creturn{b}$ for each symbol $b$ labelling inner nodes of $\tau$ (symbols of rank $>0$).
+%Weighted parsing
+%corresponds to $\SW$-parsing in the case of finite alphabets,
+%a transducer $T$ computing the identity and some \SWVPA~$A$
+%obtained from $G$. %the weighted CF grammar.
+%Indeed, the \emph{depth-first} traversal of an AST $\tau$
+%yields a well-parenthesised word $\lin(\tau)$ over an alphabet
+%$\Delta = \Deltai \uplus \Deltac \uplus \Deltar$,
+%assuming \eg that $\Deltai$ contains the symbols labelling the leaves of $\tau$ 
+%(symbols of rank $0$),
+%and $\Deltac$ and $\Deltar$ contain respectively one left and right parenthesis
+%$\ccall{b}$ and $\creturn{b}$ for each symbol $b$ labelling inner nodes of $\tau$ 
+%(symbols of rank $>0$).
 %
 %With this representation, the projection $\lin(t)|_\Deltai$ is the
 %sequence of leaves of $\tau$. %, enumerated in a \emph{dfs}-traversal.
 %
-We show in Appendix~\ref{sec:trees} how to construct
-%($\SW$) tree automaton~$A$ %(in particular the TA computing on the AST of a given CF-grammar)
-a $\SWVPA$ $A$ such that $A(\lin(\tau))$ is the weight the AST $\tau$ of $G$.
+%We show in Appendix~\ref{sec:trees} how to construct
+%%($\SW$) tree automaton~$A$ %(in particular the TA computing on the AST of a given CF-grammar)
+%a $\SWVPA$ $A$ such that $A(\lin(\tau))$ is the weight the AST $\tau$ of $G$.
+
 
 %That also holds for the set of ASTs of a weighted CF-grammar.
 %The purpose of the transducer $T$ is to measure a distance between input and output words,
@@ -1559,13 +1573,10 @@ a $\SWVPA$ $A$ such that $A(\lin(\tau))$ is the weight the AST $\tau$ of $G$.
 %\paragraph{Application to Automated Music Transcription.}
 %\input{transcription}
 %...
-%\florent{2 lines Application to Automated Music Transcription:
-%implementation $\neq$ but same principle, on-the-fly automata construction
-%during best search, for efficiency.}
 
 \section*{Conclusion}
 
-We  introduced weighted language models over infinite alphabets,
+We  introduced Symbolic Weighted language models %over infinite alphabets,
 and applied them to the problem of parsing
 with infinitely many possible input symbols (typically timed events).
 Our approach extends conventional parsing and weighted parsing
@@ -1573,17 +1584,23 @@ by computing a derivation tree modulo
 a distance between words
 defined by a SW transducer given in input.
 This allows to consider finer word relationships than strict equality.
+%
 
 This work can be extended in several directions. First, the
-the best search algorithm could bbe generalized from $1$-best to $n$-best~\cite{Huang05kbest},
+the best search algorithm could be generalized from $1$-best to $n$-best~\cite{Huang05kbest},
 and to $k$-\emph{closed} semirings~\cite{Mohri02semiring}
 (instead of \emph{bounded}, which corresponds to $0$-\emph{closed}). Second,
-we believe that
-the complexity bounds of the algorithms can be more precisely characterized.
+%we believe that
+the complexity bounds of the algorithms could be more precisely characterized,
+as well as expressiveness of \swM compared to the automata of 
+\eg~\cite{Segoufin06csl,KaminskiFrancez94,NevenSchwentickVianu04FSMinfinite,Bojanczyk11FO2}.
 Finally, the  best search algorithm presented here offline, whereas
 an on-the-fly automata construction would allow for online parsing,
-a suitable feature in the context of applications such as, e.g., automatic music transcription.
-\florent{compare expressiveness with register etc automata}
+a suitable feature in the context of applications such as, 
+\eg automatic music transcription.
+
+\florent{comparison of expressiveness with the automata 
+of\cite{Segoufin06csl,KaminskiFrancez94,NevenSchwentickVianu04FSMinfinite,Bojanczyk11FO2}.}
 
 \newpage
 

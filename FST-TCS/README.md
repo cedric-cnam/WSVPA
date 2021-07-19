@@ -1,5 +1,13 @@
 https://www.fsttcs.org.in/2021/
 
+**Track B**
+
+- Automata, Games and Formal Languages
+- Models of Timed, Reactive, Hybrid and Stochastic Systems
+- 
+
+
+
 
 
 - **Submission deadline**: July 19, 2021 AoE (**firm**)
