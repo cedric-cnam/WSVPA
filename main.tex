@@ -276,7 +276,7 @@ and extend it to infinite alphabets.
 The models introduced in this section generalize
 weighted automata and transducers~\cite{Droste09handbook}
 %over finite alphabets, see  e.g.~\cite{Mohri03EDWA},
-by labeling each transition with a weight function 
+by labeling each transition with a weight function
 that takes the input and output symbols as parameters.
 These functions are similar to the guards of symbolic automata~\cite{dAntoniVeanes17CAV,dAntoni21CACM},
 but the latter guards are restricted to the Boolean semiring.
@@ -459,28 +459,28 @@ T(s, t)  =
 
 
 \begin{example}\label{ex:SWT}
-We build a small \SWT over the alphabets $\Sigma$ and $\Deltai$ of
-Examples~\ref{ex:running} and \ref{distance-time},
+We build a small \SWT over  alphabets $\Sigma$ and $\Deltai$
+(Ex.~\ref{ex:running} and \ref{distance-time}),
 %weighted transducer model
-with two states $q_0$ and $q_1$ that
+with two states $q_0$ and $q_1$, that
 calculates the temporal distance between an input performance in~$\Sigma^*$
 and the subsequence
-of the events of $\Deltai$ in a score.
+of $\Deltai$ events in a score.
 %the performance $I$ and
 %the score $O$ of Example~\ref{ex:running}.
 %
-When reading one performed event $\mu$
+Given  a performed event $\mu$
 and the corresponding notated event $\nu$
-(for instance MIDI pitch 69 and note name $\mbox{\footnotesize A4}$),
-the weight value computed by the \SWT is the time distance between both,
-(see Example~\ref{distance-time}), as modeled by transitions $\wei_{11}$ below.
+(e.g., MIDI pitch 69 and note $\mbox{\footnotesize A4}$),
+the weight  computed by the \SWT is the time distance between both,
+as modeled by transitions $\wei_{11}$ below.
 %
-If we meet the continuation symbol $'-'$
-(this occurs for instance in \emph{ties}
+The continuation symbol $'-'$
+(met for instance in \emph{ties}
 $\musQuarter\!\!\!\mathrel{\raisebox{-1.5mm}{$\smile$}}\!\!\!\musEighth$,
 or \emph{dots} \musQuarterDotted{}),
 %that represents continuation
-it is  skipped with no cost (transitions $\wei_{01}$ or weight $\one$).
+is  skipped with no cost (transitions $\wei_{01}$).
 %Likewise, the markups are ignored.
 \[
 \begin{array}{lclclcll}
@@ -627,7 +627,7 @@ from $Q \times Q$ into~$\Phi_{\Sigma}$.
 \end{definition}
 %
 \noindent
-\florent{mv formal def. weight for \SWA to app.?}
+%\florent{mv formal def. weight for \SWA to app.?}
 As above in the case of \SWT,
 when $\wei_1(q, q') = \phi \in \Phi_\Sigma$,
 %respectively $\mathsf{in}(q) = \phi$, $\mathsf{out}(q') = \phi$,
@@ -635,8 +635,8 @@ we may write $\wei_1(q, a, q')$ for~$\phi(a)$.
 %respectively $\mathsf{in}(q, a) = \phi(a)$, $\mathsf{out}(q', a) = \phi(a)$.
 %$\wei_1: Q \times \Sigma \times Q \to \Semiring$,
 The computation of $A$ on words $s \in \Sigma^*$
-is defined with an intermediate function $\weight_A$,
-defined as follows for $q, q' \in Q$, $a \in \Sigma$, $u \in \Sigma^*$,
+is based with an intermediate function $\weight_A$,
+defined as follows for $q, q' \in Q$, $a \in \Sigma$, $u \in \Sigma^*$
 %
 \begin{align}
 \weight_A(q, \varepsilon, q) & = \one\\ %\final(q)\\
@@ -675,8 +675,8 @@ Given a \SWT $T$ over $\Sigma$, $\Delta$,
 $\Semiring$ commutative, bounded and complete,
 and $\bar\Phi$ effective,
 and a $\SWA$ $A$ over $\Sigma$, $\Semiring$ and $\bar\Phi$,
-there exists an effectively constructible \SWA
-$B_{A, T}$ over $\Delta$, $\Semiring$ and $\bar\Phi$,
+there exists a \SWA $B_{A, T}$ over $\Delta$, $\Semiring$ and $\bar\Phi$,
+effectively constructible in PTIME, 
 such that for all $t \in \Delta^+$,
 $B_{A, T}(t) = \displaystyle\bigoplus_{s\in \Sigma^*} A(s) \otimes T(s, t)$.
 \end{proposition}
@@ -702,12 +702,12 @@ following a procedure of~\cite{LombardySakarovitch12ciaa}.
 \end{proof}
 
 %The complexity of construction
-\noindent
-The construction time and size for $B_{A, T}$ are $O(\| T \|^3 . \| A \|^2)$,
-where the sizes $\| T \|$ and $\| A \|$ are their number of states.
-%of~$T$ is its number of states $|Q|$.
-\florent{revise complexity with nb. of tr. and states? 
-         or skip details and just say polynomial?}
+%\noindent
+%The construction time and size for $B_{A, T}$ are $O(\| T \|^3 . \| A \|^2)$,
+%where the sizes $\| T \|$ and $\| A \|$ are their number of states.
+%%of~$T$ is its number of states $|Q|$.
+%\florent{revise complexity with nb. of tr. and states? 
+%         or skip details and just say polynomial?}
 %
 The particular case of Proposition~\ref{prop:epsilon} with a singleton $A$,
 \ie such that $A(s) = \one$ for a given $s \in \Sigma^*$
@@ -742,15 +742,14 @@ such that for all $t \in \Delta^+$, $B_{s, T}(t) = T(s, t)$.
 
 \section{SW Visibly Pushdown Automata}
 \label{section:SWVPA}\label{sec:SWVPA}
-The model presented in this section generalizes symbolic \VPA
+The model presented now generalizes symbolic \VPA
 (\SVPA~\cite{dAntonyAlur14SVPDA},
  generalizing themselves \VPA~\cite{AlurMadhusudan09nested} to infinite alphabets)
-from Boolean semirings to arbitrary semiring weight domains.
-It will compute on nested words over infinite alphabets,
-associating to every such word a weight value.
-Nested words are able to describe structures of labeled trees,
-and in the context of parsing, they will be useful to
-represent AST 
+from Boolean semirings to arbitrary semiring domains.
+It associates to every nested words over infinite alphabets a weight value.
+Nested words can describe structures of labeled trees.
+In the context of parsing, they will be useful to
+represent AST % parse trees.
 (see Section~\ref{sec:parsing} and Appendix~\ref{app:trees}). % parse trees. 
 %\florent{see \S 5 and App.A}
 
@@ -759,11 +758,10 @@ represent AST
 \label{sec:SWVPA-def}
 Let $\Delta$ be a countable alphabet
 %finite (large) or infinite,
-that we assume partitioned into three
+artitioned into three
 subsets~$\Deltai$, $\Deltac$, $\Deltar$,
 whose elements are respectively called
-\emph{internal}, \emph{call} and \emph{return} symbols,
-following~\cite{AlurMadhusudan09nested}.
+\emph{internal}, \emph{call} and \emph{return} symbols~\cite{AlurMadhusudan09nested}.
 % names are  coined by application to functional program verification
 % \begin{itemize}
 % \item a set $\Deltai$ of \emph{internal symbols} denoted $a$,
@@ -784,23 +782,19 @@ for~$\Phi_\Deltai$, $\Phi_\Deltac$, $\Phi_\Deltar$ and~$\Phi_{\Deltac, \Delta_\m
 %closed under $\oplus$ and $\otimes$.
 
 \begin{example}\label{ex:nested-word}
-Consider once more the linearized score of Example~\ref{ex:running},
-with $\Deltai$ representing timed notes and continuations.
+The score representation $O$ in Example~\ref{ex:running}
+is a nested-word of~$\Delta^*$.
+$\Deltai$ corresponds to timed notes and continuations.
 %the set of music events of the form $<\nu, \tau>$
 %where $\nu$ is either a note (e.g. A4), the continuation symbol $-$, or a
 %rest symbol R.
-The subset $\Delta \setminus \Deltai$ is partitioned into
-$\Deltac$ and $\Deltar$, containing respectively opening and closing parentheses.
+$\Deltac$ and $\Deltar$ contain respectively opening and closing parentheses.
 %are used to encode the score structure:
 %Let $\Deltac = \{\langle, \prec\}$ and  $\Deltar = \{\rangle, \succ\}$ where $\langle$
 %(resp. $\rangle$)
 %and $\prec$ (resp. $\succ$) correspond to start/end of measures, and start/end of
 %tuplets. Then  \includegraphics[scale=0.20]{pictures/score5.png}
 %is encoded with the nested word $\langle \prec 0, \frac{3}{4}, \frac{7}{8} \succ \rangle %\langle \prec 1, \frac{4}{3}, \frac{5}{3}  \succ \rangle$
-The score representation $O$ in Example~\ref{ex:running}
-% score: \includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex1.pdf},
-is a nested-word of~$\Delta^*$.
-%
 Another example is the second candidate
 \includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex2.pdf}
 of transcription of~$I$,
@@ -823,10 +817,10 @@ $\mbox{\footnotesize F5}\ts{\frac{5}{3}}$,
 $\creturn{3}\ts{2}$,
 $\creturn{\mathsf{m}}\ts{2}$,
 $\creturn{\mathsf{m}}\ts{2}$
-(see also Figure~\ref{fig:score-tree}).
+(see also Fig.~\ref{fig:score-tree}).
 The symbol between quotes $\mbox{\footnotesize `C$\sharp$5`}$
 represents an \emph{appogiatura}, %(grace-note),
-that is an ornemental note with theoretical duration zero.
+i.e., an ornemental note with theoretical duration zero.
 \endex
 \end{example}
 
@@ -853,7 +847,7 @@ $\weier : Q \times Q \to \Phir$.
 %with $\mathsf{x} \in \{ \mathsf{i}, \mathsf{c}, \mathsf{r}\}$.
 \end{definition}
 %
-Similarly as in Section~\ref{section:transducer},
+As in Section~\ref{section:transducer},
 we extend the above transition functions as follows
 for all $q, q' \in Q$, $p \in P$,
 $a \in \Deltai$,
@@ -889,9 +883,9 @@ overloading their names: % for simplicity:
 \]
 
 \noindent
-The intuition is the following for the above transitions.
+%The intuition is the following for the above transitions.
 $\weiei$, $\weiec$, and $\weier$ describe the cases where the stack is empty.
-\lydia{moved this to the beginning}
+%\lydia{moved this to the beginning}
 %
 \noindent
 $\weii$ and $\weiei$ both read an input internal symbol $a$ and change state from $q$ to $q'$,
@@ -1020,12 +1014,16 @@ $\weiei = \wei_1$ and all the other functions
 of~$\bar\wei$ are the constant~$\zero$.
 
 \begin{example} \label{ex:SWVPA}
-We consider a \SWVPA over the alphabet of Example~\ref{ex:nested-word}
+We consider a \SWVPA over the alphabet of Ex.~\ref{ex:nested-word}
 that expresses a weight related to the music notation,
-more precisely to its structural complexity:
-given a set of equivalent representations, we aim at choosing the simpler one.
+more precisely to its structural complexity.
+Given a set of equivalent representations, we aim at choosing the simpler one.
 
 Let us assume a third component in the symbols of $\Deltac$
+\philippe{Je trouve l'exemple un peu confus. Je ne sais pas
+quel est "l'associate time interval" d'un symbole. Je ne sais
+pas à quoi fait référence "the following call transition". Je
+n'ose pas trop toucher mais je crois qu'il faut revoir.}
 which is the duration of the associated time interval.
 It is used to check the timestamps in the symbols.
 %
@@ -1258,21 +1256,24 @@ The infinite sums in the updates of $d$ in Algorithm~\ref{algo:Dijkstra},
 Figure~\ref{fig:best-update}
 are well defined
 since~$\Semiring$ is complete.
-The algorithm performs $2.|Q|^2$ iterations until $P$ is empty,
-and each iteration has a time complexity $O(|Q|^2 . |P|)$.
+%
+% COMPLEXITY
+%The algorithm performs $2.|Q|^2$ iterations until $P$ is empty,
+%and each iteration has a time complexity $O(|Q|^2 . |P|)$.
 \florent{complexity: detail with nb tr. and states?}
-That gives a time complexity $O(|Q|^4 . |P|)$.
-It can be reduced by implementing $P$ as a priority queue,
-prioritized by the value returned by $d$.
-** where  $T$ is the worst time complexity for an oracle computing the values
-of Definition~\ref{def:effective}.
+%That gives a time complexity $O(|Q|^4 . |P|)$.
+%It can be reduced by implementing $P$ as a priority queue,
+%prioritized by the value returned by $d$.
+%** where  $T$ is the worst time complexity for an oracle computing the values
+%of Definition~\ref{def:effective}.
 %$|Q|^3.\log(|Q|^2)$
 %
-At termination, $d_\bot = b_\bot$ and $d_\top = b_\top$
-(see Appendix~\ref{sec:bestsearch}).
+Algorithm~\ref{algo:Dijkstra}
+terminates in PTIME and at termination, $d_\bot = b_\bot$ and $d_\top = b_\top$.
+\florent{(see Appendix~\ref{sec:bestsearch}).}
 With~\eqref{eq:min}, this ensures
-the correctness of Algorithm~\ref{algo:Dijkstra}.
-
+its correctness. %of Algorithm~\ref{algo:Dijkstra}.
+%
 \begin{figure}[ht]
 For all $q_0, q_3 \in Q$, %$p \in P$,
 \[
@@ -1329,15 +1330,17 @@ d_\bot(q_1, q_3) & \opluseq &
 \caption{Update $d_\bot$ with $\<q_1, q_2>$ or $d_\top$ with $\< q_1, p, q_2>$.}
 \label{fig:best-update}
 \end{figure}
+%
+%\noindent
+%** effectively computable by hypothesis that the label theory is effective**
+%\florent{REVOIR}
+Thanks to the hypothesis of effectiveness of $\bar\Phi$, 
+it is possible to construct suring the iteration a witness word
+for Proposition~\ref{th:best-search}, 
+\ie a word of $\Delta^*$ with a minimal weight \wrt $A$.
 
-
-\noindent
-** effectively computable by hypothesis that the label theory is effective**
-\florent{REVOIR}
-In order to obtain effectively a witness
-(word of $\Delta^*$ with a computation of $A$ of minimal weight),...
 %we require the additional property of convexity of weight functions.***
-using the second requirement in Definition~\ref{def:effective}.
+%using the second requirement in Definition~\ref{def:effective}.
 
 
 
@@ -1557,42 +1560,27 @@ a $\SWVPA$ $A$ such that $A(\lin(\tau))$ is the weight the AST $\tau$ of $G$.
 %during best search, for efficiency.}
 
 \section*{Conclusion}
-% summary
-We have introduced weighted language models (SW transducers and visibly pushdown automata)
-computing over infinite alphabets,
+
+We  introduced weighted language models over infinite alphabets,
 and applied them to the problem of parsing
 with infinitely many possible input symbols (typically timed events).
-%handled with suitable language formalisms,
-%
-This approach extends conventional parsing and weighted parsing
+Our approach extends conventional parsing and weighted parsing
 by computing a derivation tree modulo
-a generic distance between words,
+a distance between words
 defined by a SW transducer given in input.
-This enables to consider finer word relationships than strict equality,
-%as in the conventional parsing approach,
-opening possibilities of quantitative analysis via this method.
+This allows to consider finer word relationships than strict equality.
 
-% discussion
-\noindent
-Ongoing and future work include
-\florent{TODO future work}
-
-\noindent
--- The study of other theoretical properties of SW models,
-such as the extension of the best search algorithm from $1$-best to $n$-best~\cite{Huang05kbest},
+This work can be extended in several directions. First, the
+the best search algorithm could bbe generalized from $1$-best to $n$-best~\cite{Huang05kbest},
 and to $k$-\emph{closed} semirings~\cite{Mohri02semiring}
-(instead of \emph{bounded}, which corresponds to $0$-\emph{closed}).
+(instead of \emph{bounded}, which corresponds to $0$-\emph{closed}). Second,
+we believe that
+the complexity bounds of the algorithms can be more precisely characterized.
+Finally, the  best search algorithm presented here offline, whereas
+an on-the-fly automata construction would allow for online parsing,
+a suitable feature in the context of applications such as, e.g., automatic music transcription.
 
-\noindent
--- ...there is room to improve the complexity bounds for the algorithms
-... modular approach with oracles ...
-
-\noindent
--- present here an offline algorithm for best search,
-semi-online implementation for AMT (bar-by-bar approach)
-with an on-the-fly automata construction.
-
-
+\newpage
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
