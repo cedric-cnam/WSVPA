@@ -148,6 +148,8 @@
 \newcommand{\zero}{\mathbb{0}}
 \newcommand{\one}{\mathbb{1}}
 \newcommand{\dom}{\ensuremath{\mathit{dom}}}
+\newcommand{\seq}{\ensuremath{\mathit{seq}}}
+\newcommand{\word}{\mathit{word}}
 
 \def\SA{\textsf{sA}\xspace}
 \def\WA{\textsf{wA}\xspace}
@@ -248,11 +250,11 @@
 %interval $[i..j]$ of natural numbers
 
 %\paragraph*{Semirings}
-%\label{section:semiring}\label{sec:semiring}
+\label{section:semiring}\label{sec:semiring}
 \input{semiring}
 
 %\paragraph*{Label Theory}
-%\label{section:symbols}
+\label{section:symbols}
 \input{labels}
 
 
@@ -344,7 +346,7 @@ and every pairs of strings $\< s, t> \in \Sigma^* \times \Delta^*$,
 where $au$, and $bv$, denote the concatenation
 of the symbol $a \in \Sigma$ (resp. $b \in \Delta$)
 with a word $u \in \Sigma^*$ (resp. $v \in \Delta^*$).
-\lydia{added $u$ and $v$ def}
+%\lydia{added $u$ and $v$ def}
 %
 %$a \in \Sigma$, $u \in \Sigma^*$, $b\in \Delta$, $v\in \Delta^*$, by:
 %
@@ -502,8 +504,8 @@ The transition $\wei_{10}$,
 with an fixed weight value $\alpha \in \Semiring$,
 switches from state $q_0$ (normal) to $q_1$ (error)
 when reading an extra note $\mu$.
-\philippe{Comprends pas cette phrase}
-\florent{$\to$ reformulation}
+%\philippe{Comprends pas cette phrase}
+%\florent{$\to$ reformulation}
 The transitions in the second column below switch back to the normal state $q_0$.
 % the metric computed by the \SWT is the smallest sum of point wise distances
 % between dates of input and output events.
@@ -675,7 +677,7 @@ and $\bar\Phi$ effective,
 and a $\SWA$ $A$ over $\Sigma$, $\Semiring$ and $\bar\Phi$,
 there exists an effectively constructible \SWA
 $B_{A, T}$ over $\Delta$, $\Semiring$ and $\bar\Phi$,
-such that for all $t \in \Delta^*$,
+such that for all $t \in \Delta^+$,
 $B_{A, T}(t) = \displaystyle\bigoplus_{s\in \Sigma^*} A(s) \otimes T(s, t)$.
 \end{proposition}
 %
@@ -686,7 +688,7 @@ the state sets of $A$ and $T$ and its transitions simulate,
 while reading an output word $t \in \Delta^*$, the
 synchronized behaviour of $A$ and $T$ on $t$
 and some input word $s \in \Sigma^*$.
-The weight for reading of the input is obtained with
+The weight for reading the input $s$ is obtained with
 $\bigoplus^1_\Sigma$.
 %
 The main difficulty comes from the transitions
@@ -704,7 +706,8 @@ following a procedure of~\cite{LombardySakarovitch12ciaa}.
 The construction time and size for $B_{A, T}$ are $O(\| T \|^3 . \| A \|^2)$,
 where the sizes $\| T \|$ and $\| A \|$ are their number of states.
 %of~$T$ is its number of states $|Q|$.
-\florent{revise complexity with nb. of tr. and states}
+\florent{revise complexity with nb. of tr. and states? 
+         or skip details and just say polynomial?}
 %
 The particular case of Proposition~\ref{prop:epsilon} with a singleton $A$,
 \ie such that $A(s) = \one$ for a given $s \in \Sigma^*$
@@ -718,7 +721,7 @@ and $\bar\Phi$ effective,
 and $s \in \Sigma^+$,
 there exists an effectively constructible \SWA
 $B_{s, T}$ over $\Delta$, $\Semiring$ and $\bar\Phi$,
-such that for all $t \in \Delta^*$, $B_{s, T}(t) = T(s, t)$.
+such that for all $t \in \Delta^+$, $B_{s, T}(t) = T(s, t)$.
 \end{corollary}
 
 
@@ -747,8 +750,9 @@ It will compute on nested words over infinite alphabets,
 associating to every such word a weight value.
 Nested words are able to describe structures of labeled trees,
 and in the context of parsing, they will be useful to
-represent AST. % parse trees.
-\florent{see \S 5 and App.A}
+represent AST 
+(see Section~\ref{sec:parsing} and Appendix~\ref{app:trees}). % parse trees. 
+%\florent{see \S 5 and App.A}
 
 %\subsection{Definition}
 \noindent
@@ -1625,7 +1629,7 @@ with an on-the-fly automata construction.
 \input{app-bestsearch}
 
 
-\section{Nested-Words and Parse-Trees} \label{sec:trees}
+\section{Nested-Words and Parse-Trees} \label{sec:trees}\label{app:trees}
 \input{app-trees}
 
 

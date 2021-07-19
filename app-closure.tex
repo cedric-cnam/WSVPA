@@ -12,25 +12,30 @@ The state set of $B_{A, T}$ will be $Q' = P \times Q$.
 
 The entering, leaving and transition functions of $B_{A, T}$ will
 simulate synchronized computations of $A$ and $T$,
-while reading an output word of $\Delta^*$.
+while reading an output word of $t \in \Delta^*$, 
+and some input word $s \in \Sigma^*$.
 %
 Its state entering functions is defined
 for all $\<p_1, q_1> \in Q'$, %$p_1 \in P$, $q_1 \in Q$
-by $\init'(p_1, q_1) = \init_A(p_1) \otimes \init_T(q_1)$.
+by:
+%
+\begin{equation} \label{eq:initprime}
+\init'\bigl(\< p_1, q_1>\bigr) = \init_A(p_1) \otimes \init_T(q_1).
+\end{equation}
 %
 The transition function $\wei'_1$ will roughly perform
 a synchronized product of transitions defined by $\wei_1$,
-$\wei_{01}$ ($T$ reading in output word and not an input word)
-and $\wei_{11}$ ($T$ reading both an input word and an output word).
+$\wei_{01}$ ($T$ reading in output word and not in input word)
+and $\wei_{11}$ ($T$ reading both in input word and in output word).
 %
 Moreover, $\wei'_1$ also needs to simulate transitions
-defined by $\wei_{10}$: $T$ reading in input word and not an output word.
+defined by $\wei_{10}$: $T$ reading in input word and not in output word.
 Since $B_{A, T}$  will read only in the output word, such a transition corresponds
 to an $\varepsilon$-transition of $\SWA$.
 But $\SWA$ have been defined without $\varepsilon$-transitions.
 Therefore, in order to take care of this case, we perform an on-the-fly
-elimination of $\varepsilon$-transition in the $\SWA$ in construction,
-following the algorithm~1 of~\cite{LombardySakarovitch12ciaa}.
+elimination of $\varepsilon$-transition during the construction of the $\SWA$,
+following Algorithm~1 of~\cite{LombardySakarovitch12ciaa}.
 %
 % Initialize state leaving functions i
 %and $\final'(p, q) = \final_A(p) \otimes \final_T(q)$.
@@ -41,48 +46,268 @@ following the algorithm~1 of~\cite{LombardySakarovitch12ciaa}.
 %and then make one step in the output word (and advance in the input word or not).
 
 \noindent
+The transition function $\wei'_1$ is constructed iteratively.
+
+\noindent
 Initially, for all $p_1, p_2 \in P$, and $q_1, q_2 \in Q$, let
-\[
-\begin{array}{rcl}
-\wei'_1\bigl( \< p_1, q_1>, \< p_2, q_2>\bigr) & = &
+%
+\begin{align}
+%\begin{array}{rcl}
+\wei'_1\bigl( \< p_1, q_1>, \< p_2, q_2>\bigr) & = 
 \bigl({\displaystyle\bigoplus_{p_1 = p_2}} \wei_{01}(q_1, q_2)\;\bigr)
 \oplus
-\bigoplus^1_\Sigma \bigl(\wei_1(p_1, p_2) \otimes_1 \wei_{11}(q_1, q_2)\bigr)\\
+{\bigoplus}_\Sigma^1 \bigl(\wei_1(p_1, p_2) \otimes_1 \wei_{11}(q_1, q_2)\bigr)
+\label{eq:init-wei}\\
 %
-\final'(p_1, q_1) & = & \final_A(p_1) \otimes \final_T(q_1)
-\end{array}
-\]
+\final'\bigl(\<p_1, q_1>\bigr) & =  \final_A(p_1) \otimes \final_T(q_1)
+\label{eq:init-final}
+%\end{array}
+\end{align}
 We recall that by convention, 
 ${\displaystyle\bigoplus_{p_1 = p_2}} \wei_{01}(q_1, q_2)$
 is equal to $\zero$ if $p_1 \neq p_2$.
 
 
 \noindent
-Then, we iterate the following updates for all $p_1, p_2, p_3\in P$ and $q_1, q_2, q_3 \in Q$:
-\[
-\begin{array}{rcl}
-\wei'_1\bigl( \< p_1, q_1>, \< p_3, q_3>\bigr) & \opluseq &
+Then, we iterate the following updates for all $p_1, p_2, p_3\in P$ 
+and $q_1, q_2, q_3 \in Q$:
+%
+\begin{align}
+%\begin{array}{rcl}
+\wei'_1\bigl( \< p_1, q_1>, \< p_3, q_3>\bigr) & \opluseq 
 %\displaystyle\bigoplus_{\Sigma} 
 \bigoplus_\Sigma \bigl(\wei_{1}(p_1, p_2) \otimes \wei_{10}(q_1, q_2)\bigr)
-\otimes \wei'_1\bigl( \< p_2, q_2>, \< p_3, q_3>\bigr)\\
+\otimes \wei'_1\bigl( \< p_2, q_2>, \< p_3, q_3>\bigr) \label{eq:iter-wei}\\
 %
-\final'(p_2, q_2) & \opluseq &
+\final'\bigl(\<p_2, q_2>\bigr) & \opluseq 
 %\displaystyle\bigoplus_{\Sigma} 
 \bigoplus_\Sigma \bigl(\wei_{1}(p_1, p_2)\otimes \wei_{10}(q_1, q_2)\bigr)
-\otimes \final'(p_1, q_1)
-\end{array}
-\]
-In both cases, 
+\otimes \final'(p_1, q_1) \label{eq:iter-final}
+%\end{array}
+\end{align}
+%
+In both cases of updates of $\wei'_1$ and $\final'$ during the iteration, 
 $\wei_{1}(p_1, p_2) \otimes \wei_{10}(q_1, q_2)$ 
 is the weight of an $\varepsilon$-transition.
 It corresponds to the reading, by $A$ and $T$, 
-of a symbol $a$ in the input word without move in the output word,
+of a symbol $a$ in the input word $s$ without moving in the output word,
 i.e. the synchronization of 
 a transition $\wei_{1}(p_1, a, p_2)$ of $A$ and 
-a transition $\wei_{10}(q_1, a, \varepsilon, q_2)$ of $T$.
+a transition $\wei_{10}(q_1, a, \varepsilon, q_2)$ of~$T$.
 
-The iteration stops when it does not change the value of $\wei'_1$.
-\florent{complete \& proof correctness (app)}
+The iteration stops if it does not change the value of $\wei'_1$ and $\final'$.
+By hypothesis and Lemma~\ref{lem:idempotent}, 
+$\Semiring$ is idempotent. 
+Therefore, the construction of $B_{A, T}$ will stop after 
+at most $|P|^2 . |Q|^2$ iterations.
+
+\smallskip
+Let us now show that 
+$B_{A, T}(t) = \displaystyle\bigoplus_{s\in \Sigma^*} A(s) \otimes T(s, t)$
+for all $t\in \Delta^+$.
+
+\noindent
+We call \emph{path} from $\< p_0, q_0>$ to $\< p_n, q_n>$ 
+a finite sequence of the form:
+$\pi = \< p_0, q_0>$, $a_1, \< p_1, q_1>$,\ldots, $a_n, \< p_n, q_n>$
+where $\< p_i, q_i> \in Q'$ for all $0 \leq i \leq n$
+and $a_j \in \Sigma$ for all $1 \leq j \leq n$.
+The state $\< p_0, q_0>$ is called source of the path, denoted $\mathit{src}(\pi)$
+and $\< p_n, q_n>$ is called target of the path, denoted $\mathit{trg}(\pi)$;
+the set of paths with source $\< p, q>$ and target $\< p', q'>$ 
+is denoted $\Pi(\< p, q>, \< p', q'>)$.
+The word $a_1\ldots a_n \in \Sigma^*$ is called word of the path $\pi$
+and denoted $\word(\pi)$.
+%The set of all paths
+Moreover, we associate a weight value in $\Semiring$ to every path, 
+defined by:
+\begin{equation} \label{def:weight-path}
+\weight(\pi) = \bigotimes_{i = 1}^{n} 
+\wei_1(p_{i-1}, a_i, p_i) \otimes
+\wei_{10}(q_{i-1}, a_i, \varepsilon, q_i)
+\end{equation}
+
+By definition of the weight functions, and 
+associativity, commutativity, and distributivity of $\oplus$, $\otimes$,  
+it holds that:
+\begin{equation}\label{eq:weight-path}
+\weight_A(p, s, p') \otimes \weight_T(q, s, \varepsilon, q') = 
+\bigoplus_{\begin{array}{c}
+		   \scriptstyle\pi \in \Pi(\< p, q>, \< p', q'>)\\[-1ex]
+		   %\scriptstyle\mathit{src}(\pi) = \<p , q>\\[-1ex]
+		   %\scriptstyle\mathit{trg}(\pi) = \<p' , q'>\\[-1ex]
+		   \scriptstyle\word(\pi) = s
+		   \end{array}} 
+\weight(\pi) 
+\end{equation}
+%
+Using \eqref{def:weight-path} 
+and Lemma~\ref{lem:label-th} repetively, 
+\eqref{eq:weight-path} implies:
+%
+\begin{equation}\label{eq:weight-path-plus}
+\begin{array}{l}
+\displaystyle\bigoplus_{s \in \Sigma^*} 
+  \weight_A(p, s, p') \otimes \weight_T(q, s, \varepsilon, q') =\\
+\multicolumn{1}{r}{%
+\qquad
+\displaystyle\bigoplus_{\begin{array}{c}
+		   \scriptstyle\pi \in \Pi(\< p, q>, \< p', q'>)\\[-1ex]
+		   \scriptstyle\pi = \< p_0, q_0>, a_1,\< p_1, q_1>,\ldots, a_n, \< p_n, q_n>\\[-1ex]
+%		   \scriptstyle\pi = \< p_0, q_0>, a_1,\\[-1ex]
+%		   \scriptstyle\< p_1, q_1>,\ldots,\\[-1ex]
+%       	   \scriptstyle a_n, \< p_n, q_n>\\[-1ex]
+%		   \scriptstyle\< p_0, q_0> = \< p, q>\\[-1ex]
+%		   \scriptstyle\< p_n, q_n>  = \< p', q'>	   
+		   \end{array}} 
+\displaystyle\bigotimes_{i = 1}^{n} 
+\displaystyle\bigoplus_\Sigma (\wei_1(p_{i-1}, p_i) \otimes
+                  \wei_{10}(q_{i-1}, q_i))
+}
+\end{array}           %\nonumber
+\end{equation}
+%
+Note that the symbols $a_1, \ldots, a_n \in \Sigma$ in the path $\pi$
+are not significant in \eqref{eq:weight-path-plus}.
+%
+Using a pumping argument, we can show that~\eqref{eq:weight-path-plus}
+still holds when restricting $\pi$ to the set $\Pi_0(\< p, q>, \< p', q'>)$
+of paths without repetition in the state symbols.
+%
+Indeed, assume that in 
+$\pi = \< p_0, q_0>, a_1,\< p_1, q_1>,\ldots, a_n, \< p_n, q_n>$, 
+$\< p_{i_1}, q_{i_1}> = \< p_{i_2}, q_{i_2}>$
+for $0 \leq i_1 < i_2 \leq n$.
+Then 
+$\pi' = 
+ \< p_0, q_0>, \ldots, 
+ a_{i_1-1},\< p_{i_1-1}, q_{i_1-1}>,
+ a_{i_2},\< p_{i_2}, q_{i_2}>, \ldots,  a_n, \< p_n, q_n>$ 
+also belongs to   $\Pi\bigl(\< p_0, q_0>, \< p_n, q_n>\bigr)$
+and yields a smaller expression (\wrt $\leq_\oplus$) 
+in the right-hand-side of \eqref{eq:weight-path-plus}
+than~$\pi$.
+It follows, by~\eqref{eq:init-wei} and \eqref{eq:iter-wei}, that
+for all $b \in \Delta$, 
+%
+\begin{equation}\label{eq:weiprime1}
+%\begin{array}{rcl}
+\wei'_1(\< p, q>, b, \< p', q'>) = 
+\displaystyle\bigoplus_{s \in \Sigma^*} 
+\displaystyle\bigoplus_{\begin{array}{c}
+                        \scriptstyle p'' \in P\\[-1ex]
+                        \scriptstyle q'' \in Q
+                        \end{array}}
+\weight_A(p, s, p'') \otimes \weight_T(q, s, \varepsilon, q'') \otimes \psi_1(b)
+%\weight_{B_{A, T}}(\< p, q>, s, \< p', q'>)
+%\end{array}
+\end{equation}
+where 
+$\psi_1 = \wei_{01}(q'', q') \oplus
+\displaystyle{\bigoplus}_\Sigma^1 \bigl(\wei_1(p'', p') 
+ \otimes_1 \wei_{11}(q'', q')\bigr)$.
+%
+% lift to $A(s) \otimes T(s, \varepsilon)$
+
+\medskip
+We show now by induction on the length of $t \in \Delta^+$, that
+\[
+\weight_{B_{A, T}}(\<p, q>, t, \<p', q'>) = 
+ \displaystyle\bigoplus_{s\in \Sigma^*}
+ \weight_{A}(p, s, p') \otimes  \weight_{A}(q, s, t, q')
+\]
+This permits to conclude, using 
+the definition of $\init'$ in~\eqref{eq:initprime},
+%and a proof for 
+and the definition of $\final'$ 
+in~\eqref{eq:init-final}, and~\eqref{eq:iter-final}. 
+%$B_{A, T}(t) = \displaystyle\bigoplus_{s\in \Sigma^*} A(s) \otimes T(s, t)$
+
+\noindent
+The base case $t \in \Delta$ follows from~\eqref{eq:weiprime1} and 
+the distributivity of $\otimes$.
+
+\noindent
+For $t = b u$, with $b \in \Delta$ and $u \in \Delta^*$,
+by definition of $\weight_A$ and $\weight_T$,
+it holds that for all $s \in \Sigma^*$:
+\[
+\begin{array}{l}
+\displaystyle\weight_A(p, s, p') \otimes \weight_T(q, s, t, q') = 
+\bigoplus_{s = s_1 s_2}
+\displaystyle\bigoplus_{\begin{array}{c}
+                        \scriptstyle p'', p''' \in P\\[-1ex]
+                        \scriptstyle q'', q''' \in Q
+                        \end{array}}
+\weight_A(p, s_1, p''') \otimes \weight_A(p''', s_2, p'') \mathop\otimes \\
+\hfill\displaystyle
+\weight_T(q, s_1, \varepsilon, q'') \otimes
+ \left(
+ \begin{array}{l}
+ \displaystyle
+ \bigoplus_{q''' \in Q}
+ \wei_{01}(q'', \varepsilon, b, q''') \otimes \weight_T(q''', s_2, u, q')
+ \mathop\oplus\\
+ \displaystyle
+ \bigoplus_{q''' \in Q} \bigoplus_{s_2 = a s'_2}
+ \wei_{11}(q'', a, b, q''') \otimes \weight_T(q''', s'_2, u, q')
+ \end{array}
+ \right)
+\end{array}
+\]
+
+\noindent
+It follows that:
+\[
+\begin{array}{l}
+\displaystyle\bigoplus_{s \in \Sigma^*} 
+\displaystyle\weight_A(p, s, p') \otimes \weight_T(q, s, t, q') = \\
+\qquad
+\displaystyle\bigoplus_{\begin{array}{c}
+                        \scriptstyle p'', p''' \in P\\[-1ex]
+                        \scriptstyle q'', q''' \in Q
+                        \end{array}}
+\bigoplus_{s_1 \in \Sigma^*}
+\weight_A(p, s_1, p'') \otimes \weight_T(q, s_1, \varepsilon, q'') \otimes \psi_1(b)\\
+%\wei'_1(\< p, q>, b, \< p'', q''>) \mathop\otimes \\
+\qquad
+\otimes\displaystyle\bigoplus_{\scriptstyle s_2 \in \Sigma^*}
+\weight_A(p''', s_2, p') \otimes \weight_T(q''', s_2, u, q')
+%\displaystyle\bigoplus_{\begin{array}{c}
+%                        \scriptstyle s_1 \in \Sigma^*\\[-1ex]
+%                        \scriptstyle s_2 \in \Sigma^*
+%                        \end{array}}
+\end{array}
+\]
+with 
+$\psi_1 = \wei_{01}(q'', q''') \oplus
+\displaystyle{\bigoplus}_\Sigma^1 \bigl(\wei_1(p'', p''') 
+ \otimes_1 \wei_{11}(q'', q''')\bigr)$.
+
+\noindent
+The first term in the right-hand-side is 
+$\wei'_1(\< p, q>, b, \< p''', q'''>)$ by \eqref{eq:weiprime1},
+and the second term is
+$\weight_{B_{A,T}}(\< p''', q'''>, u, \< p', q'>)$ by induction hypothesis.
+Hence, by definition, 
+\[
+\begin{array}{rcl}
+\displaystyle\bigoplus_{s \in \Sigma^*} 
+\displaystyle\weight_A(p, s, p') \otimes \weight_T(q, s, t, q') & = & \\
+\multicolumn{3}{r}{%
+\displaystyle\bigoplus_{\begin{array}{c}
+                        \scriptstyle p''' \in P\\[-1ex]
+                        \scriptstyle q''' \in Q
+                        \end{array}}
+ \wei'_1(\< p, q>, b, \< p''', q'''>) \otimes
+ \weight_{B_{A,T}}(\< p''', q'''>, u, \< p', q'>)}\\
+ & = & \weight_{B_{A,T}}(\< p, q>, t, \< p', q'>).\\
+\end{array}
+\]
+
+
+
+
 %
 %
 % old version
