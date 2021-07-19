@@ -279,9 +279,12 @@ an \emph{event} (or \emph{note}),
 specified by its \emph{pitch name}
 (\eg, $\mbox{\footnotesize A4}$, $\mbox{\footnotesize G5}$, \etc.),
 an event \emph{continuation} (symbol `$-$`, see Ex.~\ref{ex:SWT}),
-or a \emph{markup}. %(\emph{parenthesis}),
-The timestamp $\tau'$
-belongs to a rhythmic ``grid'' obtained from recursive divisions:
+or a \emph{markup} (opening or closing parenthesis). %(\emph{parenthesis}),
+The temporal information $\tau'$ 
+is either a time interval, for the opening parentheses
+(representing the duration between the parenthesis and the mathing markup), 
+or a timestamp, for the other symbols.
+The time points in $\tau'$ belong to a rhythmic ``grid'' obtained from recursive divisions:
 whole notes ($\musWhole$) split in halves ($\musHalf$), halves
 in quarters ($\musQuarter$), eights ($\musEighth$), \etc.
 %
@@ -291,19 +294,19 @@ For instance, the output score
 corresponds to a hierarchical structure
 that can be linearized as the sequence
 $O =$
-$\ccall{\mathsf{m}}\ts{0}$,
-$\ccall{2}\ts{0}$,
+$\ccall{\mathsf{m}}\ts{[0,1]}$,
+$\ccall{2}\ts{[0,1]}$,
 $\mbox{\footnotesize A4}\ts{0}$,
-$\ccall{2}\ts{\frac{1}{2}}$,
+$\ccall{2}\ts{[\frac{1}{2},1]}$,
 $-\ts{\frac{1}{2}}$,
-$\ccall{2}\ts{\frac{3}{4}}$,
+$\ccall{2}\ts{[\frac{3}{4},1]}$,
 $\mbox{\footnotesize B4}\ts{\frac{3}{4}}$,
 $\mbox{\footnotesize C$\sharp$5}\ts{\frac{7}{8}}$,
 $\creturn{2}\ts{1}$,
 $\creturn{2}\ts{1}$,
 $\creturn{2}\ts{1}$,
-$\ccall{\mathsf{m}}\ts{1}$,
-$\ccall{3}\ts{1}$,
+$\ccall{\mathsf{m}}\ts{[1,2]}$,
+$\ccall{3}\ts{[1,2]}$,
 $\mbox{\footnotesize D5}\ts{1}$,
 $\mbox{\footnotesize E5}\ts{\frac{4}{3}}$,
 $\mbox{\footnotesize F5}\ts{\frac{5}{3}}$,
@@ -317,11 +320,12 @@ which are time intervals of duration 1 in this example,
 while the subsequences of $O$ between markups~$\ccall{d}$ and~$\creturn{d}$,
 for some natural number~$d$,
 represent a division of the current
-time interval into $d$ sub-intervals of equal length.
+time interval into $d$ sub-intervals of equal duration
+$\frac{\ell}{d}$ where $\ell$ is the length of the time interval attached to $\ccall{d}$.
 
 We will show that $O$ is a solution for the
-parsing of $I$. Note that several other parsings (\eg,
-\includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex2.pdf}) are possible.
+parsing of $I$. Note that several other parsings are possible
+like \eg \includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex2.pdf}.
 SW-parsing associates a weight value
 to each solution, and our framework
 aims at selecting the best one with respect to this weight.

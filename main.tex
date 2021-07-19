@@ -800,16 +800,16 @@ Another example is the second candidate
 of transcription of~$I$,
 linearized into
 $O' =$
-$\ccall{\mathsf{m}}\ts{0}$,
-$\ccall{2}\ts{0}$,
+$\ccall{\mathsf{m}}\ts{[0,1]}$,
+$\ccall{2}\ts{[0,1]}$,
 $\mbox{\footnotesize A4}\ts{0}$,
-$\ccall{2}\ts{\frac{1}{2}}$,
+$\ccall{2}\ts{[\frac{1}{2},1]}$,
 $-\ts{\frac{1}{2}}$,
 $\mbox{\footnotesize B4}\ts{\frac{3}{4}}$,
 $\creturn{2}\ts{1}$,
 $\creturn{2}\ts{1}$,
-$\ccall{\mathsf{m}}\ts{1}$,
-$\ccall{3}\ts{1}$,
+$\ccall{\mathsf{m}}\ts{[1,2]}$,
+$\ccall{3}\ts{[1,2]}$,
 $\mbox{\footnotesize `C$\sharp$5`}\ts{1}$,
 $\mbox{\footnotesize D5}\ts{1}$,
 $\mbox{\footnotesize E5}\ts{\frac{4}{3}}$,
@@ -820,7 +820,7 @@ $\creturn{\mathsf{m}}\ts{2}$
 (see also Fig.~\ref{fig:score-tree}).
 The symbol between quotes $\mbox{\footnotesize `C$\sharp$5`}$
 represents an \emph{appogiatura}, %(grace-note),
-i.e., an ornemental note with theoretical duration zero.
+i.e., an ornemental note with theoretical duration~0.
 \endex
 \end{example}
 
@@ -1019,68 +1019,72 @@ that expresses a weight related to the music notation,
 more precisely to its structural complexity.
 Given a set of equivalent representations, we aim at choosing the simpler one.
 
-Let us assume a third component in the symbols of $\Deltac$
-\philippe{Je trouve l'exemple un peu confus. Je ne sais pas
-quel est "l'associate time interval" d'un symbole. Je ne sais
-pas à quoi fait référence "the following call transition". Je
-n'ose pas trop toucher mais je crois qu'il faut revoir.}
-which is the duration of the associated time interval.
-It is used to check the timestamps in the symbols.
+%Let us assume a third component in the symbols of $\Deltac$
+%\philippe{Je trouve l'exemple un peu confus. Je ne sais pas
+%quel est "l'associate time interval" d'un symbole. Je ne sais
+%pas à quoi fait référence "the following call transition". Je
+%n'ose pas trop toucher mais je crois qu'il faut revoir.}
+%which is the duration of the associated time interval.
+%It is used to check the timestamps in the symbols.
 %
 For instance, the following call transition starts in state
 $q_{{i}/{c}}$, meaning that the current interval has number~$i$
 amongst $c$ sub-intervals of duration~$\ell$ (as indicated by the stack top).
-It reads a new time-division symbol~$\ccall{d}$.
-The date for this symbol has to be the time $\tau$
-for the previous time-division symbol read~$\ccall{c}$ (found on the stack)
-plus the total duration of intervals read so far, $i \ell$, and
-the new current interval duration is~$\frac{\ell}{d}$:
-%
+It reads a new time-division symbol~$\ccall{d}$:
 \(
 \weic\bigl(q_{{i}/{c}},
-           \ccall{c}\ts{\tau}\ts{\ell}, q,
-           \ccall{d}\ts{\tau + i\ell}\ts{\frac{\ell}{d}}, q_{{i+1}/{c}},
+           \ccall{c}\ts{[\tau, \tau+\ell]}, q,
+           \ccall{d}\ts{\iota}, q_{{i+1}/{c}},
            q_{{0}/{d}} \bigr) = \alpha_d
 \).
+The time interval $\iota$ attached to the~$\ccall{d}$ read 
+must have a starting time $\tau + \frac{i\ell}{c}$,
+where~$\tau$ and~$\ell$ are respectively
+the starting time and duration of the interval attached to
+the previous time-division symbol read $\ccall{c}$ (found on the stack).
+%plus the total duration of intervals read so far, $i \ell$, and
+%the new current interval duration is~$\frac{\ell}{d}$.
+%
+And it must have a duration $\frac{\ell}{d}$.
 
 \noindent
-The weight of this transition is $\alpha_d$.
+The weight of the above transition is $\alpha_d$.
 We can penalize \eg triplets compared to duplets with $\alpha_2 < \alpha_3$.
 %
 \noindent
 Along with $\ccall{d}$,
 the above transition pushes
 the state $q_{{i+1}/{c}}$ on the stack,
-to start the next sub-interval after reading $\creturn{d}$,
-with:
+in order to start the next sub-interval after reading $\creturn{d}$,
+with the transition:
 \(
 \weir\bigl(q_{{d}/{d}},
-           \ccall{d}\ts{\tau}\ts{\ell}, q_{{i}/{c}},
-           \,\creturn{d}\ts{\tau + d\ell}, q_{{i}/{c}} \bigr) = \one
+           \ccall{d}\ts{[\tau, \tau+\ell]}, q_{{i+1}/{c}},
+           \,\creturn{d}\ts{\tau + \ell}, q_{{i+1}/{c}} \bigr) = \one
 \).
 
 \noindent
 Reading an event is done with:
 \(
 \weii\bigl(q_{{i}/{d}},
-           \ccall{d}\ts{\tau}\ts{\ell}, q_{{j}/{c}},
-           \mu\ts{\tau + i\ell}, q_{{i+1}/{d}} \bigr) = \alpha_\mu
+           \ccall{d}\ts{[\tau, \tau+\ell]}, q_{{j}/{c}},
+           \mu\ts{\tau + \frac{i\ell}{d}}, q_{{i+1}/{d}} \bigr) = \alpha_\mu
 \).
 % cas des barres de mesure?
 %For the case of a new measure symbol,
 %$q_{1/1}$ is a special (initial) state.
-The transition for starting to read the first measure is:
+The transition to start reading the first measure is:
 \(
 \weiec\bigl(q_{1/1},
-           \ccall{\mathsf{m}}\ts{0}\ts{1}, q_{1/1},
+           \ccall{\mathsf{m}}\ts{[0, 1]}, q_{1/1},
            q_{1/1} \bigr) = \one
 \),
 and for a new measure:
 \(
 \weic\bigl(q_{1/1},
-           \ccall{\mathsf{m}}\ts{\tau}\ts{1}, q_{1/1},
-           \ccall{\mathsf{m}}\ts{\tau + 1}\ts{1}, q_{1/1},
-           q_{1/1} \bigr) = \one
+          \ccall{\mathsf{m}}\ts{[\tau-1, \tau]}, q_{1/1},
+          \ccall{\mathsf{m}}\ts{[\tau, \tau+1]}, q_{1/1},
+          q_{1/1} \bigr) = \one
 \).
 \endex
 \end{example}
@@ -1093,7 +1097,7 @@ the class of \SWVPA is closed under the binary operators of the underlying semir
 %
 \begin{proposition}\label{prop:SWVPA-product}
 Let $A_1$ and $A_2$ be two \SWVPA
-over the same $\Delta$, $\Semiring$ and $\bar\Phi$.
+over the same $\Delta$, commutative $\Semiring$ and effective $\bar\Phi$.
 There exists two effectively constructible $\SWVPA$
 $A_1 \oplus A_2$ and $A_1 \otimes A_2$,
 such that for all $s \in \Delta^*$,
@@ -1118,7 +1122,7 @@ over $\Delta$,
 $\Semiring$ commutative, bounded, total and complete, %semiring
 and $\bar\Phi$ effective, %and $k$-convex, % label theory,
 one can construct in PTIME a word $t \in \Delta^*$
-such that $A(t)$ is minimal \wrt the natural ordering for $\Semiring$.
+such that $A(t)$ is minimal \wrt the natural ordering $\leq_\oplus$ for $\Semiring$.
 \end{proposition}
 %\florent{total?}
 %
@@ -1260,7 +1264,7 @@ since~$\Semiring$ is complete.
 % COMPLEXITY
 %The algorithm performs $2.|Q|^2$ iterations until $P$ is empty,
 %and each iteration has a time complexity $O(|Q|^2 . |P|)$.
-\florent{complexity: detail with nb tr. and states?}
+\florent{complexity: detail with      and states?}
 %That gives a time complexity $O(|Q|^4 . |P|)$.
 %It can be reduced by implementing $P$ as a priority queue,
 %prioritized by the value returned by $d$.
@@ -1359,8 +1363,8 @@ Let~$\Sigma$
 and~$\Delta = \Deltai \uplus \Deltac \uplus \Deltar$
 be countable input and output alphabets,
 let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a
-commutative, bounded, and complete \florent{total?} semiring
-and let $\bar\Phi$ be an effective label theory over $\Semiring$,
+commutative, bounded, total and complete %\florent{total?} 
+semiring and let $\bar\Phi$ be an effective label theory over $\Semiring$,
 containing $\Phi_\Sigma$, $\Phi_{\Sigma, \Deltai}$, as well as
 $\Phii$, $\Phic$, $\Phir$, $\Phicr$
 (following the notations of Section~\ref{sec:SWVPA-def}).
@@ -1579,6 +1583,7 @@ the complexity bounds of the algorithms can be more precisely characterized.
 Finally, the  best search algorithm presented here offline, whereas
 an on-the-fly automata construction would allow for online parsing,
 a suitable feature in the context of applications such as, e.g., automatic music transcription.
+\florent{compare expressiveness with register etc automata}
 
 \newpage
 
@@ -1613,9 +1618,8 @@ a suitable feature in the context of applications such as, e.g., automatic music
 \section{Proof of Proposition~\ref{prop:SWVPA-product}} \label{sec:product}
 \input{app-product}
 
-\section{Correctness of the Best-Search Algorithm} \label{sec:bestsearch}
-\input{app-bestsearch}
-
+%\section{Correctness of the Best-Search Algorithm} \label{sec:bestsearch}
+%\input{app-bestsearch}
 
 \section{Nested-Words and Parse-Trees} \label{sec:trees}\label{app:trees}
 \input{app-trees}
