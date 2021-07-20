@@ -10,8 +10,13 @@ generalizing the Boolean algebras of~\cite{dAntoniVeanes17CAV}.
 We consider \emph{alphabets}, which are countable sets of symbols
 denoted $\Sigma$, $\Delta$,...
 $\Sigma^*$ is the set of finite sequences (\emph{words}) over
-$\Sigma$, $\varepsilon$ the empty word, and $\Sigma^+ = \Sigma^* \setminus \{ \varepsilon \}$.
-%
+$\Sigma$, $\varepsilon$ the empty word, $\Sigma^+ = \Sigma^* \setminus \{ \varepsilon \}$,
+and $u v$ denotes the concatenation of $u, v \in \Sigma^*$.
+%where $au$, and $bv$, denote the concatenation
+%of the symbol $a \in \Sigma$ (resp. $b \in \Delta$)
+%with a word $u \in \Sigma^*$ (resp. $v \in \Delta^*$).
+%\lydia{added $u$ and $v$ def}
+
 Given a semiring $\< \Semiring, \oplus, \zero, \otimes, \one>$,
 a \emph{label theory} over~$\Semiring$
 is a set $\bar\Phi$ of recursively enumerable sets denoted

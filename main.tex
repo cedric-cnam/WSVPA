@@ -339,12 +339,8 @@ or advance in both $s$ and $t$ ($\wei_{11}$).}
 $T$ is
 based on an intermediate function $\weight_T$
 defined recursively, for every states $q, q' \in Q$,
-and every pairs of strings $\< s, t> \in \Sigma^* \times \Delta^*$,
+and every pairs of strings $\< s, t> \in \Sigma^* \times \Delta^*$.
 % \setminus \{ \< \varepsilon, \varepsilon >\}$,
-where $au$, and $bv$, denote the concatenation
-of the symbol $a \in \Sigma$ (resp. $b \in \Delta$)
-with a word $u \in \Sigma^*$ (resp. $v \in \Delta^*$).
-%\lydia{added $u$ and $v$ def}
 %
 %$a \in \Sigma$, $u \in \Sigma^*$, $b\in \Delta$, $v\in \Delta^*$, by:
 %
@@ -376,7 +372,7 @@ We recall that, by convention (Section~\ref{sec:prelim}),
 an empty sum with $\bigoplus$ is equal to~$\zero$.
 %
 Intuitively,  a transition $\wei_{ij}(q, a, b, q')$ is interpreted as follows:
-when reading  $a$ and $b$ the input and output words,
+when reading $a$ and $b$ in the input and output words,
 increment the current position in the input word if and only if $i = 1$,
 and in the output word iff $j = 1$, %(otherwise, do not change it),
 and change state from $q$ to $q'$.
@@ -535,7 +531,7 @@ We thus want to be able to compare a music score with music played by a performe
 %
 \noindent
 We propose a small weighted transducer model with two states $q_0$ and $q_1$
-that calculates the distance bewteen an input sequence of sounding
+that calculates the distance between an input sequence of sounding
 events (music "performance")
 to an output sequence of written events (music "score").
 % simple pointwise distance between two sequences of timestamped events **
