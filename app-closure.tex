@@ -30,11 +30,12 @@ and $\wei_{11}$ ($T$ reading both in input word and in output word).
 %
 Moreover, $\wei'_1$ also needs to simulate transitions
 defined by $\wei_{10}$: $T$ reading in input word and not in output word.
-Since $B_{A, T}$  will read only in the output word, such a transition corresponds
+Since $B_{A, T}$  will read only in the output word, 
+such a transition would correspond
 to an $\varepsilon$-transition of $\SWA$.
 But $\SWA$ have been defined without $\varepsilon$-transitions.
 Therefore, in order to take care of this case, we perform an on-the-fly
-elimination of $\varepsilon$-transition during the construction of the $\SWA$,
+elimination of $\varepsilon$-transitions during the construction of the $\SWA$,
 following Algorithm~1 of~\cite{LombardySakarovitch12ciaa}.
 %
 % Initialize state leaving functions i
@@ -86,12 +87,13 @@ and $q_1, q_2, q_3 \in Q$:
 %\end{array}
 \end{align}
 %
-In both cases of updates of $\wei'_1$ and $\final'$ during the iteration, 
+In both cases of updates of $\wei'_1$~\eqref{eq:iter-wei}
+and $\final'$~\eqref{eq:iter-final} during the iteration, 
 $\wei_{1}(p_1, p_2) \otimes \wei_{10}(q_1, q_2)$ 
 is the weight of an $\varepsilon$-transition.
 It corresponds to the reading, by $A$ and $T$, 
 of a symbol $a$ in the input word $s$ without moving in the output word,
-i.e. the synchronization of 
+\ie the synchronization of 
 a transition $\wei_{1}(p_1, a, p_2)$ of $A$ and 
 a transition $\wei_{10}(q_1, a, \varepsilon, q_2)$ of~$T$.
 
@@ -143,7 +145,7 @@ it holds that:
 %
 Using \eqref{def:weight-path} 
 and Lemma~\ref{lem:label-th} repetively, 
-\eqref{eq:weight-path} implies:
+\eqref{eq:weight-path} implies that:
 %
 \begin{equation}\label{eq:weight-path-plus}
 \begin{array}{l}
@@ -257,7 +259,7 @@ it holds that for all $s \in \Sigma^*$:
 \]
 
 \noindent
-It follows that:
+Using~\eqref{eq:weiprime1}, it follows that:
 \[
 \begin{array}{l}
 \displaystyle\bigoplus_{s \in \Sigma^*} 
