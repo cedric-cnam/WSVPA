@@ -1,8 +1,9 @@
 
 formal language models
 quantitative automata
-symbolic automata and transducers
+symbolic and weighted automata and transducers
 weighted automata and transducers
-visibly pushdown automata
+symbolic and weighted visibly pushdown automata
+edit distances 
 quantitative parsing
 automated music transcription

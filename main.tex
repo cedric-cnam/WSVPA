@@ -1402,7 +1402,7 @@ minimizing \( d(s, t) \otimes A(t)\)
 \ie s.t. %such that: %Hence, it is the problem of finding
 %
 \begin{equation}\label{eq:distance-lang}
-d(s, t) \otimes A(t) = \displaystyle\bigoplus_{t' \in \Delta^*} d(s, t') \otimes A(t')
+d(s, t) \otimes A(t) = \displaystyle\bigoplus_{u \in \Delta^*} d(s, u) \otimes A(u)
 \end{equation}
 %
 Following the terminology of~\cite{Mohri03EDWA},
@@ -1417,7 +1417,8 @@ is interpreted as follows:
 \begin{itemize}
 \item The input word is $I$ of Example~\ref{ex:running}.
 \item The \SWT $T$ evaluates a ``fitness measure''  that expresses
-    a correspondance between a performance and notation events. See Example~\ref{ex:SWT}.
+    a correspondance between a performance and a nested representation of a music score.
+    See Example~\ref{ex:SWT}.
 \item The \SWVPA $A$ expresses a cost related to the music notation.
 \end{itemize}
 %One possibility is to relate this cost to the structural complexity:
@@ -1454,7 +1455,7 @@ during the search of a best AST, for efficiency reasons.
 %\subsection{Computation}
 %
 \begin{proposition}
-The problem of Symbolic Weighted  parsing
+The problem of Symbolic Weighted Parsing
 can be solved in PTIME in the size of the input \SWT $T$, \SWVPA $A$
 and input word $s$,
 and the computation time of the functions and operators of the label theory.
@@ -1506,7 +1507,7 @@ using the procedure of Proposition~\ref{th:best-search}.
 The $\SW$-parsing generalizes
 the problem of searching the best derivation (AST) of a weighted CF-grammar $G$
 that yields a given input word $w$, called~\emph{weighted parsing},
-(see \eg~\cite{Goodman99SemiringParsing}
+(see~\cite{Goodman99SemiringParsing}
  and the more general framework~\cite{MorbitzVogler19weighted-parsing}),
 with infinite input alphabet instead of a finite one and
 transducer-defined distances instead of equality. 

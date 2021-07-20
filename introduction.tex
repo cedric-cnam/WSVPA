@@ -13,10 +13,10 @@ Such a restriction makes perfect sense in the context of
 NLP tasks such as constituency parsing,
 programming languages compilers or interpreters.
 Considering large or infinite alphabets can however be of
-practical interest, when dealing with large characters encodings such as UTF-16,
+practical interest, when dealing with large characters encodings such as UTF-16~\cite{dAntoni21CACM},
 % processing strings in \eg for vulnerability detection in Web-applications~\cite{dAntoni21CACM},
 %
-analysis of data streams, serialization of structured documents~\cite{Segoufin06csl},
+analysis of data streams, serialization of structured documents~\cite{Segoufin06csl,NevenSchwentickVianu04FSMinfinite},
 or processing timed execution traces~\cite{Bouyer03algebraic}.
 % algebraic definition of a class of data languages
 % (notion of monoid recognizability, based on registers, comparable to Bojancszik et al. data words)
@@ -30,9 +30,9 @@ MIDI format~\cite{Selfridge-Field97beyondMIDI}. %\cite{MIDIfile}.
 Such representations ignore the hierarchical structures that frame the
 conception of music, at least in the western area. These structures, on the other hand,
 are present, either explicitly  or implicitly,
-in Common Western Music Notation~\cite{Gould11Notation}.
+in Common Western Music Notation~\cite{Gould11Notation}:
 %in music notation~\cite{Gould11Notation}:
-music scores are partitioned in measures,
+Music scores are partitioned in measures,
 measures in beats, and beats can be further recursively divided.
 It follows that music events do not occur at arbitrary timestamps,
 but respect a discrete partitioning of the  timeline incurred by
@@ -119,7 +119,7 @@ In this paper, we present a framework for weighted parsing over infinite input a
 It is based on \emph{symbolic weighted} finite states language models (\swM),
 generalizing the Boolean guards of~\SA %in transitions
 to functions into an arbitrary semiring,
-and generalizing also~\WA, by handling infinite alphabets (Fig.~\ref{fig:hierarchy}).
+and generalizing also~\WA, by handling infinite alphabets (Figure~\ref{fig:hierarchy}).
 %
 In short, a transition rule $q \xrightarrow{\phi} q'$, from state $q$ to $q'$,
 %\florent{c'est un résumé de la Fig. \ref{fig:hierarchy}}
@@ -278,11 +278,12 @@ where $\nu$  represents
 an \emph{event} (or \emph{note}),
 specified by its \emph{pitch name}
 (\eg, $\mbox{\footnotesize A4}$, $\mbox{\footnotesize G5}$, \etc.),
-an event \emph{continuation} (symbol `$-$`, see Ex.~\ref{ex:SWT}),
+an event \emph{continuation} (symbol `$-$`, see Example~\ref{ex:SWT}),
 or a \emph{markup} (opening or closing parenthesis). %(\emph{parenthesis}),
 The temporal information $\tau'$ 
 is either a time interval, for the opening parentheses
-(representing the duration between the parenthesis and the mathing markup), 
+(representing the duration between the parenthesis 
+ and the matching closing one), 
 or a timestamp, for the other symbols.
 The time points in $\tau'$ belong to a rhythmic ``grid'' obtained from recursive divisions:
 whole notes ($\musWhole$) split in halves ($\musHalf$), halves
