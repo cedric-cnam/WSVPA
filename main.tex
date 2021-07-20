@@ -745,7 +745,8 @@ The model presented now generalizes symbolic \VPA
 (\SVPA~\cite{dAntonyAlur14SVPDA},
  generalizing themselves \VPA~\cite{AlurMadhusudan09nested} to infinite alphabets)
 from Boolean semirings to arbitrary semiring domains.
-It associates to every nested words over infinite alphabets a weight value.
+It associates to every nested word over an infinite alphabet a weight value
+in a semiring.
 Nested words can describe structures of labeled trees.
 In the context of parsing, they will be useful to
 represent AST % parse trees.
@@ -781,20 +782,19 @@ for~$\Phi_\Deltai$, $\Phi_\Deltac$, $\Phi_\Deltar$ and~$\Phi_{\Deltac, \Delta_\m
 %closed under $\oplus$ and $\otimes$.
 
 \begin{example}\label{ex:nested-word}
-The score representation $O$ in Example~\ref{ex:running}
-is a nested-word of~$\Delta^*$.
-$\Deltai$ corresponds to timed notes and continuations.
+In the nested score representation $O \in \Delta^*$ in Ex.~\ref{ex:running},
+$\Deltai$ corresponds to timed notes and continuations,
 %the set of music events of the form $<\nu, \tau>$
 %where $\nu$ is either a note (e.g. A4), the continuation symbol $-$, or a
 %rest symbol R.
-$\Deltac$ and $\Deltar$ contain respectively opening and closing parentheses.
+and $\Deltac$ and $\Deltar$ contain respectively opening and closing parentheses.
 %are used to encode the score structure:
 %Let $\Deltac = \{\langle, \prec\}$ and  $\Deltar = \{\rangle, \succ\}$ where $\langle$
 %(resp. $\rangle$)
 %and $\prec$ (resp. $\succ$) correspond to start/end of measures, and start/end of
 %tuplets. Then  \includegraphics[scale=0.20]{pictures/score5.png}
 %is encoded with the nested word $\langle \prec 0, \frac{3}{4}, \frac{7}{8} \succ \rangle %\langle \prec 1, \frac{4}{3}, \frac{5}{3}  \succ \rangle$
-Another example is the second candidate
+Another example is the other candidate
 \includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex2.pdf}
 of transcription of~$I$,
 linearized into
@@ -918,7 +918,7 @@ and a stack content $\gamma \in \Gamma^*$,
 where $\Gamma = \Deltac \times P$.
 Hence, $\weight_A$ is a function from
 $[Q \times \Gamma^*] \times \Delta^* \times [Q \times \Gamma^*]$ into~$\Semiring$.
-The empty stack is denoted by $\bot$, and the first %upmost
+The empty stack is denoted by $\bot$, and the topupmost
 symbol is the last pushed content.
 %
 The recursive definition of $\weight_A$
@@ -926,7 +926,7 @@ enumerates each of the six possible cases:
 reading $a \in \Deltai$,
 %\lydia{intro to func}
 or $\call{c} \in \Deltac$, or $\return{r} \in \Deltar$,
-and for each possible state of the stack (empty or not).
+for each possible state of the stack (empty or not).
 %to add to $u \in {\Delta}^*$.
 %\lydia{introduced the 6 cases}
 \florent{shorter notation $cp$ for $\< c, p>$ ?}
@@ -1013,9 +1013,9 @@ $\weiei = \wei_1$ and all the other functions
 of~$\bar\wei$ are the constant~$\zero$.
 
 \begin{example} \label{ex:SWVPA}
-We consider a \SWVPA over the alphabet of Ex.~\ref{ex:nested-word}
+We consider a \SWVPA over the alphabet of Example~\ref{ex:nested-word}
 that expresses a weight related to the music notation,
-more precisely to its structural complexity.
+or more precisely to its structural complexity.
 Given a set of equivalent representations, we aim at choosing the simpler one.
 
 %Let us assume a third component in the symbols of $\Deltac$
@@ -1027,7 +1027,7 @@ Given a set of equivalent representations, we aim at choosing the simpler one.
 %It is used to check the timestamps in the symbols.
 %
 For instance, the following call transition starts in state
-$q_{{i}/{c}}$, meaning that the current interval has number~$i$
+$q_{{i}/{c}}$, meaning that the current interval has number~$i < c$
 amongst $c$ sub-intervals of duration~$\ell$ (as indicated by the stack top).
 It reads a new time-division symbol~$\ccall{d}$:
 \(
@@ -1054,7 +1054,8 @@ We can penalize \eg triplets compared to duplets with $\alpha_2 < \alpha_3$.
 Along with $\ccall{d}$,
 the above transition pushes
 the state $q_{{i+1}/{c}}$ on the stack,
-in order to start the next sub-interval after reading $\creturn{d}$,
+in order to start the next sub-interval after reading 
+a return symbol $\creturn{d}$,
 with the transition:
 \(
 \weir\bigl(q_{{d}/{d}},
@@ -1063,7 +1064,7 @@ with the transition:
 \).
 
 \noindent
-Reading an event is done with:
+Reading a musical event $\mu$ is done with:
 \(
 \weii\bigl(q_{{i}/{d}},
            \ccall{d}\ts{[\tau, \tau+\ell]}, q_{{j}/{c}},
@@ -1109,7 +1110,7 @@ We do a classical product construction, see Appendix~\ref{sec:product} for detai
 %similar to the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 \end{proof}
 \noindent
-We now present a procedure for searching, for a~$\SWVPA$ $A$,
+We present now a procedure for searching, for a~$\SWVPA$ $A$,
 a word %$w \in \Delta^*$
 of minimal weight for~$A$.
 %as stated in the following proposition. %\wrt~$\leq_\oplus$,
@@ -1142,7 +1143,7 @@ it holds that:
 \end{equation}
 The infinite sum in~\eqref{eq:bbot} is well defined since $\Semiring$ is complete.
 %
-Following~\eqref{eq:SWVPA-value}, and the associativity and commutativity
+Following~\eqref{eq:SWVPA-value}, and the associativity, commutativity
 and distributivity for~$\otimes$ and~$\oplus$, the minimum of~$A(t)$ is:
 \begin{equation}\label{eq:min}
 {\displaystyle\bigoplus_{t\in \Delta^*}} A(t)
@@ -1202,7 +1203,7 @@ representing the above untouched stack, and let:
 By definition of $\weight_A$ in \eqref{eq:SWVPA-weight},
 using the symbol $\top$ for the part of the stack below $\<c, p>$
 (\ie the substack $\gamma$ in the above $\gamma' = \<c, p> \, \gamma$)
-ensures that this part $\gamma'$ is not touched during the computation.
+ensures that this part is not touched during the computation.
 % there cannot be a pop of $\<c, p>$ followed by a push of $\<c, p>$
 % because it is not possible to push over $\top$ (push read the top of stack).
 %
@@ -1235,35 +1236,35 @@ if $q_1 = q_2$ and $d_\bot(q_1, q_2) = d_\top(q_1, p, q_2) = \zero$ otherwise$\;
 \Extract $\< q_1, q_2>$ or $\< q_1, p, q_2>$ from $\Q$
 %
 %\noindent\quad
-such that $d_\bot(q_1, q_2)$, resp. $\bigoplus_{c\in \Deltac} d_\top(q_1, p, q_2)(c)$, is minimal in $\Semiring$ \wrt $\leq_\oplus$$\;$
+such that $d_\bot(q_1, q_2)$, 
+resp. $\bigoplus_{\Deltac} d_\top(q_1, p, q_2)$, is minimal in $\Semiring$ \wrt $\leq_\oplus$$\;$
 
 %\noindent\quad
 %\textbf{for all} $q_0, q_3 \in Q$
-\Update $d_\bot$ with $\< q_1, q_2>$ or $d_\top$ with $\< q_1, p, q_2>$ (Figure~\ref{fig:best-update}).$\;$
+\Update $d_\bot$ with $\< q_1, q_2>$ or $d_\top$ with $\< q_1, p, q_2>$ 
+(Figure~\ref{fig:best-update}).$\;$
 }
 \caption{Best search for \SWVPA}
 \label{algo:Dijkstra}
 \end{algorithm}
 
 Algorithm~\ref{algo:Dijkstra}
-constructs iteratively two markings
+constructs iteratively,
+using a priority queue $\Q$, 
+two markings
 $d_\bot : Q \times Q \to \Semiring$ and
 $d_\top : Q \times P \times Q \to \Phic$,
 %of the triplets $\<q, \sigma, q'>$
 %of states of $A$ by weight values in $\Semiring$,
-that converges eventually to $b_\top$ and $b_\bot$.
-%It uses for that purpose a priority queue $P$ containing triplets of
-%$Q \times \{ \bot, \top \} \times Q$.
-\florent{explication Fig.~\ref{fig:best-update} (update) suivant cas de \eqref{eq:SWVPA-weight}?}
-The infinite sums in the updates of $d$ in Algorithm~\ref{algo:Dijkstra},
-Figure~\ref{fig:best-update}
-are well defined
-since~$\Semiring$ is complete.
+that converges eventually to $b_\top$ and $b_\bot$. 
+%\florent{explication Fig.~\ref{fig:best-update} (update) suivant cas de \eqref{eq:SWVPA-weight}?}
+%\florent{The infinite sums in the updates of $d$ in Algorithm~\ref{algo:Dijkstra},
+%Figure~\ref{fig:best-update} are well defined since~$\Semiring$ is complete.}
 %
 % COMPLEXITY
 %The algorithm performs $2.|Q|^2$ iterations until $P$ is empty,
 %and each iteration has a time complexity $O(|Q|^2 . |P|)$.
-\florent{complexity: detail with      and states?}
+%\florent{complexity: detail with and states?}
 %That gives a time complexity $O(|Q|^4 . |P|)$.
 %It can be reduced by implementing $P$ as a priority queue,
 %prioritized by the value returned by $d$.
@@ -1271,12 +1272,16 @@ since~$\Semiring$ is complete.
 %of Definition~\ref{def:effective}.
 %$|Q|^3.\log(|Q|^2)$
 %
-Algorithm~\ref{algo:Dijkstra}
-terminates in PTIME and at termination, $d_\bot = b_\bot$ and $d_\top = b_\top$.
+%Algorithm~\ref{algo:Dijkstra}
+It terminates in PTIME and at termination (when $\Q$ is empty), 
+and its correctness is ensured by~\eqref{eq:min} and  
+the following invariants: 
+$\< q_1, q_2> \notin \Q$ iff $d_\bot(q_1, q_2) = b_\bot(q_1, q_2)$, 
+and $\< q_1, p, q_2> \notin \Q$ iff 
+$\bigoplus_{\Deltac} d_\top(q_1, p, q_2) = \bigoplus_{\Deltac} b_\top(q_1, p, q_2)$.
 \florent{(see Appendix~\ref{sec:bestsearch}).}
-With~\eqref{eq:min}, this ensures
-its correctness. %of Algorithm~\ref{algo:Dijkstra}.
-%
+%of Algorithm~\ref{algo:Dijkstra}.
+
 \begin{figure}[ht]
 For all $q_0, q_3 \in Q$, %$p \in P$,
 \[
@@ -1337,10 +1342,10 @@ d_\bot(q_1, q_3) & \opluseq &
 %\noindent
 %** effectively computable by hypothesis that the label theory is effective**
 %\florent{REVOIR}
-Thanks to the hypothesis of effectiveness of $\bar\Phi$, 
-it is possible to construct suring the iteration a witness word
+Thanks to the hypothesis that $\bar\Phi$ is effective, 
+it is possible to construct during the iteration a witness word
 for Proposition~\ref{th:best-search}, 
-\ie a word of $\Delta^*$ with a minimal weight \wrt $A$.
+\ie a word $t \in \Delta^*$ with a minimal weight $A(t)$ \wrt~$\leq_\oplus$.
 
 %we require the additional property of convexity of weight functions.***
 %using the second requirement in Definition~\ref{def:effective}.
@@ -1491,7 +1496,7 @@ we compute the \SWVPA $B_{s, T'} \otimes A$,
 using Proposition~\ref{prop:SWVPA-product}.
 %
 \noindent
-It remains to compute a best nested-word $t \in {\Delta}^*$
+It remains to compute a best nested word $t \in {\Delta}^*$
 using the procedure of Proposition~\ref{th:best-search}.
 %and convert it into a best tree in $\T_\Delta$ in order to solve SW parsing
 %for~$T$, $A$ and~$s$.
@@ -1638,7 +1643,7 @@ of\cite{Segoufin06csl,KaminskiFrancez94,NevenSchwentickVianu04FSMinfinite,Bojanc
 %\section{Correctness of the Best-Search Algorithm} \label{sec:bestsearch}
 %\input{app-bestsearch}
 
-\section{Nested-Words and Parse-Trees} \label{sec:trees}\label{app:trees}
+\section{Nested Words and Parse Trees} \label{sec:trees}\label{app:trees}
 \input{app-trees}
 
 
