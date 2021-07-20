@@ -10,10 +10,10 @@ generalizing the Boolean algebras of~\cite{dAntoniVeanes17CAV}.
 We consider \emph{alphabets}, which are countable sets of symbols
 denoted $\Sigma$, $\Delta$,...
 $\Sigma^*$ is the set of finite sequences (\emph{words}) over
-$\Sigma$, $\varepsilon$ the empty word, and $\Sigma^+ = \Sigma^*$.
+$\Sigma$, $\varepsilon$ the empty word, and $\Sigma^+ = \Sigma^* \setminus \{ \varepsilon \}$.
 %
 Given a semiring $\< \Semiring, \oplus, \zero, \otimes, \one>$,
-a \emph{label theory} over $\Semiring$
+a \emph{label theory} over~$\Semiring$
 is a set $\bar\Phi$ of recursively enumerable sets denoted
 %$\Phi_\epsilon \subseteq \Semiring$, % containing constant functions valued in $\Semiring$,
 $\Phi_\Sigma$, %and $\Phi_\Delta$,
@@ -140,10 +140,11 @@ $\bigoplus^2_\Delta \eta \in \Phi_{\Sigma}$.
 We return to Example~\ref{ex:running}.
 Let $\Deltai$ be the subset of $\Delta$ without markup symbols.
 In order to align the input in $\Sigma^*$ %sequence
-with a music score v, we must account for
+with a music score, % in $\Delta^*$, 
+we must account for
 the expressive timing of human performance that
-results in small time shifts between an input event of $\Sigma$ and the corresponding
-notation event in $\Deltai$.
+results in small time shifts between an input event of~$\Sigma$ and the corresponding
+notation event in~$\Deltai$.
 These shifts can be weighted as the time distance between both,
 computed in the tropical semiring by $\delta \in \Phi_{\Sigma, \Deltai}$,
 defined as follows:
