@@ -1,0 +1,31 @@
+
+
+
+We would like to thank the reviewers for their valuable work, 
+and their comments and references/suggestion.
+
+In particular, we are grateful to them for pointing us to the work of L. Herrmann & Heiko... in DLT 2016 & PhD 2020.  
+Indeed, the models that we are using in the paper are particular (restricted) cases of the Weighted Symbolic Automata with Storage defined in DLT 2016 & PhD 2020.
+We agree that it should definitely be explained at the beginning of the paper, and the 2 references must be cited as well. 
+
+shift focus to the 2 main contributions of the paper are actually the following:
+- a best-search algorithm
+  (as far as we know no such algorithm has been proposed for swVPA)
+- a framework for parsing over infinite alphabet and with tree-automata. 
+  in particular the use of weighted transducers for def. of distance and of VPA for computing on linearization of parse trees.
+
+About the parsing : rem. reviewer1 on "previous approaches" which are more general.
+Our work is also oriented toward the formalisation of an empirical problem, the Automated Music Transcription (in parallel to the development of a tool).
+
+Regarding the best-search algorithm, 
+answer to reviewer 2:... (DETAILS)
+
+questions of reviewer 3 about the distance and the work of Mohri.
+
+
+other rem. review 1:
+the relationship between VPA and TA has been discussed in several places, 
+**we did [or not?]** find an explicit construction of VPA from TA.
+could be move to paper if you think that it is original.
+[ ] check in paper [5]
+
