@@ -5,7 +5,8 @@
 > Weighted Symbolic Automata with Data Storage
 > DLT 2016: 203-215
 
-**pdf**
+**paper**
+
 - https://link.springer.com/chapter/10.1007/978-3-662-53132-7_17
 - https://dl.acm.org/citation.cfm?id=3081476.3081493
 - doi: [10.1007/978-3-662-53132-7_17](https://doi.org/10.1007/978-3-662-53132-7_17)
@@ -13,6 +14,19 @@
 **slides**
 
 - https://wwwtcs.inf.tu-dresden.de/~herrmann/pdf/slides_dlt16.pdf
+
+
+
+---
+
+see also
+
+> Luisa Herrmann 
+> Weighted Automata with Storage
+> PhD thesis. Technische Universität Dresden, 2020, 
+> urn:nbn:de:bsz:14-qucosa2-740685
+
+https://tud.qucosa.de/api/qucosa%3A74068/attachment/ATT-0/
 
 ---
 **abstract**
@@ -76,7 +90,7 @@ its weight is the semiring K-product of $wt(\tau_i, d_i)$
 - can express Symbolic Visibly Pushdown Automata
 with a specific data storage type (nested sets)
 
-- can express Weighted Times Automata
+- can express Weighted Timed Automata
 with a specific data storage type (simulating clocks)
 
 

@@ -3,7 +3,6 @@
 
 
 > date: 30 August 2021
->
 > from: fsttcs2021@easychair.org
 
 Thank you for your submission to FSTTCS 2021. The FSTTCS 2021
@@ -101,7 +100,7 @@ List of mistakes:
 - [ ] 77: missing space after period
 - [ ] 84: convenient in this context -> for convenience?
 - [ ] 87: superfluous comma
-- [ ] 116: \oplus `combines two values into a single one' as well (in fact, every   binary operation does)
+- [ ] 116: $\oplus$ `combines two values into a single one' as well (in fact, every   binary operation does)
 - [ ] 118--119: I would say: … $\leq_\oplus$ which is called the natural ordering of $S$ and is, for every …, defined by …
 - [ ] Also, you should be consistent with using  'for all' or `for every' in quantifications (I would prefer for every)
 
@@ -162,13 +161,13 @@ List of mistakes:
 - [ ] 352: Dijkstra-like algorithm?
 - [ ] 354: readers may have an easier time seeing this argument if you say that $S$ is extremal.  You should say in the preliminaries that S is extremal if and only if $\leq_\oplus$ is total.
 - [ ] 366: be popPED
-- [ ] 371: How is it ensured that the symbol <c,p> isn't popped and pushed again later during the computation?
+- [ ] 371: How is it ensured that the symbol $<c,p>$ isn't popped and pushed again later during the computation?
 - [ ] 375: converge (singular)
 - [ ] 376: I do not understand the and at termination, and its correctness part.  What do you want to express?
 - [ ] 379: Almost all update equations need to compute infinite sums.  Don't you think that the assumption of $\bar\Phi$ being effective is pretty strong and gives your the result `for free'?  I think you should at least elaborate on this and say to what degree your effective label theory is a generalization of the decidable label theory of unweighted symbolic automata.
 - [ ] 386: We assume the following input to be given
-- [ ] 394: the notation sw-parsing is undefined
-- [ ] 416: word order: put `to T' in the end
+- [ ] 394: the notation "sw-parsing" is undefined
+- [ ] 416: word order: put "to $T$" in the end
 - [ ] 420: "the sw-parsing problem" or "sw-parsing", but not "the sw-parsing"
 - [ ] 424: the triple use and does not work well
 - [ ] 431: double the
@@ -236,7 +235,7 @@ Comments of a more editorial character follows:
 
 - [ ] The literature review should also include work by Hermann and Vogler, who bring in weights into symbolic automata as well, as well as stacks and other types of data storage, though their focus is more on exploring theoretical properties than empirical implementation, and make no complexity claims, as far as I can see. (Herrmann, Luisa, and Heiko Vogler. "Weighted symbolic automata with data storage." International Conference on Developments in Language Theory. Springer, Berlin, Heidelberg, 2016.)
 
-On lines 72+, the authors refer to Mohri in saying that "[...]given an input word $s$, the _SW-parsing_ problem aims at finding $t$ minimizing $T(s,t) \times A(t)$, called the distance between $s$ and $A$[...]". 
+On lines 72+, the authors refer to Mohri in saying that "[...] given an input word $s$, the _SW-parsing_ problem aims at finding $t$ minimizing $T(s,t) \times A(t)$, called the distance between $s$ and $A$[...]". 
 
 - [ ] It is not entirely clear to me what part of this expression they consider to be the distance as described by Mohri. Is it the distance, as defined by $T$, from the $s$ to the distribution over ASTs $t$ defined by $A$? If so, it may be useful to structure the sentence somewhat differently, e.g. "[...] finding the linearized AST $t$ minimizing $d = T(s,t) \times A(t)$, where $d$ denotes the distance between $s$ and the distribution over linearized ASTs described by $A$, using the distance measure defined by $T$." 
 
@@ -244,10 +243,14 @@ Another possible interpretation would be that the distance is between the two di
 
 I think that, for me, the confusion stems partly from Mohri exclusively talking about distances between two strings (languages,distributions) over the _same_ alphabet, while $s$, crucially, comes from a _different_ alphabet than the one over which $A$ defines a distribution.
 
+
+
 **Preliminary Notions**:
 
 - [ ] The introduction of Label theories (l. 154++) does not depend on its first paragraph containing the definitions of words and alphabets, as far as I can tell, so I would let this first paragraph sit under its own title of e.g. "Alphabets and words".
 - [ ] It is also, separately, not clear to me what the intuition and motivation is for using a label theory, at least at this point in the paper. In particular, I am unsure why any of the specific closures in ll 161+ are considered necessary. It may be a better use of space to define label theories rather simply, here, and put the specifics of the closures into the appendix, together with the various properties already present there.
+
+
 
 **SW Automata and Transducers**
 
@@ -269,6 +272,8 @@ Example 14 is quite limited in detail in comparison to the earlier examples, whi
   
 - [ ] On line 366 of Proposition 16, the "can be" should be "must be", surely, since what you are describing is a computation that should leave the original stack (exactly) untouched?
 - [ ]  It seems to me that there is a consistent lack of quantification over $P$ in the section starting with the definition of $b_\top$. This is not hugely problematic for the proof, since the algorithm is still defined (mostly) properly, and the complexity should only be impacted by a factor of something like $|P|$. 
+
+
 
 **Minor comments**:
 
@@ -331,5 +336,3 @@ Example 14 is quite limited in detail in comparison to the earlier examples, whi
  References:
 - [ ]  Ref [22] and [23] both seem to refer to the same work by Mohri
 
-
-------------------------------------------------------
