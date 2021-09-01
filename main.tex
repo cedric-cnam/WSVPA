@@ -284,7 +284,7 @@ but the latter guards are restricted to the Boolean semiring.
 %(SWT)
 \noindent
 Let $\Semiring$ be a commutative semiring,
-$\Sigma$ and $\Delta$ be alphabets called respectively \emph{input} and \emph{output}, %{alphabets},
+$\Sigma$ and $\Delta$ be alphabets called \emph{input} and \emph{output} respectively, %{alphabets},
 and $\bar\Phi$ be a label theory over $\Semiring$
 containing $\Phi_\Sigma$, $\Phi_\Delta$, $\Phi_{\Sigma, \Delta}$.
 
@@ -296,8 +296,8 @@ over $\Sigma$, $\Delta$, $\Semiring$ and $\bar\Phi$
 is a tuple
 $T = \< Q, \init, \bar{\wei}, \final >$,
 where $Q$ is a finite set of states,
-$\mathsf{in} : Q \to \Semiring$   %\Phi_{\Sigma, \Delta}
-(respectively $\mathsf{out} : Q \to \Semiring$)  %\Phi_{\Sigma, \Delta}
+$\mathsf{in} \colon Q \to \Semiring$   %\Phi_{\Sigma, \Delta}
+(respectively $\mathsf{out} \colon Q \to \Semiring$)  %\Phi_{\Sigma, \Delta}
 are functions defining the weight for entering
 (respectively leaving) computation in a state,
 and $\bar{\wei}$ is a triplet of transition functions
@@ -307,7 +307,7 @@ $\wei_{11}: Q \times Q \to \Phi_{\Sigma, \Delta}$.
 \end{definition}
 %
 \noindent
-We call \emph{number of transitions} of $T$ the number of pairs of states
+We call the \emph{number of transitions} of $T$ the number of pairs of states
 $q, q' \in Q$ such that $\wei_{10}$ or $\wei_{01}$ or $\wei_{11}$
 is not the constant $\zero$.
 %
@@ -316,7 +316,7 @@ For convenience, we shall sometimes present transitions
 as functions of
 $Q \times (\Sigma \cup \{ \varepsilon \}) \times (\Delta \cup \{ \varepsilon \}) \times Q \to \Semiring$,
 overloading the function names,
-such that, for all $q, q' \in Q$, $a \in \Sigma$,  $b \in \Delta$:
+such that, for every $q, q' \in Q$, $a \in \Sigma$,  $b \in \Delta$:
 \[
 \begin{array}{rcll}
 \wei_{10}(q, a, \varepsilon, q') & = & \phi(a) & %\wei_\Sigma(q, q')(a)
@@ -368,7 +368,7 @@ and every pairs of strings $\< s, t> \in \Sigma^* \times \Delta^*$.
 
 
 %
-We recall that, by convention (Section~\ref{sec:prelim}),
+We recall that, by definition (Section~\ref{sec:prelim}),
 an empty sum with $\bigoplus$ is equal to~$\zero$.
 %
 Intuitively,  a transition $\wei_{ij}(q, a, b, q')$ is interpreted as follows:
@@ -415,9 +415,9 @@ of the insertion of~$b \in \Delta$ in $t$,
 and $\wei_{11}(q, a, b, r)$ is the cost
 of the substitution of  $a \in \Sigma$ by~$b \in \Delta$.
 %
-The cost of a sequence of such operations transforming $s$ into $t$,
-is the product, with $\otimes$, of the individual costs of the operations involved;
-and the distance between $s$ and $t$ is the sum, with $\oplus$,
+The cost of a sequence of such operations transforming $s$ into $t$
+is the product in terms of $\otimes$ of the individual costs of the operations involved;
+and the distance between $s$ and $t$ is the sum in terms of $\oplus$
 of all possible products.
 %
 \medskip\noindent
@@ -453,7 +453,7 @@ T(s, t)  =
 
 
 \begin{example}\label{ex:SWT}
-We build a small \SWT over  alphabets $\Sigma$ and $\Deltai$
+We build a small \SWT over the alphabets $\Sigma$ and $\Deltai$
 (Ex.~\ref{ex:running} and \ref{distance-time}),
 %weighted transducer model
 with two states $q_0$ and $q_1$, that
@@ -472,7 +472,7 @@ as modeled by transitions $\wei_{11}$ below.
 The continuation symbol $'-'$
 (met for instance in \emph{ties}
 $\musQuarter\!\!\!\mathrel{\raisebox{-1.5mm}{$\smile$}}\!\!\!\musEighth$,
-or \emph{dots} \musQuarterDotted{}),
+or \emph{dots} \musQuarterDotted{})
 %that represents continuation
 is  skipped with no cost (transitions $\wei_{01}$).
 %Likewise, the markups are ignored.
@@ -495,7 +495,7 @@ since a performer could, for example, play an unwritten extra note.
 %
 %Reading such a note is modelled by
 The transition $\wei_{10}$,
-with an fixed weight value $\alpha \in \Semiring$,
+with a fixed weight value $\alpha \in \Semiring$,
 switches from state $q_0$ (normal) to $q_1$ (error)
 when reading an extra note $\mu$.
 %\philippe{Comprends pas cette phrase}
@@ -613,7 +613,7 @@ is a tuple
 $A = \< Q, \init, {\wei_1}, \final >$,
 where $Q$ is a finite set of states,
 $\mathsf{in} : Q \to \Semiring$ %\Phi_\Sigma$,
-(respectively $\mathsf{out} : Q \to \Semiring$)  %\Phi_\Sigma,$
+, respectively $\mathsf{out} : Q \to \Semiring$,  %\Phi_\Sigma,$
 are functions defining the weight for entering
 (respectively leaving) computation in a state,
 and ${\wei_1}$ is a transition function
@@ -629,12 +629,12 @@ we may write $\wei_1(q, a, q')$ for~$\phi(a)$.
 %respectively $\mathsf{in}(q, a) = \phi(a)$, $\mathsf{out}(q', a) = \phi(a)$.
 %$\wei_1: Q \times \Sigma \times Q \to \Semiring$,
 The computation of $A$ on words $s \in \Sigma^*$
-is based with an intermediate function $\weight_A$,
+is based on an intermediate function $\weight_A$,
 defined as follows for $q, q' \in Q$, $a \in \Sigma$, $u \in \Sigma^*$
 %
 \begin{align}
-\weight_A(q, \varepsilon, q') & = \one\ \mathrm{if}\  q = q',\ 
-          \mathrm{or}\  \zero\  \mathrm{otherwise}\\
+\weight_A(q, \varepsilon, q') & = \one\ \mathrm{if}\  q = q'\ 
+          \mathrm{and}\  \zero\  \mathrm{otherwise}\\
 %\weight_A(q, \varepsilon, q') & = \zero \quad \mathrm{if~} q \neq q'\nonumber\\
 \weight_A(q, au, q') & =  \displaystyle\bigoplus_{q'' \in Q}
     \wei_{1}(q, a, q'') \otimes \weight_A(q'', u, q')\nonumber
@@ -672,7 +672,7 @@ and $\bar\Phi$ effective,
 and a $\SWA$ $A$ over $\Sigma$, $\Semiring$ and $\bar\Phi$,
 there exists a \SWA $B_{A, T}$ over $\Delta$, $\Semiring$ and $\bar\Phi$,
 effectively constructible in PTIME, 
-such that for all $t \in \Delta^+$,
+such that for every $t \in \Delta^+$,
 $B_{A, T}(t) = \displaystyle\bigoplus_{s\in \Sigma^*} A(s) \otimes T(s, t)$.
 \end{proposition}
 %
@@ -706,7 +706,7 @@ following a procedure of~\cite{LombardySakarovitch12ciaa}.
 %
 The particular case of Proposition~\ref{prop:epsilon} with a singleton $A$,
 \ie such that $A(s) = \one$ for a given $s \in \Sigma^*$
-and $A(s') = \zero$ for all $s' \neq s$,
+and $A(s') = \zero$ for every $s' \neq s$,
 corresponds to a construction of a \SWA for the partial application of the \SWT $T$,
 fixing the first argument $s$.
 \begin{corollary} \label{cor:epsilon}
@@ -716,7 +716,7 @@ and $\bar\Phi$ effective,
 and $s \in \Sigma^+$,
 there exists an effectively constructible \SWA
 $B_{s, T}$ over $\Delta$, $\Semiring$ and $\bar\Phi$,
-such that for all $t \in \Delta^+$, $B_{s, T}(t) = T(s, t)$.
+such that for every $t \in \Delta^+$, $B_{s, T}(t) = T(s, t)$.
 \end{corollary}
 
 
@@ -739,7 +739,7 @@ such that for all $t \in \Delta^+$, $B_{s, T}(t) = T(s, t)$.
 \label{section:SWVPA}\label{sec:SWVPA}
 The model presented now generalizes symbolic \VPA
 (\SVPA~\cite{dAntonyAlur14SVPDA},
- generalizing themselves \VPA~\cite{AlurMadhusudan09nested} to infinite alphabets)
+ themselves generalizing \VPA~\cite{AlurMadhusudan09nested} to infinite alphabets)
 from Boolean semirings to arbitrary semiring domains.
 It associates to every nested word over an infinite alphabet a weight value
 in a semiring.
@@ -754,7 +754,7 @@ represent AST % parse trees.
 \label{sec:SWVPA-def}
 Let $\Delta$ be a countable alphabet
 %finite (large) or infinite,
-artitioned into three
+partitioned into three
 subsets~$\Deltai$, $\Deltac$, $\Deltar$,
 whose elements are respectively called
 \emph{internal}, \emph{call} and \emph{return} symbols~\cite{AlurMadhusudan09nested}.
@@ -815,7 +815,7 @@ $\creturn{\mathsf{m}}\ts{2}$
 (see also Fig.~\ref{fig:score-tree}).
 The symbol between quotes $\mbox{\footnotesize `C$\sharp$5`}$
 represents an \emph{appogiatura}, %(grace-note),
-\ie an ornemental note with theoretical duration~0.
+\ie an ornamental note with theoretical duration~0.
 \endex
 \end{example}
 
@@ -844,7 +844,7 @@ $\weier : Q \times Q \to \Phir$.
 %
 As in Section~\ref{section:transducer},
 we extend the above transition functions as follows
-for all $q, q' \in Q$, $p \in P$,
+for every $q, q' \in Q$, $p \in P$,
 $a \in \Deltai$,
 $\call{c} \in \Deltac$,
 $\return{r} \in \Deltar$,
@@ -898,7 +898,7 @@ Moreover, $\weic$ reads ${\call{c}}$ and $p$ at the top of the stack
 %
 \noindent
 $\weir$ and $\weier$ read the input return symbol $\return{r}$, and change state from $q$ to to $q'$.
-Moreover, $\weir$ reads and pop from stack a pair made of $\call{c}$ and $p$,
+Moreover, $\weir$ reads and pops from stack a pair made of $\call{c}$ and $p$,
 ($\call{c}$ is compared to $\return{r}$).
 %and $\weier$ applies iff the stack is empty.
 %In this case, the weight function $\phi_\mathsf{r}$
@@ -914,8 +914,8 @@ and a stack content $\gamma \in \Gamma^*$,
 where $\Gamma = \Deltac \times P$.
 Hence, $\weight_A$ is a function from
 $[Q \times \Gamma^*] \times \Delta^* \times [Q \times \Gamma^*]$ into~$\Semiring$.
-The empty stack is denoted by $\bot$, and the topupmost
-symbol is the last pushed content.
+The empty stack is denoted by $\bot$, and the topmost
+symbol is the last pushed pair.
 %
 The recursive definition of $\weight_A$
 enumerates each of the six possible cases:
@@ -1000,7 +1000,7 @@ A(t)  =
 \noindent
 Every $\SWA$ $A = \< Q, \init, {\wei_1}, \final >$,
 over $\Sigma$, $\Semiring$ and $\bar\Phi$
-is a particular case of $\SWVPA$
+is a special case of $\SWVPA$
 $\< Q, \emptyset, \init, \bar\wei, \final >$
 over $\Delta$, $\Semiring$ and $\bar\Phi$
 with $\Deltai = \Sigma$ and $\Deltac = \Deltar = \emptyset$,
@@ -1024,7 +1024,7 @@ Given a set of equivalent representations, we aim at choosing the simpler one.
 %
 For instance, the following call transition starts in state
 $q_{{i}/{c}}$, meaning that the current interval has number~$i < c$
-amongst $c$ sub-intervals of duration~$\ell$ (as indicated by the stack top).
+amongst $c$ sub-intervals of duration~$\ell$ (as indicated by the interval at the stack's top).
 It reads a new time-division symbol~$\ccall{d}$:
 \(
 \weic\bigl(q_{{i}/{c}},
@@ -1094,9 +1094,9 @@ the class of \SWVPA is closed under the binary operators of the underlying semir
 \begin{proposition}\label{prop:SWVPA-product}
 Let $A_1$ and $A_2$ be two \SWVPA
 over the same $\Delta$, commutative $\Semiring$ and effective $\bar\Phi$.
-There exists two effectively constructible $\SWVPA$
+There exist two effectively constructible $\SWVPA$
 $A_1 \oplus A_2$ and $A_1 \otimes A_2$,
-such that for all $s \in \Delta^*$,
+such that for every $s \in \Delta^*$,
 $(A_1 \oplus A_2)(s) = A_1(s) \oplus A_2(s)$ and
 $(A_1 \otimes A_2)(s) = A_1(s) \otimes A_2(s)$.
 \end{proposition}
@@ -1124,7 +1124,7 @@ such that $A(t)$ is minimal \wrt the natural ordering $\leq_\oplus$ for $\Semiri
 %
 Let $A = \< Q, P, \init, \bar\wei, \final >$.
 %
-We propose a Dijkstra algorithm computing,
+We propose a Dijkstra-like algorithm computing,
 for every $q, q' \in Q$,
 the minimum, \wrt $\leq_\oplus$, of the function
 $\beta_{q, q'} : t \mapsto \weight_A(\config{q}{\bot}, t, \config{q'}{\bot})$.
@@ -1171,9 +1171,9 @@ the computation does not pop the pair $\<c, p>$ at the top of $\gamma'$
 (\ie $\gamma'$ is left untouched during the computation).
 However, the computation can read $\<c, p>$ at the top of $\gamma'$,
 and can also push another pair $\< c', p'> \in \Gamma$ on $\gamma'$,
-following the third case of
+following the third case 
 in the definition \eqref{eq:SWVPA-weight} of $\weight_A$ (call symbol).
-The pair $\< c', p'>$ can be pop later, during the computation from $q$ to $q'$,
+The pair $\< c', p'>$ can be popped later, during the computation from $q$ to $q'$,
 following the fifth case of \eqref{eq:SWVPA-weight} (return symbol).
 %However, it cannot apply one of the two last cases (return symbol and empty stack)
 %when the current stack is $\gamma$.
@@ -1253,7 +1253,7 @@ $d_\bot : Q \times Q \to \Semiring$ and
 $d_\top : Q \times P \times Q \to \Phic$,
 %of the triplets $\<q, \sigma, q'>$
 %of states of $A$ by weight values in $\Semiring$,
-that converges eventually to $b_\top$ and $b_\bot$. 
+that converge eventually to $b_\top$ and $b_\bot$. 
 %\florent{explication Fig.~\ref{fig:best-update} (update) suivant cas de \eqref{eq:SWVPA-weight}?}
 %\florent{The infinite sums in the updates of $d$ in Algorithm~\ref{algo:Dijkstra},
 %Figure~\ref{fig:best-update} are well defined since~$\Semiring$ is complete.}
@@ -1280,7 +1280,7 @@ $\bigoplus_{\Deltac} d_\top(q_1, p, q_2) = \bigoplus_{\Deltac} b_\top(q_1, p, q_
 %of Algorithm~\ref{algo:Dijkstra}.
 
 \begin{figure}[ht]
-For all $q_0, q_3 \in Q$, for all $p' \in P$,
+For every $q_0, q_3 \in Q$, for every $p' \in P$,
 \[
 \begin{array}{lcl}
 %\multicolumn{3}{l}{\mathrm{For~all~} q_0, q_3 \in Q, p \in P,}\\
@@ -1372,7 +1372,7 @@ $\Phii$, $\Phic$, $\Phir$, $\Phicr$
 (following the notations of Section~\ref{sec:SWVPA-def}).
 %
 \noindent
-We assume given the following input:
+We assume the following input to be given:
 \begin{description}
 \item[--] a \SWT $T$ over $\Sigma$, $\Deltai$, $\Semiring$, and $\bar\Phi$,
 defining a measure %between words
@@ -1385,7 +1385,7 @@ defining a measure $A: \Delta^* \to \Semiring$,
 \item[--] an input word $s \in \Sigma^*$.
 \end{description}
 %
-For all $u \in \Sigma^*$ and $t \in \Delta^*$, let
+For every $u \in \Sigma^*$ and $t \in \Delta^*$, let
 \(d(u, t) = T\bigl(u, t|_\Deltai \bigr)\),
 where $t|_\Deltai \in \Deltai^*$ is the projection of $t$ onto~$\Deltai$,
 obtained from $t$ by removing all symbols in $\Delta \setminus \Deltai$.
@@ -1405,7 +1405,7 @@ d(s, t) \otimes A(t) = \displaystyle\bigoplus_{u \in \Delta^*} d(s, u) \otimes A
 %
 Following the terminology of~\cite{Mohri03EDWA},
 $\SW$-parsing is the problem of computing
-the distance~\eqref{eq:distance-lang} between the input~$s$ and the output weighted language of~$A$,
+the distance~\eqref{eq:distance-lang} between the input string ~$s$ and the weighted language over the output alphabet defined by ~$A$,
 and returning a witness $t$.
 
 \begin{example}[Symbolic Weighted Parsing and the transcription problem]
@@ -1415,7 +1415,7 @@ is interpreted as follows:
 \begin{itemize}
 \item The input word is $I$ of Example~\ref{ex:running}.
 \item The \SWT $T$ evaluates a ``fitness measure''  that expresses
-    a correspondance between a performance and a nested representation of a music score.
+    a correspondence between a performance and a nested representation of a music score.
     See Example~\ref{ex:SWT}.
 \item The \SWVPA $A$ expresses a cost related to the music notation.
 \end{itemize}
@@ -1429,7 +1429,7 @@ As seen in Example~\ref{ex:SWVPA},
 will be favored on
 \includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex2.pdf}
 %\includegraphics[scale=0.20]{pictures/score4.png}.
-when the weight a second time division with $\ccall{2}$ is less
+when the weight assigned to an additional second time division with $\ccall{2}$ is less
 than the difference of weight between
 $\mbox{`\footnotesize C$\sharp$5`}$
 and $\mbox{\footnotesize C$\sharp$5}$.
@@ -1466,19 +1466,19 @@ We follow a \emph{Bar-Hillel} construction for parsing by intersection.
 We first extend the \SWT $T$ over $\Sigma$, $\Deltai$
 into a \SWT $T'$ over $\Sigma$ and $\Delta$
 (and the same semiring and label theory $\Semiring$ and $\bar\Phi$),
-such that for all $u \in \Sigma^*$, and $t \in {\Delta}^*$,
+such that for every $u \in \Sigma^*$, and $t \in {\Delta}^*$,
 $T'(u, t) = T(u, t|_{\Deltai})$.
 %
 $T'$ simply skips every symbol
 $b \in {\Delta} \setminus \Deltai$
-by the addition to $T$,
-of new transitions of the form $\wei_{01}(q, \varepsilon, b, q')$.
+by the addition 
+of new transitions of the form $\wei_{01}(q, \varepsilon, b, q')$ to $T$.
 %
 \noindent
-Then, using Corolary~\ref{cor:epsilon},
+Then, using Corollary~\ref{cor:epsilon},
 we construct from $s \in \Sigma^*$ and $T'$
 a \SWA $B_{s, T'}$,
-such that for all $t \in \Delta^*$, $B_{s, T'}(t) = d(s, t)$.
+such that for every $t \in \Delta^*$, $B_{s, T'}(t) = d(s, t)$.
 %
 %This automaton is such that for all $t \in \Delta^*$,
 %\[
@@ -1502,16 +1502,16 @@ using the procedure of Proposition~\ref{th:best-search}.
 %\qed
 \end{proof}
 
-The $\SW$-parsing generalizes
-the problem of searching the best derivation (AST) of a weighted CF-grammar $G$
+The $\SW$-parsing problem generalizes
+the problem of searching for the best derivation (AST) of a weighted CF-grammar $G$
 that yields a given input word $w$, called~\emph{weighted parsing},
-(see~\cite{Goodman99SemiringParsing}
- and the more general framework~\cite{MorbitzVogler19weighted-parsing}),
-with infinite input alphabet instead of a finite one and
+(see~\cite{Goodman99SemiringParsing},
+ also the more general framework~\cite{MorbitzVogler19weighted-parsing}),
+with an infinite input alphabet instead of a finite one and
 transducer-defined distances instead of equality. 
 %
 See Appendix~\ref{sec:trees} for more details on the correspondence between 
-nested words $t \in \Delta^*$ and AST and CF grammars and \SWVPA.
+nested words $t \in \Delta^*$, AST, CF grammars and \SWVPA.
 
 %
 %Indeed, it corresponds to the case where $T$
@@ -1590,7 +1590,7 @@ defined by a SW transducer given in input.
 This allows to consider finer word relationships than strict equality.
 %
 
-This work can be extended in several directions. First, the
+This work can be extended in several directions. First, 
 the best search algorithm could be generalized from $1$-best to $n$-best~\cite{Huang05kbest},
 and to $k$-\emph{closed} semirings~\cite{Mohri02semiring}
 (instead of \emph{bounded}, which corresponds to $0$-\emph{closed}). Second,
@@ -1598,9 +1598,9 @@ and to $k$-\emph{closed} semirings~\cite{Mohri02semiring}
 the complexity bounds of the algorithms could be more precisely characterized,
 as well as expressiveness of \swM compared to the automata of 
 \eg~\cite{Segoufin06csl,KaminskiFrancez94,NevenSchwentickVianu04FSMinfinite,Bojanczyk11FO2}.
-Finally, the  best search algorithm presented here offline, whereas
+Finally, the  best search algorithm presented here works offline, whereas
 an on-the-fly automata construction would allow for online parsing,
-a suitable feature in the context of applications such as, 
+a suitable feature in the context of applications such as 
 \eg automatic music transcription.
 
 \florent{comparison of expressiveness with the automata 
