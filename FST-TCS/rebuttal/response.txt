@@ -7,14 +7,20 @@ and their comments and references/suggestion.
 In particular, we are grateful to them for pointing us to the work of L. Herrmann & Heiko... in DLT 2016 & PhD 2020.  
 Indeed, the models that we are using in the paper are particular (restricted) cases of the Weighted Symbolic Automata with Storage defined in DLT 2016 & PhD 2020.
 We agree that it should definitely be explained at the beginning of the paper, and the 2 references must be cited as well. 
-however, It seems difficult to completely skip definitions of the models, for self-completeness reasons.
+
+However, It seems difficult to completely skip definitions of the models, for self-completeness reasons.
+definition of models less general sufficient for our purpose
+not clear whether Prop. 10 (in center pages) is a direct consequence of Hermann V. 2016...
 
 also agree to focus the paper on its 2 main contributions, which are the following:
 - a best-search algorithm
-  (as far as we know no such algorithm has been proposed for swVPA)
+  (as far as we know this is a new result
+  no such algorithm has been proposed for swVPA)
 - a framework for parsing over infinite alphabet and with tree-automata. 
   in particular the use of weighted transducers for def. of distance and of VPA for computing on linearization of parse trees.
 
+second is new application 
+Moreover, 
 Although this only mentioned quickly in the paper, our main motivation / purpose is a formal study of an empirical (challenging) problem : Automated Music Transcription, based on consistent theoretical framework made of formal language models / formalisms.
 in parallel to developpement of a transcription tool
 so far results have shown that theoretical foundations improve accuracy…
