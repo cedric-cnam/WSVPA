@@ -284,7 +284,7 @@ but the latter guards are restricted to the Boolean semiring.
 %(SWT)
 \noindent
 Let $\Semiring$ be a commutative semiring,
-$\Sigma$ and $\Delta$ be alphabets called respectively \emph{input} and \emph{output}, %{alphabets},
+$\Sigma$ and $\Delta$ be alphabets called \emph{input} and \emph{output} respectively, %{alphabets},
 and $\bar\Phi$ be a label theory over $\Semiring$
 containing $\Phi_\Sigma$, $\Phi_\Delta$, $\Phi_{\Sigma, \Delta}$.
 
@@ -296,8 +296,8 @@ over $\Sigma$, $\Delta$, $\Semiring$ and $\bar\Phi$
 is a tuple
 $T = \< Q, \init, \bar{\wei}, \final >$,
 where $Q$ is a finite set of states,
-$\mathsf{in} : Q \to \Semiring$   %\Phi_{\Sigma, \Delta}
-(respectively $\mathsf{out} : Q \to \Semiring$)  %\Phi_{\Sigma, \Delta}
+$\mathsf{in} \colon Q \to \Semiring$   %\Phi_{\Sigma, \Delta}
+(respectively $\mathsf{out} \colon Q \to \Semiring$)  %\Phi_{\Sigma, \Delta}
 are functions defining the weight for entering
 (respectively leaving) computation in a state,
 and $\bar{\wei}$ is a triplet of transition functions
@@ -307,7 +307,7 @@ $\wei_{11}: Q \times Q \to \Phi_{\Sigma, \Delta}$.
 \end{definition}
 %
 \noindent
-We call \emph{number of transitions} of $T$ the number of pairs of states
+We call the \emph{number of transitions} of $T$ the number of pairs of states
 $q, q' \in Q$ such that $\wei_{10}$ or $\wei_{01}$ or $\wei_{11}$
 is not the constant $\zero$.
 %
@@ -316,7 +316,7 @@ For convenience, we shall sometimes present transitions
 as functions of
 $Q \times (\Sigma \cup \{ \varepsilon \}) \times (\Delta \cup \{ \varepsilon \}) \times Q \to \Semiring$,
 overloading the function names,
-such that, for all $q, q' \in Q$, $a \in \Sigma$,  $b \in \Delta$:
+such that, for every $q, q' \in Q$, $a \in \Sigma$,  $b \in \Delta$:
 \[
 \begin{array}{rcll}
 \wei_{10}(q, a, \varepsilon, q') & = & \phi(a) & %\wei_\Sigma(q, q')(a)
@@ -368,7 +368,7 @@ and every pairs of strings $\< s, t> \in \Sigma^* \times \Delta^*$.
 
 
 %
-We recall that, by convention (Section~\ref{sec:prelim}),
+We recall that, by definition (Section~\ref{sec:prelim}),
 an empty sum with $\bigoplus$ is equal to~$\zero$.
 %
 Intuitively,  a transition $\wei_{ij}(q, a, b, q')$ is interpreted as follows:
@@ -415,9 +415,9 @@ of the insertion of~$b \in \Delta$ in $t$,
 and $\wei_{11}(q, a, b, r)$ is the cost
 of the substitution of  $a \in \Sigma$ by~$b \in \Delta$.
 %
-The cost of a sequence of such operations transforming $s$ into $t$,
-is the product, with $\otimes$, of the individual costs of the operations involved;
-and the distance between $s$ and $t$ is the sum, with $\oplus$,
+The cost of a sequence of such operations transforming $s$ into $t$
+is the product in terms of $\otimes$ of the individual costs of the operations involved;
+and the distance between $s$ and $t$ is the sum in terms of $\oplus$
 of all possible products.
 %
 \medskip\noindent
@@ -453,7 +453,7 @@ T(s, t)  =
 
 
 \begin{example}\label{ex:SWT}
-We build a small \SWT over  alphabets $\Sigma$ and $\Deltai$
+We build a small \SWT over the alphabets $\Sigma$ and $\Deltai$
 (Ex.~\ref{ex:running} and \ref{distance-time}),
 %weighted transducer model
 with two states $q_0$ and $q_1$, that
@@ -472,7 +472,7 @@ as modeled by transitions $\wei_{11}$ below.
 The continuation symbol $'-'$
 (met for instance in \emph{ties}
 $\musQuarter\!\!\!\mathrel{\raisebox{-1.5mm}{$\smile$}}\!\!\!\musEighth$,
-or \emph{dots} \musQuarterDotted{}),
+or \emph{dots} \musQuarterDotted{})
 %that represents continuation
 is  skipped with no cost (transitions $\wei_{01}$).
 %Likewise, the markups are ignored.
@@ -613,7 +613,7 @@ is a tuple
 $A = \< Q, \init, {\wei_1}, \final >$,
 where $Q$ is a finite set of states,
 $\mathsf{in} : Q \to \Semiring$ %\Phi_\Sigma$,
-(respectively $\mathsf{out} : Q \to \Semiring$)  %\Phi_\Sigma,$
+, respectively $\mathsf{out} : Q \to \Semiring$,  %\Phi_\Sigma,$
 are functions defining the weight for entering
 (respectively leaving) computation in a state,
 and ${\wei_1}$ is a transition function
@@ -629,12 +629,12 @@ we may write $\wei_1(q, a, q')$ for~$\phi(a)$.
 %respectively $\mathsf{in}(q, a) = \phi(a)$, $\mathsf{out}(q', a) = \phi(a)$.
 %$\wei_1: Q \times \Sigma \times Q \to \Semiring$,
 The computation of $A$ on words $s \in \Sigma^*$
-is based with an intermediate function $\weight_A$,
+is based on with an intermediate function $\weight_A$,
 defined as follows for $q, q' \in Q$, $a \in \Sigma$, $u \in \Sigma^*$
 %
 \begin{align}
-\weight_A(q, \varepsilon, q') & = \one\ \mathrm{if}\  q = q',\ 
-          \mathrm{or}\  \zero\  \mathrm{otherwise}\\
+\weight_A(q, \varepsilon, q') & = \one\ \mathrm{if}\  q = q'\ 
+          \mathrm{and}\  \zero\  \mathrm{otherwise}\\
 %\weight_A(q, \varepsilon, q') & = \zero \quad \mathrm{if~} q \neq q'\nonumber\\
 \weight_A(q, au, q') & =  \displaystyle\bigoplus_{q'' \in Q}
     \wei_{1}(q, a, q'') \otimes \weight_A(q'', u, q')\nonumber
@@ -672,7 +672,7 @@ and $\bar\Phi$ effective,
 and a $\SWA$ $A$ over $\Sigma$, $\Semiring$ and $\bar\Phi$,
 there exists a \SWA $B_{A, T}$ over $\Delta$, $\Semiring$ and $\bar\Phi$,
 effectively constructible in PTIME, 
-such that for all $t \in \Delta^+$,
+such that for every $t \in \Delta^+$,
 $B_{A, T}(t) = \displaystyle\bigoplus_{s\in \Sigma^*} A(s) \otimes T(s, t)$.
 \end{proposition}
 %
@@ -706,7 +706,7 @@ following a procedure of~\cite{LombardySakarovitch12ciaa}.
 %
 The particular case of Proposition~\ref{prop:epsilon} with a singleton $A$,
 \ie such that $A(s) = \one$ for a given $s \in \Sigma^*$
-and $A(s') = \zero$ for all $s' \neq s$,
+and $A(s') = \zero$ for every $s' \neq s$,
 corresponds to a construction of a \SWA for the partial application of the \SWT $T$,
 fixing the first argument $s$.
 \begin{corollary} \label{cor:epsilon}
@@ -716,7 +716,7 @@ and $\bar\Phi$ effective,
 and $s \in \Sigma^+$,
 there exists an effectively constructible \SWA
 $B_{s, T}$ over $\Delta$, $\Semiring$ and $\bar\Phi$,
-such that for all $t \in \Delta^+$, $B_{s, T}(t) = T(s, t)$.
+such that for every $t \in \Delta^+$, $B_{s, T}(t) = T(s, t)$.
 \end{corollary}
 
 
@@ -754,7 +754,7 @@ represent AST % parse trees.
 \label{sec:SWVPA-def}
 Let $\Delta$ be a countable alphabet
 %finite (large) or infinite,
-artitioned into three
+partitioned into three
 subsets~$\Deltai$, $\Deltac$, $\Deltar$,
 whose elements are respectively called
 \emph{internal}, \emph{call} and \emph{return} symbols~\cite{AlurMadhusudan09nested}.
@@ -815,7 +815,7 @@ $\creturn{\mathsf{m}}\ts{2}$
 (see also Fig.~\ref{fig:score-tree}).
 The symbol between quotes $\mbox{\footnotesize `C$\sharp$5`}$
 represents an \emph{appogiatura}, %(grace-note),
-\ie an ornemental note with theoretical duration~0.
+\ie an ornamental note with theoretical duration~0.
 \endex
 \end{example}
 
@@ -844,7 +844,7 @@ $\weier : Q \times Q \to \Phir$.
 %
 As in Section~\ref{section:transducer},
 we extend the above transition functions as follows
-for all $q, q' \in Q$, $p \in P$,
+for every $q, q' \in Q$, $p \in P$,
 $a \in \Deltai$,
 $\call{c} \in \Deltac$,
 $\return{r} \in \Deltar$,
@@ -1096,7 +1096,7 @@ Let $A_1$ and $A_2$ be two \SWVPA
 over the same $\Delta$, commutative $\Semiring$ and effective $\bar\Phi$.
 There exists two effectively constructible $\SWVPA$
 $A_1 \oplus A_2$ and $A_1 \otimes A_2$,
-such that for all $s \in \Delta^*$,
+such that for every $s \in \Delta^*$,
 $(A_1 \oplus A_2)(s) = A_1(s) \oplus A_2(s)$ and
 $(A_1 \otimes A_2)(s) = A_1(s) \otimes A_2(s)$.
 \end{proposition}
@@ -1280,7 +1280,7 @@ $\bigoplus_{\Deltac} d_\top(q_1, p, q_2) = \bigoplus_{\Deltac} b_\top(q_1, p, q_
 %of Algorithm~\ref{algo:Dijkstra}.
 
 \begin{figure}[ht]
-For all $q_0, q_3 \in Q$, for all $p' \in P$,
+For every $q_0, q_3 \in Q$, for every $p' \in P$,
 \[
 \begin{array}{lcl}
 %\multicolumn{3}{l}{\mathrm{For~all~} q_0, q_3 \in Q, p \in P,}\\
@@ -1385,7 +1385,7 @@ defining a measure $A: \Delta^* \to \Semiring$,
 \item[--] an input word $s \in \Sigma^*$.
 \end{description}
 %
-For all $u \in \Sigma^*$ and $t \in \Delta^*$, let
+For every $u \in \Sigma^*$ and $t \in \Delta^*$, let
 \(d(u, t) = T\bigl(u, t|_\Deltai \bigr)\),
 where $t|_\Deltai \in \Deltai^*$ is the projection of $t$ onto~$\Deltai$,
 obtained from $t$ by removing all symbols in $\Delta \setminus \Deltai$.
@@ -1466,7 +1466,7 @@ We follow a \emph{Bar-Hillel} construction for parsing by intersection.
 We first extend the \SWT $T$ over $\Sigma$, $\Deltai$
 into a \SWT $T'$ over $\Sigma$ and $\Delta$
 (and the same semiring and label theory $\Semiring$ and $\bar\Phi$),
-such that for all $u \in \Sigma^*$, and $t \in {\Delta}^*$,
+such that for every $u \in \Sigma^*$, and $t \in {\Delta}^*$,
 $T'(u, t) = T(u, t|_{\Deltai})$.
 %
 $T'$ simply skips every symbol
@@ -1478,7 +1478,7 @@ of new transitions of the form $\wei_{01}(q, \varepsilon, b, q')$.
 Then, using Corolary~\ref{cor:epsilon},
 we construct from $s \in \Sigma^*$ and $T'$
 a \SWA $B_{s, T'}$,
-such that for all $t \in \Delta^*$, $B_{s, T'}(t) = d(s, t)$.
+such that for every $t \in \Delta^*$, $B_{s, T'}(t) = d(s, t)$.
 %
 %This automaton is such that for all $t \in \Delta^*$,
 %\[

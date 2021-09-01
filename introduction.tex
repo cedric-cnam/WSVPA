@@ -10,10 +10,10 @@ of structuring a linear representation
 Most of the context-free parsing approaches~\cite{GruneJacobs08parsing}
 assume a finite and reasonably small input alphabet. %models and algorithms
 Such a restriction makes perfect sense in the context of
-NLP tasks such as constituency parsing,
-programming languages compilers or interpreters.
+NLP tasks such as constituency parsing, 
+compilers or interpreters for programming languages.
 Considering large or infinite alphabets can however be of
-practical interest, when dealing with large characters encodings such as UTF-16~\cite{dAntoni21CACM},
+practical interest when dealing with large characters encodings such as UTF-16~\cite{dAntoni21CACM},
 % processing strings in \eg for vulnerability detection in Web-applications~\cite{dAntoni21CACM},
 %
 analysis of data streams, serialization of structured documents~\cite{Segoufin06csl,NevenSchwentickVianu04FSMinfinite},
@@ -25,10 +25,10 @@ or processing timed execution traces~\cite{Bouyer03algebraic}.
 The latter case is related to a motivation  of  the present work:
 automated music transcription. Representations that capture  music performances
 are essentially linear:
-audio files, or the widely used
+audio files or the widely used
 MIDI format~\cite{Selfridge-Field97beyondMIDI}. %\cite{MIDIfile}.
 Such representations ignore the hierarchical structures that frame the
-conception of music, at least in the western area. These structures, on the other hand,
+conception of music, at least in the Western area. These structures, on the other hand,
 are present, either explicitly  or implicitly,
 in Common Western Music Notation~\cite{Gould11Notation}:
 %in music notation~\cite{Gould11Notation}:
@@ -47,11 +47,11 @@ over an infinite alphabet of timed events.
 Various extensions of language models for handling infinite alphabets have been studied.
 %words carrying data values in an infinite domain (e.g. integers) e.g. data processing
 Some automata with memory extensions
-allow restricted storage and comparison of input symbols,
+allow restricted storage and comparison of input symbols
 %and correspond with logics,
-(see~\cite{Segoufin06csl} for a survey),
+(see~\cite{Segoufin06csl} for a survey)
 \florent{register: skip refs and details, add Mikolaj recent}
-with pebbles for marking positions~\cite{NevenSchwentickVianu04FSMinfinite},
+using pebbles for marking positions~\cite{NevenSchwentickVianu04FSMinfinite},
 registers~\cite{KaminskiFrancez94},
 or %computations in 2 steps
 the possibility to compute on subsequences
@@ -66,7 +66,7 @@ compute on input symbols represented by large bitvectors~\cite{Vardi07ciaa} %\ci
 (sets of assignments of Boolean variables) %propositional variables)
 and, in practice,  %implementation
 each transition accepts a set of such symbols (instead of an individual symbol),
-represented by Boolean formula or Binary Decision Diagrams.
+represented by Boolean Formulas or Binary Decision Diagrams.
 %
 Following a similar idea, % and generalizing,
 in symbolic automata (\SA)~\cite{dAntoniVeanes17CAV,dAntoni21CACM},
@@ -172,7 +172,7 @@ in a semiring $\Semiring$.
 %\begin{array}{c} \mathsf{NFA} : \Sigma^* \to \mathbb{B} \end{array}
 \end{tikzpicture}
 \caption{Classes of Symbolic/Weighted Automata.
-$\Sigma_\mathsf{fin}$ and $\Sigma_\mathsf{inf}$ denote finite/countable alphabets,
+Here, $\Sigma_\mathsf{fin}$ and $\Sigma_\mathsf{inf}$ denote finite/countable alphabets,
 $\mathbb{B}$  the Boolean algebra,
 $\mathbb{S}$ a commutative semiring.
 $q \xrightarrow{\dots} q'$ is a transition between states $q$ and $q'$.}
@@ -193,14 +193,14 @@ A \SWT defines a distance $T(s, t)$ between finite words $s$ and $t$
 over infinite alphabets. % following~\cite{Mohri03EDWA}.
 %\wrt an edit distance
 A  \SWVPA operates sequentially on \emph{nested words}~\cite{AlurMadhusudan09nested},
-structured with markup symbols (parentheses), and describing linearizations of trees.
+structured with markup symbols (parentheses) and describing linearizations of trees.
 A \SWVPA $A$ associates a weight value $A(t)$ % \in \Semiring$
 to a given nested word $t$, which is itsef the linearization of a weighted AST. %representing a parse tree.
 %
 Then, given an input word $s$, the \emph{SW-parsing} problem aims at
 finding $t$ minimizing
 $T(s, t) \otimes A(t)$, called the distance between $s$ and $A$ in~\cite{Mohri03EDWA},
-\wrt the ranking defined by $\oplus$Like weighted-parsing
+\wrt the ranking defined by $\oplus$. Like weighted-parsing
 methods~\cite{Goodman99SemiringParsing,Nederhof03weightedParsing,MorbitzVogler19weighted-parsing},
 \florent{WARNING: \cite{MorbitzVogler19weighted-parsing} much is more general that weighted parsing}
 our approach proceeds in two steps.
@@ -210,7 +210,7 @@ The first step is an intersection
 where, given a \SWT $T$, a \SWVPA $A$, and an input word $s$,
 a \SWVPA $B$ %$A_{T, s}$
 is built, such that for all~$t$,
-$B(t) = T(s, t) \otimes A(t)$.% $A_{T, s}(t) = T(s, t) \otimes A(t)$.
+$B(t) = T(s, t) \otimes A(t)$. % $A_{T, s}(t) = T(s, t) \otimes A(t)$.
 In the second step, a best AST $t$ is found by applying to $B$ %$A_{T, s}$
 a best search algorithm similar to the shortest distance
 in graphs~\cite{Mohri02semiring,Huang05kbest}.
@@ -245,7 +245,7 @@ generalizing the corresponding classes of symbolic and weighted models,
 and ($iii$)~a uniform framework (Section~\ref{sec:parsing}) for parsing over infinite alphabets,
 the keys to which are
 ($iii.a$)~the \SWT-based definition of generic edit distances between input and output (yield) words,
-and ($iii.b$)~the use, convenient in this context,
+and ($iii.b$)~the use, for convenience in this context,
 of nested words, and \SWVPA,
 instead of syntax trees and grammars. %(\S~\ref{sec:trees}).
 
@@ -255,7 +255,7 @@ instead of syntax trees and grammars. %(\S~\ref{sec:trees}).
 We illustrate our framework with a very simplified %toy
 running example of \emph{music transcription}:
 a given \emph{timeline} of musical events
-from an infinite alphabet $\Sigma$ as input,
+from an infinite alphabet $\Sigma$ as input
 is parsed into a structured music score.
 Input events of $\Sigma$
 are pairs $\mu \ts{\tau}$, where $\mu$ is a

@@ -82,70 +82,70 @@ In particular, the authors could spend fewer pages repeating already established
 concepts from the literature and integrate Appendix D into the main paper.
 
 List of mistakes:
-- [ ] 17: who -> which; missing comma after swT
-- [ ] 18: superfluous comma
-- [ ] 26: compilers or interpreters for programming languages
-- [ ] 27: superfluous comma
-- [ ] 32: superfluous comma
-- [ ] 33: Western
-- [ ] 43: skip commas around parentheses; `with' is not an optimal conjuction 
-- [ ] Figure 1: do no start sentences with symbols; add an `and' before $S$
-- [ ] 47: Boolean Formulas
+- [x] 17: who -> which; missing comma after swT
+- [x] 18: superfluous comma
+- [x] 26: compilers or interpreters for programming languages
+- [x] 27: superfluous comma
+- [x] 32: superfluous comma
+- [x] 33: Western
+- [x] 43: skip commas around parentheses; `with' is not an optimal conjuction 
+- [x] Figure 1: do no start sentences with symbols; add an `and' before $S$
+- [x] 47: Boolean Formulas
 - [ ] 51--53: the jump from automata to grammars is uneasy and not really necessary, as the paper mainly deals with automata
 - [ ] 57: weighted automata don't have ASTs, but runs
 - [ ] 60: other approaches use multioperator monoids or valuation monoids, so `at minima a semiring' is wrong
-- [ ] 70: the second comma is superfluous
-- [ ] 74: missing period and space after $\oplus$
+- [x] 70: the second comma is superfluous
+- [x] 74: missing period and space after $\oplus$
 - [ ] 75: maybe cite Parsing as intersection by Nederhof and Satta (2003)
-- [ ] 77: missing space after period
-- [ ] 84: convenient in this context -> for convenience?
-- [ ] 87: superfluous comma
+- [x] 77: missing space after period
+- [x] 84: convenient in this context -> for convenience?
+- [x] 87: superfluous comma
 - [ ] 116: $\oplus$ `combines two values into a single one' as well (in fact, every   binary operation does)
-- [ ] 118--119: I would say: … $\leq_\oplus$ which is called the natural ordering of $S$ and is, for every …, defined by …
-- [ ] Also, you should be consistent with using  'for all' or `for every' in quantifications (I would prefer for every)
+- [x] 118--119: I would say: … $\leq_\oplus$ which is called the natural ordering of $S$ and is, for every …, defined by …
+- [x] Also, you should be consistent with using  'for all' or `for every' in quantifications (I would prefer for every)
 
-- [ ] 122: if it IS; I'd also add a comma after total
-- [ ] 123: Lemma 2 is Lemma 2 in [21], you should refer to it
-- [ ] 125: you write `then', but the following sentence seems to be disconnected from the previous lemma
+- [x] 122: if it IS; I'd also add a comma after total
+- [x] 123: Lemma 2 is Lemma 2 in [21], you should refer to it
+- [x] 125: you write `then', but the following sentence seems to be disconnected from the previous lemma
 - [ ] 126: you should cite Knuth's generalization of Dijkstra's algorithm for superiority, he defines the notion for functions of arbitrary arity, so not just semirings (but multioperator monoids); you should give an example for superiority in the semiring notation (with $\otimes$)
   Moreover, the `corresponds' is wrong, since superiority generalizes non-negative edge weights
 - [ ] PS: Knuth's definition of superiority includes monotonicity
 
-- [ ] 128: increaseS
+- [x] 128: increaseS
 - [ ] 136: what implies?
 - [ ] 143: Lemma 4 is Lemma 3 in [21]
-- [ ] 146: need infinite sums with \oplus -> need to extend \oplus to infinitely many operands
-- [ ] 147: dom is undefined; I can also be ℕ
-- [ ] 151: partitionS
-- [ ] 152: I'd use plural, i.e. products and sums
+- [x] 146: need infinite sums with \oplus -> need to extend \oplus to infinitely many operands
+- [x] 147: dom is undefined; I can also be ℕ
+- [x] 151: partitionS
+- [x] 152: I'd use plural, i.e. products and sums
 - [ ] 153: quantify $x$ and the family ($y_i$) for $i ∈ ℕ$
 - [ ] 155--156: alphabets are usually finite and non-empty sets
-- [ ] 156: the sentence ends after … which is difficult to spot
+- [x] 156: the sentence ends after … which is difficult to spot
 - [ ] 159: denoted by; also it seems like $\bar\Phi$ is a ($\Sigma \cup \Sigma \times \Delta$)-indexed family, why don't you introduce it like this
-- [ ] 161--171: use an itemize environment
+- [ ] 161--171: use an itemize environment 
 - [ ] 162--165: I think these should also hold for $\Delta$, why don't you write this explicitly?
-- [ ] 186: calculability -> computability?
+- [x] 186: calculability -> computability?
 - [ ] 188: the definition of $\bigoplus_\Delta$ can be seen to be implicit.  Please fully quantify the alphabets of a label theory
 - [ ] 195: references: there is earlier research on symbolic automata, e.g. Veanes (2013)
-- [ ] 196: put respectively after output
-- [ ] 199: use \colon rather than : after function names (this also applies to several other places in the paper)
-- [ ] 203: THE number
+- [x] 196: put respectively after output
+- [x] 199: use \colon rather than : after function names (this also applies to several other places in the paper)
+- [x] 203: THE number
 - [ ] 208: What does $T$ compute?
-- [ ] 216: by convention -> by definition
+- [x] 216: by convention -> by definition
 - [ ] 219: resp.\@
 - [ ] 220--221: you mean that a term CONTAINING $w_{ij}(…)$ equal to 0 is ignored
-- [ ] 228: three superfluous commas
-- [ ] 228--229: with $\oplus/\otimes$ -> in terms of $\oplus/\otimes$
-- [ ] 232: over THE alphabets
-- [ ] 237: superfluous commas
+- [x] 228: three superfluous commas
+- [x] 228--229: with $\oplus/\otimes$ -> in terms of $\oplus/\otimes$
+- [x] 232: over THE alphabets
+- [x] 237: superfluous commas
 - [ ] 238: text in the margin, also it is not clear whether the if refers to the entire line or just the right definition
-- [ ] 247: I wouldn't define out just inside parentheses
-- [ ] 251: based ON
-- [ ] 252: for EVERY
-- [ ] 253: replace comma by and
-- [ ] 281: Partitioned
+- [x] 247: I wouldn't define out just inside parentheses
+- [x] 251: based ON
+- [x] 252: for EVERY
+- [x] 253: replace comma by and
+- [x] 281: Partitioned
 - [ ] 284: $x$ is a variable, so it should be typeset in math mode
-- [ ] 290: appogGiatura; ornAmental; also, I'd give this explanation already in Example 1 where the appoggiatura is first used
+- [x] 290: appogGiatura; ornAmental; also, I'd give this explanation already in Example 1 where the appoggiatura is first used
 - [ ] 291: I'd at least say once that $\Delta_i$, $\Delta_c$, and $\Delta_r$ are pairwise disjoint (or explain the symbol)
 - [ ] 297: the extension here is not as in Section 3, there, the different function hat at least similar types
 - [ ] 299: every line expands into the margin; moreover, in the rightmost equation of line three, in the application of $w_c$, $p'$ and $q'$ are swapped

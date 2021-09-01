@@ -31,14 +31,14 @@ in order to handle non-determinism,
 and $\otimes$ combines two values into a single one.
 %and let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a {semiring},
 A semiring~$\Semiring$ is \emph{commutative} if $\otimes$ is commutative.
-It is \emph{idempotent} if for all $x \in \Semiring$, $x \oplus x = x$.
+It is \emph{idempotent} if for every $x \in \Semiring$, $x \oplus x = x$.
 %
 Every idempotent semiring~$\Semiring$ induces
 a partial ordering~$\leq_\oplus$
-called the \emph{natural ordering} of~$\Semiring$~\cite{Mohri02semiring}
-defined,  by:
+which is called the \emph{natural ordering} of~$\Semiring$~\cite{Mohri02semiring},
+and is defined by:
 %implicitly defined by the semiring $\Semiring$
-for all $x, y\in \Semiring$,
+for every $x, y\in \Semiring$,
 $x \leq_\oplus y \;\mbox{iff}\; x \oplus y = x$.
 %(see~\cite{Mohri02semiring} for the proof that it is an ordering).
 %
@@ -49,13 +49,13 @@ that coincides with the usual ordering on the Tropical semiring \emph{min-plus}
 %
 \noindent
 An idempotent semiring $\Semiring$~is called \emph{total} if
-it~$\leq_\oplus$ is total
-\ie when for all $x, y \in \Semiring$, either $x \oplus y = x$ or $x \oplus y = y$.
+~$\leq_\oplus$ is total,
+\ie when for every $x, y \in \Semiring$, either $x \oplus y = x$ or $x \oplus y = y$.
 %\florent{is total necessary?}
 
 \begin{lemma}[Monotony, \cite{Mohri02semiring}] \label{lem:monotonic}
 Let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be an idempotent semiring.
-For all $x, y, z  \in \Semiring$,
+For every $x, y, z  \in \Semiring$,
 if $x \leq_\oplus y$ then
 $x \oplus z \leq_\oplus y \oplus z$,
 $x \otimes z \leq_\oplus y \otimes z$
@@ -63,7 +63,7 @@ and $z \otimes x \leq_\oplus z \otimes y$.
 \end{lemma}
 %When  holds,
 
-We then say the
+We thus say the
 $\Semiring$ is \emph{monotonic} \wrt $\leq_\oplus$.
 %A semiring $\Semiring$
 %is \emph{monotonic} \wrt a partial ordering~$\leq$
@@ -76,7 +76,7 @@ Another important semiring property in the context of optimization
 is {superiority}~\cite{Huang08advanceddynamic},
 which corresponds to the
 \emph{non-negative weights} condition in shortest-path algorithms~\cite{Dijkstra59anote}.
-Intuitively, it means that combining elements with~$\otimes$ always increase their weight.
+Intuitively, it means that combining elements with~$\otimes$ always increases their weight.
 Formally, it is defined as the property ($i$) below. %of the following lemma.
 
 \begin{lemma}[Superiority, Boundedness]
@@ -84,10 +84,10 @@ Formally, it is defined as the property ($i$) below. %of the following lemma.
 Let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be an idempotent semiring.
 The two following statements are equivalent:
 \begin{itemize}
-\item [$i.$] for all $x, y \in \Semiring$,
+\item [$i.$] for every $x, y \in \Semiring$,
 $x \leq_\oplus x \otimes y$ and
 $y \leq_\oplus x \otimes y$
-\item[$ii.$] for all $x \in \Semiring$,  $\one \oplus x = \one$.
+\item[$ii.$] for every $x \in \Semiring$,  $\one \oplus x = \one$.
 \end{itemize}
 \end{lemma}
 %
@@ -111,12 +111,12 @@ In~\cite{Huang08advanceddynamic}, when  property~$(i)$ holds,
 $\Semiring$ is called \emph{superior} \wrt~$\leq_\oplus$.
 It implies (proof of Lemma~\ref{lem:bounded})
 that
-$\one \leq_\oplus x$ for all $x \in \Semiring$.
+$\one \leq_\oplus x$ for every $x \in \Semiring$.
 Similarly, by the first inequality of ($i$) with $y = \zero$,
 $x \leq_\oplus x \otimes \zero = \zero$.
 %
 Hence, in a superior semiring,
-for all $x \in \Semiring$, $\one \leq_\oplus x \leq_\oplus \zero$.
+for every $x \in \Semiring$, $\one \leq_\oplus x \leq_\oplus \zero$.
 %
 From an optimization point of view,
 it means that $\one$ is the best value, and $\zero$ the worst.
@@ -128,7 +128,7 @@ is called \emph{bounded} -- we shall use this term in the rest of the paper.
 % \emph{negative boundedness}
 It implies that, when looking for a best path in a graph whose edges
 are weighted by values of $\Semiring$, the loops can be safely avoided,
-because, for all $x \in \Semiring$ and $n \geq 1$,
+because, for every $x \in \Semiring$ and $n \geq 1$,
  $x \oplus x^n = x \otimes (\one \oplus x^{n-1}) = x$.
 
 
@@ -144,14 +144,14 @@ both sides by $x$ and distributing.
 
 %\medskip
 \noindent
-We  need infinite sums with~$\oplus$.
+We need to extend ~$\oplus to infinitely many operands$.
 A semiring~$\Semiring$ is called \emph{complete}~\cite{Droste09handbook}
 %(\cite{Droste09handbook} chapter 1) %\cite{Kuich97semirings}
 if it has an %infinite sum
 operation $\bigoplus_{i \in I} x_i$
 for every family
 $(x_i)_{i \in I}$ %$\{ x_i \mid i \in I \}$
-of elements of $\dom(\Semiring)$ over an index set $I \subset \mathbb{N}$, such that:
+of elements of $\dom(\Semiring)$ over an index set $I \subseteq \mathbb{N}$, such that:
 \begin{description}
 \item[$i.$]
 \emph{infinite sums extend finite sums:}\\
@@ -162,7 +162,7 @@ $\displaystyle\bigoplus_{i \in \emptyset} x_i = \zero$,\quad
 %
 \item[$ii.$]
 \emph{associativity and commutativity:}\\
-for all $I \subseteq \mathbb{N}$
+for evert $I \subseteq \mathbb{N}$
 and all partition $(I_{j})_{j \in J}$ of $I$, %\subseteq \mathbb{N}$,
 \(
 \displaystyle
@@ -172,7 +172,7 @@ and all partition $(I_{j})_{j \in J}$ of $I$, %\subseteq \mathbb{N}$,
 %
 \item[$iii.$]
 \emph{distributivity of product over infinite sum:}\\
-for all $I \subseteq \mathbb{N}$,
+for every $I \subseteq \mathbb{N}$,
 \(
 \displaystyle
 \bigoplus_{i \in I} (x \otimes y_i) = x \otimes \bigoplus_{i\in I} y_i\), and
