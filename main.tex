@@ -1237,8 +1237,9 @@ resp. $\bigoplus_{\Deltac} d_\top(q_1, p, q_2)$, is minimal in $\Semiring$ \wrt 
 
 %\noindent\quad
 %\textbf{for all} $q_0, q_3 \in Q$
-\Update $d_\bot$ with $\< q_1, q_2>$ or $d_\top$ with $\< q_1, p, q_2>$ 
-(Figure~\ref{fig:best-update}).$\;$
+\Update $d_\bot$ if $\< q_1, q_2>$ was extracted, or $d_\top$ 
+if it was $\< q_1, p, q_2>$, 
+as in Figure~\ref{fig:best-update}.$\;$
 }
 \caption{Best search for \SWVPA}
 \label{algo:Dijkstra}
@@ -1279,7 +1280,7 @@ $\bigoplus_{\Deltac} d_\top(q_1, p, q_2) = \bigoplus_{\Deltac} b_\top(q_1, p, q_
 %of Algorithm~\ref{algo:Dijkstra}.
 
 \begin{figure}[ht]
-For all $q_0, q_3 \in Q$, %$p \in P$,
+For all $q_0, q_3 \in Q$, for all $p' \in P$,
 \[
 \begin{array}{lcl}
 %\multicolumn{3}{l}{\mathrm{For~all~} q_0, q_3 \in Q, p \in P,}\\
@@ -1291,15 +1292,15 @@ d_\top(q_1, p, q_3) & \opluseq &
 %\mathrm{~is~the~partial~application~}
 %x_c \mapsto \weii(q_2, x_c, p, a, q_3)}\\
 %
-d_\bot(q_1, p, q_3) & \opluseq &
+d_\bot(q_1, q_3) & \opluseq &
   d_\bot(q_1, q_2) \otimes
   \displaystyle\bigoplus_{\Deltai} \weiei(q_2, q_3)\\
 %
-d_\top(q_0, p, q_3) & \opluseq &
+d_\top(q_0, p', q_3) & \opluseq &
   {\displaystyle\bigoplus_{\Deltac}}^2
-  \bigl[ \bigl( \weic(q_0, p, q_1, p') \otimes_2
-  d_\top(q_1, p', q_2) \bigr) \otimes_2
-  {\displaystyle\bigoplus_{\Deltar}} \weir(q_2, p', q_3) \bigr]\\
+  \bigl[ \bigl( \weic(q_0, p', q_1, p) \otimes_2
+  d_\top(q_1, p, q_2) \bigr) \otimes_2
+  {\displaystyle\bigoplus_{\Deltar}} \weir(q_2, p, q_3) \bigr]\\
 %\multicolumn{3}{l}{\quad
 %\mathrm{where~} \weic(q_0, p, p', q_1)_{c'} \in \Phic
 %\mathrm{~is~the~partial~application~}
@@ -1331,7 +1332,8 @@ d_\bot(q_1, q_3) & \opluseq &
 %$\weic(q_0, p, p', q_1)_{c'} \in \Phic$, for $c' \in \Deltac$,
 %is the partial application
 %$x_c \mapsto \weic(q_0, p, x_c, c', p', q_1)$.
-\caption{Update $d_\bot$ with $\<q_1, q_2>$ or $d_\top$ with $\< q_1, p, q_2>$.}
+%\caption{Update $d_\bot$ with $\<q_1, q_2>$ or $d_\top$ with $\< q_1, p, q_2>$.}
+\caption{Update $d_\bot$ or $d_\top$.}
 \label{fig:best-update}
 \end{figure}
 %

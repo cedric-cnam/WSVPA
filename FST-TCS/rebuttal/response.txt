@@ -1,11 +1,9 @@
 
 
-
-We would like to thank the reviewers for their valuable work, 
-and their comments and references/suggestion.
+We would like to thank the reviewers for their hard work, and all their comments and references/suggestions which are very useful to us.
 
 In particular, we are grateful to them for pointing us to the work of L. Herrmann & Heiko... in DLT 2016 & PhD 2020.  
-Indeed, the models that we are using in the paper are particular (restricted) cases of the Weighted Symbolic Automata with Storage defined in DLT 2016 & PhD 2020.
+Indeed, the models that we are using in the paper are particular (and strictly restricted) cases of the Weighted Symbolic Automata with Storage defined in DLT 2016 & PhD 2020. 
 We agree that it should definitely be explained at the beginning of the paper, and the 2 references must be cited as well. 
 
 However, It seems difficult to completely skip definitions of the models, for self-completeness reasons.
@@ -27,6 +25,9 @@ so far results have shown that theoretical foundations improve accuracy…
 
 Regarding the best-search algorithm, 
 answer to reviewer 2:... (DETAILS)
+update: intuitively, we assume that values of d_bot and d_top known for every tuplets extracted from the queue Q, 
+and use these values to update the other values of the functions d_bot and d_top .
+
 
 questions of reviewer 3 about the distance and the work of Mohri.
 
