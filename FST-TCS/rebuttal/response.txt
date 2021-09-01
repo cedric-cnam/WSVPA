@@ -7,8 +7,9 @@ and their comments and references/suggestion.
 In particular, we are grateful to them for pointing us to the work of L. Herrmann & Heiko... in DLT 2016 & PhD 2020.  
 Indeed, the models that we are using in the paper are particular (restricted) cases of the Weighted Symbolic Automata with Storage defined in DLT 2016 & PhD 2020.
 We agree that it should definitely be explained at the beginning of the paper, and the 2 references must be cited as well. 
+however, It seems difficult to completely skip definitions of the models, for self-completeness reasons.
 
-the 2 main contributions of the paper are the following:
+also agree to focus the paper on its 2 main contributions, which are the following:
 - a best-search algorithm
   (as far as we know no such algorithm has been proposed for swVPA)
 - a framework for parsing over infinite alphabet and with tree-automata. 
@@ -16,15 +17,14 @@ the 2 main contributions of the paper are the following:
 
 Although this only mentioned quickly in the paper, our main motivation / purpose is a formal study of an empirical (challenging) problem : Automated Music Transcription, based on consistent theoretical framework made of formal language models / formalisms.
 in parallel to developpement of a transcription tool
-so far results show that theoretical… improve …
-
-About the weighted parsing : rem. reviewer1 on "previous approaches" which are more general.
+so far results have shown that theoretical foundations improve accuracy…
 
 Regarding the best-search algorithm, 
 answer to reviewer 2:... (DETAILS)
 
 questions of reviewer 3 about the distance and the work of Mohri.
 
+About the weighted parsing : rem. reviewer1 on "previous approaches" which are more general.
 
 other rem. review 1:
 the relationship between VPA and TA has been discussed in several places, 
