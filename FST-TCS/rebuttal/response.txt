@@ -2,7 +2,7 @@
 
 We would like to thank the reviewers for their hard work, and all their comments and references/suggestions which are very useful to us.
 
-In particular, we are grateful to them for pointing us to the work of L. Herrmann & Heiko... in DLT 2016 & PhD 2020.  
+In particular, we are grateful to them for pointing us to the work of Luisa Herrmann & Heiko Vögler in DLT 2016 & PhD 2020.  
 Indeed, the models that we are using in the paper are particular (and strictly restricted) cases of the Weighted Symbolic Automata with Storage defined in DLT 2016 & PhD 2020. 
 We agree that it should definitely be explained at the beginning of the paper, and the 2 references must be cited as well. 
 
@@ -10,24 +10,25 @@ However, It seems difficult to completely skip definitions of the models, for se
 definition of models less general sufficient for our purpose
 not clear whether Prop. 10 (in center pages) is a direct consequence of Hermann V. 2016...
 
-also agree to focus the paper on its 2 main contributions, which are the following:
+we plan to rephrase the presentation at the begining of the paper, in order to focus on the 2 following contributions:
 - a best-search algorithm
   (as far as we know this is a new result
   no such algorithm has been proposed for swVPA)
 - a framework for parsing over infinite alphabet and with tree-automata. 
   in particular the use of weighted transducers for def. of distance and of VPA for computing on linearization of parse trees.
+  to our knowledge, this second contribution is new application of symbolic and weighted models.
 
-second is new application 
-Moreover, 
+
 Although this only mentioned quickly in the paper, our main motivation / purpose is a formal study of an empirical (challenging) problem : Automated Music Transcription, based on consistent theoretical framework made of formal language models / formalisms.
 in parallel to developpement of a transcription tool
 so far results have shown that theoretical foundations improve accuracy…
+
+
 
 Regarding the best-search algorithm, 
 answer to reviewer 2:... (DETAILS)
 update: intuitively, we assume that values of d_bot and d_top known for every tuplets extracted from the queue Q, 
 and use these values to update the other values of the functions d_bot and d_top .
-
 
 questions of reviewer 3 about the distance and the work of Mohri.
 
