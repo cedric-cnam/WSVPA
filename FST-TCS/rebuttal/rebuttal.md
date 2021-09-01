@@ -81,6 +81,61 @@ Overall, I think that the paper cannot be published in its present form because 
 In particular, the authors could spend fewer pages repeating already established
 concepts from the literature and integrate Appendix D into the main paper.
 
+
+REMAINS TO DO :
+references :
+- [ ] 75: maybe cite Parsing as intersection by Nederhof and Satta (2003)
+- [ ] 126: you should cite Knuth's generalization of Dijkstra's algorithm for superiority, he defines the notion for functions of arbitrary arity, so not just semirings (but multioperator monoids); you should give an example for superiority in the semiring notation (with $\otimes$)
+Moreover, the `corresponds' is wrong, since superiority generalizes non-negative edge weights
+- [ ] PS: Knuth's definition of superiority includes monotonicity
+- [ ] 143: Lemma 4 is Lemma 3 in [21]
+- [ ] 195: references: there is earlier research on symbolic automata, e.g. Veanes (2013)
+- [ ]  Ref [22] and [23] both seem to refer to the same work by Mohri
+
+
+
+
+
+- [ ] 51--53: the jump from automata to grammars is uneasy and not really necessary, as the paper mainly deals with automata
+- [ ] 57: weighted automata don't have ASTs, but runs
+- [ ] 60: other approaches use multioperator monoids or valuation monoids, so `at minima a semiring' is wrong
+- [ ] 116: $\oplus$ `combines two values into a single one' as well (in fact, every   binary operation does)
+- [ ] 136: what implies?
+- [ ] 153: quantify $x$ and the family ($y_i$) for $i ∈ ℕ$
+- [ ] 155--156: alphabets are usually finite and non-empty sets
+- [ ] 159: denoted by; also it seems like $\bar\Phi$ is a ($\Sigma \cup \Sigma \times \Delta$)-indexed family, why don't you introduce it like this
+- [ ] 161--171: use an itemize environment 
+- [ ] 162--165: I think these should also hold for $\Delta$, why don't you write this explicitly?
+- [ ] 188: the definition of $\bigoplus_\Delta$ can be seen to be implicit.  Please fully quantify the alphabets of a label theory
+- [ ] 208: What does $T$ compute?
+- [ ] 219: resp.\@
+- [ ] 220--221: you mean that a term CONTAINING $w_{ij}(…)$ equal to 0 is ignored
+- [ ] 238: text in the margin, also it is not clear whether the if refers to the entire line or just the right definition
+- [ ] 284: $x$ is a variable, so it should be typeset in math mode
+- [ ] 291: I'd at least say once that $\Delta_i$, $\Delta_c$, and $\Delta_r$ are pairwise disjoint (or explain the symbol)
+- [ ] 297: the extension here is not as in Section 3, there, the different function hat at least similar types
+- [ ] 299: every line expands into the margin; moreover, in the rightmost equation of line three, in the application of $w_c$, $p'$ and $q'$ are swapped
+- [ ] 316: equation extends into margin
+- [ ] 331: I think the application of $w_c$ is wrong (same with $w_r$ and $w_i$ later), shouldn't the : be a comma and what is q in the middle?
+- [ ] 336: how are states (which are in $Q$) pushed onto the stack if $\Gamma = \Delta_c \times P$?
+- [ ] 339: what are $j$ and $c$, do you mean $i$ and $d$?
+- [ ] 341: shouldn't there be a transition for returning from a measure?
+- [ ] 348: for?  do you mean accepted by?  but the language of an swA isn't defined either
+- [ ] 354: readers may have an easier time seeing this argument if you say that $S$ is extremal.  You should say in the preliminaries that S is extremal if and only if $\leq_\oplus$ is total.
+- [ ] 371: How is it ensured that the symbol $<c,p>$ isn't popped and pushed again later during the computation?
+- [ ] 376: I do not understand the and at termination, and its correctness part.  What do you want to express?
+- [ ] 379: Almost all update equations need to compute infinite sums.  Don't you think that the assumption of $\bar\Phi$ being effective is pretty strong and gives your the result `for free'?  I think you should at least elaborate on this and say to what degree your effective label theory is a generalization of the decidable label theory of unweighted symbolic automata.
+- [ ] 629: typical references for regular tree grammars are Brainerd (1969) and  Gecseg and Steinby (1984)
+- [ ] 654: an intuition for the $\bar q$ would have made understanding the construction far easier
+
+R3 :
+
+- [ ] l. 100. Shouldn't the first measure end before the second starts? This would make $O$ a forest rather than a tree - easily fixed with a "piece" root element.
+- [ ] l. 220. The sentence starting here is somewhat confusing (and possibly wrong, depending on if $q'$ and $q''$ are intended to be distinct). I suppose that the point is that one can quit the recursion "early" whenever $w_{ij}$ returns $0$, but the language could be clearer, something like "Since $0$ is absorbing for $\times$, and the identity element for $+$ in $S$, if $w_{ij}(q,a,b,q'')$ is $0$ (meaning there is no transition from $q$ to $q'$ reading $a$ and $b$) that entire term can be ignored in the sum."
+- [ ] l. 288: same as on line 100, measure 1 should maybe end before measure 2
+- [ ] l. 434: $swM$??
+
+
 List of mistakes:
 - [x] 17: who -> which; missing comma after swT
 - [x] 18: superfluous comma
@@ -103,14 +158,12 @@ List of mistakes:
 - [ ] 116: $\oplus$ `combines two values into a single one' as well (in fact, every   binary operation does)
 - [x] 118--119: I would say: … $\leq_\oplus$ which is called the natural ordering of $S$ and is, for every …, defined by …
 - [x] Also, you should be consistent with using  'for all' or `for every' in quantifications (I would prefer for every)
-
 - [x] 122: if it IS; I'd also add a comma after total
 - [x] 123: Lemma 2 is Lemma 2 in [21], you should refer to it
 - [x] 125: you write `then', but the following sentence seems to be disconnected from the previous lemma
 - [ ] 126: you should cite Knuth's generalization of Dijkstra's algorithm for superiority, he defines the notion for functions of arbitrary arity, so not just semirings (but multioperator monoids); you should give an example for superiority in the semiring notation (with $\otimes$)
   Moreover, the `corresponds' is wrong, since superiority generalizes non-negative edge weights
 - [ ] PS: Knuth's definition of superiority includes monotonicity
-
 - [x] 128: increaseS
 - [ ] 136: what implies?
 - [ ] 143: Lemma 4 is Lemma 3 in [21]
@@ -149,33 +202,33 @@ List of mistakes:
 - [ ] 291: I'd at least say once that $\Delta_i$, $\Delta_c$, and $\Delta_r$ are pairwise disjoint (or explain the symbol)
 - [ ] 297: the extension here is not as in Section 3, there, the different function hat at least similar types
 - [ ] 299: every line expands into the margin; moreover, in the rightmost equation of line three, in the application of $w_c$, $p'$ and $q'$ are swapped
-- [ ] 310: topupmost -> topmost
+- [x] 310: topupmost -> topmost
 - [ ] 316: equation extends into margin
-- [ ] 330--331: as indicated by the stack top: better explain that stack symbols are time intervals
+- [x] 330--331: as indicated by the stack top: better explain that stack symbols are time intervals
 - [ ] 331: I think the application of $w_c$ is wrong (same with $w_r$ and $w_i$ later), shouldn't the : be a comma and what is q in the middle?
 - [ ] 336: how are states (which are in $Q$) pushed onto the stack if $\Gamma = \Delta_c \times P$?
 - [ ] 339: what are $j$ and $c$, do you mean $i$ and $d$?
 - [ ] 341: shouldn't there be a transition for returning from a measure?
-- [ ] 345: exist (singular)
+- [x] 345: exist (singular)
 - [ ] 348: for?  do you mean accepted by?  but the language of an swA isn't defined either
-- [ ] 352: Dijkstra-like algorithm?
+- [x] 352: Dijkstra-like algorithm?
 - [ ] 354: readers may have an easier time seeing this argument if you say that $S$ is extremal.  You should say in the preliminaries that S is extremal if and only if $\leq_\oplus$ is total.
-- [ ] 366: be popPED
+- [x] 366: be popPED
 - [ ] 371: How is it ensured that the symbol $<c,p>$ isn't popped and pushed again later during the computation?
-- [ ] 375: converge (singular)
+- [x] 375: converge (singular)
 - [ ] 376: I do not understand the and at termination, and its correctness part.  What do you want to express?
 - [ ] 379: Almost all update equations need to compute infinite sums.  Don't you think that the assumption of $\bar\Phi$ being effective is pretty strong and gives your the result `for free'?  I think you should at least elaborate on this and say to what degree your effective label theory is a generalization of the decidable label theory of unweighted symbolic automata.
-- [ ] 386: We assume the following input to be given
-- [ ] 394: the notation "sw-parsing" is undefined
-- [ ] 416: word order: put "to $T$" in the end
-- [ ] 420: "the sw-parsing problem" or "sw-parsing", but not "the sw-parsing"
-- [ ] 424: the triple use and does not work well
-- [ ] 431: double the
-- [ ] 435: there is something missing between "here" and "offline"
+- [x] 386: We assume the following input to be given
+- [x] 394: the notation "sw-parsing" is undefined
+- [x] 416: word order: put "to $T$" in the end
+- [x] 420: "the sw-parsing problem" or "sw-parsing", but not "the sw-parsing"
+- [x] 424: the triple use and does not work well
+- [x] 431: double the
+- [x] 435: there is something missing between "here" and "offline"
 - [ ] 629: typical references for regular tree grammars are Brainerd (1969) and  Gecseg and Steinby (1984)
-- [ ] 647: inn -> in
-- [ ] 650: missing period after function
-- [ ] 652: I think $\bar w$ should be $\bar w'$
+- [x] 647: inn -> in
+- [x] 650: missing period after function
+- [x] 652: I think $\bar w$ should be $\bar w'$
 - [ ] 654: an intuition for the $\bar q$ would have made understanding the construction far easier
 
 Original literature:
@@ -200,7 +253,7 @@ The contributions of this paper are extending transducers and automata to handle
 
 - [ ] Line 209:  "T is based on an intermediate function ...": should this be "The semantics of $T$ is based on an intermediate function ..."?
 
-- [ ] Line 281: "artitioned into three" -> "partitioned into three"
+- [x] Line 281: "artitioned into three" -> "partitioned into three"
 
 - [ ] Last line of algorithm 1: What exactly is meant by "update $d_⊥$ with $<q_1,q_2>$"? Does it mean update the image of $<q_1,q_2>$ under $d_⊥$ with the new value as computed in Figure 3? Write this clearly.
 
@@ -277,61 +330,61 @@ Example 14 is quite limited in detail in comparison to the earlier examples, whi
 
 **Minor comments**:
 
-- [ ] l. 87. I would front "input" in the sentence, yielding "a given input _timeline_ of [...] alphabet $\Sigma$, is parsed into[...]"
+- [x] l. 87. I would front "input" in the sentence, yielding "a given input _timeline_ of [...] alphabet $\Sigma$, is parsed into[...]"
 
-- [ ] l. 90. Please parenthesize the pitch-timecode pairs for readability. As an aside: these are strictly the onsets? And strictly monophonic? 
+- [x] l. 90. Please parenthesize the pitch-timecode pairs for readability. As an aside: these are strictly the onsets? And strictly monophonic? 
 
 - [ ] l. 100. Shouldn't the first measure end before the second starts? This would make $O$ a forest rather than a tree - easily fixed with a "piece" root element.
 
-- [ ] l. 156. The ellipsis between $\Delta$ and $\Sigma^*$ confuses the sentence boundaries for the reader. Better to go "The set of finite sequences (_words_) over $\Sigma$ is denoted $\Sigma^*$, while $\varepsilon$ denotes the empty word[...]".
+- [x] l. 156. The ellipsis between $\Delta$ and $\Sigma^*$ confuses the sentence boundaries for the reader. Better to go "The set of finite sequences (_words_) over $\Sigma$ is denoted $\Sigma^*$, while $\varepsilon$ denotes the empty word[...]".
 
 - [ ] l. 220. The sentence starting here is somewhat confusing (and possibly wrong, depending on if $q'$ and $q''$ are intended to be distinct). I suppose that the point is that one can quit the recursion "early" whenever $w_{ij}$ returns $0$, but the language could be clearer, something like "Since $0$ is absorbing for $\times$, and the identity element for $+$ in $S$, if $w_{ij}(q,a,b,q'')$ is $0$ (meaning there is no transition from $q$ to $q'$ reading $a$ and $b$) that entire term can be ignored in the sum."
 
-- [ ] l. 240: an fixed weight -> a fixed weight
+- [x] l. 240: an fixed weight -> a fixed weight
 
-- [ ] l. 251: based with an intermediate -> based on an intermediate
+- [x] l. 251: based with an intermediate -> based on an intermediate
 
-- [ ] l. 276: generalizing themselves -> themselves generalizing
+- [x] l. 276: generalizing themselves -> themselves generalizing
 
-- [ ] l. 281: artitioned -> partitioned
+- [x] l. 281: artitioned -> partitioned
 
 - [ ] l. 288: same as on line 100, measure 1 should maybe end before measure 2
 
-- [ ] l. 290: ornemental -> ornamental
+- [x] l. 290: ornemental -> ornamental
 
-- [ ] l. 306: reads and pop from stack -> reads and pops from the stack
+- [x] l. 306: reads and pop from stack -> reads and pops from the stack
 
-- [ ] l. 307: I would use "computations" or something like that rather than "transitions" here
+- [x] l. 307: I would use "computations" or something like that rather than "transitions" here
 
-- [ ] l. 310: topupmost -> topmost, though I'm not sure if it's necessary to describe the basic workings of a stack. If you choose to do so, then also
+- [x] l. 310: topupmost -> topmost, though I'm not sure if it's necessary to describe the basic workings of a stack. If you choose to do so, then also
 
-- [ ] l. 311: content -> pair
+- [x] l. 311: content -> pair
 
-- [ ] l. 323: particular -> special
+- [x] l. 323: particular -> special
 
-- [ ] l. 365: "case of in the" -> either "case in the" or "case of the"
+- [x] l. 365: "case of in the" -> either "case in the" or "case of the"
 
-- [ ] l. 366: pop -> popped
+- [x] l. 366: pop -> popped
 
- The second case in Figure 3 should start with $d_\top$, not $d_\bot$
+ - [x] The second case in Figure 3 should start with $d_\top$, not $d_\bot$
 
-- [ ] l. 395: I would omit "output". If you want to draw attention to the different alphabets involved, I would say "between the string $s$ over the input alphabet, and the weighted language over the output alphabet defined by $A$"
+- [x] l. 395: I would omit "output". If you want to draw attention to the different alphabets involved, I would say "between the string $s$ over the input alphabet, and the weighted language over the output alphabet defined by $A$"
 
-- [ ] l. 399: correspondance -> correspondence
+- [x] l. 399: correspondance -> correspondence
 
-- [ ] l. 402: "weight a second time division" -> something like "weight assigned to an additional second time division"
+- [x] l. 402: "weight a second time division" -> something like "weight assigned to an additional second time division"
 
-- [ ] l. 416: extra commen between "$T$" and "of new transition"
+- [x] l. 416: extra commen between "$T$" and "of new transition"
 
-- [ ] l. 417: Corolary -> Corollary
+- [x] l. 417: Corolary -> Corollary
 
-- [ ] l. 420: This whole paragraph should be shaped up, writing wise. 
+- [x] l. 420: This whole paragraph should be shaped up, writing wise. 
 
 - [ ] l. 434: $swM$??
 
-- [ ] l. 435: "offline" -> "works offline"
+- [x] l. 435: "offline" -> "works offline"
 
-- [ ] l. 437: extraneous comma after "such as"
+- [x] l. 437: extraneous comma after "such as"
 
  References:
 - [ ]  Ref [22] and [23] both seem to refer to the same work by Mohri
