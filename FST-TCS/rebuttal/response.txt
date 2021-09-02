@@ -3,12 +3,12 @@ We first warmly thank the reviewers for their hard work, and the impressive list
 Position and contributions (mostly review 1)
 --------------------------------------------
 
-In particular, we are grateful to them for pointing out the work of Luisa Herrmann & Heiko Vögler in DLT 2016 & PhD 2020.  We fully agree that the models presented in our paper are particular (and strictly restricted) cases of the Weighted Symbolic Automata with Storage defined in DLT 2016 & PhD 2020. This must definitely be explained at the beginning of the paper, and both references must be cited. 
+In particular, we are grateful to them for pointing out the work of Luisa Herrmann & Heiko Vögler in DLT 2016 & Ph.D. 2020.  We fully agree that the models presented in our paper are particular (and strictly restricted) cases of the Weighted Symbolic Automata with Storage defined in DLT 2016 & Ph.D. 2020. This must definitely be explained at the beginning of the paper, and both references must be cited. 
 
-We believe that our work still contains significant and original contributions. However, given these new references and the reviewer’s comment, we do realize that the focus of the paper should be more clearly stated. In short, the purpose of developing a theoretical framework combining several language models is not to study their formal properties as such (in this respect our work does not directly compare with the study conducted in PhD 2020) but  to address a specific class of problems via weighted parsing. In the current text, we agree that it is fully revealed in the last section, but we will rephrase the beginning of the paper by shifting the list of contributions as follows:
+We believe that our work still contains significant and original contributions. However, given these new references and the reviewer’s comment, we do realize that the focus of the paper should be more clearly stated. In short, the purpose of developing a theoretical framework combining several language models is not to study their formal properties as such (in this respect our work does not directly compare with the study conducted in Ph.D. 2020) but to address a specific class of problems via weighted parsing. In the current text, we agree that it is fully revealed in the last section, but we will rephrase the beginning of the paper by shifting the list of contributions as follows:
 
-- Our framework is intended to address the optimisation problem of symbolic weighted parsing over an infinite alphabet and with tree-automata. It combines weighted transducers for defining distances, and VPA for linearizing parse trees. To our knowledge, this contribution is a new application of symbolic and weighted models.
-- Our work features a best-search algorithm (as far as we know this is a new result no such algorithm has been proposed for swVPA)
+- Our framework is intended to address the optimization problem of symbolic weighted parsing over an infinite alphabet and with tree-automata. It combines weighted transducers for defining distances and VPA for linearizing parse trees. To our knowledge, this contribution is a new application of symbolic and weighted models.
+- Our work features a best-search algorithm (as far as we know this is a new result, no such algorithm has been proposed for swVPA)
 - Finally, in order to highlight the central motivation of the paper which is the definition of a formal approach yielding a tractable algorithm to solve a challenging parsing problem, we will mention the challenging problem of Automatic Music Transcription as a main empirical target. 
 
 We hope that it would reinforce and clarify the purpose of the theoretical contributions developed in the text. An additional change to reflect this focus shift is to change the title to: 
@@ -16,17 +16,16 @@ Quantitative Parsing over Infinite Alphabets with Symbolic Weighted Language Mod
 
 We propose this rephrasing, along with the improved SOA, as a means to more accurately position our work, and let the reviewers decide whether this is satisfactory regarding the objections raised in the first review. 
 
-
 Regarding the suggestion of the first reviewer to remove that part of our text to avoid rephrasing, we believe that it would be difficult to completely skip the definitions of the models without impacting the readability of the text. We will of course devote our best efforts to improve the formal material by pointing to related work when it does not hinder self-completeness.
-
 
 
 Algorithm (mostly review 2)
 -------------------------------------
 
-Regarding the best-search algorithm, in particular Figure 3, we agree that it could be better explained (we do also apologize for the several unfortunate typos…). 
-For the updates defined in Figure 3, intuitively, we assume that the values of d_bot and d_top are definitely fixed for every tuplet which has been extracted from the queue \Q, and we use these values in order to update the functions d_bot and d_top on the other tuplets (those  which are still in the queue).
-The typos In Figure 3 are the following:
+Regarding the best-search algorithm, in particular Figure 3, we agree that it could be better explained. We do also apologize for the several unfortunate typos… 
+For the updates defined in Figure 3, intuitively, we assume that the values of d_bot and d_top are definitely fixed for every tuplet which has been extracted from the queue \Q (in particular <q_1, q_2> and <q_1, p, q_2>), and we use these values (and the functions w of transitions) in order to update the values of d_bot and d_top on the other tuplets (those which are still in the queue).
+
+The typos in Figure 3 are the following:
 - At the beginning of Fig. 3, the quantification is “for all q_0, q_3 in Q and p’ in P”
 - the second line should be of the form:  d_\bot(q_1, q_3) += … (as pointed by reviewer 2)
 - In line 3, p and p’ should be swapped.
@@ -35,9 +34,10 @@ The typos In Figure 3 are the following:
 Misc.
 ------
 
-Some reviewers raised questions about the notion of label theory, in particular the condition of effectiveness (Definition 6). This assumption is indeed strong, but in the context of solving symbolic weighted parsing, it is not unrealistic. In fact, for an instance of the problem, as stated in Section 5, we have only a finite number of fixed weight functions to consider (the functions in the automata’s transitions) and we may assume that they are effective (i.e. their global minimum are known). Then, the other functions to consider are obtained by combination with the operators of Section 2, and these operators preserve effectiveness, by monotony of the semiring. In practice, the combinations may be represented by structures like Algebraic Decision Diagrams (Bahar et al 1997).
+Some reviewers raised questions about the notion of label theory, in particular the condition of effectiveness (Definition 6). This assumption is indeed strong, but in the context of solving symbolic weighted parsing, it is not unrealistic. In fact, for an instance of the problem, as stated in Section 5, we have first only a finite number of fixed weight functions to consider (the functions in the automata’s transitions) and we may assume that they are effective (i.e. their global minimum are known). Then, the other functions to consider are obtained by combination with the operators of Section 2, and these operators preserve effectiveness, by monotony of the semiring. In practice, the combinations may be represented by structures like Algebraic Decision Diagrams (Bahar et al 1997).
 
-Reviewer 3 has questions about the relationship between our notion of distance and the definitions of Mohri in [22]. Our interpretation is actually the second one mentioned in the review: using the notation of [22], Def. 6, we consider the distance d({ s }, A) between a singleton distribution {s} (all words other than s have weight 0) and the distribution of A, wrt a partial application of T (on a subset of the alphabet).
+Reviewer 3 has questions about the relationship between our notion of distance and the definitions of Mohri in [22]. Our interpretation is actually the second one mentioned in the review: using the notation of [22], Def. 6, we consider the distance d({ s }, A) between a singleton distribution {s} (all words other than s have weight 0) and the distribution of A, with respect to a partial application of T (on a subset of the alphabet).
 
 
-
+The other comments raised by the reviewer are relevant, but for the sake of conciseness, we do not describe in this response how we will address them in the forthcoming version of our text. 
+Thanks again for these very helpful reviews!
