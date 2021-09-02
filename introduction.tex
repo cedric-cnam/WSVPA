@@ -96,7 +96,7 @@ of several (in general exponentially many) AST
 associated to a given input word.
 Typically, $\oplus$  selects the best of two weight values.
 %Intuitively,~$\oplus$ selects, or ranking, the syntax trees.
-The weight domain, equipped with these two operators is, at minima,
+The weight domain, equipped with these two operators is typically 
 a \emph{semiring} %$\Semiring$
 where $\oplus$ can be extended to infinite sums,
 %\cite{Eilenberg74automata}
@@ -190,7 +190,7 @@ symbolic-weighted automata (\SWA),
 transducers (\SWT), and pushdown automata
 with a visibility restriction~\cite{AlurMadhusudan09nested} (\SWVPA).
 A \SWT defines a distance $T(s, t)$ between finite words $s$ and $t$
-over infinite alphabets. % following~\cite{Mohri03EDWA}.
+over infinite alphabets. % following~\cite{Mohri03ijfcs}.
 %\wrt an edit distance
 A  \SWVPA operates sequentially on \emph{nested words}~\cite{AlurMadhusudan09nested},
 structured with markup symbols (parentheses) and describing linearizations of trees.
@@ -199,7 +199,7 @@ to a given nested word $t$, which is itsef the linearization of a weighted AST. 
 %
 Then, given an input word $s$, the \emph{SW-parsing} problem aims at
 finding $t$ minimizing
-$T(s, t) \otimes A(t)$, called the distance between $s$ and $A$ in~\cite{Mohri03EDWA},
+$T(s, t) \otimes A(t)$, called the distance between $s$ and $A$ in~\cite{Mohri03ijfcs},
 \wrt the ranking defined by $\oplus$. Like weighted-parsing
 methods~\cite{Goodman99SemiringParsing,Nederhof03weightedParsing,MorbitzVogler19weighted-parsing},
 \florent{WARNING: \cite{MorbitzVogler19weighted-parsing} much is more general that weighted parsing}
@@ -226,7 +226,7 @@ in graphs~\cite{Mohri02semiring,Huang05kbest}.
 %given an input string $s$, to find a nested word $w$ minimizing
 %(according to the ranking defined by $\oplus$)
 %the distance $d(s, w) \otimes A(w)$ between $s$ and $A$,
-%as defined in~\cite{Mohri03EDWA}.
+%as defined in~\cite{Mohri03ijfcs}.
 
 % First one general edit-distance is defined by a weighted word
 % transducer~\cite{Mohri}

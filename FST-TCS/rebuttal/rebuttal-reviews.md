@@ -64,9 +64,9 @@ Finally, the paper introduces the framework of Symbolic Weighted Parsing, which,
   aims to compute a nested word which minimizes both the weight assigned to it by the sw-VPA and the distance to the input word (which is computed by the swT).  The authors show that this problem can be solved in polynomial time by combining the three constructions introduced earlier.  Moreover, they
   motivate their work by the example of the automatic transcription of music recordings into music scores.
 
-The formalism of symbolic weighted automata is not original to the paper.  It was already introduced by Herrmann and Vogler (2016) and later revised by Herrmann (2020) under the name of weighted symbolic automata with data storage.  This literature subsumes swA (by choosing the trivial storage), swT (since transducers can be understood as particular weighted automata), and sw-VPA, for which the data storage VP was defined.  Moreover, the earlier work is more general, since it allows unital valuation monoids (rather than just semirings) as weight structures.  They authors of the present paper should refer to the earlier publications and clearly distinguish between adopted concepts and their own work.
+- [ ] The formalism of symbolic weighted automata is not original to the paper.  It was already introduced by Herrmann and Vogler (2016) and later revised by Herrmann (2020) under the name of weighted symbolic automata with data storage.  This literature subsumes swA (by choosing the trivial storage), swT (since transducers can be understood as particular weighted automata), and sw-VPA, for which the data storage VP was defined.  Moreover, the earlier work is more general, since it allows unital valuation monoids (rather than just semirings) as weight structures.  They authors of the present paper should refer to the earlier publications and clearly distinguish between adopted concepts and their own work.
 
-Moreover, the authors claim that their framework is a generalization of previous approaches to weighted parsing, in the sense that it allows infinite input alphabets.  However, some of the previous approaches allowed more general weight structures than just semirings, so their are incomparable to the present paper.
+- [ ] Moreover, the authors claim that their framework is a generalization of previous approaches to weighted parsing, in the sense that it allows infinite input alphabets.  However, some of the previous approaches allowed more general weight structures than just semirings, so their are **incomparable** to the present paper.
 
 The paper is very well structured and it was a pleasure to see all three automaton models and constructions fit together in the final section.
 
@@ -90,7 +90,7 @@ Moreover, the `corresponds' is wrong, since superiority generalizes non-negative
 - [ ] PS: Knuth's definition of superiority includes monotonicity
 - [ ] 143: Lemma 4 is Lemma 3 in [21]
 - [ ] 195: references: there is earlier research on symbolic automata, e.g. Veanes (2013)
-- [ ]  Ref [22] and [23] both seem to refer to the same work by Mohri
+- [x]  Ref [22] and [23] both seem to refer to the same work by Mohri
 
 
 
@@ -98,10 +98,10 @@ Moreover, the `corresponds' is wrong, since superiority generalizes non-negative
 
 - [ ] 51--53: the jump from automata to grammars is uneasy and not really necessary, as the paper mainly deals with automata
 - [ ] 57: weighted automata don't have ASTs, but runs
-- [ ] 60: other approaches use multioperator monoids or valuation monoids, so `at minima a semiring' is wrong
+- [x] 60: other approaches use multioperator monoids or valuation monoids, so `at minima a semiring' is wrong
 - [ ] 116: $\oplus$ `combines two values into a single one' as well (in fact, every   binary operation does)
 - [ ] 136: what implies?
-- [ ] 153: quantify $x$ and the family ($y_i$) for $i ∈ ℕ$
+- [x] 153: quantify $x$ and the family ($y_i$) for $i ∈ ℕ$
 - [ ] 155--156: alphabets are usually finite and non-empty sets
 - [ ] 159: denoted by; also it seems like $\bar\Phi$ is a ($\Sigma \cup \Sigma \times \Delta$)-indexed family, why don't you introduce it like this
 - [ ] 161--171: use an itemize environment 
@@ -123,15 +123,18 @@ Moreover, the `corresponds' is wrong, since superiority generalizes non-negative
 - [ ] 348: for?  do you mean accepted by?  but the language of an swA isn't defined either
 - [ ] 354: readers may have an easier time seeing this argument if you say that $S$ is extremal.  You should say in the preliminaries that S is extremal if and only if $\leq_\oplus$ is total.
 - [ ] 371: How is it ensured that the symbol $<c,p>$ isn't popped and pushed again later during the computation?
-- [ ] 376: I do not understand the and at termination, and its correctness part.  What do you want to express?
+- [x] 376: I do not understand the and at termination, and its correctness part.  What do you want to express?
 - [ ] 379: Almost all update equations need to compute infinite sums.  Don't you think that the assumption of $\bar\Phi$ being effective is pretty strong and gives your the result `for free'?  I think you should at least elaborate on this and say to what degree your effective label theory is a generalization of the decidable label theory of unweighted symbolic automata.
-- [ ] 629: typical references for regular tree grammars are Brainerd (1969) and  Gecseg and Steinby (1984)
+- [ ] 629: typical references for regular tree grammars are Brainerd (1969) 
+- [ ] ​         and  Gecseg and Steinby (1984)
 - [ ] 654: an intuition for the $\bar q$ would have made understanding the construction far easier
 
 R3 :
 
 - [ ] l. 100. Shouldn't the first measure end before the second starts? This would make $O$ a forest rather than a tree - easily fixed with a "piece" root element.
+  
 - [ ] l. 220. The sentence starting here is somewhat confusing (and possibly wrong, depending on if $q'$ and $q''$ are intended to be distinct). I suppose that the point is that one can quit the recursion "early" whenever $w_{ij}$ returns $0$, but the language could be clearer, something like "Since $0$ is absorbing for $\times$, and the identity element for $+$ in $S$, if $w_{ij}(q,a,b,q'')$ is $0$ (meaning there is no transition from $q$ to $q'$ reading $a$ and $b$) that entire term can be ignored in the sum."
+  
 - [ ] l. 288: same as on line 100, measure 1 should maybe end before measure 2
 - [ ] l. 434: $swM$??
 
@@ -216,7 +219,7 @@ List of mistakes:
 - [x] 366: be popPED
 - [ ] 371: How is it ensured that the symbol $<c,p>$ isn't popped and pushed again later during the computation?
 - [x] 375: converge (singular)
-- [ ] 376: I do not understand the and at termination, and its correctness part.  What do you want to express?
+- [x] 376: I do not understand the and at termination, and its correctness part.  What do you want to express?
 - [ ] 379: Almost all update equations need to compute infinite sums.  Don't you think that the assumption of $\bar\Phi$ being effective is pretty strong and gives your the result `for free'?  I think you should at least elaborate on this and say to what degree your effective label theory is a generalization of the decidable label theory of unweighted symbolic automata.
 - [x] 386: We assume the following input to be given
 - [x] 394: the notation "sw-parsing" is undefined
@@ -232,8 +235,10 @@ List of mistakes:
 - [ ] 654: an intuition for the $\bar q$ would have made understanding the construction far easier
 
 Original literature:
-- Herrmann and Vogler (2016): L. Herrmann & H. Vogler (2016): Weighted Symbolic Automata with Data Storage. In: Developments in Language Theory, Springer, pp. 203–215, doi:10.1007/978-3-662-53132-7 17.
-- Herrmann (2020): L. Herrmann (2016): Weighted Automata with Storage. PhD thesis. Technische Universität Dresden, 2020, urn:nbn:de:bsz:14-qucosa2-740685
+
+- [ ] Herrmann and Vogler (2016): L. Herrmann & H. Vogler (2016): Weighted Symbolic Automata with Data Storage. In: Developments in Language Theory, Springer, pp. 203–215, doi:10.1007/978-3-662-53132-7 17.
+
+- [ ] Herrmann (2020): L. Herrmann (2016): Weighted Automata with Storage. PhD thesis. Technische Universität Dresden, 2020, urn:nbn:de:bsz:14-qucosa2-740685
 
 
 
@@ -255,13 +260,13 @@ The contributions of this paper are extending transducers and automata to handle
 
 - [x] Line 281: "artitioned into three" -> "partitioned into three"
 
-- [ ] Last line of algorithm 1: What exactly is meant by "update $d_⊥$ with $<q_1,q_2>$"? Does it mean update the image of $<q_1,q_2>$ under $d_⊥$ with the new value as computed in Figure 3? Write this clearly.
+- [x] Last line of algorithm 1: What exactly is meant by "update $d_⊥$ with $<q_1,q_2>$"? Does it mean update the image of $<q_1,q_2>$ under $d_⊥$ with the new value as computed in Figure 3? Write this clearly.
 
 Figure 3: This figure is supposed to compute $<q_1,q_2>$. 
-- [ ] First of all, it is not clear what is meant by "compute $<q_1,q_2>$"; I am guessing, as I wrote in the comment above that the computed quantity is the image of $<q_1,q_2>$ under $d_⊥$. However, even this doesn't make sense; there are some series of equantions written, for $d_\top(q_1,p,q_3)$ (not for $d_\top(q_1,p,q_2)$. 
-- [ ] Even in this equation, what is $q_2$? Do we take the minimum (wrt $\oplus$) over all $q_2$? 
-- [ ] The second line says $d_\bot(q_1,p,q_3)$, which doesn't make sense because $d_⊥$ takes two arguments, not three. 
-- [ ] There are two equations for $d_\top(q_1,p,q_3)$ and one for $d_\top(q_0,p,q_3)$. How are these related? It is very confusing what is being computed here and how. Please update this to make it clear.
+- [x] First of all, it is not clear what is meant by "compute $<q_1,q_2>$"; I am guessing, as I wrote in the comment above that the computed quantity is the image of $<q_1,q_2>$ under $d_⊥$. However, even this doesn't make sense; there are some series of equantions written, for $d_\top(q_1,p,q_3)$ (not for $d_\top(q_1,p,q_2)$. 
+- [x] Even in this equation, what is $q_2$? Do we take the minimum (wrt $\oplus$) over all $q_2$? 
+- [x] The second line says $d_\bot(q_1,p,q_3)$, which doesn't make sense because $d_⊥$ takes two arguments, not three. 
+- [x] There are two equations for $d_\top(q_1,p,q_3)$ and one for $d_\top(q_0,p,q_3)$. How are these related? It is very confusing what is being computed here and how. Please update this to make it clear.
 
 
 
@@ -387,5 +392,5 @@ Example 14 is quite limited in detail in comparison to the earlier examples, whi
 - [x] l. 437: extraneous comma after "such as"
 
  References:
-- [ ]  Ref [22] and [23] both seem to refer to the same work by Mohri
+- [x]  Ref [22] and [23] both seem to refer to the same work by Mohri
 

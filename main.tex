@@ -30,11 +30,11 @@
 % - inline: place a todonote inside the text instead of in the margin
 % - author=name
 \newcommand{\florent}[1]{\todo[noline,size=\tiny,color=yellow!40]{#1}}
-\renewcommand{\florent}[1]{} % uncomment for final
+%\renewcommand{\florent}[1]{} % uncomment for final
 \newcommand{\lydia}[1]{\todo[noline,size=\tiny,color=red!30]{#1}}
-\renewcommand{\lydia}[1]{} % uncomment for final
+%\renewcommand{\lydia}[1]{} % uncomment for final
 \newcommand{\philippe}[1]{\todo[noline,size=\tiny,color=green!30]{#1}}
-\renewcommand{\philippe}[1]{} % uncomment for final
+%\renewcommand{\philippe}[1]{} % uncomment for final
 
 \usepackage{hyperref}
 %\usepackage[bookmarks,bookmarksnumbered,naturalnames,plainpages=false]{hyperref}
@@ -266,14 +266,14 @@
 \label{section:SWA}\label{sec:SWA}
 \label{section:SWT}\label{sec:SWT}
 
-We follow the approach of~\cite{Mohri03EDWA} for the computation of distances
+We follow the approach of~\cite{Mohri03ijfcs} for the computation of distances
 between words and languages
 and extend it to infinite alphabets.
 % with models of symbolic weighted automata and transducers.
 %
 The models introduced in this section generalize
 weighted automata and transducers~\cite{Droste09handbook}
-%over finite alphabets, see \eg~\cite{Mohri03EDWA},
+%over finite alphabets, see \eg~\cite{Mohri03ijfcs},
 by labeling each transition with a weight function
 that takes the input and output symbols as parameters.
 These functions are similar to the guards of symbolic automata~\cite{dAntoniVeanes17CAV,dAntoni21CACM},
@@ -1245,18 +1245,27 @@ as in Figure~\ref{fig:best-update}.$\;$
 \label{algo:Dijkstra}
 \end{algorithm}
 
-Algorithm~\ref{algo:Dijkstra}
-constructs iteratively,
-using a priority queue $\Q$, 
+Algorithm~\ref{algo:Dijkstra} constructs iteratively, using a priority queue $\Q$, 
 two markings
 $d_\bot : Q \times Q \to \Semiring$ and
 $d_\top : Q \times P \times Q \to \Phic$,
 %of the triplets $\<q, \sigma, q'>$
 %of states of $A$ by weight values in $\Semiring$,
 that converge eventually to $b_\top$ and $b_\bot$. 
-%\florent{explication Fig.~\ref{fig:best-update} (update) suivant cas de \eqref{eq:SWVPA-weight}?}
-%\florent{The infinite sums in the updates of $d$ in Algorithm~\ref{algo:Dijkstra},
-%Figure~\ref{fig:best-update} are well defined since~$\Semiring$ is complete.}
+%
+\florent{intuition sur update en commentaire}
+%Intuitively, in the update defined in Figure~\ref{fig:best-update},
+%we assume that the values of $d_\bot$ and $d_\top$ are definitely 
+%fixed for every tuplet which has been extracted from the queue $\Q$ 
+%(like in particular $\<q_1, q_2>$ or $\< q_1, p, q_2>$ when the algorithm calls this update), 
+%and we use these values 
+%(and the functions $w$ of transitions) 
+%in order to update the values of $d_\bot$ and $d_\top$ 
+%on the other tuplets (those which are still in the queue $\Q$).
+%
+\florent{explication Fig.~\ref{fig:best-update} (update) suivant cas de \eqref{eq:SWVPA-weight}?}
+\florent{The infinite sums in the updates of $d$ in Algorithm~\ref{algo:Dijkstra},
+ Figure~\ref{fig:best-update} are well defined since~$\Semiring$ is complete.}
 %
 % COMPLEXITY
 %The algorithm performs $2.|Q|^2$ iterations until $P$ is empty,
@@ -1270,7 +1279,7 @@ that converge eventually to $b_\top$ and $b_\bot$.
 %$|Q|^3.\log(|Q|^2)$
 %
 %Algorithm~\ref{algo:Dijkstra}
-It terminates in PTIME and at termination (when $\Q$ is empty), 
+It terminates in PTIME (when $\Q$ is empty), 
 and its correctness is ensured by~\eqref{eq:min} and  
 the following invariants: 
 $\< q_1, q_2> \notin \Q$ iff $d_\bot(q_1, q_2) = b_\bot(q_1, q_2)$, 
@@ -1280,31 +1289,15 @@ $\bigoplus_{\Deltac} d_\top(q_1, p, q_2) = \bigoplus_{\Deltac} b_\top(q_1, p, q_
 %of Algorithm~\ref{algo:Dijkstra}.
 
 \begin{figure}[ht]
-For every $q_0, q_3 \in Q$, for every $p' \in P$,
+For every $q_0, q_3 \in Q$ and $p' \in P$, if $\< q_1, q_2> \notin \Q$ 
 \[
 \begin{array}{lcl}
 %\multicolumn{3}{l}{\mathrm{For~all~} q_0, q_3 \in Q, p \in P,}\\
-d_\top(q_1, p, q_3) & \opluseq &
-  d_\top(q_1, p, q_2) \otimes
-  \displaystyle\bigoplus_{\Deltai} \weii(q_2, p, q_3)\\
-%\multicolumn{3}{l}{\quad
-%\mathrm{where~} \weii(q_2, p, q_3)_a \in \Phic
-%\mathrm{~is~the~partial~application~}
-%x_c \mapsto \weii(q_2, x_c, p, a, q_3)}\\
 %
 d_\bot(q_1, q_3) & \opluseq &
   d_\bot(q_1, q_2) \otimes
-  \displaystyle\bigoplus_{\Deltai} \weiei(q_2, q_3)\\
-%
-d_\top(q_0, p', q_3) & \opluseq &
-  {\displaystyle\bigoplus_{\Deltac}}^2
-  \bigl[ \bigl( \weic(q_0, p', q_1, p) \otimes_2
-  d_\top(q_1, p, q_2) \bigr) \otimes_2
-  {\displaystyle\bigoplus_{\Deltar}} \weir(q_2, p, q_3) \bigr]\\
-%\multicolumn{3}{l}{\quad
-%\mathrm{where~} \weic(q_0, p, p', q_1)_{c'} \in \Phic
-%\mathrm{~is~the~partial~application~}
-%x_c \mapsto \weic(q_0, p, x_c, c', p', q_1)}\\[2pt]
+  \displaystyle\bigoplus_{\Deltai} \weiei(q_2, q_3)
+  \mathrm{if~} \< q_1, q_2> \notin \Q \\
 %
 d_\bot(q_0, q_3) & \opluseq &
   {\displaystyle\bigoplus_{\Deltac}}
@@ -1317,12 +1310,35 @@ d_\bot(q_1, q_3) & \opluseq &
   d_\bot(q_1, q_2) \otimes
   \displaystyle\bigoplus_{\Deltar} \weier(q_2, q_3)\\
 %
-d_\top(q_1, p, q_3) & \opluseq &
-  d_\top(q_1, p, q_2) \otimes d_\top(q_2, p, q_3),
-  \mathrm{if~} \< q_2, p, q_3> \notin \Q \\
-%
 d_\bot(q_1, q_3) & \opluseq &
-  d_\bot(q_1, q_2) \otimes d_\bot(q_2, q_3), \mathrm{if~} \< q_2, q_3> \notin \Q \\
+  d_\bot(q_1, q_2) \otimes d_\bot(q_2, q_3)\  \mathrm{if~} \< q_2, q_3> \notin \Q \\
+\end{array}
+\]
+%
+For every $q_0, q_3 \in Q$ and $p' \in P$, if $\< q_1, p, q_2> \notin \Q$
+\[
+\begin{array}{lcl}
+d_\top(q_1, p, q_3) & \opluseq &
+  d_\top(q_1, p, q_2) \otimes
+  \displaystyle\bigoplus_{\Deltai} \weii(q_2, p, q_3)
+  \mathrm{if~} \< q_1, p, q_2> \notin \Q \\
+%\multicolumn{3}{l}{\quad
+%\mathrm{where~} \weii(q_2, p, q_3)_a \in \Phic
+%\mathrm{~is~the~partial~application~}
+%x_c \mapsto \weii(q_2, x_c, p, a, q_3)}\\
+d_\top(q_0, p', q_3) & \opluseq &
+  {\displaystyle\bigoplus_{\Deltac}}^2
+  \bigl[ \bigl( \weic(q_0, p', q_1, p) \otimes_2
+  d_\top(q_1, p, q_2) \bigr) \otimes_2
+  {\displaystyle\bigoplus_{\Deltar}} \weir(q_2, p, q_3) \bigr]\\
+%\multicolumn{3}{l}{\quad
+%\mathrm{where~} \weic(q_0, p, p', q_1)_{c'} \in \Phic
+%\mathrm{~is~the~partial~application~}
+%x_c \mapsto \weic(q_0, p, x_c, c', p', q_1)}\\[2pt]
+%
+d_\top(q_1, p, q_3) & \opluseq &
+  d_\top(q_1, p, q_2) \otimes d_\top(q_2, p, q_3)\ 
+  \mathrm{if~} \< q_2, p, q_3> \notin \Q \\
 \end{array}
 \]
 %$\weii(q_2, p, q_3)_a \in \Phic$, for $a \in \Deltai$,
@@ -1333,7 +1349,8 @@ d_\bot(q_1, q_3) & \opluseq &
 %is the partial application
 %$x_c \mapsto \weic(q_0, p, x_c, c', p', q_1)$.
 %\caption{Update $d_\bot$ with $\<q_1, q_2>$ or $d_\top$ with $\< q_1, p, q_2>$.}
-\caption{Update $d_\bot$ or $d_\top$.}
+\caption{The update of $d_\bot$ when $\< q_1, q_2> \notin \Q$, 
+         and the update $d_\top$ when $\< q_1, q_2> \notin \Q$.}
 \label{fig:best-update}
 \end{figure}
 %
@@ -1403,7 +1420,7 @@ minimizing \( d(s, t) \otimes A(t)\)
 d(s, t) \otimes A(t) = \displaystyle\bigoplus_{u \in \Delta^*} d(s, u) \otimes A(u)
 \end{equation}
 %
-Following the terminology of~\cite{Mohri03EDWA},
+Following the terminology of~\cite{Mohri03ijfcs},
 $\SW$-parsing is the problem of computing
 the distance~\eqref{eq:distance-lang} between the input string ~$s$ and the weighted language over the output alphabet defined by ~$A$,
 and returning a witness $t$.
