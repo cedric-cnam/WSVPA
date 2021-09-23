@@ -755,10 +755,11 @@ represent AST % parse trees.
 %\subsection{Definition}
 \noindent
 \label{sec:SWVPA-def}
-Let $\Delta$ be a countable alphabet
+\reviews{3) pb countable}
+Let $\Delta$ be a countable alphabet,
 %finite (large) or infinite,
 partitioned into three
-subsets~$\Deltai$, $\Deltac$, $\Deltar$,
+pairwise disjoint subsets~$\Deltai$, $\Deltac$, $\Deltar$,
 whose elements are respectively called
 \emph{internal}, \emph{call} and \emph{return} symbols~\cite{AlurMadhusudan09nested}.
 % names are  coined by application to functional program verification
@@ -772,7 +773,8 @@ $\bar\Phi = \< \Phii, \Phic, \Phir, \Phici, \Phicc, \Phicr>$
 be a label theory over $\Semiring$
 %In order to simplify notations, %and following the definition of Section~\ref{section:transducer},
 %we shall write respectively
-where $\Phii$, $\Phic$, $\Phir$ and~$\Phicx$ (with $\mathsf{x} \in \{ \mathsf{i}, \mathsf{c}, \mathsf{r}\}$)
+where $\Phii$, $\Phic$, $\Phir$ and~$\Phicx$ 
+(where $\mathsf{x}$ is either $\mathsf{i}$, $\mathsf{c}$, or $\mathsf{r}$)
 stand respectively
 for~$\Phi_\Deltai$, $\Phi_\Deltac$, $\Phi_\Deltar$ and~$\Phi_{\Deltac, \Delta_\mathsf{x}}$.
 %
@@ -1012,6 +1014,7 @@ $\weiei = \wei_1$ and all the other functions
 of~$\bar\wei$ are the constant~$\zero$.
 
 \begin{example} \label{ex:SWVPA}
+\reviews{revision ex. needed. see rev. 3) and app. $\weic$, $\weir$, $\weii$ wrong.}
 We consider a \SWVPA over the alphabet of Example~\ref{ex:nested-word}
 that expresses a weight related to the music notation,
 or more precisely to its structural complexity.
@@ -1035,7 +1038,7 @@ It reads a new time-division symbol~$\ccall{d}$:
            \ccall{d}\ts{\iota}, q_{{i+1}/{c}},
            q_{{0}/{d}} \bigr) = \alpha_d
 \).
-The time interval $\iota$ attached to the~$\ccall{d}$ read 
+The time interval $\iota$ attached to~$\ccall{d}$ 
 must have a starting time $\tau + \frac{i\ell}{c}$,
 where~$\tau$ and~$\ell$ are respectively
 the starting time and duration of the interval attached to
@@ -1133,6 +1136,7 @@ the minimum, \wrt $\leq_\oplus$, of the function
 $\beta_{q, q'} : t \mapsto \weight_A(\config{q}{\bot}, t, \config{q'}{\bot})$.
 Let us denote by $b_\bot(q, q')$ this minimum.
 By definition of $\leq_\oplus$, and since $\Semiring$ is total,
+\reviews{1) $\Semiring$ total $\to$ $\Semiring$ extremal}
 it holds that:
 %
 \begin{equation}\label{eq:bbot}

@@ -20,10 +20,14 @@ TITLE: Symbolic Weighted Language Models and Quantitative Parsing over Infinite 
 AUTHORS: Florent Jacquemard, Philippe Rigaux and Lydia Rodrigez de la Nava
 
 ----------- Overall evaluation -----------
+
 The paper introduces symbolic weighted automata (swA) as a generalization of finite automata in two directions: first, like symbolic automata, they allow infinite input alphabets and second, like weighted automata, they map each input word to a value in a semiring .  In the same spirit, symbolic weighted transducers (swT) and symbolic visibly pushdown automata (sw-VPA) are introduced.
 
 Based on these concepts, the paper introduces a variety of constructions. 
-The first one is a Bar-Hillel Perles Shamir construction for a given swT and a given sWA.  The second one performs the closure of two sw-VPA under the semiring operations.  The third one computes, for a given sw-VPA, the best word with respect to the natural order of the underlying semiring.
+
+1. The first one is a Bar-Hillel Perles Shamir construction for a given swT and a given sWA.  
+2. The second one performs the closure of two sw-VPA under the semiring operations.  
+3. The third one computes, for a given sw-VPA, the best word with respect to the natural order of the underlying semiring.
 
 Finally, the paper introduces the framework of Symbolic Weighted Parsing, which, given
 - a word from some input alphabet,
@@ -60,7 +64,7 @@ List of mistakes:
 - [x] 47: Boolean Formulas
 - [ ] 51--53: the jump from automata to grammars is uneasy and not really necessary, as the paper mainly deals with automata
 - [ ] 57: weighted automata don't have ASTs, but runs
-- [ ] 60: other approaches use multioperator monoids or valuation monoids, so `at minima a semiring' is wrong
+- [x] 60: other approaches use multioperator monoids or valuation monoids, so `at minima a semiring' is wrong
 - [x] 70: the second comma is superfluous
 - [x] 74: missing period and space after $\oplus$
 - [ ] 75: maybe cite Parsing as intersection by Nederhof and Satta (2003)
@@ -73,21 +77,22 @@ List of mistakes:
 - [x] 122: if it IS; I'd also add a comma after total
 - [x] 123: Lemma 2 is Lemma 2 in [21], you should refer to it
 - [x] 125: you write `then', but the following sentence seems to be disconnected from the previous lemma
-- [ ] 126: you should cite Knuth's generalization of Dijkstra's algorithm for superiority, he defines the notion for functions of arbitrary arity, so not just semirings (but multioperator monoids); you should give an example for superiority in the semiring notation (with $\otimes$)
-  Moreover, the `corresponds' is wrong, since superiority generalizes non-negative edge weights
+- [ ] 126: you should cite Knuth's generalization of Dijkstra's algorithm for superiority, he defines the notion for functions of arbitrary arity, so not just semirings (but multioperator monoids); 
+- [ ] you should give an example for superiority in the semiring notation (with $\otimes$)
+- [x] Moreover, the `corresponds' is wrong, since superiority generalizes non-negative edge weights
 - [ ] PS: Knuth's definition of superiority includes monotonicity
 - [x] 128: increaseS
-- [ ] 136: what implies?
-- [ ] 143: Lemma 4 is Lemma 3 in [21]
+- [x] 136: what implies?
+- [x] 143: Lemma 4 is Lemma 3 in [21]
 - [x] 146: need infinite sums with \oplus -> need to extend \oplus to infinitely many operands
 - [x] 147: dom is undefined; I can also be ℕ
 - [x] 151: partitionS
 - [x] 152: I'd use plural, i.e. products and sums
-- [ ] 153: quantify $x$ and the family ($y_i$) for $i ∈ ℕ$
-- [ ] 155--156: alphabets are usually finite and non-empty sets
+- [x] 153: quantify $x$ and the family ($y_i$) for $i ∈ ℕ$
+- [x] 155--156: alphabets are usually finite and non-empty sets
 - [x] 156: the sentence ends after … which is difficult to spot
 - [ ] 159: denoted by; also it seems like $\bar\Phi$ is a ($\Sigma \cup \Sigma \times \Delta$)-indexed family, why don't you introduce it like this
-- [ ] 161--171: use an itemize environment 
+- [x] 161--171: use an itemize environment 
 - [ ] 162--165: I think these should also hold for $\Delta$, why don't you write this explicitly?
 - [x] 186: calculability -> computability?
 - [ ] 188: the definition of $\bigoplus_\Delta$ can be seen to be implicit.  Please fully quantify the alphabets of a label theory
@@ -109,7 +114,7 @@ List of mistakes:
 - [x] 252: for EVERY
 - [x] 253: replace comma by and
 - [x] 281: Partitioned
-- [ ] 284: $x$ is a variable, so it should be typeset in math mode
+- [x] 284: $x$ is a variable, so it should be typeset in math mode
 - [x] 290: appogGiatura; ornAmental; also, I'd give this explanation already in Example 1 where the appoggiatura is first used
 - [ ] 291: I'd at least say once that $\Delta_i$, $\Delta_c$, and $\Delta_r$ are pairwise disjoint (or explain the symbol)
 - [ ] 297: the extension here is not as in Section 3, there, the different function hat at least similar types

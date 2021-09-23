@@ -7,7 +7,9 @@
 generalizing the Boolean algebras of~\cite{dAntoniVeanes17CAV}.
 %from Boolean to other semiring domains.
 %
-We consider \emph{alphabets}, which are countable sets of symbols
+We consider \emph{alphabets}, which are countable 
+\reviews{1) non-empty}
+sets of symbols
 denoted by $\Sigma$, $\Delta$,...
 Moreover, $\Sigma^*$ is the set of finite sequences (\emph{words}) over
 $\Sigma$, $\varepsilon$ the empty word, $\Sigma^+ = \Sigma^* \setminus \{ \varepsilon \}$,
@@ -20,6 +22,7 @@ and $u v$ denotes the concatenation of $u, v \in \Sigma^*$.
 Given a semiring $\< \Semiring, \oplus, \zero, \otimes, \one>$,
 a \emph{label theory} over~$\Semiring$
 is a set $\bar\Phi$ of recursively enumerable sets denoted by
+\reviews{1) $\bar\Phi$ is a $(\Sigma \cup \Sigma \times \Delta)$-indexed family...}
 %$\Phi_\epsilon \subseteq \Semiring$, % containing constant functions valued in $\Semiring$,
 $\Phi_\Sigma$, %and $\Phi_\Delta$,
 containing unary functions of type $\Sigma \to \Semiring$, %resp. $\Delta \to \Semiring$,
@@ -34,7 +37,8 @@ $\Phi_{\Sigma} \in \bar\Phi$ and $\Phi_{\Delta} \in \bar\Phi$
 
 \noindent --
 every $\Phi_{\Sigma}\in \bar\Phi$ contains all the constant functions from $\Sigma$ into $\Semiring$,
-
+\reviews{3) contradicts $\Sigma$ countable}
+\reviews{1) $\forall \Sigma$...}
 \noindent --
 for all $\alpha \in \Semiring$ and $\phi \in \Phi_\Sigma$,
       $\alpha \otimes \phi : x \mapsto \alpha \otimes \phi(x)$,

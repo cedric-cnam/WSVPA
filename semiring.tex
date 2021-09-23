@@ -74,7 +74,8 @@ $\Semiring$ is \emph{monotonic} \wrt $\leq_\oplus$.
 %
 Another important semiring property in the context of optimization
 is {superiority}~\cite{Huang08advanceddynamic},
-which corresponds to the
+\reviews{1) also \cite{Knuth77}: "he defines the notion for functions of arbitrary arity, so not just semirings (but multioperator monoids"}
+which generalizes to the
 \emph{non-negative weights} condition in shortest-path algorithms~\cite{Dijkstra59anote}.
 Intuitively, it means that combining elements with~$\otimes$ always increases their weight.
 Formally, it is defined as the property ($i$) below. %of the following lemma.
@@ -107,6 +108,7 @@ by definition of $\leq_\oplus$, $\one \oplus x = \one$.
 %\qed
 \end{proof}
 
+\reviews{1) example superiority}
 In~\cite{Huang08advanceddynamic}, when  property~$(i)$ holds,
 $\Semiring$ is called \emph{superior} \wrt~$\leq_\oplus$.
 It implies (proof of Lemma~\ref{lem:bounded})
@@ -126,7 +128,7 @@ In~\cite{Mohri02semiring},
 $\Semiring$ with the property ($ii$) of Lemma~\ref{lem:bounded}
 is called \emph{bounded} -- we shall use this term in the rest of the paper.
 % \emph{negative boundedness}
-It implies that, when looking for a best path in a graph whose edges
+Boundedeness implies that, when looking for a best path in a graph whose edges
 are weighted by values of $\Semiring$, the loops can be safely avoided,
 because, for every $x \in \Semiring$ and $n \geq 1$,
  $x \oplus x^n = x \otimes (\one \oplus x^{n-1}) = x$.
