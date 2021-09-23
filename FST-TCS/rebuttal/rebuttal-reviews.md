@@ -60,9 +60,9 @@ The first one is a Bar-Hillel Perles Shamir construction for a given swT and a g
 Finally, the paper introduces the framework of Symbolic Weighted Parsing, which, given
 - a word from some input alphabet,
 - an sw-VPA over some target alphabet, and
-- an swT mapping words from the input alphabet to the internal symbols of the sw-VPA's alphabet,
-  aims to compute a nested word which minimizes both the weight assigned to it by the sw-VPA and the distance to the input word (which is computed by the swT).  The authors show that this problem can be solved in polynomial time by combining the three constructions introduced earlier.  Moreover, they
-  motivate their work by the example of the automatic transcription of music recordings into music scores.
+- an swT mapping words from the input alphabet to the internal symbols of the sw-VPA's alphabet,  aims to compute a nested word which minimizes both the weight assigned to it by the sw-VPA and the distance to the input word (which is computed by the swT).  
+
+The authors show that this problem can be solved in polynomial time by combining the three constructions introduced earlier.  Moreover, they motivate their work by the example of the automatic transcription of music recordings into music scores.
 
 - [ ] The formalism of symbolic weighted automata is not original to the paper.  It was already introduced by Herrmann and Vogler (2016) and later revised by Herrmann (2020) under the name of weighted symbolic automata with data storage.  This literature subsumes swA (by choosing the trivial storage), swT (since transducers can be understood as particular weighted automata), and sw-VPA, for which the data storage VP was defined.  Moreover, the earlier work is more general, since it allows unital valuation monoids (rather than just semirings) as weight structures.  They authors of the present paper should refer to the earlier publications and clearly distinguish between adopted concepts and their own work.
 
@@ -251,8 +251,7 @@ TITLE: Symbolic Weighted Language Models and Quantitative Parsing over Infinite 
 AUTHORS: Florent Jacquemard, Philippe Rigaux and Lydia Rodrigez de la Nava
 
 ----------- Overall evaluation -----------
-Transducers and visibly pushdown automata are used for parsing input words into abstract syntax trees. When the input words carry information from an infinite domain, such as time stamps, the transducers and automata need to be extended to handle these, which is the topic of this paper. The transducers are extended in one direction to handle inputs from the infinite domain, using the concepts from symbolic automata. Transducers are extended in another direction to give multiple outputs with associated weights. These can be used to produce multiple options for intermediate representations before computing the abstract syntax trees. The multiple intermediate representations can be compared and the one with the minimum weight can be picked up for further processing by visibly pushdown automata to construct the abstract syntax tree. The visibly pushdown automata are again extended to handle symbolic inputs and ouptut weights for different possible runs, which represent different!
-  possible abstract syntax trees.
+Transducers and visibly pushdown automata are used for parsing input words into abstract syntax trees. When the input words carry information from an infinite domain, such as time stamps, the transducers and automata need to be extended to handle these, which is the topic of this paper. The transducers are extended in one direction to handle inputs from the infinite domain, using the concepts from symbolic automata. Transducers are extended in another direction to give multiple outputs with associated weights. These can be used to produce multiple options for intermediate representations before computing the abstract syntax trees. The multiple intermediate representations can be compared and the one with the minimum weight can be picked up for further processing by visibly pushdown automata to construct the abstract syntax tree. The visibly pushdown automata are again extended to handle symbolic inputs and ouptut weights for different possible runs, which represent different! possible abstract syntax trees.
 
 The contributions of this paper are extending transducers and automata to handle symbolic inputs and to output weights in a semiring instead of Boolean values. The paper also gives procedures for computing minimum weights for given inputs and to compute witnesses for these minimum weights, which will be helpful to construct syntax trees. The definitions have been extended from the respective symbolic and weighted models. The technical details are mostly well written and complemented with intuitive explanations using a running example. However, for now, I am still giving weak accept instead of accept, since I am having difficulty understading a few points. See the last two comments below.
 
@@ -270,7 +269,7 @@ Figure 3: This figure is supposed to compute $<q_1,q_2>$.
 
 
 
-
+---
 ## REVIEW 3
 SUBMISSION: 89
 TITLE: Symbolic Weighted Language Models and Quantitative Parsing over Infinite Alphabets
