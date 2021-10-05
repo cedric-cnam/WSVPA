@@ -1,7 +1,8 @@
 % !TEX root = main.tex
 
 % https://www.springer.com/gp/computer-science/lncs/conference-proceedings-guidelines
-\documentclass[runningheads]{llncs}
+%\documentclass[runningheads, a4paper]{llncs}
+\documentclass{llncs}
 
 %\usepackage[T1]{fontenc}
 %\usepackage[utf8]{inputenc}
@@ -16,10 +17,33 @@
 \def\endex{\hspace*{\fill} $\Diamond$\smallskip }
 {\theorembodyfont{\rmfamily} \theoremstyle{break} \newtheorem{algo}{Algorithm}}
 
-
 % author
-\author{Florent Jacquemard}
-\institute{INRIA \& CNAM, Paris, France\\
-    \email{florent.jacquemard@inria.fr}}
+\author{Florent Jacquemard\inst{1,2} %\orcidID{0000-0003-2269-7550} 
+        \and 
+        Philippe Rigaux\inst{2} 
+        \and 
+        Lydia Rodriguez de la Nava\inst{1,2}}
+
+\institute{INRIA \& CNAM, Paris, France \and 
+           CNAM, Paris, France}
+
+%\email{florent.jacquemard@inria.fr}}
+%{Inria \& CNAM, Paris, France %\and My second affiliation, Country
+%\and \url{https://jacquema.gitlabpages.inria.fr} }{florent.jacquemard@inria.fr}{https://orcid.org/0000-0003-2269-7550}{}
+%{Inria \& CNAM, Paris, France}{lydia.rodriguez-de-la-nava.fr}{}{}
+
+%{philippe.rigaux@cnam.fr}{}{}
+
+%funding Inria AEx Codex, ANR Collabscore,  %ANR-20-CE27-0014 , EU H2020 Polifonia}
+%TODO mandatory, please use full name; only 1 author per \author macro; first two parameters are mandatory, other parameters can be empty. Please provide at least the name of the affiliation and the country. The full address is optional
+
     
+\titlerunning{Symbolic Weighted Parsing} % and Automated Music Transcription
+%\authorrunning{Florent Jacquemard, Philippe Rigaux, Lydia Rodriguez de la Nava}
+    
+
+
+
+
+
     
