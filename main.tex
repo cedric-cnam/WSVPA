@@ -197,7 +197,7 @@
 \newcommand{\ioi}[1]{\mathsf{ioi}({#1})}
 \newcommand{\rank}{\mathsf{rk}}
 \newcommand{\lin}{\mathsf{lin}}
-\renewcommand{\ts}[1]{\mathop{:}{#1}} % timestamp marker
+%\newcommand{\ts}[1]{\mathop{:}{#1}} % timestamp marker
 %\newcommand{\ts}[1]{^{#1}} % timestamp marker
 
 \newcommand{\call}[1]{\ensuremath #1} %{\ensuremath \langle_{#1}}
@@ -1112,9 +1112,10 @@ We do a classical product construction, see Appendix~\ref{sec:product} for detai
 %similar to the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 \end{proof}
 \noindent
-We present now a procedure for searching, for a~$\SWVPA$ $A$,
-a word %$w \in \Delta^*$
-of minimal weight for~$A$.
+%We present now a procedure for searching, for a~$\SWVPA$ $A$,
+%a word %$w \in \Delta^*$
+%of minimal weight for~$A$.
+We present now a procedure for searching a word of minimal weight for a~$\SWVPA$ $A$.
 %as stated in the following proposition. %\wrt~$\leq_\oplus$,
 %It requires the following property of label theories.
 %
@@ -1166,6 +1167,9 @@ b_\bot(q, q')
 \noindent
 In order to compute the above function $b_\bot : Q \times Q \to \Semiring$,
 we shall consider an auxiliary function $b_\top :  Q \times P \times Q \to \Phic$.
+%%%%%% lydaddition %%%%%%
+The function $b_\bot$ will allow to compute $b_\top$ recursively in the case where the stack in not empty.
+%%%%%% lydaddition %%%%%%
 %
 Intuitively, $b_\top(q, p, q')$ is a function of $\Phic$,
 mapping every $c \in \Deltac$ to
@@ -1173,11 +1177,11 @@ the minimum weight of a computation of~$A$
 starting in state $q$ with a non-empty stack
 $\gamma' = \<c, p> \, \gamma \in \Gamma^+$,
 and ending in state $q'$ with the same stack $\gamma'$,
-such that moreover,
+such that
 the computation does not pop the pair $\<c, p>$ at the top of $\gamma'$
 (\ie $\gamma'$ is left untouched during the computation).
 However, the computation can read $\<c, p>$ at the top of $\gamma'$,
-and can also push another pair $\< c', p'> \in \Gamma$ on $\gamma'$,
+and can also push another pair $\< c', p'> \in \Gamma$ on top of $\gamma'$,
 following the third case 
 in the definition \eqref{eq:SWVPA-weight} of $\weight_A$ (call symbol).
 The pair $\< c', p'>$ can be popped later, during the computation from $q$ to $q'$,
@@ -1203,10 +1207,10 @@ representing the above untouched stack, and let:
 \mathrm{~for~all~} c \in \Deltac
 \end{equation}
 %
-By definition of $\weight_A$ in \eqref{eq:SWVPA-weight},
-using the symbol $\top$ for the part of the stack below $\<c, p>$
-(\ie the substack $\gamma$ in the above $\gamma' = \<c, p> \, \gamma$)
-ensures that this part is not touched during the computation.
+%By definition of $\weight_A$ in \eqref{eq:SWVPA-weight},
+%using the symbol $\top$ for the part of the stack below $\<c, p>$
+%(\ie the substack $\gamma$ in the above $\gamma' = \<c, p> \, \gamma$)
+%ensures that this part is not touched during the computation.
 % there cannot be a pop of $\<c, p>$ followed by a push of $\<c, p>$
 % because it is not possible to push over $\top$ (push read the top of stack).
 %
@@ -1244,13 +1248,16 @@ resp. $\bigoplus_{\Deltac} d_\top(q_1, p, q_2)$, is minimal in $\Semiring$ \wrt 
 
 %\noindent\quad
 %\textbf{for all} $q_0, q_3 \in Q$
-\Update $d_\bot$ if $\< q_1, q_2>$ was extracted, or $d_\top$ 
-if it was $\< q_1, p, q_2>$, 
-as in Figure~\ref{fig:best-update}.$\;$
+\Update $d_\bot$ if $\< q_1, q_2>$ was extracted (see Figure~\ref{fig:best-update-bottom}), or $d_\top$ 
+if it was $\< q_1, p, q_2>$
+(see Figure~\ref{fig:best-update-top}).$\;$
 }
 \caption{Best search for \SWVPA}
 \label{algo:Dijkstra}
 \end{algorithm}
+
+\input{proof}
+
 
 Algorithm~\ref{algo:Dijkstra} constructs iteratively, using a priority queue $\Q$, 
 two markings
@@ -1303,15 +1310,14 @@ For every $q_0, q_3 \in Q$ and $p' \in P$, if $\< q_1, q_2> \notin \Q$
 %
 d_\bot(q_1, q_3) & \opluseq &
   d_\bot(q_1, q_2) \otimes
-  \displaystyle\bigoplus_{\Deltai} \weiei(q_2, q_3)
-  \mathrm{if~} \< q_1, q_2> \notin \Q \\
+  \displaystyle\bigoplus_{\Deltai} \weiei(q_2, q_3)\\
 %
 d_\bot(q_0, q_3) & \opluseq &
   {\displaystyle\bigoplus_{\Deltac}}
   \bigl(
-  \weiec(q_0, p, q_1) \otimes
-   d_\top(q_1, p, q_2) \otimes
-  \displaystyle\bigoplus_{\Deltar} \weir(q_2, p, q_3)\bigr)\\
+  \weiec(q_0, p', q_1) \otimes
+   d_\top(q_1, p', q_2) \otimes
+  \displaystyle\bigoplus_{\Deltar} \weir(q_2, p', q_3)\bigr)\\
 %
 d_\bot(q_1, q_3) & \opluseq &
   d_\bot(q_1, q_2) \otimes
@@ -1321,14 +1327,18 @@ d_\bot(q_1, q_3) & \opluseq &
   d_\bot(q_1, q_2) \otimes d_\bot(q_2, q_3)\  \mathrm{if~} \< q_2, q_3> \notin \Q \\
 \end{array}
 \]
+\caption{The update $d_\top$ when $\< q_1, q_2> \notin \Q$.}
+\label{fig:best-update-bottom}
+\end{figure}
 %
+
+\begin{figure}[ht]
 For every $q_0, q_3 \in Q$ and $p' \in P$, if $\< q_1, p, q_2> \notin \Q$
 \[
 \begin{array}{lcl}
 d_\top(q_1, p, q_3) & \opluseq &
   d_\top(q_1, p, q_2) \otimes
-  \displaystyle\bigoplus_{\Deltai} \weii(q_2, p, q_3)
-  \mathrm{if~} \< q_1, p, q_2> \notin \Q \\
+  \displaystyle\bigoplus_{\Deltai} \weii(q_2, p, q_3)\\
 %\multicolumn{3}{l}{\quad
 %\mathrm{where~} \weii(q_2, p, q_3)_a \in \Phic
 %\mathrm{~is~the~partial~application~}
@@ -1345,7 +1355,7 @@ d_\top(q_0, p', q_3) & \opluseq &
 %
 d_\top(q_1, p, q_3) & \opluseq &
   d_\top(q_1, p, q_2) \otimes d_\top(q_2, p, q_3)\ 
-  \mathrm{if~} \< q_2, p, q_3> \notin \Q \\
+\\
 \end{array}
 \]
 %$\weii(q_2, p, q_3)_a \in \Phic$, for $a \in \Deltai$,
@@ -1356,9 +1366,8 @@ d_\top(q_1, p, q_3) & \opluseq &
 %is the partial application
 %$x_c \mapsto \weic(q_0, p, x_c, c', p', q_1)$.
 %\caption{Update $d_\bot$ with $\<q_1, q_2>$ or $d_\top$ with $\< q_1, p, q_2>$.}
-\caption{The update of $d_\bot$ when $\< q_1, q_2> \notin \Q$, 
-         and the update $d_\top$ when $\< q_1, q_2> \notin \Q$.}
-\label{fig:best-update}
+\caption{The update of $d_\bot$ when $\< q_1, q_2> \notin \Q$.}
+\label{fig:best-update-top}
 \end{figure}
 %
 %\noindent
