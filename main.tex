@@ -1248,9 +1248,8 @@ resp. $\bigoplus_{\Deltac} d_\top(q_1, p, q_2)$, is minimal in $\Semiring$ \wrt 
 
 %\noindent\quad
 %\textbf{for all} $q_0, q_3 \in Q$
-\Update $d_\bot$ if $\< q_1, q_2>$ was extracted (see Figure~\ref{fig:best-update-bottom}), or $d_\top$ 
-if it was $\< q_1, p, q_2>$
-(see Figure~\ref{fig:best-update-top}).$\;$
+\Update $d_\bot$ if $\< q_1, q_2>$ was extracted (Figure~\ref{fig:best-update-bottom}), or \\
+\Update $d_\top$ if $\< q_1, p, q_2>$ was extracted (Figure~\ref{fig:best-update-top}).$\;$
 }
 \caption{Best search for \SWVPA}
 \label{algo:Dijkstra}
@@ -1303,61 +1302,68 @@ $\bigoplus_{\Deltac} d_\top(q_1, p, q_2) = \bigoplus_{\Deltac} b_\top(q_1, p, q_
 %of Algorithm~\ref{algo:Dijkstra}.
 
 \begin{figure}[ht]
-For every $q_0, q_3 \in Q$ and $p' \in P$, if $\< q_1, q_2> \notin \Q$ 
-\[
+\(
 \begin{array}{lcl}
-%\multicolumn{3}{l}{\mathrm{For~all~} q_0, q_3 \in Q, p \in P,}\\
-%
-d_\bot(q_1, q_3) & \opluseq &
-  d_\bot(q_1, q_2) \otimes
-  \displaystyle\bigoplus_{\Deltai} \weiei(q_2, q_3)\\
+\multicolumn{3}{l}{%
+ \mbox{For~every}\  q_0, q_3 \in Q,}\\[1mm] % if $\< q_1, p, q_2> \notin \Q$
 %
 d_\bot(q_0, q_3) & \opluseq &
-  {\displaystyle\bigoplus_{\Deltac}}
+  d_\bot(q_0, q_2) \otimes
+  \bigoplus_{\Deltai} \weiei(q_2, q_3)\ 
+  \mathrm{if~} \< q_0, q_2> \notin \Q \\
+%
+d_\bot(q_0, q_3) & \opluseq &
+  {\bigoplus_{\Deltac}}
   \bigl(
-  \weiec(q_0, p', q_1) \otimes
-   d_\top(q_1, p', q_2) \otimes
-  \displaystyle\bigoplus_{\Deltar} \weir(q_2, p', q_3)\bigr)\\
+  \weiec(q_0, p, q_1) \otimes
+   d_\top(q_1, p, q_2) \otimes
+  \bigoplus_{\Deltar} \weir(q_2, p, q_3)\bigr)\ 
+  \mathrm{if~} \< q_1, p, q_2> \notin \Q \\
 %
-d_\bot(q_1, q_3) & \opluseq &
-  d_\bot(q_1, q_2) \otimes
-  \displaystyle\bigoplus_{\Deltar} \weier(q_2, q_3)\\
+d_\bot(q_0, q_3) & \opluseq &
+  d_\bot(q_0, q_2) \otimes
+  \bigoplus_{\Deltar} \weier(q_2, q_3)\ 
+  \mathrm{if~} \< q_0, q_2> \notin \Q \\ 
 %
-d_\bot(q_1, q_3) & \opluseq &
-  d_\bot(q_1, q_2) \otimes d_\bot(q_2, q_3)\  \mathrm{if~} \< q_2, q_3> \notin \Q \\
+d_\bot(q_0, q_3) & \opluseq &
+  d_\bot(q_0, q_2) \otimes d_\bot(q_2, q_3)\  
+  \mathrm{if~} \< q_0, q_2>\notin \Q, \< q_2, q_3> \notin \Q \\[-1mm]
 \end{array}
-\]
-\caption{The update $d_\top$ when $\< q_1, q_2> \notin \Q$.}
+\)
+\caption{\textbf{update} $d_\bot$ (Algorithm~\ref{algo:Dijkstra}).}
 \label{fig:best-update-bottom}
 \end{figure}
 %
 
 \begin{figure}[ht]
-For every $q_0, q_3 \in Q$ and $p' \in P$, if $\< q_1, p, q_2> \notin \Q$
-\[
+\(
 \begin{array}{lcl}
-d_\top(q_1, p, q_3) & \opluseq &
-  d_\top(q_1, p, q_2) \otimes
-  \displaystyle\bigoplus_{\Deltai} \weii(q_2, p, q_3)\\
+\multicolumn{3}{l}{%
+ \mbox{For~every}\  q_0, q_3 \in Q\ \mbox{and}\ p \in P,}\\[1mm] % if $\< q_1, p, q_2> \notin \Q$
+d_\top(q_0, p, q_3) & \opluseq &
+  d_\top(q_0, p, q_2) \otimes
+  \bigoplus_{\Deltai} \weii(q_2, p, q_3)\
+  \mathrm{if~} \< q_0, p, q_2> \notin \Q \\
 %\multicolumn{3}{l}{\quad
 %\mathrm{where~} \weii(q_2, p, q_3)_a \in \Phic
 %\mathrm{~is~the~partial~application~}
 %x_c \mapsto \weii(q_2, x_c, p, a, q_3)}\\
-d_\top(q_0, p', q_3) & \opluseq &
-  {\displaystyle\bigoplus_{\Deltac}}^2
-  \bigl[ \bigl( \weic(q_0, p', q_1, p) \otimes_2
-  d_\top(q_1, p, q_2) \bigr) \otimes_2
-  {\displaystyle\bigoplus_{\Deltar}} \weir(q_2, p, q_3) \bigr]\\
+d_\top(q_0, p, q_3) & \opluseq &
+  {\bigoplus^2_{\Deltac}}
+  \bigl[ \bigl( \weic(q_0, p, q_1, p) \otimes_2
+  d_\top(q_1, p', q_2) \bigr) \otimes_2
+  {\bigoplus_{\Deltar}} \weir(q_2, p', q_3) \bigr]\
+  \mathrm{if~} \< q_1, p', q_2> \notin \Q \\
 %\multicolumn{3}{l}{\quad
 %\mathrm{where~} \weic(q_0, p, p', q_1)_{c'} \in \Phic
 %\mathrm{~is~the~partial~application~}
 %x_c \mapsto \weic(q_0, p, x_c, c', p', q_1)}\\[2pt]
 %
-d_\top(q_1, p, q_3) & \opluseq &
-  d_\top(q_1, p, q_2) \otimes d_\top(q_2, p, q_3)\ 
-\\
+d_\top(q_0, p, q_3) & \opluseq &
+  d_\top(q_0, p, q_2) \otimes d_\top(q_2, p, q_3)\ 
+  \mathrm{if~} \< q_0, p, q_2> \notin \Q, < q_2, p, q_3> \notin \Q \\[-1mm]
 \end{array}
-\]
+\)
 %$\weii(q_2, p, q_3)_a \in \Phic$, for $a \in \Deltai$,
 %is the partial application
 %$x_c \mapsto \weii(q_2, x_c, p, a, q_3)$.
@@ -1366,7 +1372,7 @@ d_\top(q_1, p, q_3) & \opluseq &
 %is the partial application
 %$x_c \mapsto \weic(q_0, p, x_c, c', p', q_1)$.
 %\caption{Update $d_\bot$ with $\<q_1, q_2>$ or $d_\top$ with $\< q_1, p, q_2>$.}
-\caption{The update of $d_\bot$ when $\< q_1, q_2> \notin \Q$.}
+\caption{\textbf{update} $d_\top$ (Algorithm~\ref{algo:Dijkstra}).}
 \label{fig:best-update-top}
 \end{figure}
 %
