@@ -266,20 +266,20 @@ a given input \emph{timeline} of musical events
 from an infinite alphabet $\Sigma$,
 is parsed into a structured music score.
 Input events of $\Sigma$
-are pairs $\mu \ts{\tau}$, where $\mu$ is a
-MIDI pitch~\cite{Selfridge-Field97beyondMIDI}, %\cite{MIDIfile}
+are pairs $\mu \tstamp{\tau}$, where $\mu$ is a
+MIDI key number~\cite{Selfridge-Field97beyondMIDI}, %\cite{MIDIfile}
 and $\tau \in \mathbb{Q}$ is a timestamp in seconds.
 Such inputs typically correspond
 to the recording of a live performance, \eg
-$I = (69\ts{0.07}),
-     (71\ts{0.72}),
-     (73\ts{0.91}),
-     (74\ts{1.05}),
-     (76\ts{1.36}),
-     (77\ts{1.71})$. % over interval $[0,2[$,
+$I = (69\tstamp{0.07}),
+     (71\tstamp{0.72}),
+     (73\tstamp{0.91}),
+     (74\tstamp{1.05}),
+     (76\tstamp{1.36}),
+     (77\tstamp{1.71})$. % over interval $[0,2[$,
 
 The output of parsing is a sequence of
-timed symbols $\nu\ts{\tau'}$ in an alphabet $\Delta$,
+timed symbols $\nu\tstamp{\tau'}$ in an alphabet $\Delta$,
 %events (or \emph{notes})
 %in Common Western Music Notation (CWMN)~\cite{Gould11Notation}
 where $\nu$  represents
@@ -303,25 +303,25 @@ For instance, the output score
 corresponds to a hierarchical structure
 that can be linearized as the sequence
 $O =$
-$\ccall{\mathsf{m}}\ts{[0,1]}$,
-$\ccall{2}\ts{[0,1]}$,
-$\mbox{\footnotesize A4}\ts{0}$,
-$\ccall{2}\ts{[\frac{1}{2},1]}$,
-$-\ts{\frac{1}{2}}$,
-$\ccall{2}\ts{[\frac{3}{4},1]}$,
-$\mbox{\footnotesize B4}\ts{\frac{3}{4}}$,
-$\mbox{\footnotesize C$\sharp$5}\ts{\frac{7}{8}}$,
-$\creturn{2}\ts{1}$,
-$\creturn{2}\ts{1}$,
-$\creturn{2}\ts{1}$,
-$\ccall{\mathsf{m}}\ts{[1,2]}$,
-$\ccall{3}\ts{[1,2]}$,
-$\mbox{\footnotesize D5}\ts{1}$,
-$\mbox{\footnotesize E5}\ts{\frac{4}{3}}$,
-$\mbox{\footnotesize F5}\ts{\frac{5}{3}}$,
-$\creturn{3}\ts{2}$,
-$\creturn{\mathsf{m}}\ts{2}$,
-$\creturn{\mathsf{m}}\ts{2}$.
+$\ccall{\mathsf{m}}\tstamp{[0,1]}$,
+$\ccall{2}\tstamp{[0,1]}$,
+$\mbox{\footnotesize A4}\tstamp{0}$,
+$\ccall{2}\tstamp{[\frac{1}{2},1]}$,
+$-\tstamp{\frac{1}{2}}$,
+$\ccall{2}\tstamp{[\frac{3}{4},1]}$,
+$\mbox{\footnotesize B4}\tstamp{\frac{3}{4}}$,
+$\mbox{\footnotesize C$\sharp$5}\tstamp{\frac{7}{8}}$,
+$\creturn{2}\tstamp{1}$,
+$\creturn{2}\tstamp{1}$,
+$\creturn{2}\tstamp{1}$,
+$\ccall{\mathsf{m}}\tstamp{[1,2]}$,
+$\ccall{3}\tstamp{[1,2]}$,
+$\mbox{\footnotesize D5}\tstamp{1}$,
+$\mbox{\footnotesize E5}\tstamp{\frac{4}{3}}$,
+$\mbox{\footnotesize F5}\tstamp{\frac{5}{3}}$,
+$\creturn{3}\tstamp{2}$,
+$\creturn{\mathsf{m}}\tstamp{2}$,
+$\creturn{\mathsf{m}}\tstamp{2}$.
 %\end{enumerate}
 The opening markups $\ccall{\mathsf{m}}$ %and $\creturn{\mathsf{m}}$
 delimit \emph{measures},

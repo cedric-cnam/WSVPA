@@ -197,7 +197,7 @@
 \newcommand{\ioi}[1]{\mathsf{ioi}({#1})}
 \newcommand{\rank}{\mathsf{rk}}
 \newcommand{\lin}{\mathsf{lin}}
-\renewcommand{\ts}[1]{\mathop{:}{#1}} % timestamp marker
+\newcommand{\tstamp}[1]{\mathpunct{:}{\scriptstyle #1}} % timestamp marker
 %\newcommand{\ts}[1]{^{#1}} % timestamp marker
 
 \newcommand{\call}[1]{\ensuremath #1} %{\ensuremath \langle_{#1}}
@@ -481,14 +481,14 @@ is  skipped with no cost (transitions $\wei_{01}$).
 %Likewise, the markups are ignored.
 \[
 \begin{array}{lclclcll}
-\wei_{11}(q_0, \mu\ts{\tau}, \nu\ts{\tau'}, q_0) & = &
-     \delta(\mu\ts{\tau}, \nu\ts{\tau'}) & \quad & %|\tau' - \tau| & \quad &
-\wei_{11}(q_1, \mu\ts{\tau}, \nu\ts{\tau'}, q_0) & = &
-     \delta(\mu\ts{\tau}, \nu\ts{\tau'}) &
+\wei_{11}(q_0, \mu\tstamp{\tau}, \nu\tstamp{\tau'}, q_0) & = &
+     \delta(\mu\tstamp{\tau}, \nu\tstamp{\tau'}) & \quad & %|\tau' - \tau| & \quad &
+\wei_{11}(q_1, \mu\tstamp{\tau}, \nu\tstamp{\tau'}, q_0) & = &
+     \delta(\mu\tstamp{\tau}, \nu\tstamp{\tau'}) &
      \mbox{if~} \nu \neq - \\ %|\tau' - \tau| & \quad &
-\wei_{01}(q_0, \varepsilon, \mathsf{-}\ts{\tau'}, q_0) & = & \one & &
-\wei_{01}(q_1, \varepsilon, \mathsf{-}\ts{\tau'}, q_0) & = & \one\\
-\wei_{10}(q_0, \mu\ts{\tau}, \varepsilon, q_1) & = & \alpha & & %\multicolumn{3}{l}{\mathrm{for~all~} b \in \Delta}
+\wei_{01}(q_0, \varepsilon, \mathsf{-}\tstamp{\tau'}, q_0) & = & \one & &
+\wei_{01}(q_1, \varepsilon, \mathsf{-}\tstamp{\tau'}, q_0) & = & \one\\
+\wei_{10}(q_0, \mu\tstamp{\tau}, \varepsilon, q_1) & = & \alpha & & %\multicolumn{3}{l}{\mathrm{for~all~} b \in \Delta}
 \end{array}
 \]
 %
@@ -800,23 +800,23 @@ Another example is the other candidate
 of transcription of~$I$,
 linearized into
 $O' =$
-$\ccall{\mathsf{m}}\ts{[0,1]}$,
-$\ccall{2}\ts{[0,1]}$,
-$\mbox{\footnotesize A4}\ts{0}$,
-$\ccall{2}\ts{[\frac{1}{2},1]}$,
-$-\ts{\frac{1}{2}}$,
-$\mbox{\footnotesize B4}\ts{\frac{3}{4}}$,
-$\creturn{2}\ts{1}$,
-$\creturn{2}\ts{1}$,
-$\ccall{\mathsf{m}}\ts{[1,2]}$,
-$\ccall{3}\ts{[1,2]}$,
-$\mbox{\footnotesize `C$\sharp$5`}\ts{1}$,
-$\mbox{\footnotesize D5}\ts{1}$,
-$\mbox{\footnotesize E5}\ts{\frac{4}{3}}$,
-$\mbox{\footnotesize F5}\ts{\frac{5}{3}}$,
-$\creturn{3}\ts{2}$,
-$\creturn{\mathsf{m}}\ts{2}$,
-$\creturn{\mathsf{m}}\ts{2}$
+$\ccall{\mathsf{m}}\tstamp{[0,1]}$,
+$\ccall{2}\tstamp{[0,1]}$,
+$\mbox{\footnotesize A4}\tstamp{0}$,
+$\ccall{2}\tstamp{[\frac{1}{2},1]}$,
+$-\tstamp{\frac{1}{2}}$,
+$\mbox{\footnotesize B4}\tstamp{\frac{3}{4}}$,
+$\creturn{2}\tstamp{1}$,
+$\creturn{2}\tstamp{1}$,
+$\ccall{\mathsf{m}}\tstamp{[1,2]}$,
+$\ccall{3}\tstamp{[1,2]}$,
+$\mbox{\footnotesize `C$\sharp$5`}\tstamp{1}$,
+$\mbox{\footnotesize D5}\tstamp{1}$,
+$\mbox{\footnotesize E5}\tstamp{\frac{4}{3}}$,
+$\mbox{\footnotesize F5}\tstamp{\frac{5}{3}}$,
+$\creturn{3}\tstamp{2}$,
+$\creturn{\mathsf{m}}\tstamp{2}$,
+$\creturn{\mathsf{m}}\tstamp{2}$
 (see also Fig.~\ref{fig:score-tree}).
 The symbol between quotes $\mbox{\footnotesize `C$\sharp$5`}$
 represents an \emph{appogiatura}, %(grace-note),
@@ -1034,8 +1034,8 @@ amongst $c$ sub-intervals of duration~$\ell$ (as indicated by the interval at th
 It reads a new time-division symbol~$\ccall{d}$:
 \(
 \weic\bigl(q_{{i}/{c}},
-           \ccall{c}\ts{[\tau, \tau+\ell]}, q,
-           \ccall{d}\ts{\iota}, q_{{i+1}/{c}},
+           \ccall{c}\tstamp{[\tau, \tau+\ell]}, q,
+           \ccall{d}\tstamp{\iota}, q_{{i+1}/{c}},
            q_{{0}/{d}} \bigr) = \alpha_d
 \).
 The time interval $\iota$ attached to~$\ccall{d}$ 
@@ -1061,16 +1061,16 @@ a return symbol $\creturn{d}$,
 with the transition:
 \(
 \weir\bigl(q_{{d}/{d}},
-           \ccall{d}\ts{[\tau, \tau+\ell]}, q_{{i+1}/{c}},
-           \,\creturn{d}\ts{\tau + \ell}, q_{{i+1}/{c}} \bigr) = \one
+           \ccall{d}\tstamp{[\tau, \tau+\ell]}, q_{{i+1}/{c}},
+           \,\creturn{d}\tstamp{\tau + \ell}, q_{{i+1}/{c}} \bigr) = \one
 \).
 
 \noindent
 Reading a musical event $\mu$ is done with:
 \(
 \weii\bigl(q_{{i}/{d}},
-           \ccall{d}\ts{[\tau, \tau+\ell]}, q_{{j}/{c}},
-           \mu\ts{\tau + \frac{i\ell}{d}}, q_{{i+1}/{d}} \bigr) = \alpha_\mu
+           \ccall{d}\tstamp{[\tau, \tau+\ell]}, q_{{j}/{c}},
+           \mu\tstamp{\tau + \frac{i\ell}{d}}, q_{{i+1}/{d}} \bigr) = \alpha_\mu
 \).
 % cas des barres de mesure?
 %For the case of a new measure symbol,
@@ -1078,14 +1078,14 @@ Reading a musical event $\mu$ is done with:
 The transition to start reading the first measure is:
 \(
 \weiec\bigl(q_{1/1},
-           \ccall{\mathsf{m}}\ts{[0, 1]}, q_{1/1},
+           \ccall{\mathsf{m}}\tstamp{[0, 1]}, q_{1/1},
            q_{1/1} \bigr) = \one
 \),
 and for a new measure:
 \(
 \weic\bigl(q_{1/1},
-          \ccall{\mathsf{m}}\ts{[\tau-1, \tau]}, q_{1/1},
-          \ccall{\mathsf{m}}\ts{[\tau, \tau+1]}, q_{1/1},
+          \ccall{\mathsf{m}}\tstamp{[\tau-1, \tau]}, q_{1/1},
+          \ccall{\mathsf{m}}\tstamp{[\tau, \tau+1]}, q_{1/1},
           q_{1/1} \bigr) = \one
 \).
 \endex
