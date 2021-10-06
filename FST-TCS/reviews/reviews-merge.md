@@ -2,19 +2,16 @@
 
 version merged with rebuttal reviews
 
-
-
 > date: 20 Sept 2021
 > from: fsttcs2021@easychair.org
-
-
 
 SUBMISSION: 89
 TITLE: Symbolic Weighted Language Models and Quantitative Parsing over Infinite Alphabets
 
-
 ---
+
 ## REVIEW 1
+
 SUBMISSION: 89
 TITLE: Symbolic Weighted Language Models and Quantitative Parsing over Infinite Alphabets
 AUTHORS: Florent Jacquemard, Philippe Rigaux and Lydia Rodrigez de la Nava
@@ -30,6 +27,7 @@ Based on these concepts, the paper introduces a variety of constructions.
 3. The third one computes, for a given sw-VPA, the best word with respect to the natural order of the underlying semiring.
 
 Finally, the paper introduces the framework of Symbolic Weighted Parsing, which, given
+
 - a word from some input alphabet,
 - an sw-VPA over some target alphabet, and
 - an swT mapping words from the input alphabet to the internal symbols of the  sw-VPA's alphabet,  aims to compute a nested word which minimizes both the weight assigned to it by the sw-VPA and the distance to the input word (which is computed by the swT).  
@@ -53,6 +51,7 @@ weighted automata to the framework of symbolic weighted parsing.
 In particular, the authors could spend fewer pages repeating already established concepts from the literature and integrate Appendix D into the main paper.
 
 List of mistakes:
+
 - [x] 17: who -> which; missing comma after swT
 - [x] 18: superfluous comma
 - [x] 26: compilers or interpreters for programming languages
@@ -150,16 +149,14 @@ List of mistakes:
 
 Original literature:
 
-- [  ]  Herrmann and Vogler (2016): L. Herrmann & H. Vogler (2016): Weighted Symbolic Automata with Data Storage. In: Developments in Language Theory, Springer, pp. 203–215, doi:10.1007/978-3-662-53132-7 17.
+- [ ] Herrmann and Vogler (2016): L. Herrmann & H. Vogler (2016): Weighted Symbolic Automata with Data Storage. In: Developments in Language Theory, Springer, pp. 203–215, doi:10.1007/978-3-662-53132-7 17.
 
 - [ ] Herrmann (2020): L. Herrmann (2016): Weighted Automata with Storage. PhD thesis. Technische Universität Dresden, 2020, urn:nbn:de:bsz:14-qucosa2-740685
 
-
-
-
-
 ---
+
 ## REVIEW 2
+
 SUBMISSION: 89
 TITLE: Symbolic Weighted Language Models and Quantitative Parsing over Infinite Alphabets
 AUTHORS: Florent Jacquemard, Philippe Rigaux and Lydia Rodrigez de la Nava
@@ -176,15 +173,16 @@ The contributions of this paper are extending transducers and automata to handle
 - [x] Last line of algorithm 1: What exactly is meant by "update $d_⊥$ with $<q_1,q_2>$"? Does it mean update the image of $<q_1,q_2>$ under $d_⊥$ with the new value as computed in Figure 3? Write this clearly.
 
 Figure 3: This figure is supposed to compute $<q_1,q_2>$. 
+
 - [x] First of all, it is not clear what is meant by "compute $<q_1,q_2>$"; I am guessing, as I wrote in the comment above that the computed quantity is the image of $<q_1,q_2>$ under $d_⊥$. However, even this doesn't make sense; there are some series of equantions written, for $d_\top(q_1,p,q_3)$ (not for $d_\top(q_1,p,q_2)$. 
 - [x] Even in this equation, what is $q_2$? Do we take the minimum (wrt $\oplus$) over all $q_2$? 
 - [x] The second line says $d_\bot(q_1,p,q_3)$, which doesn't make sense because $d_⊥$ takes two arguments, not three. 
 - [x] There are two equations for $d_\top(q_1,p,q_3)$ and one for $d_\top(q_0,p,q_3)$. How are these related? It is very confusing what is being computed here and how. Please update this to make it clear.
 
-
-
 ---
+
 ## REVIEW 3
+
 SUBMISSION: 89
 TITLE: Symbolic Weighted Language Models and Quantitative Parsing over Infinite Alphabets
 AUTHORS: Florent Jacquemard, Philippe Rigaux and Lydia Rodrigez de la Nava
@@ -214,8 +212,6 @@ Another possible interpretation would be that the distance is between the two di
 
 I think that, for me, the confusion stems partly from Mohri exclusively talking about distances between two strings (languages,distributions) over the _same_ alphabet, while $s$, crucially, comes from a _different_ alphabet than the one over which $A$ defines a distribution.
 
-
-
 **Preliminary Notions**:
 
 - [ ] The introduction of Label theories (l 154++) does not depend on its first paragraph containing the definitions of words and alphabets, as far as I can tell, so I would let this first paragraph sit under its own title of e.g. "Alphabets and words". 
@@ -232,14 +228,16 @@ The paragraph starting at line 224 is a great summary of the way you consider ed
 **SW Visibly Pushdown Automata**
 
 Example 14 is quite limited in detail in comparison to the earlier examples, while being more complex in scope. This makes the specifics of the example hard to double check, and to properly understand. 
+
 - [ ] It is also somewhat difficult to separate the symbols that form part of the language from those of the meta-language in the specifications of the various $w$ function calls. 
+
 - [ ] Additionally, you write "the above transition pushes the state $q_{i + 1/c}$ on[to] the stack" - I would encourage you to choose different letters and terminology than "state $q$" for stack symbols, to reduce the risk for the reader confusing the stack symbols and states. 
+
 - [ ] In fact, it may be a good idea to show a fuller schematic of a few steps of the sw-VPA computation, with relevant connections between various variables highlighted, what equalities need to hold etc.
 
 - [ ] On line 366 of Proposition 16, the "can be" should be "must be", surely, since what you are describing is a computation that should leave the original stack (exactly) untouched?
 
 - [ ] It seems to me that there is a consistent lack of quantification over $P$ in the section starting with the definition of $b_\top$. This is not hugely problematic for the proof, since the algorithm is still defined (mostly) properly, and the complexity should only be impacted by a factor of something like $|P|$.
-
 
 **Minor comments**:
 
@@ -278,8 +276,8 @@ Example 14 is quite limited in detail in comparison to the earlier examples, whi
 - [x] l. 365: "case of in the" -> either "case in the" or "case of the"
 
 - [x] l. 366: pop -> popped
-
- - [x] The second case in Figure 3 should start with $d_\top$, not $d_\bot$
+  
+  - [x] The second case in Figure 3 should start with $d_\top$, not $d_\bot$
 
 - [x] l. 395: I would omit "output". If you want to draw attention to the different alphabets involved, I would say "between the string $s$ over the input alphabet, and the weighted language over the output alphabet defined by $A$"
 
@@ -298,8 +296,9 @@ Example 14 is quite limited in detail in comparison to the earlier examples, whi
 - [x] l. 435: "offline" -> "works offline"
 
 - [x] l. 437: extraneous comma after "such as"
+  
+  References:
 
- References:
 - [x] Ref 22 and 23 both seem to refer to the same work by Mohri
 
 Additional technical remarks added later (possibly the authors intend to take care of these already):
@@ -318,6 +317,5 @@ Remark: In Def. 6 the meaning of the requirement "moreover, the number of symbol
 Further remark:
 
 - [ ] The authors should state that the symbolic-weighted transducers of Def. 7 do not form a new model. They are classical weighted transducers where the alphabets are permitted to be infinite. For this, one could simply replace their weight functions by a single function $$wt: Q \times (\Sigma \cup \{ \epsilon\}) \times (\Delta \cup \{\epsilon\}) \times Q \to S$$. 
-
+  
   In particular, the swA of Def 9 are classical weighted finite automata.
-
