@@ -1064,6 +1064,54 @@ For example, let's say we want to prioritize tuplets over triplets, then we set 
 \endex
 \end{example}
 
+%\begin{example} \label{ex:SWVPA}
+%\reviews{revision ex. needed. see rev. 3) and app. $\weic$, $\weir$, $\weii$ wrong.}
+%We consider a \SWVPA over the alphabet of Example~\ref{ex:nested-word} and with $P = Q$
+%that expresses a weight related to the music notation,
+%or more precisely to its structural complexity.
+%Given a set of equivalent representations, we aim at choosing the simpler one.
+%
+%Let's say the top of the stack is a tuple of the call~$\ccall{n}\tstamp{[\tau, \tau+\ell] and a state $q$. Let's now consider a new call transition starting in state $q_{\frac{j}{n}}$, that is the $j$-th state of the $n$ sub-intervals of duration~$\frac{\ell}{n}$.
+%We thus read a new time-division symbol ~$\ccall{d}$ and compute the weight of the transition from q_{\frac{j}{n}} to q_{\frac{1}{d} (the first state after the new ~$\ccall{d}$), reading the top of the stack <\ccall{n}\tstamp{[\tau, \tau+\ell]}, q>, and pushing <\ccall{d}\tstamp{\iota}, q_{\frac{j+1}{c}}> on top, or:
+%\(
+%\weic\bigl(q_{\frac{j}{n}},
+           %\ccall{n}\tstamp{[\tau, \tau+\ell]}, q,
+           %\ccall{d}\tstamp{\iota}, q_{\frac{j+1}{c}},
+           %q_{\frac{1}{d}} \bigr) = \alpha_d
+%%\).
+%
+%\noindent
+%Reading the $k$-th musical event $\mu$ in this current sub-interval is computed with:
+%\(
+%\weii\bigl(q_{{k}/{d}},
+           %\ccall{d}\tstamp{[\tau, \tau+\ell]}, q_{\frac{j}{n}},
+           %\mu\tstamp{\tau + \frac{j\ell}{d}}, q_{\frac{k+1}{d}} \bigr) = \alpha_\mu
+%\).
+%Finally, this sub-interval will end after reading a return symbol \creturn{d} which will compute the transition:
+%\(
+%\weir\bigl(q_{\frac{d}{d}},
+           %\ccall{d}\tstamp{[\tau, \tau+\ell]}, q_{\frac{i+1}{c}},
+           %\,\creturn{d}\tstamp{\tau + \ell}, q_{\frac{i+1}{c}} \bigr) = \one
+%\).
+%
+%\noindent
+%We described earlier the special cases where the stack is empty, which applies for example when reading the first measure for which we push <\ccall{\mathsf{m}}\tstamp{[0, 1]}, q_{1/1}>, but don't read anything on the stack:
+%\(
+%\weiec\bigl(q_{1/1},
+ %          \ccall{\mathsf{m}}\tstamp{[0, 1]}, q_{1/1},
+%           q_{1/1} \bigr) = \one
+%\).
+%In comparison, any other new measure would compute instead:
+%\(
+%\weic\bigl(q_{1/1},
+%          \ccall{\mathsf{m}}\tstamp{[\tau-1, \tau]}, q_{1/1},
+%          \ccall{\mathsf{m}}\tstamp{[\tau, \tau+1]}, q_{1/1},
+%          q_{1/1} \bigr) = \one
+%\).
+%\endex
+%\end{example}
+
+
 %\subsection{Properties}
 \medskip\noindent
 Similarly to \VPA~\cite{AlurMadhusudan09nested}
