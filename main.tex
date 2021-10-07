@@ -1015,79 +1015,52 @@ of~$\bar\wei$ are the constant~$\zero$.
 
 \begin{example} \label{ex:SWVPA}
 \reviews{revision ex. needed. see rev. 3) and app. $\weic$, $\weir$, $\weii$ wrong.}
-We consider a \SWVPA over the alphabet of Example~\ref{ex:nested-word}
+We consider a \SWVPA over the alphabet of Example~\ref{ex:nested-word} and with $P = Q$,
 that expresses a weight related to the music notation,
 or more precisely to its structural complexity.
-Given a set of equivalent representations, we aim at choosing the simpler one.
+Given a set of equivalent representations, we aim at choosing the simpler one, \ie the one with the smallest weight.
 
-%Let us assume a third component in the symbols of $\Deltac$
-%\philippe{Je trouve l'exemple un peu confus. Je ne sais pas
-%quel est "l'associate time interval" d'un symbole. Je ne sais
-%pas à quoi fait référence "the following call transition". Je
-%n'ose pas trop toucher mais je crois qu'il faut revoir.}
-%which is the duration of the associated time interval.
-%It is used to check the timestamps in the symbols.
-%
-For instance, the following call transition starts in state
-$q_{{i}/{c}}$, meaning that the current interval has number~$i < c$
-amongst $c$ sub-intervals of duration~$\ell$ (as indicated by the interval at the stack's top).
-It reads a new time-division symbol~$\ccall{d}$:
+\lydia{We should find a better variable name than j... it does not render well in fractions}
+Let's say the top of the stack is a tuple of the call~$\ccall{n}\tstamp{[\tau, \tau+\ell]}$ and a state $q$. Let's now consider a new call transition starting in state $q_{\frac{j}{n}}$, that is the $j$-th state of the $n$ sub-intervals of duration~$\frac{\ell}{n}$.
+We thus read a new time-division symbol ~$\ccall{d}$ and compute the weight of the transition from $q_{\frac{j}{n}}$ to $q_{\frac{1}{d}}$ (the first state after the new ~$\ccall{d}$), reading the top of the stack $<\ccall{n}\tstamp{[\tau, \tau+\ell]}, q>$, and pushing $<\ccall{d}\tstamp{\iota}, q_{\frac{j+1}{c}}>$ on top, or:
 \(
-\weic\bigl(q_{{i}/{c}},
-           \ccall{c}\tstamp{[\tau, \tau+\ell]}, q,
-           \ccall{d}\tstamp{\iota}, q_{{i+1}/{c}},
-           q_{{0}/{d}} \bigr) = \alpha_d
+\weic\bigl(q_{\frac{j}{n}},
+           \ccall{n}\tstamp{[\tau, \tau+\ell]}, q,
+           \ccall{d}\tstamp{\iota}, q_{\frac{j+1}{c}},
+           q_{\frac{1}{d}} \bigr) = \alpha_d
 \).
-The time interval $\iota$ attached to~$\ccall{d}$ 
-must have a starting time $\tau + \frac{i\ell}{c}$,
-where~$\tau$ and~$\ell$ are respectively
-the starting time and duration of the interval attached to
-the previous time-division symbol read $\ccall{c}$ (found on the stack).
-%plus the total duration of intervals read so far, $i \ell$, and
-%the new current interval duration is~$\frac{\ell}{d}$.
-%
-And it must have a duration $\frac{\ell}{d}$.
-
+\lydia{is it ok to explain precisely this computation and not the others ? is it redundant with the explaniation before equation (5) ?}
 \noindent
-The weight of the above transition is $\alpha_d$.
-We can penalize \eg triplets compared to duplets with $\alpha_2 < \alpha_3$.
-%
-\noindent
-Along with $\ccall{d}$,
-the above transition pushes
-the state $q_{{i+1}/{c}}$ on the stack,
-in order to start the next sub-interval after reading 
-a return symbol $\creturn{d}$,
-with the transition:
+Reading the $k$-th musical event $\mu$ in this current sub-interval is computed with:
 \(
-\weir\bigl(q_{{d}/{d}},
-           \ccall{d}\tstamp{[\tau, \tau+\ell]}, q_{{i+1}/{c}},
-           \,\creturn{d}\tstamp{\tau + \ell}, q_{{i+1}/{c}} \bigr) = \one
+\weii\bigl(q_{{k}/{d}},
+           \ccall{d}\tstamp{[\tau, \tau+\ell]}, q_{\frac{j}{n}},
+           \mu\tstamp{\tau + \frac{j\ell}{d}}, q_{\frac{k+1}{d}} \bigr) = \alpha_\mu
 \).
-
-\noindent
-Reading a musical event $\mu$ is done with:
+Finally, this sub-interval will end after reading a return symbol $\creturn{d}$ and compute:
 \(
-\weii\bigl(q_{{i}/{d}},
-           \ccall{d}\tstamp{[\tau, \tau+\ell]}, q_{{j}/{c}},
-           \mu\tstamp{\tau + \frac{i\ell}{d}}, q_{{i+1}/{d}} \bigr) = \alpha_\mu
+\weir\bigl(q_{\frac{d}{d}},
+           \ccall{d}\tstamp{[\tau, \tau+\ell]}, q_{\frac{i+1}{c}},
+           \,\creturn{d}\tstamp{\tau + \ell}, q_{\frac{i+1}{c}} \bigr) = \one
 \).
-% cas des barres de mesure?
-%For the case of a new measure symbol,
-%$q_{1/1}$ is a special (initial) state.
-The transition to start reading the first measure is:
+\noindent
+We described earlier the special cases where the stack is empty, which applies for example when reading the first measure for which we only push $<\ccall{\mathsf{m}}\tstamp{[0, 1]}, q_{1/1}>$ in the stack:
 \(
 \weiec\bigl(q_{1/1},
            \ccall{\mathsf{m}}\tstamp{[0, 1]}, q_{1/1},
            q_{1/1} \bigr) = \one
-\),
-and for a new measure:
+\).
+In comparison, any other new measure would compute instead:
 \(
 \weic\bigl(q_{1/1},
           \ccall{\mathsf{m}}\tstamp{[\tau-1, \tau]}, q_{1/1},
           \ccall{\mathsf{m}}\tstamp{[\tau, \tau+1]}, q_{1/1},
           q_{1/1} \bigr) = \one
 \).
+
+Each transition thus has a weight computing an overall weight for one representation of music notation. 
+When setting the weights, we decide which notation is preferred if possible. 
+For example, let's say we want to prioritize tuplets over triplets, then we set $\alpha_2$ and $\alpha_3$ such as $\alpha_2 > \alpha_3$. In conclusion, a \SWVPA is capable of computing several representations of the same piece of music, allowing to choose the best one.
 \endex
 \end{example}
 
@@ -1428,7 +1401,6 @@ For every $u \in \Sigma^*$ and $t \in \Delta^*$, let
 \(d(u, t) = T\bigl(u, t|_\Deltai \bigr)\),
 where $t|_\Deltai \in \Deltai^*$ is the projection of $t$ onto~$\Deltai$,
 obtained from $t$ by removing all symbols in $\Delta \setminus \Deltai$.
-%\end{equation}
 %
 \noindent
 \emph{Symbolic weighted parsing} is the problem,
