@@ -1033,7 +1033,7 @@ We thus read a new time-division symbol ~$\ccall{d}$ and compute the weight of t
 \noindent
 Reading the $k$-th musical event $\mu$ in this current sub-interval is computed with:
 \(
-\weii\bigl(q_{{k}/{d}},
+\weii\bigl(q_{\frac{k}{d}},
            \ccall{d}\tstamp{[\tau, \tau+\ell]}, q_{\frac{j}{n}},
            \mu\tstamp{\tau + \frac{j\ell}{d}}, q_{\frac{k+1}{d}} \bigr) = \alpha_\mu
 \).
@@ -1044,18 +1044,18 @@ Finally, this sub-interval will end after reading a return symbol $\creturn{d}$ 
            \,\creturn{d}\tstamp{\tau + \ell}, q_{\frac{i+1}{c}} \bigr) = \one
 \).
 \noindent
-We described earlier the special cases where the stack is empty, which applies for example when reading the first measure for which we only push $<\ccall{\mathsf{m}}\tstamp{[0, 1]}, q_{1/1}>$ in the stack:
+We described earlier the special cases where the stack is empty, which applies for example when reading the first measure for which we only push $<\ccall{\mathsf{m}}\tstamp{[0, 1]}, q_{\frac{1}{1}}>$ in the stack:
 \(
-\weiec\bigl(q_{1/1},
+\weiec\bigl(q_{\frac{1}{1}},
            \ccall{\mathsf{m}}\tstamp{[0, 1]}, q_{1/1},
            q_{1/1} \bigr) = \one
 \).
 In comparison, any other new measure would compute instead:
 \(
-\weic\bigl(q_{1/1},
-          \ccall{\mathsf{m}}\tstamp{[\tau-1, \tau]}, q_{1/1},
-          \ccall{\mathsf{m}}\tstamp{[\tau, \tau+1]}, q_{1/1},
-          q_{1/1} \bigr) = \one
+\weic\bigl(q_{\frac{1}{1}},
+          \ccall{\mathsf{m}}\tstamp{[\tau-1, \tau]}, q_{\frac{1}{1}},
+          \ccall{\mathsf{m}}\tstamp{[\tau, \tau+1]}, q_{\frac{1}{1}},
+          q_{\frac{1}{1}} \bigr) = \one
 \).
 
 Each transition thus has a weight computing an overall weight for one representation of music notation. 
@@ -1195,8 +1195,8 @@ The function $b_\bot$ will allow to compute $b_\top$ recursively in the case whe
 Intuitively, $b_\top(q, p, q')$ is a function of $\Phic$,
 mapping every $c \in \Deltac$ to
 the minimum weight of a computation of~$A$
-starting in state $q$ with a non-empty stack
-$\gamma' = \<c, p> \, \gamma \in \Gamma^+$,
+starting in state $q$, 
+with a non-empty stack $\gamma' = \<c, p> \, \gamma \in \Gamma^+$,
 and ending in state $q'$ with the same stack $\gamma'$,
 such that
 the computation does not pop the pair $\<c, p>$ at the top of $\gamma'$
@@ -1338,7 +1338,7 @@ d_\bot(q_0, q_3) & \opluseq &
   \bigl(
   \weiec(q_0, p, q_1) \otimes
    d_\top(q_1, p, q_2) \otimes
-  \bigoplus_{\Deltar} \weir(q_2, p, q_3)\bigr)\ 
+  \bigoplus^2_{\Deltar} \weir(q_2, p, q_3)\bigr)\ 
   \mathrm{if~} \< q_1, p, q_2> \notin \Q \\
 %
 d_\bot(q_0, q_3) & \opluseq &
@@ -1371,7 +1371,7 @@ d_\top(q_0, p, q_3) & \opluseq &
 %x_c \mapsto \weii(q_2, x_c, p, a, q_3)}\\
 d_\top(q_0, p, q_3) & \opluseq &
   {\bigoplus^2_{\Deltac}}
-  \bigl[ \bigl( \weic(q_0, p, q_1, p) \otimes_2
+  \bigl[ \bigl( \weic(q_0, p, p', q_1) \otimes_2
   d_\top(q_1, p', q_2) \bigr) \otimes_2
   {\bigoplus_{\Deltar}} \weir(q_2, p', q_3) \bigr]\
   \mathrm{if~} \< q_1, p', q_2> \notin \Q \\
@@ -1382,7 +1382,7 @@ d_\top(q_0, p, q_3) & \opluseq &
 %
 d_\top(q_0, p, q_3) & \opluseq &
   d_\top(q_0, p, q_2) \otimes d_\top(q_2, p, q_3)\ 
-  \mathrm{if~} \< q_0, p, q_2> \notin \Q, < q_2, p, q_3> \notin \Q \\[-1mm]
+  \mathrm{if~} \< q_0, p, q_2> \notin \Q, \< q_2, p, q_3> \notin \Q \\[-1mm]
 \end{array}
 \)
 %$\weii(q_2, p, q_3)_a \in \Phic$, for $a \in \Deltai$,
