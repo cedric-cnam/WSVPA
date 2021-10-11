@@ -1,0 +1,99 @@
+
+
+
+\begin{algorithm}
+\SetKw{Extract}{extract}
+\SetKw{Update}{update}
+
+\textbf{initially} let $\Q = (Q \times Q) \cup (Q \times P \times Q)$,
+and let $d_\bot(q_1, q_2) = d_\top(q_1, p, q_2) = \one$
+if $q_1 = q_2$ and $d_\bot(q_1, q_2) = d_\top(q_1, p, q_2) = \zero$ otherwise$\;$
+
+\smallskip\noindent
+\While{$\Q \neq \emptyset$}{
+
+%\noindent\quad
+\Extract $\< q_1, q_2>$ or $\< q_1, p, q_2>$ from $\Q$
+%
+%\noindent\quad
+such that $d_\bot(q_1, q_2)$, 
+resp. $\bigoplus_{\Deltac} d_\top(q_1, p, q_2)$, is minimal in $\Semiring$ \wrt $\leq_\oplus$$\;$
+
+%\noindent\quad
+%\textbf{for all} $q_0, q_3 \in Q$
+\Update $d_\bot$ if $\< q_1, q_2>$ was extracted, or $d_\top$ 
+if it was $\< q_1, p, q_2>$, 
+as in Figure~\ref{fig:best-update}.$\;$
+}
+\caption{Best search for \SWVPA}
+\label{algo:Dijkstra}
+\end{algorithm}
+
+
+
+
+\begin{figure}[ht]
+For every $q_0, q_3 \in Q$ and $p' \in P$, if $\< q_1, q_2> \notin \Q$ 
+\[
+\begin{array}{lcl}
+%\multicolumn{3}{l}{\mathrm{For~all~} q_0, q_3 \in Q, p \in P,}\\
+%
+d_\bot(q_1, q_3) & \opluseq &
+  d_\bot(q_1, q_2) \otimes
+  \displaystyle\bigoplus_{\Deltai} \weiei(q_2, q_3)
+  \mathrm{if~} \< q_1, q_2> \notin \Q \\
+%
+d_\bot(q_0, q_3) & \opluseq &
+  {\displaystyle\bigoplus_{\Deltac}}
+  \bigl(
+  \weiec(q_0, p, q_1) \otimes
+   d_\top(q_1, p, q_2) \otimes
+  \displaystyle\bigoplus_{\Deltar} \weir(q_2, p, q_3)\bigr)\\
+%
+d_\bot(q_1, q_3) & \opluseq &
+  d_\bot(q_1, q_2) \otimes
+  \displaystyle\bigoplus_{\Deltar} \weier(q_2, q_3)\\
+%
+d_\bot(q_1, q_3) & \opluseq &
+  d_\bot(q_1, q_2) \otimes d_\bot(q_2, q_3)\  \mathrm{if~} \< q_2, q_3> \notin \Q \\
+\end{array}
+\]
+%
+For every $q_0, q_3 \in Q$ and $p' \in P$, if $\< q_1, p, q_2> \notin \Q$
+\[
+\begin{array}{lcl}
+d_\top(q_1, p, q_3) & \opluseq &
+  d_\top(q_1, p, q_2) \otimes
+  \displaystyle\bigoplus_{\Deltai} \weii(q_2, p, q_3)
+  \mathrm{if~} \< q_1, p, q_2> \notin \Q \\
+%\multicolumn{3}{l}{\quad
+%\mathrm{where~} \weii(q_2, p, q_3)_a \in \Phic
+%\mathrm{~is~the~partial~application~}
+%x_c \mapsto \weii(q_2, x_c, p, a, q_3)}\\
+d_\top(q_0, p', q_3) & \opluseq &
+  {\displaystyle\bigoplus_{\Deltac}}^2
+  \bigl[ \bigl( \weic(q_0, p', q_1, p) \otimes_2
+  d_\top(q_1, p, q_2) \bigr) \otimes_2
+  {\displaystyle\bigoplus_{\Deltar}} \weir(q_2, p, q_3) \bigr]\\
+%\multicolumn{3}{l}{\quad
+%\mathrm{where~} \weic(q_0, p, p', q_1)_{c'} \in \Phic
+%\mathrm{~is~the~partial~application~}
+%x_c \mapsto \weic(q_0, p, x_c, c', p', q_1)}\\[2pt]
+%
+d_\top(q_1, p, q_3) & \opluseq &
+  d_\top(q_1, p, q_2) \otimes d_\top(q_2, p, q_3)\ 
+  \mathrm{if~} \< q_2, p, q_3> \notin \Q \\
+\end{array}
+\]
+%$\weii(q_2, p, q_3)_a \in \Phic$, for $a \in \Deltai$,
+%is the partial application
+%$x_c \mapsto \weii(q_2, x_c, p, a, q_3)$.
+%
+%$\weic(q_0, p, p', q_1)_{c'} \in \Phic$, for $c' \in \Deltac$,
+%is the partial application
+%$x_c \mapsto \weic(q_0, p, x_c, c', p', q_1)$.
+%\caption{Update $d_\bot$ with $\<q_1, q_2>$ or $d_\top$ with $\< q_1, p, q_2>$.}
+\caption{The update of $d_\bot$ when $\< q_1, q_2> \notin \Q$, 
+         and the update $d_\top$ when $\< q_1, q_2> \notin \Q$.}
+\label{fig:best-update}
+\end{figure}

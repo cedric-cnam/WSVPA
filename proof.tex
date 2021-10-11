@@ -2,9 +2,9 @@
 
 To prove that the algorithm does compute the word with the best weight, we use the following invariant :
 $$
-<q_1, q_2> \notin Q \iff d_{bot} (q_1, q_2) = b_{bot} (q_1, q_2)
+\<q_1, q_2> \notin Q \iff d_{\bot}(q_1, q_2) = b_{\bot}(q_1, q_2)
 $$
-In other words, a tuple $<q_1, q_2>$ is removed from the queue during an iteration only when $d_{bot}(q1, q2)$ has its minimal value.
+In other words, a tuple $\<q_1, q_2>$ is removed from the queue during an iteration only when $d_{\bot}(q1, q2)$ has its minimal value.
 
 Initialization : Before the while loop, no tuple has been extracted from the queue, so the invariant is trivially true.
 

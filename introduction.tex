@@ -136,7 +136,42 @@ in a semiring $\Semiring$.
 \begin{figure}
 \centering
 \begin{tikzpicture}
-\node (NFA) at (0,4) {%
+\node (SWADS) at (0,5.0) {%
+  \(
+  \begin{array}{c}
+  \mathsf{SWADS}\mbox{\cite{Herrmann16dlt,Herrmann20phd}}: \Sigma_{\mathsf{inf}}^* \to \mathbb{S}
+  \end{array}
+  \)
+};
+%
+\node (SWA) at (0,3.4) {%
+  \(
+  \begin{array}{c}
+  \mathsf{SWA}\mbox{\cite{Herrmann16dlt,Herrmann20phd}}: \Sigma_{\mathsf{inf}}^* \to \mathbb{S}\\
+  q \xrightarrow{\phi} q' \quad \phi : \Sigma_\mathsf{inf} \to \mathbb{S}
+  \end{array}
+  \)
+};
+%
+\node (WA) at (-2.5,1.7) {%
+  \(
+  \begin{array}{c}
+  \mathsf{WA}\mbox{\cite{Droste09handbook}}: \Sigma_{\mathsf{fin}}^* \to \mathbb{S}\\
+  q \xrightarrow{a, w} q' \quad  a \in \Sigma_\mathsf{fin}, w \in \mathbb{S}
+  \end{array}
+  \)
+};
+%
+\node (SA) at (2.5,1.7) {%8
+  \(
+  \begin{array}{c}
+  \mathsf{SA}\mbox{\cite{dAntoni21CACM}}: \Sigma_{\mathsf{inf}}^* \to \mathbb{B}\\
+  q \xrightarrow{\phi} q' \quad \phi : \Sigma_\mathsf{inf} \to \mathbb{B}
+  \end{array}
+  \)
+};
+%
+\node (NFA) at (0,0) {%
   \(
   \begin{array}{c}
   \mathsf{FA} : \Sigma_{\mathsf{fin}}^* \to \mathbb{B}\\
@@ -144,37 +179,11 @@ in a semiring $\Semiring$.
   \end{array}
   \)
 };
-%
-\node (WA) at (-2.5,2) {%
-  \(
-  \begin{array}{c}
-  \mathsf{WA}\cite{Droste09handbook}: \Sigma_{\mathsf{fin}}^* \to \mathbb{S}\\
-  q \xrightarrow{a, w} q' \quad  a \in \Sigma_\mathsf{fin}, w \in \mathbb{S}
-  \end{array}
-  \)
-};
-%
-\node (SA) at (2.5,2) {%8
-  \(
-  \begin{array}{c}
-  \mathsf{SA} : \Sigma_{\mathsf{inf}}^* \to \mathbb{B}\\
-  q \xrightarrow{\phi} q' \quad \phi : \Sigma_\mathsf{inf} \to \mathbb{B}
-  \end{array}
-  \)
-};
-%
-\node (SWA) at (0,0) {%
-  \(
-  \begin{array}{c}
-  \mathsf{SWA} : \Sigma_{\mathsf{inf}}^* \to \mathbb{S}\\
-  q \xrightarrow{\phi} q' \quad \phi : \Sigma_\mathsf{inf} \to \mathbb{S}
-  \end{array}
-  \)
-};
 \draw[->] (NFA)--(WA);
 \draw[->] (NFA)--(SA);
 \draw[->] (WA)--(SWA);
 \draw[->] (SA)--(SWA);
+\draw[->] (SWA)--(SWADS);
 %\begin{array}{c} \mathsf{NFA} : \Sigma^* \to \mathbb{B} \end{array}
 \end{tikzpicture}
 \caption{Classes of Symbolic/Weighted Automata.

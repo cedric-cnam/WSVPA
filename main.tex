@@ -142,6 +142,8 @@
 \newcommand{\C}{\mathcal{C}} % automata (in constructions)
 \newcommand{\D}{\mathcal{D}}  % transducer = distance
 \newcommand{\E}{\mathbb{E}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\G}{\mathcal{G}}
 %\newcommand{\P}{\mathcal{P}}
 \newcommand{\Q}{\mathcal{Q}}
 \newcommand{\R}{\mathcal{R}}
@@ -199,12 +201,13 @@
 \newcommand{\lin}{\mathsf{lin}}
 \newcommand{\tstamp}[1]{\mathpunct{:}{\scriptstyle #1}} % timestamp marker
 %\newcommand{\ts}[1]{^{#1}} % timestamp marker
-
 \newcommand{\call}[1]{\ensuremath #1} %{\ensuremath \langle_{#1}}
 \newcommand{\return}[1]{\ensuremath #1} %{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
 \newcommand{\ccall}[1]{\ensuremath \langle_{#1}}
 \newcommand{\creturn}[1]{\ensuremath \rangle_{#1}}
 %\newcommand{\creturn}[1]{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
+\newcommand{\src}{\mathsf{src}}
+\newcommand{\trg}{\mathsf{trg}}
 
 %\sloppy
 
@@ -1136,7 +1139,7 @@ We do a classical product construction, see Appendix~\ref{sec:product} for detai
 %We present now a procedure for searching, for a~$\SWVPA$ $A$,
 %a word %$w \in \Delta^*$
 %of minimal weight for~$A$.
-We present now a procedure for searching a word of minimal weight for a~$\SWVPA$ $A$.
+We present now a procedure for searching a word of minimal weight for a~$\SWVPA$~$A$.
 %as stated in the following proposition. %\wrt~$\leq_\oplus$,
 %It requires the following property of label theories.
 %
@@ -1248,6 +1251,12 @@ read during the computation is well parenthesized
 %of this sum is the central expression in
 %the definition \eqref{eq:weightA} of $A(s_0)$, for the minimum $s_0$
 %of the function $\weight_A$.
+
+
+\input{altalgo}
+
+
+
 
 \begin{algorithm}
 \SetKw{Extract}{extract}
