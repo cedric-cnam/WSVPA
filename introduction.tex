@@ -3,6 +3,7 @@
 % Introduction
 %
 Parsing is the problem
+\florent{mv}
 of structuring a linear representation
 (a finite word) according to a language model. % (a formal grammar).
 % natural language, programming language,
@@ -120,7 +121,10 @@ such as the Viterbi semiring and the tropical min-plus algebra% % see Figure~\re
 %the problem: quantitative parsing or symbolic parsing
 %of parsing of words over infinite input alphabet.
 
-In this paper, we present a framework for weighted parsing over infinite input alphabets.
+\florent{Both WA and SA generalized \cite{Herrmann16dlt,Herrmann20phd}...
+         we present results...}
+In this paper, we present 
+a framework for weighted parsing over infinite input alphabets.
 It is based on \emph{symbolic weighted} finite states language models (\swM),
 generalizing the Boolean guards of~\SA %in transitions
 to functions into an arbitrary semiring,
@@ -251,7 +255,9 @@ in graphs~\cite{Mohri02semiring,Huang05kbest}.
 % value in a semiring...
 \florent{expressiveness: VPA have restricted equality test.
         comparable to pebble automata? $\to$ conclusion}
-The main contributions of the paper are:
+The main contributions 
+\florent{main results = 3 Prop.}
+of the paper are:
 \reviews{1) not $i$! see response.txt}
 ($i$)~the introduction of automata, \SWA, transducers, \SWT (Section~\ref{section:SWA}),
 and visibly pushdown automata \SWVPA (Section~\ref{sec:SWVPA}),
@@ -266,6 +272,7 @@ and ($iii.b$)~the use, for convenience in this context,
 of nested words, and \SWVPA,
 instead of syntax trees and grammars. %(\S~\ref{sec:trees}).
 
+\florent{Moreover, application parsing. believe results appliable to other decision pb.}
 
 \begin{example}%[Running example]
 \label{ex:running}
@@ -279,13 +286,13 @@ are pairs $\mu \tstamp{\tau}$, where $\mu$ is a
 MIDI key number~\cite{Selfridge-Field97beyondMIDI}, %\cite{MIDIfile}
 and $\tau \in \mathbb{Q}$ is a timestamp in seconds.
 Such inputs typically correspond
-to the recording of a live performance, \eg
-$I = (69\tstamp{0.07}),
-     (71\tstamp{0.72}),
-     (73\tstamp{0.91}),
-     (74\tstamp{1.05}),
-     (76\tstamp{1.36}),
-     (77\tstamp{1.71})$. % over interval $[0,2[$,
+to the recording of a live performance, 
+\eg~$I = 69\tstamp{0.07},
+	     71\tstamp{0.72},
+    	 73\tstamp{0.91},
+	     74\tstamp{1.05},
+	     76\tstamp{1.36},
+	     77\tstamp{1.71}$. % over interval $[0,2[$,
 
 The output of parsing is a sequence of
 timed symbols $\nu\tstamp{\tau'}$ in an alphabet $\Delta$,
