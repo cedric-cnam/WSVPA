@@ -312,16 +312,17 @@ $\wei_{11}: Q \times Q \to \Phi_{\Sigma, \Delta}$.
 \end{definition}
 %
 \noindent
-We call the \emph{number of transitions} of $T$ the number of pairs of states
-$q, q' \in Q$ such that $\wei_{10}$ or $\wei_{01}$ or $\wei_{11}$
-is not the constant $\zero$.
+%We call the \emph{number of transitions} of $T$ the number of pairs of states
+%$q, q' \in Q$ such that $\wei_{10}$ or $\wei_{01}$ or $\wei_{11}$
+%is not the constant $\zero$.
 %
 \noindent
-For convenience, we shall sometimes present transitions
-as functions of
-$Q \times (\Sigma \cup \{ \varepsilon \}) \times (\Delta \cup \{ \varepsilon \}) \times Q \to \Semiring$,
-overloading the function names,
-such that, for every $q, q' \in Q$, $a \in \Sigma$,  $b \in \Delta$:
+A tuple of $Q \times (\Sigma \cup \{ \varepsilon \}) \times (\Delta \cup \{ \varepsilon \}) \times Q \to \Semiring$
+is called a \emph{transition} of $T$.
+For convenience, we shall sometimes present the above $\wei_{10}$, $\wei_{01}$, $\wei_{11}$
+%(overloading the function names),
+as mappings associating to every transition a weight value in $\Semiring$ as follows,
+for every $q, q' \in Q$, $a \in \Sigma$,  $b \in \Delta$:
 \[
 \begin{array}{rcll}
 \wei_{10}(q, a, \varepsilon, q') & = & \phi(a) & %\wei_\Sigma(q, q')(a)
@@ -628,10 +629,11 @@ from $Q \times Q$ into~$\Phi_{\Sigma}$.
 %
 \noindent
 %\florent{mv formal def. weight for \SWA to app.?}
-As above in the case of \SWT,
-when $\wei_1(q, q') = \phi \in \Phi_\Sigma$,
+A \SWA \emph{transition} is a triplet of $Q \times \Sigma \times Q$, 
+and, as in the case of \SWT,
+we may write $\wei_1(q, a, q')$ for~$\phi(a)$
+when $\wei_1(q, q') = \phi \in \Phi_\Sigma$.
 %respectively $\mathsf{in}(q) = \phi$, $\mathsf{out}(q') = \phi$,
-we may write $\wei_1(q, a, q')$ for~$\phi(a)$.
 %respectively $\mathsf{in}(q, a) = \phi(a)$, $\mathsf{out}(q', a) = \phi(a)$.
 %$\wei_1: Q \times \Sigma \times Q \to \Semiring$,
 The computation of $A$ on words $s \in \Sigma^*$
@@ -884,36 +886,35 @@ overloading their names: % for simplicity:
 \mathrm{where~} \phi_\mathsf{r} = \weier(q, q').\\
 \end{array}
 \]
-
-\noindent
-%The intuition is the following for the above transitions.
-$\weiei$, $\weiec$, and $\weier$ describe the cases where the stack is empty.
-%\lydia{moved this to the beginning}
+The tuples in the definition domains of the above functions 
+are also called \emph{transitions} of the \SWVPA.
 %
 \noindent
-$\weii$ and $\weiei$ both read an input internal symbol $a$ and change state from $q$ to $q'$,
-without changing the stack.
+%The intuition is the following for the above transitions.
+Intuitively, $\weiei$, $\weiec$, and $\weier$ describe the cases where the stack is empty.
+The transitions of $\weii$ and $\weiei$ both read an internal symbol~$a$ 
+and change state from $q$ to $q'$, without changing the stack.
 Moreover, $\weii$ reads a pair made of
 ${\call{c}} \in \Deltac$ and $p \in P$ on the top of the stack
 ($c$ is compared to $a$ by the weight function $\eta_\mathsf{ci} \in \Phici$).
 %
 \noindent
-$\weic$ and $\weiec$ read the input call symbol $\call{c}'$,
+The transitions of $\weic$ and $\weiec$ read the call symbol $\call{c}'$,
 push it to the stack along with $p'$, and change state from $q$ to to $q'$.
 Moreover, $\weic$ reads ${\call{c}}$ and $p$ at the top of the stack
 ($c$ is compared to $c'$).
 %and $\weiec$ applies iff the stack is empty.
 %
 \noindent
-$\weir$ and $\weier$ read the input return symbol $\return{r}$, and change state from $q$ to to $q'$.
-Moreover, $\weir$ reads and pops from stack a pair made of $\call{c}$ and $p$,
+Finally, $\weir$ and $\weier$ read the return symbol $\return{r}$, and change state from $q$ to to $q'$.
+Moreover, $\weir$ reads and pops from stack a pair made of $\call{c}$ and $p$
 ($\call{c}$ is compared to $\return{r}$).
 %and $\weier$ applies iff the stack is empty.
 %In this case, the weight function $\phi_\mathsf{r}$
 %computes a value of matching between the call and return symbols $c$ and $r$.
 %This value might be set to $\zero$ in order to express that the symbols do not match.
 
-Formally, the transitions of the automaton~$A$ are defined
+Formally, the computations of the automaton~$A$ are defined
 with an intermediate function $\weight_A$, like in Section~\ref{sec:SWT}.
 %
 A configuration $q[\gamma]$
