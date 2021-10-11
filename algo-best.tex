@@ -1,0 +1,162 @@
+
+
+\begin{algorithm}
+\SetKw{Extract}{extract}
+\SetKw{Update}{update}
+
+\textbf{initially} let $\Q = (Q \times Q) \cup (Q \times P \times Q)$,
+and let $d_\bot(q_1, q_2) = d_\top(q_1, p, q_2) = \one$
+if $q_1 = q_2$ and $d_\bot(q_1, q_2) = d_\top(q_1, p, q_2) = \zero$ otherwise$\;$
+
+\smallskip\noindent
+\While{$\Q \neq \emptyset$}{
+
+%\noindent\quad
+\Extract $\< q_1, q_2>$ or $\< q_1, p, q_2>$ from $\Q$
+%
+%\noindent\quad
+such that $d_\bot(q_1, q_2)$, 
+resp. $\bigoplus_{\Deltac} d_\top(q_1, p, q_2)$, is minimal in $\Semiring$ \wrt $\leq_\oplus$$\;$
+
+%\noindent\quad
+%\textbf{for all} $q_0, q_3 \in Q$
+\Update $d_\bot$ if $\< q_1, q_2>$ was extracted (Figure~\ref{fig:best-update-bottom}), or \\
+\Update $d_\top$ if $\< q_1, p, q_2>$ was extracted (Figure~\ref{fig:best-update-top}).$\;$
+}
+\caption{Best search for \SWVPA}
+\label{algo:Dijkstra}
+\end{algorithm}
+
+\input{proof-best}
+
+
+Algorithm~\ref{algo:Dijkstra} constructs iteratively, using a priority queue $\Q$, 
+two markings
+$d_\bot : Q \times Q \to \Semiring$ and
+$d_\top : Q \times P \times Q \to \Phic$,
+%of the triplets $\<q, \sigma, q'>$
+%of states of $A$ by weight values in $\Semiring$,
+that converge eventually to $b_\top$ and $b_\bot$. 
+%
+\florent{intuition sur update en commentaire}
+%Intuitively, in the update defined in Figure~\ref{fig:best-update},
+%we assume that the values of $d_\bot$ and $d_\top$ are definitely 
+%fixed for every tuplet which has been extracted from the queue $\Q$ 
+%(like in particular $\<q_1, q_2>$ or $\< q_1, p, q_2>$ when the algorithm calls this update), 
+%and we use these values 
+%(and the functions $w$ of transitions) 
+%in order to update the values of $d_\bot$ and $d_\top$ 
+%on the other tuplets (those which are still in the queue $\Q$).
+%
+\florent{explication Fig.~\ref{fig:best-update} (update) suivant cas de \eqref{eq:SWVPA-weight}?}
+\florent{The infinite sums in the updates of $d$ in Algorithm~\ref{algo:Dijkstra},
+ Figure~\ref{fig:best-update} are well defined since~$\Semiring$ is complete.}
+%
+% COMPLEXITY
+%The algorithm performs $2.|Q|^2$ iterations until $P$ is empty,
+%and each iteration has a time complexity $O(|Q|^2 . |P|)$.
+%\florent{complexity: detail with and states?}
+%That gives a time complexity $O(|Q|^4 . |P|)$.
+%It can be reduced by implementing $P$ as a priority queue,
+%prioritized by the value returned by $d$.
+%** where  $T$ is the worst time complexity for an oracle computing the values
+%of Definition~\ref{def:effective}.
+%$|Q|^3.\log(|Q|^2)$
+%
+%Algorithm~\ref{algo:Dijkstra}
+It terminates in PTIME (when $\Q$ is empty), 
+and its correctness is ensured by~\eqref{eq:min} and  
+the following invariants: 
+$\< q_1, q_2> \notin \Q$ iff $d_\bot(q_1, q_2) = b_\bot(q_1, q_2)$, 
+and $\< q_1, p, q_2> \notin \Q$ iff 
+$\bigoplus_{\Deltac} d_\top(q_1, p, q_2) = \bigoplus_{\Deltac} b_\top(q_1, p, q_2)$.
+\florent{(see Appendix~\ref{sec:bestsearch}).}
+%of Algorithm~\ref{algo:Dijkstra}.
+
+\begin{figure}[ht]
+\(
+\begin{array}{lcl}
+\multicolumn{3}{l}{%
+ \mbox{For~every}\  q_0, q_3 \in Q,}\\[1mm] % if $\< q_1, p, q_2> \notin \Q$
+%
+d_\bot(q_0, q_3) & \opluseq &
+  d_\bot(q_0, q_2) \otimes
+  \bigoplus_{\Deltai} \weiei(q_2, q_3)\ 
+  \mathrm{if~} \< q_0, q_2> \notin \Q \\
+%
+d_\bot(q_0, q_3) & \opluseq &
+  {\bigoplus_{\Deltac}}
+  \bigl(
+  \weiec(q_0, p, q_1) \otimes
+   d_\top(q_1, p, q_2) \otimes
+  \bigoplus^2_{\Deltar} \weir(q_2, p, q_3)\bigr)\ 
+  \mathrm{if~} \< q_1, p, q_2> \notin \Q \\
+%
+d_\bot(q_0, q_3) & \opluseq &
+  d_\bot(q_0, q_2) \otimes
+  \bigoplus_{\Deltar} \weier(q_2, q_3)\ 
+  \mathrm{if~} \< q_0, q_2> \notin \Q \\ 
+%
+d_\bot(q_0, q_3) & \opluseq &
+  d_\bot(q_0, q_2) \otimes d_\bot(q_2, q_3)\  
+  \mathrm{if~} \< q_0, q_2>\notin \Q, \< q_2, q_3> \notin \Q \\[-1mm]
+\end{array}
+\)
+\caption{\textbf{update} $d_\bot$ (Algorithm~\ref{algo:Dijkstra}).}
+\label{fig:best-update-bottom}
+\end{figure}
+%
+
+\begin{figure}[ht]
+\(
+\begin{array}{lcl}
+\multicolumn{3}{l}{%
+ \mbox{For~every}\  q_0, q_3 \in Q\ \mbox{and}\ p \in P,}\\[1mm] % if $\< q_1, p, q_2> \notin \Q$
+d_\top(q_0, p, q_3) & \opluseq &
+  d_\top(q_0, p, q_2) \otimes
+  \bigoplus_{\Deltai} \weii(q_2, p, q_3)\
+  \mathrm{if~} \< q_0, p, q_2> \notin \Q \\
+%\multicolumn{3}{l}{\quad
+%\mathrm{where~} \weii(q_2, p, q_3)_a \in \Phic
+%\mathrm{~is~the~partial~application~}
+%x_c \mapsto \weii(q_2, x_c, p, a, q_3)}\\
+d_\top(q_0, p, q_3) & \opluseq &
+  {\bigoplus^2_{\Deltac}}
+  \bigl[ \bigl( \weic(q_0, p, p', q_1) \otimes_2
+  d_\top(q_1, p', q_2) \bigr) \otimes_2
+  {\bigoplus_{\Deltar}} \weir(q_2, p', q_3) \bigr]\
+  \mathrm{if~} \< q_1, p', q_2> \notin \Q \\
+%\multicolumn{3}{l}{\quad
+%\mathrm{where~} \weic(q_0, p, p', q_1)_{c'} \in \Phic
+%\mathrm{~is~the~partial~application~}
+%x_c \mapsto \weic(q_0, p, x_c, c', p', q_1)}\\[2pt]
+%
+d_\top(q_0, p, q_3) & \opluseq &
+  d_\top(q_0, p, q_2) \otimes d_\top(q_2, p, q_3)\ 
+  \mathrm{if~} \< q_0, p, q_2> \notin \Q, \< q_2, p, q_3> \notin \Q \\[-1mm]
+\end{array}
+\)
+%$\weii(q_2, p, q_3)_a \in \Phic$, for $a \in \Deltai$,
+%is the partial application
+%$x_c \mapsto \weii(q_2, x_c, p, a, q_3)$.
+%
+%$\weic(q_0, p, p', q_1)_{c'} \in \Phic$, for $c' \in \Deltac$,
+%is the partial application
+%$x_c \mapsto \weic(q_0, p, x_c, c', p', q_1)$.
+%\caption{Update $d_\bot$ with $\<q_1, q_2>$ or $d_\top$ with $\< q_1, p, q_2>$.}
+\caption{\textbf{update} $d_\top$ (Algorithm~\ref{algo:Dijkstra}).}
+\label{fig:best-update-top}
+\end{figure}
+%
+%\noindent
+%** effectively computable by hypothesis that the label theory is effective**
+%\florent{REVOIR}
+Thanks to the hypothesis that $\bar\Phi$ is effective, 
+it is possible to construct during the iteration a witness word
+for Proposition~\ref{th:best-search}, 
+\ie a word $t \in \Delta^*$ with a minimal weight $A(t)$ \wrt~$\leq_\oplus$.
+
+%we require the additional property of convexity of weight functions.***
+%using the second requirement in Definition~\ref{def:effective}.
+
+
