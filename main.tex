@@ -206,8 +206,10 @@
 \newcommand{\ccall}[1]{\ensuremath \langle_{#1}}
 \newcommand{\creturn}[1]{\ensuremath \rangle_{#1}}
 %\newcommand{\creturn}[1]{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
-\newcommand{\src}{\mathsf{src}}
-\newcommand{\trg}{\mathsf{trg}}
+\newcommand{\src}{\mathit{src}}
+\newcommand{\trg}{\mathit{trg}}
+\newcommand{\fst}{\mathit{fst}}
+\newcommand{\snd}{\mathit{snd}}
 
 %\sloppy
 
@@ -1157,11 +1159,14 @@ such that $A(t)$ is minimal \wrt the natural ordering $\leq_\oplus$ for $\Semiri
 %
 Let $A = \< Q, P, \init, \bar\wei, \final >$.
 %
-We propose a Dijkstra-like algorithm computing,
+We propose a method for %Dijkstra-like algorithm 
+computing,
 for every $q, q' \in Q$,
 the minimum, \wrt $\leq_\oplus$, of the function
 $\beta_{q, q'} : t \mapsto \weight_A(\config{q}{\bot}, t, \config{q'}{\bot})$.
 Let us denote by $b_\bot(q, q')$ this minimum.
+\florent{it exists by effectiveness of label th. ?}
+%
 By definition of $\leq_\oplus$, and since $\Semiring$ is total,
 \reviews{1) $\Semiring$ total $\to$ $\Semiring$ extremal}
 it holds that:

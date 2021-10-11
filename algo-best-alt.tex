@@ -1,11 +1,13 @@
 % !TEX root = main.tex
 %
 
-\subsection*{Alternative Algorithm for best-search}
+\subsection*{(Alternative Algorithm for best-search)}
 We associate to the \SWVPA $A$ a $\Semiring$-labeled graph
 $\G_A = \< V_A, E_A, \eta_A >$
 with set of vertices $V_A = (Q \times Q) \cup (Q \times P \times Q)$,
-set of edges $E_A = V_A \times V_A$, and with an edge labelling  
+set of edges $E_A = V_A \times V_A$
+(an edge $\< v_1, v_2>$, with $v_1, v_2 \in V_A$ is denoted by $v_1 \to v_2$),
+and with an edge labelling  
 $\eta_A : E_A \to \Semiring$ defined as follows,
 for $q_0, q_1, q_2, q_3 \in Q$, $p, p' \in P$:
 %
@@ -30,10 +32,10 @@ for $q_0, q_1, q_2, q_3 \in Q$, $p, p' \in P$:
 Removing from $\G_A$ every edge $e \in E_A$ such that $\eta(e) = \zero$ 
 is preserving the results below.
 %
-A \emph{path} of $\G_A$ is a sequence $e_1,\ldots, e_n \in V^*_A$ such that 
-for all $1 \leq i < n$, the second component of $e_i$ is the first component of $e_{i+1}$.
-We write $\src(\pi) = e_1$ and $\trg(\pi) = e_n$.
-The weight of the path is $\weight(\pi) = \bigotimes_{i=1}^{n} \eta(e_i)$.
+A \emph{path} of $\G_A$ is a sequence $v_0,\ldots, v_n \in V^*_A$,
+%for all $0 \leq i < n$. %the second component of $e_i$ is the first component of $e_{i+1}$.
+%We write $\src(\pi) = e_1$ and $\trg(\pi) = e_n$.
+it is assigned a weight value $\weight(\pi) = \bigotimes_{i=1}^{n} \eta(v_{i-1} \to v_i)$.
 
 %Intuitively, 
 \begin{lemma}[Correctness]
@@ -70,12 +72,24 @@ and $\weight(\pi) = b_\top(q_1, q_2)$.
 \end{lemma}
 %
 \begin{proof}
-Since $\Semiring$ is  total, there exists $t \in \Delta^*$ such that  
+By~\eqref{eq:bbot}, 
+and since $\Semiring$ is total, for all $q_1, q_2 \in Q$, 
+there exists one or several $t \in \Delta^*$ such that  
 $b_\bot(q_1, q_2) = \weight_A\bigl(\config{q_1}{\bot}, t, \config{q_2}{\bot}\bigr)$.
-We represent a computation of $A$ on $t$ by a sequence of transitions...
+Let $T(q_1, q_2) \subseteq \Delta^*$ denotes the set of such words $t$. % of minimal length.
+%
+Moreover, following~\eqref{eq:SWVPA-weight}, and by distributivity and commutativity in $\Semiring$, 
+$b_\bot(q_1, q_2)$ is equal to a finite product $\bigotimes_{i=0}^n w_i(\tau_i)$, 
+where every $\tau_i$ is a transition of $A$, every $w_i$ is one of the functions of $\bar\wei$,
+the sequence of input symbols in $\tau_0,\ldots, \tau_n$ belongs to $T(q_1, q_2)$, 
+$\src(\tau_0) = q_1$, and $\snd(\tau_n) = q_2$, where 
+$\src(\tau)$ (resp. $\snd(\tau)$) is the first (resp. second) state component of a transition~$\tau$.
+There may be several such sequences of $\tau_i$ and $w_i$, we choose an arbitrarily one of minimal length $n$.
 
-We show that we can construct a path $\pi$ from $t$.
-...\qed
+%We represent a computation of $A$ on $t$ by a sequence $\rho$ of its transitions, 
+
+We show now by induction on $n$ that we can construct a path $\pi$ of weight $b_\bot(q_1, q_2)$
+from $\tau_0,\ldots, \tau_n$ and $w_0,\ldots, w_n$. ...\qed
 \end{proof}
 
 
