@@ -203,8 +203,8 @@
 %\newcommand{\ts}[1]{^{#1}} % timestamp marker
 \newcommand{\call}[1]{\ensuremath #1} %{\ensuremath \langle_{#1}}
 \newcommand{\return}[1]{\ensuremath #1} %{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
-\newcommand{\ccall}[1]{\ensuremath \langle_{#1}}
-\newcommand{\creturn}[1]{\ensuremath \rangle_{#1}}
+\newcommand{\ccall}[1]{\ensuremath \lceil_{#1}}   % \langle
+\newcommand{\creturn}[1]{\ensuremath \rceil_{#1}}
 %\newcommand{\creturn}[1]{\ensuremath {}_{#1}{\rangle}} % $\prescript{}{a}{)}$
 \newcommand{\src}{\mathit{src}}
 \newcommand{\trg}{\mathit{trg}}
@@ -1028,7 +1028,11 @@ Given a set of equivalent representations, we aim at choosing the simpler one, \
 
 \lydia{We should find a better variable name than j... it does not render well in fractions}
 Let's say the top of the stack is a tuple of the call~$\ccall{n}\tstamp{[\tau, \tau+\ell]}$ and a state $q$. Let's now consider a new call transition starting in state $q_{\frac{j}{n}}$, that is the $j$-th state of the $n$ sub-intervals of duration~$\frac{\ell}{n}$.
-We thus read a new time-division symbol ~$\ccall{d}$ and compute the weight of the transition from $q_{\frac{j}{n}}$ to $q_{\frac{1}{d}}$ (the first state after the new ~$\ccall{d}$), reading the top of the stack $<\ccall{n}\tstamp{[\tau, \tau+\ell]}, q>$, and pushing $<\ccall{d}\tstamp{\iota}, q_{\frac{j+1}{c}}>$ on top, or:
+We thus read a new time-division symbol ~$\ccall{d}$ 
+and compute the weight of the transition from $q_{\frac{j}{n}}$ to $q_{\frac{1}{d}}$, 
+the first state after the new~$\ccall{d}$, reading on the top of the stack the pair
+$\<\ccall{n}\tstamp{[\tau, \tau+\ell]}, q>$, 
+and pushing $\<\ccall{d}\tstamp{\iota}, q_{\frac{j+1}{c}}>$ on top, or:
 \(
 \weic\bigl(q_{\frac{j}{n}},
            \ccall{n}\tstamp{[\tau, \tau+\ell]}, q,
@@ -1050,7 +1054,8 @@ Finally, this sub-interval will end after reading a return symbol $\creturn{d}$ 
            \,\creturn{d}\tstamp{\tau + \ell}, q_{\frac{i+1}{c}} \bigr) = \one
 \).
 \noindent
-We described earlier the special cases where the stack is empty, which applies for example when reading the first measure for which we only push $<\ccall{\mathsf{m}}\tstamp{[0, 1]}, q_{\frac{1}{1}}>$ in the stack:
+We described earlier the special cases where the stack is empty, which applies for example when reading the first measure 
+for which we only push $\<\ccall{\mathsf{m}}\tstamp{[0, 1]}, q_{\frac{1}{1}}>$ in the stack:
 \(
 \weiec\bigl(q_{\frac{1}{1}},
            \ccall{\mathsf{m}}\tstamp{[0, 1]}, q_{1/1},
