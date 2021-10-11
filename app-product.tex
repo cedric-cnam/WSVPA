@@ -2,9 +2,9 @@
 %
 % Proof of Proposition product swVPA
 %
-We prove the closure under $\otimes$. 
-The proof of the closure under $\oplus$ is similar.
-%
+We prove the closure under~$\otimes$
+- the case of~$\oplus$ is similar.
+% 
 Let $A_1 = \< Q_1, P_1, \init_1, \bar\wei_1, \final_1 >$
 and $A_2 = \< Q_2, P_2, \init_2, \bar\wei_2, \final_2 >$.
 The \SWVPA $A_1 \otimes A_2$ is built by a 
@@ -18,15 +18,14 @@ The weight entering and leaving functions
 $\init_{\otimes}$, $\final_{\otimes}$
 and the sextuplet of transition functions $\bar\wei_{\otimes}$
 are defined 
-using the label-theory operators of Section~\ref{section:symbols}.
-They will simulate the synchronized behaviour of $A_1$ and $A_2$.
+using the label-theory operators of Section~\ref{section:symbols} as follows, 
 %
-For all $\< q_1, q_2>, \< q'_1, q'_2> \in Q$ 
+for all $\< q_1, q_2>, \< q'_1, q'_2> \in Q$ 
 and $\< p_1, p_2>, \< p'_1, p'_2> \in P$:
 \[
-\begin{array}{lcl}
-\init_{\otimes}\bigl(\< q_1, q_2>\bigr) & = & \init_{1}(q_1) \otimes \init_{2}(q_2)\\
-\final_{\otimes}\bigl(\< q_1, q_2>\bigr) & = & \final_{1}(q_1) \otimes \final_{2}(q_2)\\
+\begin{array}{rcl}
+\init_{\otimes}\bigl(\< q_1, q_2>\bigr) = \init_{1}(q_1) \otimes \init_{2}(q_2) & &
+\final_{\otimes}\bigl(\< q_1, q_2>\bigr) = \final_{1}(q_1) \otimes \final_{2}(q_2)\\
 %
 \wei_{\mathsf{i}, \otimes}\bigl(\< q_1, q_2>, \<p_1, p_2>, \<q'_1, q'_2>\bigr) & = &
 \wei_{\mathsf{i}, 1}(q_1, p_1, q'_1) \otimes \wei_{\mathsf{i}, 2}(q_2, p_2, q'_2)\\
@@ -47,9 +46,5 @@ and $\< p_1, p_2>, \< p'_1, p'_2> \in P$:
 \weie[\mathsf{r}, 1](q_1, q'_1) \otimes \weie[\mathsf{i}, 2](q_2, q'_2)\\
 \end{array}
 \]
-
-
-
-
-
-
+With these functions, $A$ simulate the synchronized behaviour of~$A_1$ and~$A_2$.
+\florent{complete proof.}

@@ -1140,7 +1140,7 @@ $(A_1 \otimes A_2)(s) = A_1(s) \otimes A_2(s)$.
 \end{proposition}
 %
 \begin{proof}
-We do a classical product construction. % see Appendix~\ref{sec:product} for details.
+%We do a classical product construction, see Appendix~\ref{sec:product} for details.
 %similar to the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
 \input{app-product}
 \end{proof}
@@ -1174,14 +1174,14 @@ Let us denote by $b_\bot(q, q')$ this minimum.
 %
 By definition of $\leq_\oplus$, and since $\Semiring$ is total,
 \reviews{1) $\Semiring$ total $\to$ $\Semiring$ extremal}
-it holds that:
+it holds that
+(the infinite sum in~\eqref{eq:bbot} is well defined since $\Semiring$ is complete):
 %
 \begin{equation}\label{eq:bbot}
   b_\bot(q, q') = \bigoplus_{t\in \Delta^*}
   \textstyle
   \weight_A\bigl(\config{q}{\bot}, t, \config{q'}{\bot}\bigr).
 \end{equation}
-The infinite sum in~\eqref{eq:bbot} is well defined since $\Semiring$ is complete.
 %
 Following~\eqref{eq:SWVPA-value}, and the associativity, commutativity
 and distributivity for~$\otimes$ and~$\oplus$, the minimum of~$A(t)$ is:

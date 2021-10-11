@@ -2,8 +2,10 @@
 %
 
 \subsection*{(Alternative Algorithm for best-search)}
-We associate to the \SWVPA $A$ a $\Semiring$-labeled graph
-$\G_A = \< V_A, E_A, \eta_A >$
+We shall compute the values of the functions $b_\bot$ and $b_\top$
+by searching shortests paths in a $\Semiring$-labeled graph $\G_A$
+associated to the \SWVPA $A$. 
+This graph is defined by $\G_A = \< V_A, E_A, \eta_A >$, 
 with set of vertices $V_A = (Q \times Q) \cup (Q \times P \times Q)$,
 set of edges $E_A = V_A \times V_A$
 (an edge $\< v_1, v_2>$, with $v_1, v_2 \in V_A$ is denoted by $v_1 \to v_2$),
@@ -88,8 +90,9 @@ There may be several such sequences of $\tau_i$ and $w_i$, we choose an arbitrar
 
 %We represent a computation of $A$ on $t$ by a sequence $\rho$ of its transitions, 
 
-We show now by induction on $n$ that we can construct a path $\pi$ of weight $b_\bot(q_1, q_2)$
-from $\tau_0,\ldots, \tau_n$ and $w_0,\ldots, w_n$. ...\qed
+We show now the existence of a path $\pi$ as expected, by induction on $n$.
+%that we can construct a path $\pi$ of weight $b_\bot(q_1, q_2)$
+%from $\tau_0,\ldots, \tau_n$ and $w_0,\ldots, w_n$. ...\qed
 \end{proof}
 
 
