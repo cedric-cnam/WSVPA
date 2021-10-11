@@ -62,33 +62,60 @@ We prove ($i$) and ($ii$) simultaneously by induction on the length of the path 
 
 
 \begin{lemma}[Completeness]
-For all $q_1, q_2 \in Q$, $p\in P$, 
-($i$) there exists a path $\pi$ of $\G_A$ 
+For all $q, q' \in Q$, $p\in P$, 
+($i$) there exists a path~$\pi$ of~$\G_A$ 
 such that $\src(\pi) = \<q_0, q_0>$ for some $q_0 \in Q$, 
-$\trg(\pi) = \< q_1, q_2>$,
-and $\weight(\pi) = b_\bot(q_1, q_2)$, 
+$\trg(\pi) = \< q, q'>$,
+and $\weight(\pi) = b_\bot(q, q')$, 
 ($ii$) there exists a path $\pi'$ of $\G_A$ 
 such that $\src(\pi) = \<q_0, q_0>$ for some $q_0 \in Q$, 
 $\trg(\pi) = \< q_1, p, q_2>$,
-and $\weight(\pi) = b_\top(q_1, q_2)$.
+and $\weight(\pi) = \bigoplus_\Deltac b_\top(q_1, p, q_2)$.
 \end{lemma}
 %
 \begin{proof}
-By~\eqref{eq:bbot}, 
-and since $\Semiring$ is total, for all $q_1, q_2 \in Q$, 
-there exists one or several $t \in \Delta^*$ such that  
-$b_\bot(q_1, q_2) = \weight_A\bigl(\config{q_1}{\bot}, t, \config{q_2}{\bot}\bigr)$.
-Let $T(q_1, q_2) \subseteq \Delta^*$ denotes the set of such words $t$. % of minimal length.
+By associativity, commutativity and distributivity for $\Semiring$,
+\eqref{eq:bbot} can be rewritten into the form, unfolding~\eqref{eq:SWVPA-weight}:
+\[
+b_\bot(q, q') = 
+\bigoplus_{t\in \Delta^*} 
+\bigoplus_{\begin{array}{c}
+           \scriptstyle q_0,\ldots, q_n \in Q\\
+           \scriptstyle p_{i},\ldots, p_{k} \in P
+           \end{array}}
+\bigotimes_{i=i}^n w_i(\tau_i)           
+\]
+where $n$ is the length of $t$, $k \leq n$,
+$q_0 = q$, $q_n = q'$, 
+for all $1 \leq i < n$, 
+$w_i$ is one of the functions of $\bar\wei$,
+$\tau_i$ is a transition of $A$ and
+$\src(\tau_i) = q_{i-1}$, $\snd(\tau_i) = q_i$.
 %
-Moreover, following~\eqref{eq:SWVPA-weight}, and by distributivity and commutativity in $\Semiring$, 
-$b_\bot(q_1, q_2)$ is equal to a finite product $\bigotimes_{i=0}^n w_i(\tau_i)$, 
-where every $\tau_i$ is a transition of $A$, every $w_i$ is one of the functions of $\bar\wei$,
-the sequence of input symbols in $\tau_0,\ldots, \tau_n$ belongs to $T(q_1, q_2)$, 
-$\src(\tau_0) = q_1$, and $\snd(\tau_n) = q_2$, where 
-$\src(\tau)$ (resp. $\snd(\tau)$) is the first (resp. second) state component of a transition~$\tau$.
-There may be several such sequences of $\tau_i$ and $w_i$, we choose an arbitrarily one of minimal length $n$.
-
+Since $\Semiring$ is total, there exists finite sequences as above such that
+\( b_\bot(q, q') = \bigotimes_{i=i}^n w_i(\tau_i)\).
+%
+There might exists, for $q$ and $q'$,
+several finite sequences~$\bar\tau$ and~$\bar{w}$ as above, 
+let us choose arbitrarily one of minimal length~$n$. 
+This integer $n$ will be denoted $n_{q, q'}$ in the following.
 %We represent a computation of $A$ on $t$ by a sequence $\rho$ of its transitions, 
+
+Similarly, following~\eqref{eq:btop} and~\eqref{eq:SWVPA-weight}, 
+$\bigoplus_\Deltac b_\top(q_1, q_2)$ can be put in the form:
+\[
+{\textstyle\bigoplus_\Deltac} b_\top(q_1, q_2) = 
+{\textstyle\bigoplus_\Deltac} \bigoplus_{t\in \Delta^*} 
+\bigoplus_{\begin{array}{c}
+           \scriptstyle q_0,\ldots, q_n \in Q\\
+           \scriptstyle p_{i},\ldots, p_{k} \in P
+           \end{array}}
+\bigotimes_{i=i}^n w_i(\tau_i)           
+\]
+and hence 
+\( {\textstyle\bigoplus_\Deltac} b_\top(q_1, q_2) = \bigotimes_{i=i}^n w_i(\tau_i) \),
+using $c \in \Deltac$ that minimize...
+We denote the smallest $n$ as above by $n_{q, p, q'}$.
 
 We show now the existence of a path $\pi$ as expected, by induction on $n$.
 %that we can construct a path $\pi$ of weight $b_\bot(q_1, q_2)$
