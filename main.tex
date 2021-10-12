@@ -963,15 +963,16 @@ for each possible state of the stack (empty or not).
    \weight_A\bigl(\config{q}{\gamma}, u, \config{q''}{\bot}\bigr)
    \otimes\weiei(q'', a, q')\nonumber\\
 %
-\weight_A\bigl(\configup{q}{\<{\call{c}}, p>\stackup\gamma}, {\call{c}'}\, u,
-               \config{q'}{\gamma'}\bigr) & =
+\weight_A\bigl(\config{q}{\gamma}, {\call{c}'}\, u,
+               \configup{q'}{\<{\call{c}'}, p'>\stackup \<{\call{c}}, p>\stackup \gamma'}\bigr) & =
  {\displaystyle\bigoplus_{\begin{array}{c}
                           \scriptstyle q'' \in Q\\[-1ex]
                           \scriptstyle p' \in P
                           \end{array}}}
- \weic\bigl(q, {\call{c}}, p, {\call{c}'}, p', q''\bigr)
- \otimes \weight_A\bigl(\configup{q''}{\<{\call{c}'}, p'>\stackup \<{\call{c}}, p>\stackup \gamma}, u,
-                        \config{q'}{\gamma'}\bigr)\nonumber\\[1mm]
+ \weight_A\bigl(\config{q}{\gamma}, u,
+                \configup{q''}{\<{\call{c}}, p>\stackup\gamma'}\bigr)
+ \otimes \weic\bigl(q'', {\call{c}}, p, {\call{c}'}, p', q'\bigr)
+\nonumber\\[1mm]
 %
 \weight_A\bigl(\config{q}{\bot}, {\call{c}}\, u,
                \config{q'}{\gamma'}\bigr) & =
