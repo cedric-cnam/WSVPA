@@ -210,6 +210,7 @@
 \newcommand{\trg}{\mathit{trg}}
 \newcommand{\fst}{\mathit{fst}}
 \newcommand{\snd}{\mathit{snd}}
+\newcommand{\last}{\mathit{last}}
 
 %\sloppy
 
@@ -948,16 +949,19 @@ for each possible state of the stack (empty or not).
 \weight_A\bigl(\config{q}{\gamma}, \varepsilon, \config{q'}{\gamma'}) & = \one
 \mathrm{~if~} q = q', \gamma =\gamma' = \bot
 \mathrm{~and~} \zero \mathrm{~otherwise}\label{eq:SWVPA-weight}\\
-\weight_A\bigl(\configup{q}{\<{\call{c}}, p>\stackup\gamma}, a\, u,
-               \config{q'}{\gamma'}\bigr) & =
- {\displaystyle\bigoplus_{q'' \in Q}} \weii(q, c, p, a, q'')
-  \otimes \weight_A\bigl(\configup{q''}{\<{\call{c}}, p> \stackup \gamma}, u,
-                         \config{q'}{\gamma'}\bigr)\nonumber\\
 %
-\weight_A\bigl(\config{q}{\bot}, a\, u,
-               \config{q'}{\gamma'}\bigr) & =
-  {\displaystyle\bigoplus_{q'' \in Q}} \weiei(q, a, q'')
-   \otimes \weight_A\bigl(\config{q''}{\bot}, u, \config{q'}{\gamma'}\bigr)\nonumber\\
+\weight_A\bigl(\config{q}{\gamma}, a\, u,
+               \configup{q'}{\<{\call{c}}, p>\stackup\gamma'}\bigr) & =
+ {\displaystyle\bigoplus_{q'' \in Q}} 
+  \weight_A\bigl(\config{q}{\gamma}, u,
+                 \configup{q''}{\<{\call{c}}, p> \stackup \gamma'}\bigr) 
+  \otimes \weii(q'', c, p, a, q') \nonumber\\
+%
+\weight_A\bigl(\config{q}{\gamma}, a\, u,
+               \config{q'}{\bot}\bigr) & =
+  {\displaystyle\bigoplus_{q'' \in Q}} 
+   \weight_A\bigl(\config{q}{\gamma}, u, \config{q''}{\bot}\bigr)
+   \otimes\weiei(q'', a, q')\nonumber\\
 %
 \weight_A\bigl(\configup{q}{\<{\call{c}}, p>\stackup\gamma}, {\call{c}'}\, u,
                \config{q'}{\gamma'}\bigr) & =

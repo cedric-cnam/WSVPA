@@ -39,7 +39,9 @@ Removing from $\G_A$ every edge $e \in E_A$ such that $\eta(e) = \zero$
 is preserving the results below.
 %
 A \emph{path} of $\G_A$ is a sequence $\pi = v_0,\ldots, v_n \in V^*_A$,
-it is called \emph{safe} when $v_0$ has the form $\< q, q>$ for some $q \in Q$.
+it is called \emph{safe} when $v_0$ has the form $\< q, q>$ for some $q \in Q$, 
+and $n_v$ is called $\last(\pi)$.
+%
 A path $\pi$ is assigned a weight value $\weight(\pi)$ which is the product by $\otimes$ 
 of the weights of the edges involved in the path.
 More precisely, for all $q, q' \in Q$ and $p \in P$, we let 
@@ -51,14 +53,14 @@ $\weight(v_0,\ldots, v_n) = \weight(v_0,\ldots, v_{n-1}) \otimes \eta_A(v_{n-1} 
 
 %Intuitively, 
 \begin{lemma}[Correctness]
-For all safe path~$\pi$ of~$\G_A$ %with $\src(\pi) = \<q_0, q_0>$,
-with last element $v$, \\
-($i$) if $v = \< q, q'>$, with $q, q' \in Q$, 
+For all safe path~$\pi$ of~$\G_A$,  %with $\src(\pi) = \<q_0, q_0>$,
+%with last element $v$, \\
+($i$) if $\last(\pi) = \< q, q'>$, %with $q, q' \in Q$, 
 then there exists $u \in \Delta^*$ such that 
-$\weight_A(q[\bot], u, q'[\bot]) = \weight(\pi)$,
+$\weight_A(q[\bot], u, q'[\bot]) = \weight(\pi)$,\\
 %
-($ii$) if $v = \< q, p, q'>$, with $q, q' \in Q$, $p\in P$, 
-then there exists $v \in \Delta^*$ such that 
+($ii$) if $\last(\pi) = \< q, p, q'>$, %with $q, q' \in Q$, $p\in P$, 
+then there exists $v \in \Delta^*$ such that \\
 ${\displaystyle\bigoplus_{c \in \Deltac}}
  \weight_A\bigl(\configup{q}{\< c, p> \stackup \top }, v, \configup{q'}{\<c, p> \stackup \top}\bigr)
  = \weight(\pi)$.
@@ -82,14 +84,13 @@ let us do a case analysis on the edge $v_{n-1} \to v_n$.
 
 \begin{lemma}[Completeness] \label{lem:algo-completeness}
 For all $q, q' \in Q$, $p\in P$, 
-($i$) there exists a path~$\pi$ of~$\G_A$ 
-such that $\src(\pi) = \<q_0, q_0>$ for some $q_0 \in Q$, 
-$\trg(\pi) = \< q, q'>$,
-and $\weight(\pi) = b_\bot(q, q')$, 
-($ii$) there exists a path $\pi'$ of $\G_A$ 
-such that $\src(\pi) = \<q_0, q_0>$ for some $q_0 \in Q$, 
-$\trg(\pi) = \< q_1, p, q_2>$,
-and $\weight(\pi) = \bigoplus_\Deltac b_\top(q_1, p, q_2)$.
+($i$) there exists a safe path~$\pi$ of~$\G_A$ such that
+%such that $\src(\pi) = \<q_0, q_0>$ for some $q_0 \in Q$, 
+$\last(\pi) = \< q, q'>$,
+and $\weight(\pi) = b_\bot(q, q')$, \\
+($ii$) there exists a safe path $\pi'$ of $\G_A$ 
+such that $\last(\pi') = \< q, p, q'>$,
+and $\weight(\pi') = \bigoplus_\Deltac b_\top(q, p, q')$.
 \end{lemma}
 %
 \begin{proof}
