@@ -41,16 +41,16 @@ it is assigned a weight value $\weight(\pi) = \bigotimes_{i=1}^{n} \eta(v_{i-1} 
 
 %Intuitively, 
 \begin{lemma}[Correctness]
-For all $q_0, q_1, q_2 \in Q$, $p\in P$, 
+For all $q_0, q, q' \in Q$, $p\in P$, 
 and all path $\pi$ of $\G_A$ with $\src(\pi) = \<q_0, q_0>$,
-($i$) if $\trg(\pi) = \< q_1, q_2>$, 
+($i$) if $\trg(\pi) = \< q, q'>$, 
 then there exists $u \in \Delta^*$ such that 
-$\weight_A(q_1[\bot], u, q_1[\bot]) = \weight(\pi)$,
+$\weight_A(q[\bot], u, q'[\bot]) = \weight(\pi)$,
 %
-($ii$) if $\trg(\pi) = \< q_1, p, q_2>$,
+($ii$) if $\trg(\pi) = \< q, p, q'>$,
 then there exists $v \in \Delta^*$ such that 
 ${\displaystyle\bigoplus_{c \in \Deltac}}
- \weight_A\bigl(\configup{q_1}{\< c, p> \stackup \top }, v, \configup{q_2}{\<c, p> \stackup \top}\bigr)
+ \weight_A\bigl(\configup{q}{\< c, p> \stackup \top }, v, \configup{q'}{\<c, p> \stackup \top}\bigr)
  = \weight(\pi)$.
 \end{lemma}
 %
@@ -61,7 +61,7 @@ We prove ($i$) and ($ii$) simultaneously by induction on the length of the path 
 
 
 
-\begin{lemma}[Completeness]
+\begin{lemma}[Completeness] \label{lem:algo-completeness}
 For all $q, q' \in Q$, $p\in P$, 
 ($i$) there exists a path~$\pi$ of~$\G_A$ 
 such that $\src(\pi) = \<q_0, q_0>$ for some $q_0 \in Q$, 
@@ -76,15 +76,17 @@ and $\weight(\pi) = \bigoplus_\Deltac b_\top(q_1, p, q_2)$.
 \begin{proof}
 By associativity, commutativity and distributivity for $\Semiring$,
 \eqref{eq:bbot} can be rewritten into the form, unfolding~\eqref{eq:SWVPA-weight}:
-\[
+%
+\begin{equation}\label{eq:bbot-unfold}
 b_\bot(q, q') = 
 \bigoplus_{t\in \Delta^*} 
 \bigoplus_{\begin{array}{c}
            \scriptstyle q_0,\ldots, q_n \in Q\\
            \scriptstyle p_{i},\ldots, p_{k} \in P
            \end{array}}
-\bigotimes_{i=i}^n w_i(\tau_i)           
-\]
+\bigotimes_{i=1}^n w_i(\tau_i)           
+\end{equation}
+%
 where $n$ is the length of $t$, $k \leq n$,
 $q_0 = q$, $q_n = q'$, 
 for all $1 \leq i < n$, 
@@ -102,24 +104,40 @@ This integer $n$ will be denoted $n_{q, q'}$ in the following.
 %We represent a computation of $A$ on $t$ by a sequence $\rho$ of its transitions, 
 
 Similarly, following~\eqref{eq:btop} and~\eqref{eq:SWVPA-weight}, 
-$\bigoplus_\Deltac b_\top(q_1, q_2)$ can be put in the form:
-\[
-{\textstyle\bigoplus_\Deltac} b_\top(q_1, q_2) = 
+$\bigoplus_\Deltac b_\top(q, p, q')$ can be put in the form:
+%
+\begin{equation}\label{eq:btop-unfold}
+{\textstyle\bigoplus_\Deltac} b_\top(q, p, q') = 
 {\textstyle\bigoplus_\Deltac} \bigoplus_{t\in \Delta^*} 
 \bigoplus_{\begin{array}{c}
            \scriptstyle q_0,\ldots, q_n \in Q\\
            \scriptstyle p_{i},\ldots, p_{k} \in P
            \end{array}}
-\bigotimes_{i=i}^n w_i(\tau_i)           
-\]
+\bigotimes_{i=1}^n w_i(\tau_i)           
+\end{equation}
+%
 and hence 
-\( {\textstyle\bigoplus_\Deltac} b_\top(q_1, q_2) = \bigotimes_{i=i}^n w_i(\tau_i) \),
-using $c \in \Deltac$ that minimize...
+\( {\textstyle\bigoplus_\Deltac} b_\top(q, p, q') = \bigotimes_{i=i}^n w_i(\tau_i) \),
+using $c \in \Deltac$ that minimize the function in rhs of~\eqref{eq:btop-unfold}.
 We denote the smallest $n$ as above by $n_{q, p, q'}$.
 
-We show now the existence of a path $\pi$ as expected, by induction on $n$.
-%that we can construct a path $\pi$ of weight $b_\bot(q_1, q_2)$
-%from $\tau_0,\ldots, \tau_n$ and $w_0,\ldots, w_n$. ...\qed
+\noindent
+We show now the existence of a path $\pi$ of Lemma~\ref{lem:algo-completeness}, 
+by simultaneous induction on $n_{q, q'}$ and $n_{q, p, q'}$.
+
+The base case, $n = 0$ corresponds to $t = \varepsilon$. 
+In this case, by~\eqref{eq:SWVPA-weight}, $b_\top(q, p, q') = \zero$,
+$b_\bot(q, q) = \one$ and $b_\bot(q, q') = \zero$ if $q \neq q'$.
+
+\noindent
+For $n = n_{q, q'} > 0$, let $\bar\tau$ and~$\bar{w}$
+be the sequences associated to $q$ and $q'$ as above.
+Let us do a case analysis of $w_n$.
+
+
+
+ 
+
 \end{proof}
 
 
