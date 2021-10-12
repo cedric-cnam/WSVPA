@@ -144,7 +144,7 @@ in a semiring $\Semiring$.
 \node (SWADS) at (0,5.0) {%
   \(
   \begin{array}{c}
-  \mathsf{SWADS}\mbox{\cite{Herrmann16dlt,Herrmann20phd}}: \Sigma_{\mathsf{inf}}^* \to \mathbb{S}
+  \mathsf{SWADS}\,\mbox{\cite{Herrmann16dlt,Herrmann20phd}}: \Sigma_{\mathsf{inf}}^* \to \mathbb{S}
   \end{array}
   \)
 };
@@ -152,7 +152,7 @@ in a semiring $\Semiring$.
 \node (SWA) at (0,3.4) {%
   \(
   \begin{array}{c}
-  \mathsf{SWA}\mbox{\cite{Herrmann16dlt,Herrmann20phd}}: \Sigma_{\mathsf{inf}}^* \to \mathbb{S}\\
+  \mathsf{SWA}: \Sigma_{\mathsf{inf}}^* \to \mathbb{S}\\
   q \xrightarrow{\phi} q', \phi : \Sigma_\mathsf{inf} \to \mathbb{S}
   \end{array}
   \)
@@ -161,7 +161,7 @@ in a semiring $\Semiring$.
 \node (WA) at (-1.8,1.7) {%
   \(
   \begin{array}{c}
-  \mathsf{WA}\mbox{\cite{Droste09handbook}}: \Sigma_{\mathsf{fin}}^* \to \mathbb{S}\\
+  \mathsf{WA}\,\mbox{\cite{Droste09handbook}}: \Sigma_{\mathsf{fin}}^* \to \mathbb{S}\\
   q \xrightarrow{a, w} q', a \in \Sigma_\mathsf{fin}, w \in \mathbb{S}
   \end{array}
   \)
@@ -170,7 +170,7 @@ in a semiring $\Semiring$.
 \node (SA) at (1.8,1.7) {%8
   \(
   \begin{array}{c}
-  \mathsf{SA}\mbox{\cite{dAntoni21CACM}}: \Sigma_{\mathsf{inf}}^* \to \mathbb{B}\\
+  \mathsf{SA}\,\mbox{\cite{dAntoni21CACM}}: \Sigma_{\mathsf{inf}}^* \to \mathbb{B}\\
   q \xrightarrow{\phi} q', \phi : \Sigma_\mathsf{inf} \to \mathbb{B}
   \end{array}
   \)
@@ -184,11 +184,41 @@ in a semiring $\Semiring$.
   \end{array}
   \)
 };
+%
+\node (VPA) at (5.6,0) {%
+  \(
+  \mathsf{VPA}\,\cite{AlurMadhusudan09nested}
+  \)
+};
+%
+\node (WVPA) at (4.6,1.7) {%
+  \(
+  \mathsf{WVPA}\,\cite{Caralp12VPAmult}
+  \)
+};
+%
+\node (SVPA) at (6.6,1.7) {%
+  \(
+  \mathsf{SVPA}\,\cite{dAntonyAlur14SVPDA}
+  \)
+};
+%
+\node (SWVPA) at (5.6,3.4) {%
+  \(
+  \mathsf{SWVPA}
+  \)
+};
+%
 \draw[->] (NFA)--(WA);
 \draw[->] (NFA)--(SA);
 \draw[->] (WA)--(SWA);
 \draw[->] (SA)--(SWA);
 \draw[->] (SWA)--(SWADS);
+\draw[->] (VPA)--(WVPA);
+\draw[->] (VPA)--(SVPA);
+\draw[->] (WVPA)--(SWVPA);
+\draw[->] (SVPA)--(SWVPA);
+\draw[->] (SWVPA)--(SWADS);
 %\begin{array}{c} \mathsf{NFA} : \Sigma^* \to \mathbb{B} \end{array}
 \end{tikzpicture}
 \caption{Classes of Symbolic/Weighted Automata.
