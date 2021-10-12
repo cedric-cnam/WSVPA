@@ -360,19 +360,19 @@ and every pairs of strings $\< s, t> \in \Sigma^* \times \Delta^*$.
  \quad \mathrm{if~} q = q' \mathrm{~and~} \zero \mathrm{~otherwise} \label{eq:SWT-weight}\\
 \weight_T(q, s, t, q') & = \displaystyle\bigoplus_{\begin{array}{c}
                                                    \scriptstyle q'' \in Q\\[-1ex]
-                                                   \scriptstyle s = au,\, a \in \Sigma
+                                                   \scriptstyle s = ua,\, a \in \Sigma
                                                    \end{array}}
-    \wei_{10}(q, a, \varepsilon, q'') \otimes \weight_T(q'', u, t, q')\nonumber\\
+    \weight_T(q, u, t, q'') \otimes \wei_{10}(q'', a, \varepsilon, q')\nonumber\\
                     & \oplus \displaystyle\bigoplus_{\begin{array}{c}
                                                      \scriptstyle q'' \in Q\\[-1ex]
-                                                     \scriptstyle t = bv,\, b \in \Delta\\
+                                                     \scriptstyle t = vb,\, b \in \Delta\\
                                                      \end{array}}
-    \wei_{01}(q, \varepsilon, b, q'') \otimes \weight_T(q'', s, v, q')\nonumber\\
+    \weight_T(q, s, v, q'') \otimes \wei_{01}(q'', \varepsilon, b, q')\nonumber\\
                     & \oplus \displaystyle\bigoplus_{\begin{array}{c}
                                                      \scriptstyle q'' \in Q\\[-1ex]
-                                                     \scriptstyle s = au,\, t = bv\\
+                                                     \scriptstyle s = ua,\, t = vb\\
                                                      \end{array}}
-    \wei_{11}(q, a, b, q'') \otimes \weight_T(q'', u, v, q')\nonumber
+    \weight_T(q, u, v, q'') \otimes \wei_{11}(q'', a, b, q')\nonumber
 \end{align}
 
 
@@ -647,8 +647,8 @@ defined as follows for $q, q' \in Q$, $a \in \Sigma$, $u \in \Sigma^*$
 \weight_A(q, \varepsilon, q') & = \one\ \mathrm{if}\  q = q'\ 
           \mathrm{and}\  \zero\  \mathrm{otherwise}\\
 %\weight_A(q, \varepsilon, q') & = \zero \quad \mathrm{if~} q \neq q'\nonumber\\
-\weight_A(q, au, q') & =  \displaystyle\bigoplus_{q'' \in Q}
-    \wei_{1}(q, a, q'') \otimes \weight_A(q'', u, q')\nonumber
+\weight_A(q, ua, q') & =  \displaystyle\bigoplus_{q'' \in Q}
+\weight_A(q, u, q'') \otimes  \wei_{1}(q'', a, q')\nonumber
 \label{eq:SWA-weight}
 \end{align}
 %
@@ -950,20 +950,20 @@ for each possible state of the stack (empty or not).
 \mathrm{~if~} q = q', \gamma =\gamma' = \bot
 \mathrm{~and~} \zero \mathrm{~otherwise}\label{eq:SWVPA-weight}\\
 %
-\weight_A\bigl(\config{q}{\gamma}, a\, u,
+\weight_A\bigl(\config{q}{\gamma}, u\, a,
                \configup{q'}{\<{\call{c}}, p>\stackup\gamma'}\bigr) & =
  {\displaystyle\bigoplus_{q'' \in Q}} 
   \weight_A\bigl(\config{q}{\gamma}, u,
                  \configup{q''}{\<{\call{c}}, p> \stackup \gamma'}\bigr) 
   \otimes \weii(q'', c, p, a, q') \nonumber\\
 %
-\weight_A\bigl(\config{q}{\gamma}, a\, u,
+\weight_A\bigl(\config{q}{\gamma}, u\, a,
                \config{q'}{\bot}\bigr) & =
   {\displaystyle\bigoplus_{q'' \in Q}} 
    \weight_A\bigl(\config{q}{\gamma}, u, \config{q''}{\bot}\bigr)
    \otimes\weiei(q'', a, q')\nonumber\\
 %
-\weight_A\bigl(\config{q}{\gamma}, {\call{c}'}\, u,
+\weight_A\bigl(\config{q}{\gamma}, u\,{\call{c}'},
                \configup{q'}{\<{\call{c}'}, p'>\stackup \<{\call{c}}, p>\stackup \gamma'}\bigr) & =
  {\displaystyle\bigoplus_{\begin{array}{c}
                           \scriptstyle q'' \in Q\\[-1ex]
@@ -974,28 +974,30 @@ for each possible state of the stack (empty or not).
  \otimes \weic\bigl(q'', {\call{c}}, p, {\call{c}'}, p', q'\bigr)
 \nonumber\\[1mm]
 %
-\weight_A\bigl(\config{q}{\bot}, {\call{c}}\, u,
-               \config{q'}{\gamma'}\bigr) & =
+\weight_A\bigl(\config{q}{\gamma}, u\, {\call{c}},
+               \config{q'}{\<{\call{c}}, p>}\bigr) & =
  {\displaystyle\bigoplus_{\begin{array}{c}
                           \scriptstyle q'' \in Q\\[-1ex]
                           \scriptstyle p \in P
                           \end{array}}}
-  \weiec(q, {\call{c}}, p, q'')
-  \otimes \weight_A\bigl(\config{q''}{\<{\call{c}}, p>}, u,
-                         \config{q'}{\gamma'}\bigr)\nonumber\\
+ \weight_A\bigl(\config{q}{\gamma}, u,
+                \config{q''}{\bot}\bigr)
+ \otimes \weiec(q'', {\call{c}}, p, q')
+\nonumber\\
 %
-\weight_A\bigl(\configup{q}{\<{\call{c}}, p>\stackup\gamma}, {\return{r}}\, u,
+\weight_A\bigl(\config{q}{\gamma}, u\,{\return{r}},
                \config{q'}{\gamma'}\bigr) & =
  {\displaystyle\bigoplus_{q'' \in Q}}
-  \weir\bigl(q, {\call{c}}, p, {\return{r}}, q''\bigr)
-  \otimes \weight_A\bigl(\config{q''}{\gamma}, u,
-                         \config{q'}{\gamma'}\bigr)\nonumber\\
+  \weight_A\bigl(\config{q}{\gamma}, u,
+                 \configup{q''}{\<{\call{c}}, p>\stackup\gamma'}\bigr)
+  \otimes \weir\bigl(q'', {\call{c}}, p, {\return{r}}, q'\bigr)\nonumber\\
 %
-\weight_A\bigl(\config{q}{\bot}, {\return{r}}\, u,
-               \config{q'}{\gamma'}\bigr) & =
- {\displaystyle\bigoplus_{q'' \in Q}} \weier(q, {\return{r}}, q'')
-  \otimes \weight_A\bigl(\config{q''}{\bot}, u,
-                         \config{q'}{\gamma'}\bigr)\nonumber
+\weight_A\bigl(\config{q}{\gamma}, u\,{\return{r}},
+               \config{q'}{\bot}\bigr) & =
+ {\displaystyle\bigoplus_{q'' \in Q}} 
+          \weight_A\bigl(\config{q}{\gamma}, u,
+                         \config{q''}{\bot}\bigr)
+  \otimes \weier(q'', {\return{r}}, q')\nonumber
 \end{align}
 %\lydia{c p to <c, p>}
 %
@@ -1012,7 +1014,7 @@ A(t)  =
 {\displaystyle\bigoplus_{q, q' \in Q}} \textstyle
 \mathsf{in}(q) \mathop{\otimes}
 \weight_A\bigl(\config{q}{\bot}, t, \config{q'}{\bot}\bigr)
-\mathop{\otimes} \mathsf{out}(q').
+\mathop{\otimes} \mathsf{out}(q')
 \label{eq:SWVPA-value}
 \end{equation}
 
