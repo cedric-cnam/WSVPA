@@ -34,10 +34,15 @@ for $q_0, q_1, q_2, q_3 \in Q$, $p, p' \in P$:
 Removing from $\G_A$ every edge $e \in E_A$ such that $\eta(e) = \zero$ 
 is preserving the results below.
 %
-A \emph{path} of $\G_A$ is a sequence $v_0,\ldots, v_n \in V^*_A$,
-%for all $0 \leq i < n$. %the second component of $e_i$ is the first component of $e_{i+1}$.
-%We write $\src(\pi) = e_1$ and $\trg(\pi) = e_n$.
-it is assigned a weight value $\weight(\pi) = \bigotimes_{i=1}^{n} \eta(v_{i-1} \to v_i)$.
+A \emph{path} of $\G_A$ is a sequence $\pi = v_0,\ldots, v_n \in V^*_A$,
+it is assigned a weight value $\weight(\pi)$ which is the product by $\otimes$ of the weights of the 
+edges involved in the path.
+More precisely, for all $q, q' \in Q$ and $p \in P$, we let 
+$\weight(\< q, q' > ) = \one$ if $q = q'$, and $\zero$ otherwise, 
+$\weight(\< q, p, q' > ) = \zero$ and 
+for all $n \geq 1$, 
+$\weight(v_0,\ldots, v_n) = \weight(v_0,\ldots, v_{n-1}) \otimes \eta_A(v_{n-1} \to v_{n})$.
+%$\weight(\pi) = \bigotimes_{i=1}^{n} \eta(v_{i-1} \to v_i)$.
 
 %Intuitively, 
 \begin{lemma}[Correctness]
