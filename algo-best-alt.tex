@@ -15,28 +15,33 @@ for $q_0, q_1, q_2, q_3 \in Q$, $p, p' \in P$:
 %
 \[
 \begin{array}{rclcl}
+%
 \< q_0, q_1> & \to & \< q_0, q_2> & : &
-\bigoplus_{\Deltai} \weiei(q_1, q_2)\\
+\bigoplus_{\Deltai} \weiei(q_1, q_2) \oplus \bigoplus_{\Deltar} \weier(q_1, q_2)\\
 %
 \< q_1, p, q_2> & \to & \<q_0, q_3> & : &
-\bigoplus_{\Deltac} \bigl( \weiec(q_0, p, q_1) \otimes \bigoplus^2_{\Deltar} \weir(q_2, p, q_3)\bigr)\\ 
+\bigoplus_{\Deltac} \bigl[ \weiec(q_0, p, q_1) \otimes \bigoplus^2_{\Deltar} \weir(q_2, p, q_3)\bigr]\\ 
 %
-\< q_0, q_2> & \to & \< q_0, q_3> & : & 
-\bigoplus_{\Deltar} \weier(q_2, q_3)\\
-% 
-\< q_0, p, q_1> & \to & \< q_0, p, q_2> & : &
-\bigoplus_{\Deltai} \weii(q_1, p, q_2)\\[1mm]
+%\< q_0, p, q_1> & \to & \< q_0, p, q_2> & : &
+%\bigoplus_{\Deltai} \weii(q_1, p, q_2)\\
 %
 \< q_1, p', q_2> & \to & \< q_0, p, q_3> & : &
-\bigoplus^2_{\Deltac} \bigl[ \weic(q_0, p, p', q_1) \otimes_2 {\bigoplus_{\Deltar}} \weir(q_2, p', q_3) \bigr]\\
+{\displaystyle\bigoplus_{q_0=q_1}}
+{\displaystyle\bigoplus_{p=p'}}
+ \bigoplus_{\Deltai} \weii(q_2, p, q_3)\\
+ & & & & 
+\qquad\quad 
+\oplus \bigoplus^2_{\Deltac} \bigl[ \weic(q_0, p, p', q_1) \otimes_2 {\bigoplus_{\Deltar}} \weir(q_2, p', q_3) \bigr]\\
+%
 \end{array}
 \]
 Removing from $\G_A$ every edge $e \in E_A$ such that $\eta(e) = \zero$ 
 is preserving the results below.
 %
 A \emph{path} of $\G_A$ is a sequence $\pi = v_0,\ldots, v_n \in V^*_A$,
-it is assigned a weight value $\weight(\pi)$ which is the product by $\otimes$ of the weights of the 
-edges involved in the path.
+it is called \emph{safe} when $v_0$ has the form $\< q, q>$ for some $q \in Q$.
+A path $\pi$ is assigned a weight value $\weight(\pi)$ which is the product by $\otimes$ 
+of the weights of the edges involved in the path.
 More precisely, for all $q, q' \in Q$ and $p \in P$, we let 
 $\weight(\< q, q' > ) = \one$ if $q = q'$, and $\zero$ otherwise, 
 $\weight(\< q, p, q' > ) = \zero$ and 
@@ -46,13 +51,13 @@ $\weight(v_0,\ldots, v_n) = \weight(v_0,\ldots, v_{n-1}) \otimes \eta_A(v_{n-1} 
 
 %Intuitively, 
 \begin{lemma}[Correctness]
-For all $q_0, q, q' \in Q$, $p\in P$, 
-and all path $\pi$ of $\G_A$ with $\src(\pi) = \<q_0, q_0>$,
-($i$) if $\trg(\pi) = \< q, q'>$, 
+For all safe path~$\pi$ of~$\G_A$ %with $\src(\pi) = \<q_0, q_0>$,
+with last element $v$, \\
+($i$) if $v = \< q, q'>$, with $q, q' \in Q$, 
 then there exists $u \in \Delta^*$ such that 
 $\weight_A(q[\bot], u, q'[\bot]) = \weight(\pi)$,
 %
-($ii$) if $\trg(\pi) = \< q, p, q'>$,
+($ii$) if $v = \< q, p, q'>$, with $q, q' \in Q$, $p\in P$, 
 then there exists $v \in \Delta^*$ such that 
 ${\displaystyle\bigoplus_{c \in \Deltac}}
  \weight_A\bigl(\configup{q}{\< c, p> \stackup \top }, v, \configup{q'}{\<c, p> \stackup \top}\bigr)
@@ -60,8 +65,17 @@ ${\displaystyle\bigoplus_{c \in \Deltac}}
 \end{lemma}
 %
 \begin{proof}
-We prove ($i$) and ($ii$) simultaneously by induction on the length of the path $\pi$.
-...\qed
+We prove ($i$) and ($ii$) simultaneously by induction on the length $|\pi|$ of the path $\pi$.
+
+\noindent
+The base case $|pi| = 1$ is a direct consequence of the definition of weight of paths of length 1
+and the first line of \eqref{eq:SWVPA-weight}.
+
+\noindent
+If $\pi = v_0,\ldots, v_n$ with $n \geq 1$, 
+let us do a case analysis on the edge $v_{n-1} \to v_n$.
+...
+\qed
 \end{proof}
 
 
