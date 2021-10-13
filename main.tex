@@ -280,14 +280,16 @@ between words and languages
 and extend it to infinite alphabets.
 % with models of symbolic weighted automata and transducers.
 %
-The models introduced in this section generalize
-weighted automata and transducers~\cite{Droste09handbook}
+The models presented in this section generalize weighted automata and transducers~\cite{Droste09handbook}
 %over finite alphabets, see \eg~\cite{Mohri03ijfcs},
 by labeling each transition with a weight function
 that takes the input and output symbols as parameters.
-These functions are similar to the guards of symbolic automata~\cite{dAntoniVeanes17CAV,dAntoni21CACM},
-but the latter guards are restricted to the Boolean semiring.
+These functions generalize the guards 
+of symbolic automata~\cite{Veanes12symbolic,dAntoniVeanes17CAV,dAntoni21CACM},
+from Boolean domains to commutative semirings.
 %
+They are particular cases of the very general model of 
+Weighted Symbolic Automata with Data Storage~\cite{Herrmann16dlt}. 
 
 %\subsection{Definitions} \label{sec:SWTdef}\label{sec:SWAdef}
 %(SWT)
@@ -378,7 +380,7 @@ and every pairs of strings $\< s, t> \in \Sigma^* \times \Delta^*$.
 
 
 %
-We recall that, by definition (Section~\ref{sec:prelim}),
+We recall that, by convention (Section~\ref{sec:prelim}),
 an empty sum with $\bigoplus$ is equal to~$\zero$.
 %
 Intuitively,  a transition $\wei_{ij}(q, a, b, q')$ is interpreted as follows:
@@ -401,7 +403,7 @@ one term $\wei_{ij}(q, a, b, q'')$ equal to $\zero$ in the above expression
 will be ignored in the sum, meaning that there is no possible transition
 from state $q$ into state $q'$ while reading $a$ and $b$.
 This is analogous to the case of a transition's guard not satisfied by $\<a, b>$ for
-symbolic transducers.
+symbolic transducers~\cite{Veanes12transducers}.
 
 %whereas considering the current symbol may be useful to compute a transition weight.
 %(even when it does not change the head's position, like with $\varepsilon$-transitions).
@@ -747,7 +749,7 @@ such that for every $t \in \Delta^+$, $B_{s, T}(t) = T(s, t)$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\section{SW Visibly Pushdown Automata}
+\section{SW Visibly Pushdown Automata and Best-Search}
 \label{section:SWVPA}\label{sec:SWVPA}
 The model presented now generalizes symbolic \VPA
 (\SVPA~\cite{dAntonyAlur14SVPDA},
@@ -1572,8 +1574,8 @@ of\cite{Segoufin06csl,KaminskiFrancez94,NevenSchwentickVianu04FSMinfinite,Bojanc
 %\section{Correctness of the Best-Search Algorithm} \label{sec:bestsearch}
 %\input{app-bestsearch}
 
-%\section{Nested Words and Parse Trees} \label{sec:trees}\label{app:trees}
-%\input{app-trees}
+\section{Nested Words and Parse Trees} \label{sec:trees}\label{app:trees}
+\input{app-trees}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

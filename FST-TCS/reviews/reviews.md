@@ -66,7 +66,7 @@ List of mistakes:
 - [x] 60: other approaches use multioperator monoids or valuation monoids, so `at minima a semiring' is wrong
 - [x] 70: the second comma is superfluous
 - [x] 74: missing period and space after $\oplus$
-- [ ] 75: maybe cite Parsing as intersection by Nederhof and Satta (2003)
+- [x] 75: maybe cite Parsing as intersection by Nederhof and Satta (2003)
 - [x] 77: missing space after period
 - [x] 84: convenient in this context -> for convenience?
 - [x] 87: superfluous comma
@@ -90,12 +90,12 @@ List of mistakes:
 - [x] 153: quantify $x$ and the family ($y_i$) for $i ∈ ℕ$
 - [x] 155--156: alphabets are usually finite and non-empty sets
 - [x] 156: the sentence ends after … which is difficult to spot
-- [ ] 159: denoted by; also it seems like $\bar\Phi$ is a ($\Sigma \cup \Sigma \times \Delta$)-indexed family, why don't you introduce it like this
+- [x] 159: denoted by; also it seems like $\bar\Phi$ is a ($\Sigma \cup \Sigma \times \Delta$)-indexed family, why don't you introduce it like this
 - [x] 161--171: use an itemize environment 
 - [ ] 162--165: I think these should also hold for $\Delta$, why don't you write this explicitly?
 - [x] 186: calculability -> computability?
-- [ ] 188: the definition of $\bigoplus_\Delta$ can be seen to be implicit.  Please fully quantify the alphabets of a label theory
-- [ ] 195: references: there is earlier research on symbolic automata, e.g. Veanes (2013)
+- [x] 188: the definition of $\bigoplus_\Delta$ can be seen to be implicit.  Please fully quantify the alphabets of a label theory
+- [x] 195: references: there is earlier research on symbolic automata, e.g. Veanes (2013)
 - [x] 196: put respectively after output
 - [x] 199: use \colon rather than : after function names (this also applies to several other places in the paper)
 - [x] 203: THE number
@@ -115,7 +115,7 @@ List of mistakes:
 - [x] 281: Partitioned
 - [x] 284: $x$ is a variable, so it should be typeset in math mode
 - [x] 290: appogGiatura; ornAmental; also, I'd give this explanation already in Example 1 where the appoggiatura is first used
-- [ ] 291: I'd at least say once that $\Delta_i$, $\Delta_c$, and $\Delta_r$ are pairwise disjoint (or explain the symbol)
+- [x] 291: I'd at least say once that $\Delta_i$, $\Delta_c$, and $\Delta_r$ are pairwise disjoint (or explain the symbol)
 - [ ] 297: the extension here is not as in Section 3, there, the different function hat at least similar types
 - [ ] 299: every line expands into the margin; moreover, in the rightmost equation of line three, in the application of $w_c$, $p'$ and $q'$ are swapped
 - [x] 310: topupmost -> topmost
