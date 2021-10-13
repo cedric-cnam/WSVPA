@@ -52,13 +52,12 @@ $\weight(v_0,\ldots, v_n) = \weight(v_0,\ldots, v_{n-1}) \otimes \eta_A(v_{n-1} 
 %$\weight(\pi) = \bigotimes_{i=1}^{n} \eta(v_{i-1} \to v_i)$.
 %
 %The following results establish that $b_\bot(q, q')$ by be computed from a shortest path in $\G_A$.
-For $v, v' \in V_A$, let $\mathit{short}(v, v')$ be the weight of the shortest path from $v$ to $v'$, 
+For $v, v' \in V_A$,
+let $\Pi_{v, v'}$ be the set of pathes $\pi$ such that 
+$\fst(\pi) = v$ and $\last(\pi) = v'$, 
+and let $\mathit{short}(v, v')$ be the weight of the shortest path from $v$ to $v'$, 
 more precisely, 
-\(\mathit{short}(v, v') = \displaystyle\bigoplus_{\begin{array}{c}
-                                                  \scriptstyle\pi\,\mathrm{s.t.}\,
-										          \scriptstyle\fst(\pi) = v,
-	                                              \scriptstyle\last(\pi) = v'
-											      \end{array}} \weight(\pi)$.
+\(\mathit{short}(v, v') = \displaystyle\bigoplus_{\pi\in \Pi_{v, v'}} \weight(\pi)\).
 
 \begin{proposition}\label{algo-shortest}
 %Let  and let $\pi$ be the shortest safe path with $\last(\pi) = \< q, q'>$, i.e. 
@@ -177,13 +176,13 @@ Let us do a case analysis of $w_n$.
 \medskip\noindent
 Following~\eqref{eq:min} and Proposition~\ref{algo-shortest}, 
 in order to compute the minimum of $t \mapsto A(t)$ \wrt $\leq_\oplus$, 
-it is sufficient to compute one shortest path in $\G_{A}$ of source
+it is sufficient to compute one shortest pathes in $\G_{A}$ of source
 $\<q_0, q_0>$ and target $\<q, q'>$ for all $q_0, q, q' \in Q$.
 This can be done with~~\cite{Mohri02semiring}~Theorem~?? \florent{completer}
 with a complexity ***. Altogether, the complexity for computing the minimum of $A$
 is in $O(...)$.
 Moreover, a witness $t \in \Delta^*$ for this minimum can be associated to the appropriate
-shortest path, like in the proof of Lemma~\ref{algo-correct}
+shortest path, with nno additional cost, like in the proof of Lemma~\ref{algo-correct}
 
 
 
