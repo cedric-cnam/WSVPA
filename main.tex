@@ -348,9 +348,9 @@ $s$ and $t$, being respectively called \emph{input} and \emph{output} word.
 or the opposite ($\wei_{01}$),
 or advance in both $s$ and $t$ ($\wei_{11}$).}
 % \noindent
-$T$ is
+The semantics of $T$ is
 based on an intermediate function $\weight_T$
-defined recursively, for every states $q, q' \in Q$,
+defined recursively as follows, for every states $q, q' \in Q$,
 and every pairs of strings $\< s, t> \in \Sigma^* \times \Delta^*$.
 % \setminus \{ \< \varepsilon, \varepsilon >\}$,
 %
@@ -751,10 +751,13 @@ such that for every $t \in \Delta^+$, $B_{s, T}(t) = T(s, t)$.
 
 \section{SW Visibly Pushdown Automata and Best-Search}
 \label{section:SWVPA}\label{sec:SWVPA}
-The model presented now generalizes symbolic \VPA
+We consider now a language model generalizing symbolic \VPA
 (\SVPA~\cite{dAntonyAlur14SVPDA},
  themselves generalizing \VPA~\cite{AlurMadhusudan09nested} to infinite alphabets)
 from Boolean semirings to arbitrary semiring domains.
+It is also a particular case of 
+Weighted Symbolic Automata with Data Storage~\cite{Herrmann16dlt} for a special 
+type of data storage.
 It associates to every nested word over an infinite alphabet a weight value
 in a semiring.
 Nested words can describe structures of labeled trees.

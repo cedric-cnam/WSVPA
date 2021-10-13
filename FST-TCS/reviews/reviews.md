@@ -149,9 +149,9 @@ List of mistakes:
 
 Original literature:
 
-- [ ] Herrmann and Vogler (2016): L. Herrmann & H. Vogler (2016): Weighted Symbolic Automata with Data Storage. In: Developments in Language Theory, Springer, pp. 203–215, doi:10.1007/978-3-662-53132-7 17.
+- [x] Herrmann and Vogler (2016): L. Herrmann & H. Vogler (2016): Weighted Symbolic Automata with Data Storage. In: Developments in Language Theory, Springer, pp. 203–215, doi:10.1007/978-3-662-53132-7 17.
 
-- [ ] Herrmann (2020): L. Herrmann (2016): Weighted Automata with Storage. PhD thesis. Technische Universität Dresden, 2020, urn:nbn:de:bsz:14-qucosa2-740685
+- [x] Herrmann (2020): L. Herrmann (2016): Weighted Automata with Storage. PhD thesis. Technische Universität Dresden, 2020, urn:nbn:de:bsz:14-qucosa2-740685
 
 ---
 
@@ -166,7 +166,7 @@ Transducers and visibly pushdown automata are used for parsing input words into 
 
 The contributions of this paper are extending transducers and automata to handle symbolic inputs and to output weights in a semiring instead of Boolean values. The paper also gives procedures for computing minimum weights for given inputs and to compute witnesses for these minimum weights, which will be helpful to construct syntax trees. The definitions have been extended from the respective symbolic and weighted models. The technical details are mostly well written and complemented with intuitive explanations using a running example. However, for now, I am still giving weak accept instead of accept, since I am having difficulty understading a few points. See the last two comments below.
 
-- [ ] Line 209:  "T is based on an intermediate function ...": should this be "The semantics of $T$ is based on an intermediate function ..."?
+- [x] Line 209:  "T is based on an intermediate function ...": should this be "The semantics of $T$ is based on an intermediate function ..."?
 
 - [x] Line 281: "artitioned into three" -> "partitioned into three"
 
@@ -245,7 +245,7 @@ Example 14 is quite limited in detail in comparison to the earlier examples, whi
 
 - [x] l. 90. Please parenthesize the pitch-timecode pairs for readability. As an aside: these are strictly the onsets? And strictly monophonic? 
 
-- [ ] l. 100. Shouldn't the first measure end before the second starts? This would make $O$ a forest rather than a tree - easily fixed with a "piece" root element.
+- [x] l. 100. Shouldn't the first measure end before the second starts? This would make $O$ a forest rather than a tree - easily fixed with a "piece" root element.
 
 - [x] l. 156. The ellipsis between $\Delta$ and $\Sigma^*$ confuses the sentence boundaries for the reader. Better to go "The set of finite sequences (_words_) over $\Sigma$ is denoted $\Sigma^*$, while $\varepsilon$ denotes the empty word[...]".
 
