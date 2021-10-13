@@ -211,30 +211,32 @@ the following results, in order to ensure
 the computability of the above infinite sum operators.
 %
 \begin{definition}\label{def:effective}
-A label theory $\bar\Phi$ is called \emph{effective} when
-for all $\Phi_{\Sigma}, \Phi_{\Sigma, \Delta} \in \bar\Phi$, 
-$\phi \in \Phi_\Sigma$ and $\eta \in \Phi_{\Sigma, \Delta}$,
+A function $\phi: \Sigma \to \Semiring$, 
+resp. $\eta: \Sigma \times \Delta \to \Semiring$,
+is called \emph{effective} when 
+%for all $\Phi_{\Sigma}, \Phi_{\Sigma, \Delta} \in \bar\Phi$, $\phi \in \Phi_\Sigma$ and $\eta \in \Phi_{\Sigma, \Delta}$,
 $\bigoplus_{\Sigma} \phi$,
-$\bigoplus_{\Delta}\bigoplus^1_{\Sigma} \eta$, and
-$\bigoplus_{\Sigma}\bigoplus^2_{\Delta} \eta$
-can be effectively computed from $\phi$ and $\eta$,
-as well as one symbol, at least, 
-reaching each of these bounds.
-%the number of symbols reaching these bounds is finite
+resp. $\bigoplus_{\Delta}\bigoplus^1_{\Sigma} \eta$ and $\bigoplus_{\Sigma}\bigoplus^2_{\Delta} \eta$,
+can be effectively computed from $\phi$, resp. $\eta$, 
+as well as one symbol of $\Sigma$, resp. symbols of $\Sigma$ and $\Delta$, 
+reaching this bound.
+%
+A label theory $\bar\Phi$ is \emph{effective} when all its functions are.
 \end{definition}
 
-The effectiveness is a strong restriction on label theories.
-It is however not unrealistic in the context of the problems for languages models considered below, 
+The effectiveness is a strong restriction on label theories, but it is
+not unrealistic in the context of the problems for languages models considered below, 
 namely the combination of automata, best-search and symbolic weighted parsing.
 %
-In fact, every instance of such problems comes with a finite number of automata, each one containing a finite number of functions in a label theory, in their transitions. 
+In fact, every instance of such problems comes with a finite number of automata, 
+each one containing a finite number of functions in a label theory, in their transitions. 
 We may assume that the global minimums $\bigoplus_{\Sigma} \phi$,
 $\bigoplus_{\Delta}\bigoplus^1_{\Sigma} \eta$, and
 $\bigoplus_{\Sigma}\bigoplus^2_{\Delta} \eta$
 of all these functions are known.
 %
-Then, the other functions considered when solving the problems are obtained by combination with the above operators.  
-These operators preserve effectiveness, as long as the semiring is monotonic. 
+Then, the other functions considered when solving the problems are obtained by combination with the above operators, and are effective by Lemma~\ref{lem:label-th}.
+%These operators preserve effectiveness, as long as the semiring is monotonic. 
 In practice, the combinations may be represented by structures like 
 Algebraic Decision Diagrams~\cite{Bahar97ADD}.
 
