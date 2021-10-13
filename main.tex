@@ -1141,7 +1141,7 @@ the class of \SWVPA is closed under the binary operators of the underlying semir
 %
 \begin{proposition}\label{prop:SWVPA-product}
 Let $A_1$ and $A_2$ be two \SWVPA
-over the same $\Delta$, commutative $\Semiring$ and effective $\bar\Phi$.
+over the same~$\Delta$, commutative~$\Semiring$ and effective~$\bar\Phi$.
 There exist two effectively constructible $\SWVPA$
 $A_1 \oplus A_2$ and $A_1 \otimes A_2$,
 such that for every $s \in \Delta^*$,
@@ -1152,7 +1152,7 @@ $(A_1 \otimes A_2)(s) = A_1(s) \otimes A_2(s)$.
 \begin{proof}
 %We do a classical product construction, see Appendix~\ref{sec:product} for details.
 %similar to the case of the Boolean semiring~\cite{dAntonyAlur14SVPDA}.
-\input{app-product}
+\input{app-product}\qed
 \end{proof}
 \noindent
 %We present now a procedure for searching, for a~$\SWVPA$ $A$,
@@ -1214,15 +1214,15 @@ b_\bot(q, q')
 In order to compute the above function $b_\bot : Q \times Q \to \Semiring$,
 we shall consider an auxiliary function $b_\top :  Q \times P \times Q \to \Phic$.
 %%%%%% lydaddition %%%%%%
-The function $b_\bot$ will allow to compute $b_\top$ recursively in the case where the stack in not empty.
+%The function $b_\top$ will allow to compute~$b_\bot$ recursively in the case where the stack in not empty.
 %%%%%% lydaddition %%%%%%
 %
-Intuitively, $b_\top(q, p, q')$ is a function of $\Phic$,
+Intuitively, $b_\top(q, p, q')$ is a function of~$\Phic$,
 mapping every $c \in \Deltac$ to
 the minimum weight of a computation of~$A$
-starting in state $q$, 
+starting in state~$q$, 
 with a non-empty stack $\gamma' = \<c, p> \, \gamma \in \Gamma^+$,
-and ending in state $q'$ with the same stack $\gamma'$,
+and ending in state~$q'$ with the same stack~$\gamma'$,
 such that
 the computation does not pop the pair $\<c, p>$ at the top of $\gamma'$
 (\ie $\gamma'$ is left untouched during the computation).
@@ -1241,7 +1241,7 @@ following the fifth case of \eqref{eq:SWVPA-weight} (return symbol).
 % However, it is possible to apply the two first cases
 % (internal symbol or call symbol, with a push on the top of $\top$).
 %
-Formally, in order to define $b_\top$, we consider
+Formally, in order to define~$b_\top$, we consider
 a fresh stack symbol $\top \notin \Gamma$,   %which does not belong to $\Gamma$,
 representing the above untouched stack, and let:
 %
@@ -1275,8 +1275,9 @@ read during the computation is well parenthesized
 %of the function $\weight_A$.
 
 
-%\input{algo-best}
+\medskip
 \input{algo-best-alt}
+%\input{algo-best} % former version
 
 
 

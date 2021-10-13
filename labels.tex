@@ -8,8 +8,8 @@ We define the functions labeling the transitions of SW automata and transducers,
 generalizing the Boolean algebras of~\cite{dAntoniVeanes17CAV}.
 %from Boolean to other semiring domains.
 %
-We consider \emph{alphabets}, which are countable 
-\reviews{1) non-empty}
+We consider \emph{alphabets}, which are non-empty countable 
+%\reviews{1) non-empty}
 sets of symbols
 denoted by $\Sigma$, $\Delta$,...
 Moreover, $\Sigma^*$ is the set of finite sequences (\emph{words}) over
@@ -21,54 +21,60 @@ and $u v$ denotes the concatenation of $u, v \in \Sigma^*$.
 %\lydia{added $u$ and $v$ def}
 
 Given a semiring $\< \Semiring, \oplus, \zero, \otimes, \one>$,
-a \emph{label theory} over~$\Semiring$
-is a set $\bar\Phi$ of recursively enumerable sets denoted by
-\reviews{1) $\bar\Phi$ is a $(\Sigma \cup \Sigma \times \Delta)$-indexed family...}
+a \emph{label theory} $\bar\Phi$ over~$\Semiring$
+is an indexed family of recursively enumerable sets denoted by
+%\reviews{1) $\bar\Phi$ is a $(\Sigma \cup \Sigma \times \Delta)$-indexed family...}
 %$\Phi_\epsilon \subseteq \Semiring$, % containing constant functions valued in $\Semiring$,
 $\Phi_\Sigma$, %and $\Phi_\Delta$,
 containing unary functions of type $\Sigma \to \Semiring$, %resp. $\Delta \to \Semiring$,
 or $\Phi_{\Sigma, \Delta}$, containing binary functions $\Sigma \times \Delta \to \Semiring$,
 and such that:
-\florent{unary for \SWA (weight depends on input symbol)
-         and binary for transducers and VPA (weight depends on input symbol AND output or stack symbol)}
-
-\noindent --
-for all $\Phi_{\Sigma, \Delta} \in \bar\Phi$, we have
-$\Phi_{\Sigma} \in \bar\Phi$ and $\Phi_{\Delta} \in \bar\Phi$
-
-\noindent --
-every $\Phi_{\Sigma}\in \bar\Phi$ contains all the constant functions from $\Sigma$ into $\Semiring$,
-\reviews{3) contradicts $\Sigma$ countable}
-\reviews{1) $\forall \Sigma$...}
-\noindent --
-for all $\alpha \in \Semiring$ and $\phi \in \Phi_\Sigma$,
+%\florent{unary for \SWA (weight depends on input symbol) and binary for transducers and VPA (weight depends on input symbol AND output or stack symbol)}
+\begin{itemize}
+\item %\noindent --
+     for all $\Phi_{\Sigma, \Delta} \in \bar\Phi$, we have
+     $\Phi_{\Sigma} \in \bar\Phi$ and $\Phi_{\Delta} \in \bar\Phi$
+%
+%\item %\noindent --
+%every $\Phi_{\Sigma}\in \bar\Phi$ contains all the constant functions from $\Sigma$ into $\Semiring$,
+%\reviews{3) contradicts $\Sigma$ countable}
+%\reviews{1) $\forall \Sigma$...}
+%
+\item %\noindent --
+      for all $\Phi_{\Sigma} \in \bar\Phi$, 
+      for all $\phi \in \Phi_\Sigma$, and $\alpha \in \Semiring$ 
       $\alpha \otimes \phi : x \mapsto \alpha \otimes \phi(x)$,
-      and $\phi \otimes \alpha : x \mapsto \phi(x) \otimes \alpha$\\
-\phantom{--} belong to $\Phi_\Sigma$, and similarly for $\oplus$
+      and $\phi \otimes \alpha : x \mapsto \phi(x) \otimes \alpha$  %\phantom{--} 
+      belong to $\Phi_\Sigma$, and similarly for $\oplus$
       and for $\Phi_{\Sigma, \Delta}$
-
-\noindent --
-for all $\phi, \phi' \in \Phi_\Sigma$,
-$\phi \otimes \phi': x \mapsto \phi(x) \otimes \phi'(x)$ belongs to $\Phi_\Sigma$
-
-\noindent --
-for all $\eta, \eta' \in \Phi_{\Sigma, \Delta}$
-$\eta \otimes \eta': x, y \mapsto \eta(x, y) \otimes \eta'(x, y)$ belongs to $\Phi_{\Sigma, \Delta}$
-
-\noindent --
-for all $\phi \in \Phi_\Sigma$ and $\eta \in \Phi_{\Sigma, \Delta}$,
-$\phi \otimes_1 \eta: x, y \mapsto \phi(x) \otimes \eta(x, y)$ and\\
-\phantom{--} $\eta \otimes_1 \phi: x, y \mapsto \eta(x, y) \otimes \phi(x)$
-belong to $\Phi_{\Sigma, \Delta}$
-
-\noindent --
-for all $\psi \in \Phi_\Delta$ and $\eta \in \Phi_{\Sigma, \Delta}$,
-$\psi \otimes_2 \eta: x, y \mapsto \psi(y) \otimes \eta(x, y)$ and\\
-\phantom{--} $\eta \otimes_2 \psi: x, y \mapsto \eta(x, y) \otimes \psi(y)$
-belong to $\Phi_{\Sigma, \Delta}$
-
-\noindent --
-similar closures hold for $\oplus$.
+%
+\item %\noindent --
+      for all $\Phi_{\Sigma} \in \bar\Phi$, 
+      for all $\phi, \phi' \in \Phi_\Sigma$,
+      $\phi \otimes \phi': x \mapsto \phi(x) \otimes \phi'(x)$ belongs to $\Phi_\Sigma$
+%
+\item %\noindent --
+	  for all $\Phi_{\Sigma, \Delta} \in \bar\Phi$,
+      for all $\eta, \eta' \in \Phi_{\Sigma, \Delta}$
+      $\eta \otimes \eta': x, y \mapsto \eta(x, y) \otimes \eta'(x, y)$ belongs to $\Phi_{\Sigma, \Delta}$
+%
+\item %\noindent --
+      for all $\Phi_{\Sigma}, \Phi_{\Sigma, \Delta} \in \bar\Phi$,
+      for all $\phi \in \Phi_\Sigma$ and $\eta \in \Phi_{\Sigma, \Delta}$,
+      $\phi \otimes_1 \eta: x, y \mapsto \phi(x) \otimes \eta(x, y)$ and
+      $\eta \otimes_1 \phi: x, y \mapsto \eta(x, y) \otimes \phi(x)$
+      belong to $\Phi_{\Sigma, \Delta}$
+%
+\item %\noindent --
+      for all $\Phi_{\Delta}, \Phi_{\Sigma, \Delta} \in \bar\Phi$,
+      for all $\psi \in \Phi_\Delta$ and $\eta \in \Phi_{\Sigma, \Delta}$,
+      $\psi \otimes_2 \eta: x, y \mapsto \psi(y) \otimes \eta(x, y)$ and
+      $\eta \otimes_2 \psi: x, y \mapsto \eta(x, y) \otimes \psi(y)$
+      belong to $\Phi_{\Sigma, \Delta}$
+%
+\item %\noindent --
+      similar closures hold for $\oplus$.
+\end{itemize}
 
 %\noindent --
 %the partial applications $\eta \in \Phi_{\Sigma, \Delta}$
@@ -104,24 +110,28 @@ similar closures hold for $\oplus$.
 %belong resp. to~$\Phi_\Sigma$ and~$\Phi_\Delta$.
 %
 \noindent
-When the semiring $\Semiring$ is complete, we
-consider the following operators on the functions of~$\bar\Phi$. % a label theory.
-Intuitively, $\bigoplus_\Sigma$
-returns the global minimum, \wrt $\leq_\oplus$, of a function $\phi$ of~$\Phi_\Sigma$.
+When the semiring $\Semiring$ is complete, we consider moreover 
+the following operators on the functions of~$\bar\Phi$. % a label theory.
 %(we use overloading to simplify notations):
 \[
 \begin{array}{ll}
 \bigoplus_\Sigma : \Phi_\Sigma \to \Semiring,\
   \phi \mapsto \displaystyle\bigoplus_{a \in \Sigma} \phi(a)\\
+%  
 \bigoplus^1_\Sigma :
   \Phi_{\Sigma,\Delta} \to \Phi_\Delta,\
   \eta \mapsto \bigl( y \mapsto \displaystyle\bigoplus_{a \in \Sigma} \eta(a, y) \bigr) &
+%
 \bigoplus^2_\Delta :
   \Phi_{\Sigma,\Delta} \to \Phi_\Sigma,\
   \eta \mapsto \bigl( x \mapsto \displaystyle\bigoplus_{b \in \Delta} \eta(x, b) \bigr)\\
 \end{array}
 \]
-%
+Intuitively, $\bigoplus_\Sigma$
+returns the global minimum, \wrt $\leq_\oplus$, of a function $\phi$ of~$\Phi_\Sigma$,
+and $\bigoplus^1_\Sigma$, $\bigoplus^2_\Delta$ return partial minimums of 
+a function $\phi$ of~$\Phi_{\Sigma,\Delta}$.
+
 %\medskip\noindent
 %In what follows, we might omit the sub- and superscripts in
 %\philippe{On peut simplifier la notation et supprimer cette discussion?}
@@ -138,12 +148,16 @@ returns the global minimum, \wrt $\leq_\oplus$, of a function $\phi$ of~$\Phi_\S
 %
 %\begin{definition}\label{def:label-th-complete}
 %A label theory~$\bar\Phi$ is \emph{complete} when
-We assume that when the underlying semiring~$\Semiring$ is complete,
-for all $\Phi_{\Sigma, \Delta} \in \bar\Phi$
-and all $\eta \in \Phi_{\Sigma, \Delta}$,
-$\bigoplus^1_\Sigma \eta \in \Phi_{\Delta}$ and
-$\bigoplus^2_\Delta \eta \in \Phi_{\Sigma}$.
-%\end{definition}
+
+\noindent
+We assume that when the underlying semiring~$\Semiring$ is complete:
+\begin{itemize}
+\item 
+	  for all $\Phi_{\Sigma, \Delta} \in \bar\Phi$
+	  and all $\eta \in \Phi_{\Sigma, \Delta}$,
+	  $\bigoplus^1_\Sigma \eta \in \Phi_{\Delta}$ and
+	  $\bigoplus^2_\Delta \eta \in \Phi_{\Sigma}$.
+\end{itemize}
 
 
 \begin{example}\label{distance-time}
@@ -191,20 +205,37 @@ $|0.07 - 0| + |0.72 - \frac{3}{4}| + |0.91- \frac{7}{8} | +
 
 
 \noindent 
-We will need guarantees on the computability
-of the above infinite sum operators.
+The following property of label theories will be useful in 
+the following results, in order to ensure 
+the computability of the above infinite sum operators.
 %
 \begin{definition}\label{def:effective}
-A label theory is called \emph{effective} when
-for all $\phi \in \Phi_\Sigma$ and $\eta \in \Phi_{\Sigma, \Delta}$,
+A label theory $\bar\Phi$ is called \emph{effective} when
+for all $\Phi_{\Sigma}, \Phi_{\Sigma, \Delta} \in \bar\Phi$, 
+$\phi \in \Phi_\Sigma$ and $\eta \in \Phi_{\Sigma, \Delta}$,
 $\bigoplus_{\Sigma} \phi$,
-$\bigoplus_{\Delta}\bigoplus_{\Sigma} \eta$, and
-$\bigoplus_{\Sigma}\bigoplus_{\Delta} \eta$
+$\bigoplus_{\Delta}\bigoplus^1_{\Sigma} \eta$, and
+$\bigoplus_{\Sigma}\bigoplus^2_{\Delta} \eta$
 can be effectively computed from $\phi$ and $\eta$,
-and moreover, the number of symbols reaching these bounds is finite
-and can be effectively computed.
+as well as one symbol, at least, 
+reaching each of these bounds.
+%the number of symbols reaching these bounds is finite
 \end{definition}
 
+The effectiveness is a strong restriction on label theories.
+It is however not unrealistic in the context of the problems for languages models considered below, 
+namely the combination of automata, best-search and symbolic weighted parsing.
+%
+In fact, every instance of such problems comes with a finite number of automata, each one containing a finite number of functions in a label theory, in their transitions. 
+We may assume that the global minimums $\bigoplus_{\Sigma} \phi$,
+$\bigoplus_{\Delta}\bigoplus^1_{\Sigma} \eta$, and
+$\bigoplus_{\Sigma}\bigoplus^2_{\Delta} \eta$
+of all these functions are known.
+%
+Then, the other functions considered when solving the problems are obtained by combination with the above operators.  
+These operators preserve effectiveness, as long as the semiring is monotonic. 
+In practice, the combinations may be represented by structures like 
+Algebraic Decision Diagrams~\cite{Bahar97ADD}.
 
 %we call \emph{summary} of a function
 %$\phi \in \Phi_\Sigma$,

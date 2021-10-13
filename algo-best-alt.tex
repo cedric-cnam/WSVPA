@@ -1,31 +1,31 @@
 % !TEX root = main.tex
 %
 
-\subsection*{(Alternative Algorithm for best-search)}
+\florent{New Algorithm for best-search}
 We shall compute the values of the functions $b_\bot$ and $b_\top$
-by searching shortests paths in a $\Semiring$-labeled graph $\G_A$
+by search of shortest paths in a $\Semiring$-labeled graph $\G_A$
 associated to the \SWVPA $A$. 
 This graph is defined by $\G_A = \< V_A, E_A, \eta_A >$, 
 with set of vertices $V_A = (Q \times Q) \cup (Q \times P \times Q)$,
 set of edges $E_A = V_A \times V_A$
 (an edge $\< v_1, v_2>$, with $v_1, v_2 \in V_A$ is denoted by $v_1 \to v_2$),
 and with an edge labelling  
-$\eta_A : E_A \to \Semiring$ defined as follows,
+$\eta_A : E_A \to \Semiring$ defined by, %as follows,
 for $q_0, q_1, q_2, q_3 \in Q$, $p, p' \in P$:
 %
 \[
 \begin{array}{rclcl}
 %
-\< q_0, q_1> & \to & \< q_0, q_2> & : &
+\< q_0, q_1> & \to & \< q_0, q_2> & \mapsto &
 \bigoplus_{\Deltai} \weiei(q_1, q_2) \oplus \bigoplus_{\Deltar} \weier(q_1, q_2)\\
 %
-\< q_1, p, q_2> & \to & \<q_0, q_3> & : &
+\< q_1, p, q_2> & \to & \<q_0, q_3> & \mapsto &
 \bigoplus_{\Deltac} \bigl[ \weiec(q_0, p, q_1) \otimes \bigoplus^2_{\Deltar} \weir(q_2, p, q_3)\bigr]\\ 
 %
 %\< q_0, p, q_1> & \to & \< q_0, p, q_2> & : &
 %\bigoplus_{\Deltai} \weii(q_1, p, q_2)\\
 %
-\< q_1, p', q_2> & \to & \< q_0, p, q_3> & : &
+\< q_1, p', q_2> & \to & \< q_0, p, q_3> & \mapsto &
 {\displaystyle\bigoplus_{q_0=q_1}}
 {\displaystyle\bigoplus_{p=p'}}
  \bigoplus_{\Deltai} \weii(q_2, p, q_3)\\
@@ -35,14 +35,14 @@ for $q_0, q_1, q_2, q_3 \in Q$, $p, p' \in P$:
 %
 \end{array}
 \]
-Removing from $\G_A$ every edge $e \in E_A$ such that $\eta(e) = \zero$ 
-is preserving the results below.
+%Removing from $\G_A$ every edge $e \in E_A$ such that $\eta(e) = \zero$ 
+%is preserving the results below.
 %
 A \emph{path} of $\G_A$ is a sequence $\pi = v_0,\ldots, v_n \in V^*_A$,
 it is called \emph{safe} when $v_0$ has the form $\< q, q>$ for some $q \in Q$, 
 and $n_v$ is called $\last(\pi)$.
 %
-A path $\pi$ is assigned a weight value $\weight(\pi)$ which is the product by $\otimes$ 
+A path $\pi$ is assigned a weight value $\weight(\pi) \in \Semiring$ which is the product by $\otimes$ 
 of the weights of the edges involved in the path.
 More precisely, for all $q, q' \in Q$ and $p \in P$, we let 
 $\weight(\< q, q' > ) = \one$ if $q = q'$, and $\zero$ otherwise, 
