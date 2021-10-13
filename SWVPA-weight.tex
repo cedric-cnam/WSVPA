@@ -1,0 +1,97 @@
+% !TEX root = main.tex
+%
+% initial def. of weight for SW-VPA (before revision)
+
+
+Formally, the computations of the automaton~$A$ are defined
+with an intermediate function $\weight_A$, like in Section~\ref{sec:SWT}.
+%
+A configuration $q[\gamma]$
+is composed of a state $q \in Q$
+and a stack content $\gamma \in \Gamma^*$,
+where $\Gamma = \Deltac \times P$.
+Hence, $\weight_A$ is a function from
+$[Q \times \Gamma^*] \times \Delta^* \times [Q \times \Gamma^*]$ into~$\Semiring$.
+The empty stack is denoted by $\bot$, and the topmost
+symbol is the last pushed pair.
+%
+The recursive definition of $\weight_A$
+enumerates each of the six possible cases:
+reading $a \in \Deltai$,
+%\lydia{intro to func}
+or $\call{c} \in \Deltac$, or $\return{r} \in \Deltar$,
+for each possible state of the stack (empty or not).
+%to add to $u \in {\Delta}^*$.
+%\lydia{introduced the 6 cases}
+\florent{shorter notation $cp$ for $\< c, p>$ ?}
+
+\begin{align}
+%\weight_A\bigl(\config{q}{\bot}, \varepsilon, \config{q}{\bot}) & = \one\label{eq:SWVPA-weight}\\
+%\weight_A\bigl(\config{q}{\bot}, \varepsilon, \config{q'}{\gamma}) & = \zero
+%\mathrm{~if~} q \neq q'\nonumber\\
+%
+\weight_A\bigl(\config{q}{\gamma}, \varepsilon, \config{q'}{\gamma'}) & = \one
+\mathrm{~if~} q = q', \gamma =\gamma' = \bot
+\mathrm{~and~} \zero \mathrm{~otherwise}\label{eq:SWVPA-weight}\\
+\weight_A\bigl(\configup{q}{\<{\call{c}}, p>\stackup\gamma}, a\, u,
+               \config{q'}{\gamma'}\bigr) & =
+ {\displaystyle\bigoplus_{q'' \in Q}} \weii(q, c, p, a, q'')
+  \otimes \weight_A\bigl(\configup{q''}{\<{\call{c}}, p> \stackup \gamma}, u,
+                         \config{q'}{\gamma'}\bigr)\nonumber\\
+%
+\weight_A\bigl(\config{q}{\bot}, a\, u,
+               \config{q'}{\gamma'}\bigr) & =
+  {\displaystyle\bigoplus_{q'' \in Q}} \weiei(q, a, q'')
+   \otimes \weight_A\bigl(\config{q''}{\bot}, u, \config{q'}{\gamma'}\bigr)\nonumber\\
+%
+\weight_A\bigl(\configup{q}{\<{\call{c}}, p>\stackup\gamma}, {\call{c}'}\, u,
+               \config{q'}{\gamma'}\bigr) & =
+ {\displaystyle\bigoplus_{\begin{array}{c}
+                          \scriptstyle q'' \in Q\\[-1ex]
+                          \scriptstyle p' \in P
+                          \end{array}}}
+ \weic\bigl(q, {\call{c}}, p, {\call{c}'}, p', q''\bigr)
+ \otimes \weight_A\bigl(\configup{q''}{\<{\call{c}'}, p'>\stackup \<{\call{c}}, p>\stackup \gamma}, u,
+                        \config{q'}{\gamma'}\bigr)\nonumber\\[1mm]
+%
+\weight_A\bigl(\config{q}{\bot}, {\call{c}}\, u,
+               \config{q'}{\gamma'}\bigr) & =
+ {\displaystyle\bigoplus_{\begin{array}{c}
+                          \scriptstyle q'' \in Q\\[-1ex]
+                          \scriptstyle p \in P
+                          \end{array}}}
+  \weiec(q, {\call{c}}, p, q'')
+  \otimes \weight_A\bigl(\config{q''}{\<{\call{c}}, p>}, u,
+                         \config{q'}{\gamma'}\bigr)\nonumber\\
+%
+\weight_A\bigl(\configup{q}{\<{\call{c}}, p>\stackup\gamma}, {\return{r}}\, u,
+               \config{q'}{\gamma'}\bigr) & =
+ {\displaystyle\bigoplus_{q'' \in Q}}
+  \weir\bigl(q, {\call{c}}, p, {\return{r}}, q''\bigr)
+  \otimes \weight_A\bigl(\config{q''}{\gamma}, u,
+                         \config{q'}{\gamma'}\bigr)\nonumber\\
+%
+\weight_A\bigl(\config{q}{\bot}, {\return{r}}\, u,
+               \config{q'}{\gamma'}\bigr) & =
+ {\displaystyle\bigoplus_{q'' \in Q}} \weier(q, {\return{r}}, q'')
+  \otimes \weight_A\bigl(\config{q''}{\bot}, u,
+                         \config{q'}{\gamma'}\bigr)\nonumber
+\end{align}
+%\lydia{c p to <c, p>}
+%
+% and ${\call{c}}\, p\stacksep \gamma$
+%denotes a stack where the pair made of ${\call{c}} \in \Deltac$ and $p \in P$ is the top symbol
+%and $\gamma$ is the rest of stack.
+
+\noindent
+The weight associated by $A$ to $t \in \Delta^*$
+is defined according to empty stack semantics:
+%
+\begin{equation}
+A(t)  =
+{\displaystyle\bigoplus_{q, q' \in Q}} \textstyle
+\mathsf{in}(q) \mathop{\otimes}
+\weight_A\bigl(\config{q}{\bot}, t, \config{q'}{\bot}\bigr)
+\mathop{\otimes} \mathsf{out}(q').
+\label{eq:SWVPA-value}
+\end{equation}

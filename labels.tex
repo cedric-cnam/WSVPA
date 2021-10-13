@@ -22,9 +22,9 @@ and $u v$ denotes the concatenation of $u, v \in \Sigma^*$.
 
 Given a semiring $\< \Semiring, \oplus, \zero, \otimes, \one>$,
 a \emph{label theory} $\bar\Phi$ over~$\Semiring$
-is an indexed family of recursively enumerable sets denoted by
+is an indexed family of %recursively enumerable %$\Phi_\epsilon \subseteq \Semiring$, % containing constant functions valued in $\Semiring$,
+sets denoted by
 %\reviews{1) $\bar\Phi$ is a $(\Sigma \cup \Sigma \times \Delta)$-indexed family...}
-%$\Phi_\epsilon \subseteq \Semiring$, % containing constant functions valued in $\Semiring$,
 $\Phi_\Sigma$, %and $\Phi_\Delta$,
 containing unary functions of type $\Sigma \to \Semiring$, %resp. $\Delta \to \Semiring$,
 or $\Phi_{\Sigma, \Delta}$, containing binary functions $\Sigma \times \Delta \to \Semiring$,
@@ -33,44 +33,45 @@ and such that:
 \begin{itemize}
 \item %\noindent --
      for all $\Phi_{\Sigma, \Delta} \in \bar\Phi$, we have
-     $\Phi_{\Sigma} \in \bar\Phi$ and $\Phi_{\Delta} \in \bar\Phi$
+     $\Phi_{\Sigma} \in \bar\Phi$ and ${\Phi_{\Delta} \in \bar\Phi}$.
 %
-%\item %\noindent --
-%every $\Phi_{\Sigma}\in \bar\Phi$ contains all the constant functions from $\Sigma$ into $\Semiring$,
+\item %\noindent --
+    all $\Phi_{\Sigma}, \Phi_{\Sigma, \Delta}\in \bar\Phi$ contain all the constant functions of 
+    $\Sigma \to \Semiring$, resp. ${\Sigma \times \Delta  \to \Semiring}$.% into $\Semiring$,
 %\reviews{3) contradicts $\Sigma$ countable}
 %\reviews{1) $\forall \Sigma$...}
 %
 \item %\noindent --
       for all $\Phi_{\Sigma} \in \bar\Phi$, 
-      for all $\phi \in \Phi_\Sigma$, and $\alpha \in \Semiring$ 
+      for all $\phi \in \Phi_\Sigma$, and $\alpha \in \Semiring$,
       $\alpha \otimes \phi : x \mapsto \alpha \otimes \phi(x)$,
-      and $\phi \otimes \alpha : x \mapsto \phi(x) \otimes \alpha$  %\phantom{--} 
+      and $\phi \otimes \alpha : x \mapsto \phi(x) \otimes \alpha$,  %\phantom{--} 
       belong to $\Phi_\Sigma$, and similarly for $\oplus$
-      and for $\Phi_{\Sigma, \Delta}$
+      and for $\Phi_{\Sigma, \Delta}$.
 %
 \item %\noindent --
       for all $\Phi_{\Sigma} \in \bar\Phi$, 
       for all $\phi, \phi' \in \Phi_\Sigma$,
-      $\phi \otimes \phi': x \mapsto \phi(x) \otimes \phi'(x)$ belongs to $\Phi_\Sigma$
+      $\phi \otimes \phi': x \mapsto \phi(x) \otimes \phi'(x)$ belongs to $\Phi_\Sigma$.
 %
 \item %\noindent --
 	  for all $\Phi_{\Sigma, \Delta} \in \bar\Phi$,
-      for all $\eta, \eta' \in \Phi_{\Sigma, \Delta}$
-      $\eta \otimes \eta': x, y \mapsto \eta(x, y) \otimes \eta'(x, y)$ belongs to $\Phi_{\Sigma, \Delta}$
+      for all $\eta, \eta' \in \Phi_{\Sigma, \Delta}$,
+      $\eta \otimes \eta': x, y \mapsto \eta(x, y) \otimes \eta'(x, y)$ belongs to $\Phi_{\Sigma, \Delta}$.
 %
 \item %\noindent --
       for all $\Phi_{\Sigma}, \Phi_{\Sigma, \Delta} \in \bar\Phi$,
       for all $\phi \in \Phi_\Sigma$ and $\eta \in \Phi_{\Sigma, \Delta}$,
       $\phi \otimes_1 \eta: x, y \mapsto \phi(x) \otimes \eta(x, y)$ and
       $\eta \otimes_1 \phi: x, y \mapsto \eta(x, y) \otimes \phi(x)$
-      belong to $\Phi_{\Sigma, \Delta}$
+      belong to $\Phi_{\Sigma, \Delta}$.
 %
 \item %\noindent --
       for all $\Phi_{\Delta}, \Phi_{\Sigma, \Delta} \in \bar\Phi$,
       for all $\psi \in \Phi_\Delta$ and $\eta \in \Phi_{\Sigma, \Delta}$,
       $\psi \otimes_2 \eta: x, y \mapsto \psi(y) \otimes \eta(x, y)$ and
       $\eta \otimes_2 \psi: x, y \mapsto \eta(x, y) \otimes \psi(y)$
-      belong to $\Phi_{\Sigma, \Delta}$
+      belong to $\Phi_{\Sigma, \Delta}$.
 %
 \item %\noindent --
       similar closures hold for $\oplus$.

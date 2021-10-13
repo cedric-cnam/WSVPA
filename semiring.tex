@@ -26,10 +26,11 @@ $\forall x\in \mathbb{S}$, $\zero \otimes x = x \otimes \zero = \zero$.
 %Components of a semiring~$\Semiring$ may be subscripted by~$\Semiring$ when needed.
 %We simply write $x \in \Semiring$ to mean $x \in \mathbb{S}$.
 %
-In the models presented in this paper,
-$\oplus$ selects an optimal value from two given values,
-in order to handle non-determinism,
-and $\otimes$ combines two values into a single one. \florent{revise (rev. 1)}
+%In the models presented in this paper,
+%$\oplus$ selects an optimal value from two given values,
+%in order to handle non-determinism,
+%and $\otimes$ combines two values into a single one. 
+%\florent{revise (rev. 1)}
 
 %and let $\< \Semiring, \oplus, \zero, \otimes, \one>$ be a {semiring},
 A semiring~$\Semiring$ is \emph{commutative} if $\otimes$ is commutative.
@@ -75,12 +76,14 @@ $\Semiring$ is \emph{monotonic} \wrt $\leq_\oplus$.
 %and $z \otimes x \leq z \otimes y$.
 %
 Another important semiring property in the context of optimization
-is {superiority}~\cite{Huang08advanceddynamic},
-\reviews{1) also \cite{Knuth77}: "he defines the notion for functions of arbitrary arity, so not just semirings (but multioperator monoids"}
-which generalizes to the
+is {superiority}~\cite{Knuth77,Huang08advanceddynamic},
+%\reviews{1) also \cite{Knuth77}: "he defines the notion for functions of arbitrary arity, so not just semirings (but multioperator monoids"}
+which generalizes the
 \emph{non-negative weights} condition in shortest-path algorithms~\cite{Dijkstra59anote}.
 Intuitively, it means that combining elements with~$\otimes$ always increases their weight.
-Formally, it is defined as the property ($i$) below. %of the following lemma.
+Formally, %In~\cite{Huang08advanceddynamic}, 
+$\Semiring$ is called \emph{superior} \wrt~$\leq_\oplus$
+when property~$(i)$ of Lemma~\ref{lem:bounded} below holds.
 
 \begin{lemma}[Superiority, Boundedness]
 \label{lem:superior}\label{lem:bounded}
@@ -111,11 +114,8 @@ by definition of $\leq_\oplus$, $\one \oplus x = \one$.
 \end{proof}
 
 \reviews{1) example superiority}
-In~\cite{Huang08advanceddynamic}, when  property~$(i)$ holds,
-$\Semiring$ is called \emph{superior} \wrt~$\leq_\oplus$.
-It implies (proof of Lemma~\ref{lem:bounded})
-that
-$\one \leq_\oplus x$ for every $x \in \Semiring$.
+The property~$(i)$ of superiority implies %(proof of Lemma~\ref{lem:bounded})
+that $\one \leq_\oplus x$ for every $x \in \Semiring$.
 Similarly, by the first inequality of ($i$) with $y = \zero$,
 $x \leq_\oplus x \otimes \zero = \zero$.
 %
