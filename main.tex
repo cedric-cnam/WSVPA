@@ -210,6 +210,7 @@
 \newcommand{\trg}{\mathit{trg}}
 \newcommand{\fst}{\mathit{fst}}
 \newcommand{\snd}{\mathit{snd}}
+\newcommand{\first}{\mathit{first}}
 \newcommand{\last}{\mathit{last}}
 
 %\sloppy
@@ -1174,7 +1175,7 @@ such that $A(t)$ is minimal \wrt the natural ordering $\leq_\oplus$ for $\Semiri
 %
 Let $A = \< Q, P, \init, \bar\wei, \final >$.
 %
-We propose a method for %Dijkstra-like algorithm 
+We propose first a method for %Dijkstra-like algorithm 
 computing,
 for every $q, q' \in Q$,
 the minimum, \wrt $\leq_\oplus$, of the function
@@ -1211,11 +1212,10 @@ b_\bot(q, q')
 \end{equation}
 
 \noindent
-In order to compute the above function $b_\bot : Q \times Q \to \Semiring$,
-we shall consider an auxiliary function $b_\top :  Q \times P \times Q \to \Phic$.
-%%%%%% lydaddition %%%%%%
-%The function $b_\top$ will allow to compute~$b_\bot$ recursively in the case where the stack in not empty.
-%%%%%% lydaddition %%%%%%
+Hence, in order to prove Proposition~\ref{th:best-search}, 
+it is sufficient to show that we can compute $b_\bot(q, q')$ for all $q, q' \in Q$. 
+For this purpose, we shall consider an auxiliary function $b_\top :  Q \times P \times Q \to \Phic$
+that corresponds to the cases where the stack of $A$ is not empty.
 %
 Intuitively, $b_\top(q, p, q')$ is a function of~$\Phic$,
 mapping every $c \in \Deltac$ to
@@ -1225,7 +1225,7 @@ with a non-empty stack $\gamma' = \<c, p> \, \gamma \in \Gamma^+$,
 and ending in state~$q'$ with the same stack~$\gamma'$,
 such that
 the computation does not pop the pair $\<c, p>$ at the top of $\gamma'$
-(\ie $\gamma'$ is left untouched during the computation).
+(\ie~$\gamma'$ is left untouched during the computation).
 However, the computation can read $\<c, p>$ at the top of $\gamma'$,
 and can also push another pair $\< c', p'> \in \Gamma$ on top of $\gamma'$,
 following the third case 

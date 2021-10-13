@@ -39,8 +39,8 @@ for $q_0, q_1, q_2, q_3 \in Q$, $p, p' \in P$:
 %is preserving the results below.
 %
 A \emph{path} of $\G_A$ is a sequence $\pi = v_0,\ldots, v_n \in V^*_A$,
-it is called \emph{safe} when $v_0$ has the form $\< q, q>$ for some $q \in Q$, 
-and $n_v$ is called $\last(\pi)$.
+where $v_0$ and $v_n$ are respectively called $\fst(\pi)$ and $\last(\pi)$.
+The path $\pi$ is called \emph{safe} when $\fst(\pi)$ has the form $\< q, q>$ for some $q \in Q$, 
 %
 A path $\pi$ is assigned a weight value $\weight(\pi) \in \Semiring$ which is the product by $\otimes$ 
 of the weights of the edges involved in the path.
@@ -50,9 +50,27 @@ $\weight(\< q, p, q' > ) = \zero$ and
 for all $n \geq 1$, 
 $\weight(v_0,\ldots, v_n) = \weight(v_0,\ldots, v_{n-1}) \otimes \eta_A(v_{n-1} \to v_{n})$.
 %$\weight(\pi) = \bigotimes_{i=1}^{n} \eta(v_{i-1} \to v_i)$.
+%
+%The following results establish that $b_\bot(q, q')$ by be computed from a shortest path in $\G_A$.
+For $v, v' \in V_A$, let $\mathit{short}(v, v')$ be the weight of the shortest path from $v$ to $v'$, 
+more precisely, 
+\(\mathit{short}(v, v') = \displaystyle\bigoplus_{\begin{array}{c}
+                                                  \scriptstyle\pi\,\mathrm{s.t.}\,
+										          \scriptstyle\fst(\pi) = v,
+	                                              \scriptstyle\last(\pi) = v'
+											      \end{array}} \weight(\pi)$.
+
+\begin{proposition}\label{algo-shortest}
+%Let  and let $\pi$ be the shortest safe path with $\last(\pi) = \< q, q'>$, i.e. 
+For all $q, q' \in Q$, 
+$b_\bot(q, q') = \displaystyle\bigoplus_{q_0 \in Q} \mathit{short}\bigl(\< q_0, q_0>, \< q, q'>\bigr)$.
+\end{proposition}
+This proposition is a consequence of Lemmata~\ref{algo-correct} and~\ref{algo-complete} below.
+
+
 
 %Intuitively, 
-\begin{lemma}[Correctness]
+\begin{lemma}[Correctness]\label{algo-correct}
 For all safe path~$\pi$ of~$\G_A$,  %with $\src(\pi) = \<q_0, q_0>$,
 %with last element $v$, \\
 ($i$) if $\last(\pi) = \< q, q'>$, %with $q, q' \in Q$, 
@@ -82,7 +100,7 @@ let us do a case analysis on the edge $v_{n-1} \to v_n$.
 
 
 
-\begin{lemma}[Completeness] \label{lem:algo-completeness}
+\begin{lemma}[Completeness] \label{algo-complete}
 For all $q, q' \in Q$, $p\in P$, 
 ($i$) there exists a safe path~$\pi$ of~$\G_A$ such that
 %such that $\src(\pi) = \<q_0, q_0>$ for some $q_0 \in Q$, 
@@ -153,12 +171,20 @@ $b_\bot(q, q) = \one$ and $b_\bot(q, q') = \zero$ if $q \neq q'$.
 For $n = n_{q, q'} > 0$, let $\bar\tau$ and~$\bar{w}$
 be the sequences associated to $q$ and $q'$ as above.
 Let us do a case analysis of $w_n$.
-
-
-
- 
-
+... \qed
 \end{proof}
+
+\medskip\noindent
+Following~\eqref{eq:min} and Proposition~\ref{algo-shortest}, 
+in order to compute the minimum of $t \mapsto A(t)$ \wrt $\leq_\oplus$, 
+it is sufficient to compute one shortest path in $\G_{A}$ of source
+$\<q_0, q_0>$ and target $\<q, q'>$ for all $q_0, q, q' \in Q$.
+This can be done with~~\cite{Mohri02semiring}~Theorem~?? \florent{completer}
+with a complexity ***. Altogether, the complexity for computing the minimum of $A$
+is in $O(...)$.
+Moreover, a witness $t \in \Delta^*$ for this minimum can be associated to the appropriate
+shortest path, like in the proof of Lemma~\ref{algo-correct}
+
 
 
 

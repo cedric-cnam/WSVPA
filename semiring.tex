@@ -158,32 +158,34 @@ $(x_i)_{i \in I}$ %$\{ x_i \mid i \in I \}$
 of elements of $\dom(\Semiring)$ over an index set $I \subseteq \mathbb{N}$, such that:
 \begin{description}
 \item[$i.$]
-\emph{infinite sums extend finite sums:}\\
-$\displaystyle\bigoplus_{i \in \emptyset} x_i = \zero$,\quad
-      $\forall j\in \mathbb{N}, \displaystyle\bigoplus_{i \in \{ j \}} x_i = x_j$,
-      $\forall j, k\in \mathbb{N}, j\neq k,
-      \displaystyle\bigoplus_{i \in \{ j, k \}} x_i = x_j \oplus x_k$,
+\emph{infinite sums extend finite sums:} $\forall j, k\in \mathbb{N}, j\neq k$,\\
+$\displaystyle\bigoplus_{i \in \emptyset} x_i = \zero$,\ 
+%$\forall j\in \mathbb{N}$, 
+$\displaystyle\bigoplus_{i \in \{ j \}} x_i = x_j$,\ 
+%$\forall j, k\in \mathbb{N}, j\neq k$,
+$\displaystyle\bigoplus_{i \in \{ j, k \}} x_i = x_j \oplus x_k$,
 %
 \item[$ii.$]
-\emph{associativity and commutativity:}\\
-for all $I \subseteq \mathbb{N}$
-and all partitions $(I_{j})_{j \in J}$ of $I$, %\subseteq \mathbb{N}$,
+\emph{associativity and commutativity:}
+%for all $I \subseteq \mathbb{N}$
+for all partitions $(I_{j})_{j \in J}$ of $I$,\\ %\subseteq \mathbb{N}$,
 \(
 \displaystyle
-\bigoplus_{j \in J}\bigoplus_{i \in I_j} x_i =
-\bigoplus_{i \in I} x_i
+\bigoplus_{j \in J}\bigoplus_{i \in I_j} x_i = \bigoplus_{i \in I} x_i
 \),
 %
 \item[$iii.$]
-\emph{distributivity of products over infinite sums:}\\
-for all $I \subseteq \mathbb{N}$, 
+\emph{distributivity of products over infinite sums:} 
+for all $I \subseteq \mathbb{N}$, $\forall x, y \in \Semiring$,\\
 %and all $x, y \in \Semiring$,
 \(
 \displaystyle
-\forall x \in \Semiring, \bigoplus_{i \in I} (x \otimes y_i) = x \otimes \bigoplus_{i\in I} y_i\), and
+%\forall x \in \Semiring, 
+\bigoplus_{i \in I} (x \otimes y_i) = x \otimes \bigoplus_{i\in I} y_i\), and
 \(
 \displaystyle
-\forall y \in \Semiring, \bigoplus_{i \in I} (x_i \otimes y) = (\bigoplus_{i \in I} x_i ) \otimes y\).
+%\forall y \in \Semiring, 
+\bigoplus_{i \in I} (x_i \otimes y) = (\bigoplus_{i \in I} x_i ) \otimes y\).
 \end{description}
 
 
