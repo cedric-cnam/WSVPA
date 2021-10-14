@@ -303,13 +303,13 @@ Example 14 is quite limited in detail in comparison to the earlier examples, whi
 
 Additional technical remarks added later (possibly the authors intend to take care of these already):
 
-- [ ] 1. On page 5, in the label theory it is required that each set $\Phi_∑$ (and $\Phi_{\Sigma,\Delta}$) is recursively enumerable, in particular countable.
+- [x] 1. On page 5, in the label theory it is required that each set $\Phi_∑$ (and $\Phi_{\Sigma,\Delta}$) is recursively enumerable, in particular countable.
      $\Phi_∑$ is supposed to contain all constant functions from $∑$ into the semiring $S$.
      Hence $S$ has to be countable.
      This is not the case for the Viterbi semiring and the tropical semiring as given in Figure 2.
      Moreover, these semirings are required to be complete. There are uncountably many subsets $I$ of $\N$ and hence as many possible sums (cf. def of complete). But the semiring should countable.
 
-- [ ] 2. It is not required that the operations of the semiring are computable. But in the proof of Proposition 10, see page 15, formula (11), this is needed for the multiplication. Also, in the proof of Proposition 15, see page 17. One might use the assumptions of "label theory", p.5, that functions describing these products belong to $\Phi_\Sigma$. But then it is needed there that the products of these functions can be computed. (Also, possibly a check for equality should be given.)
+- [x] 2. It is not required that the operations of the semiring are computable. But in the proof of Proposition 10, see page 15, formula (11), this is needed for the multiplication. Also, in the proof of Proposition 15, see page 17. One might use the assumptions of "label theory", p.5, that functions describing these products belong to $\Phi_\Sigma$. But then it is needed there that the products of these functions can be computed. (Also, possibly a check for equality should be given.)
      Only in Def. 6 the authors are more precise on particular such operations.
 
 Remark: In Def. 6 the meaning of the requirement "moreover, the number of symbols reaching these bounds ..." is not clear to me.
