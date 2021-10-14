@@ -93,8 +93,45 @@ and the first line of \eqref{eq:SWVPA-weight}.
 \noindent
 If $\pi = v_0,\ldots, v_n$ with $n \geq 1$, 
 let us do a case analysis on the edge $v_{n-1} \to v_n$.
-...
-\qed
+%
+We suppose Lemma ~\ref{algo-correct} is true for a safe path $\pi' = v_0,\ldots, v_{n-1}$ and a word $u' \in \Delta^*$. Firstly, let's assume $v_{n-1} = \< q, q''>$ and $last(\pi) = \< q, q'>$. By definition, the edge $\< q, q''> \to \< q, q'>$ is possible only if an internal symbol or a return symbol is read, in order to keep the stack empty:
+
+\begin{itemize}
+\item if we read $a \in \Delta_i$ and have an empty stack, then the new $\weight_A$ is computed with the third case in equation~\eqref{eq:SWVPA-weight}.
+We have
+\begin{align*}
+ \weight_A\bigl(\config{q}{\gamma}, u\, a,
+               \config{q'}{\bot}\bigr) &=
+   \weight_A\bigl(\config{q}{\gamma}, u, \config{q''}{\bot}\bigr)
+   \otimes\weiei(q'', a, q')  \\
+ &= \weight(\pi')\otimes\weiei(q'', a, q')\\
+ &= \weight(\pi)\nonumber 
+\end{align*}
+with $\pi = (\pi', v_n)$, since we know that $\weight(v_0,\ldots, v_{n-1}) \otimes \eta_A(v_{n-1} \to v_{n}) = \weight(v_0,\ldots, v_n)$ and $\weiei(q'', a, q')$ is indeed a possible edge label $\eta_A$ for the edge $\< q, q''> \to \< q, q'>$ (first line of label definition). Hence in this case the Lemma is true. 
+
+\item Following the same reasoning as before, we find that the Lemma is also true when $a \in \Delta_r$ by using the last equation in \eqref{eq:SWVPA-weight}.
+%
+\end{itemize}
+\noindent
+Let's now assume that we have a safe path $\pi' = (v_0,\ldots, v_{n-1})$ such that $v_{n-1} = \< q_1, p, q_2>$ and $last(\pi) = \< q_0, q_3>$. The edge $\< q_1, p, q_2> \to \< q_0, q_3>$ exists if we read a return then try to match with the call on top of the stack which then leaves the stack empty. With the 6th equation in~\eqref{eq:SWVPA-weight}, we can compute the $\weight_A$ for $\<q_0, q_3>$ and then replace the first term with the 5th equation in~\eqref{eq:SWVPA-weight}, such as:
+\begin{align*}
+\weight_A\bigl(\config{q_0}{\bot}, u\,{\return{r}},
+               \config{q_3}{\bot}\bigr) &=
+  \weight_A\bigl(\config{q_0}{\bot}, u,
+                 \configup{q_2}{\<{\call{c}}, p>\stackup\bot'}\bigr)
+  \otimes \weir\bigl(q_2, {\call{c}}, p, {\return{r}}, q_3\bigr)\\
+  &=
+   \weight_A(\config{q_1}{\bot}, u, \config{q_2}{\bot}\bigr)
+ \otimes \weiec(q_0, {\call{c}}, p, q_1)
+  \otimes \weir\bigl(q_2, {\call{c}}, p, {\return{r}}, q_3\bigr)\\
+  &= \weight_A(\pi')\otimes \weiec(q_0, {\call{c}}, p, q_1)
+  \otimes \weir\bigl(q_2, {\call{c}}, p, {\return{r}}, q_3\bigr)\\
+  &= \weight_A(\pi)
+\end{align*}
+for $\pi = (\pi', v_n)$. Here the Lemma holds since $\weir\bigl(q_2, {\call{c}}, p, {\return{r}}, q_3\bigr)$ is also part of the edge labels (second line).
+
+Finally, let's assume that $v_{n-1} = \<q_1, p, q_2>$ and $last(\pi) = \<q_0, p, q_3>$ for $p, p' \in Q$. Following the same reasoning as the two previous cases, we can similarly prove that the Lemma is also true.
+
 \end{proof}
 
 
@@ -132,7 +169,7 @@ $\tau_i$ is a transition of $A$ and
 $\src(\tau_i) = q_{i-1}$, $\snd(\tau_i) = q_i$.
 %
 Since $\Semiring$ is total, there exists finite sequences as above such that
-\( b_\bot(q, q') = \bigotimes_{i=i}^n w_i(\tau_i)\).
+\( b_\bot(q, q') = \bigotimes_{i=1}^n w_i(\tau_i)\).
 %
 There might exists, for $q$ and $q'$,
 several finite sequences~$\bar\tau$ and~$\bar{w}$ as above, 
@@ -154,7 +191,7 @@ $\bigoplus_\Deltac b_\top(q, p, q')$ can be put in the form:
 \end{equation}
 %
 and hence 
-\( {\textstyle\bigoplus_\Deltac} b_\top(q, p, q') = \bigotimes_{i=i}^n w_i(\tau_i) \),
+\( {\textstyle\bigoplus_\Deltac} b_\top(q, p, q') = \bigotimes_{i=1}^n w_i(\tau_i) \),
 using $c \in \Deltac$ that minimize the function in rhs of~\eqref{eq:btop-unfold}.
 We denote the smallest $n$ as above by $n_{q, p, q'}$.
 
@@ -183,7 +220,7 @@ This can be done with~~\cite{Mohri02semiring}~Theorem~?? \florent{completer}
 with a complexity ***. Altogether, the complexity for computing the minimum of $A$
 is in $O(...)$.
 Moreover, a witness $t \in \Delta^*$ for this minimum can be associated to the appropriate
-shortest path, with nno additional cost, like in the proof of Lemma~\ref{algo-correct}
+shortest path, with no additional cost, like in the proof of Lemma~\ref{algo-correct}.
 
 
 
