@@ -2,130 +2,28 @@
 %
 % Proof of Proposition closure swA by swT
 %
-Let $T = \< Q, \init_T, \bar{\wei}, \final_T >$,
-where $\bar{\wei}$ contains $\wei_{10}$, $\wei_{01}$, and $\wei_{11}$,
-from $Q \times Q$ into respectively
-$\Phi_{\Sigma}$, $\Phi_{\Delta}$, and $\Phi_{\Sigma, \Delta}$,
-and let $A = \< P, \init_A, \wei_1, \final_A >$
-with $\wei_1: Q \times Q \to \Phi_{\Sigma}$.
-The state set of $B_{A, T}$ will be $Q' = P \times Q$.
-
-The entering, leaving and transition functions of $B_{A, T}$ will
-simulate synchronized computations of $A$ and $T$,
-while reading an output word of $t \in \Delta^*$, 
-and some input word $s \in \Sigma^*$.
-%
-Its state entering functions is defined
-for all $\<p_1, q_1> \in Q'$, %$p_1 \in P$, $q_1 \in Q$
-by:
-%
-\begin{equation} \label{eq:initprime}
-\init'\bigl(\< p_1, q_1>\bigr) = \init_A(p_1) \otimes \init_T(q_1).
-\end{equation}
-%
-The transition function $\wei'_1$ will roughly perform
-a synchronized product of transitions defined by $\wei_1$,
-$\wei_{01}$ ($T$ reading in output word and not in input word)
-and $\wei_{11}$ ($T$ reading both in input word and in output word).
-%
-Moreover, $\wei'_1$ also needs to simulate transitions
-defined by $\wei_{10}$: $T$ reading in input word and not in output word.
-Since $B_{A, T}$  will read only in the output word, 
-such a transition would correspond
-to an $\varepsilon$-transition of $\SWA$.
-But $\SWA$ have been defined without $\varepsilon$-transitions.
-Therefore, in order to take care of this case, we perform an on-the-fly
-elimination of $\varepsilon$-transitions during the construction of the $\SWA$,
-following Algorithm~1 of~\cite{LombardySakarovitch12ciaa}.
-%
-% Initialize state leaving functions i
-%and $\final'(p, q) = \final_A(p) \otimes \final_T(q)$.
-
-%Every transition of $B_{A, T}$ will
-%simulate a sequence of transitions of $T$ performing the following steps:
-%advance in the input word while staying immobile in the output word,
-%and then make one step in the output word (and advance in the input word or not).
-
-\noindent
-The transition function $\wei'_1$ is constructed iteratively.
-
-\noindent
-Initially, for all $p_1, p_2 \in P$, and $q_1, q_2 \in Q$, let
-%
-\begin{align}
-%\begin{array}{rcl}
-\wei'_1\bigl( \< p_1, q_1>, \< p_2, q_2>\bigr) & = 
-\bigl({\displaystyle\bigoplus_{p_1 = p_2}} \wei_{01}(q_1, q_2)\;\bigr)
-\oplus
-{\bigoplus}_\Sigma^1 \bigl(\wei_1(p_1, p_2) \otimes_1 \wei_{11}(q_1, q_2)\bigr)
-\label{eq:init-wei}\\
-%
-\final'\bigl(\<p_1, q_1>\bigr) & =  \final_A(p_1) \otimes \final_T(q_1)
-\label{eq:init-final}
-%\end{array}
-\end{align}
-We recall that by convention, 
-${\displaystyle\bigoplus_{p_1 = p_2}} \wei_{01}(q_1, q_2)$
-is equal to $\zero$ if $p_1 \neq p_2$.
-
-
-\noindent
-Then, we iterate the following updates for all $p_1, p_2, p_3\in P$ 
-and $q_1, q_2, q_3 \in Q$:
-%
-\begin{align}
-%\begin{array}{rcl}
-\wei'_1\bigl( \< p_1, q_1>, \< p_3, q_3>\bigr) & \opluseq 
-%\displaystyle\bigoplus_{\Sigma} 
-\bigoplus_\Sigma \bigl(\wei_{1}(p_1, p_2) \otimes \wei_{10}(q_1, q_2)\bigr)
-\otimes \wei'_1\bigl( \< p_2, q_2>, \< p_3, q_3>\bigr) \label{eq:iter-wei}\\
-%
-\final'\bigl(\<p_2, q_2>\bigr) & \opluseq 
-%\displaystyle\bigoplus_{\Sigma} 
-\bigoplus_\Sigma \bigl(\wei_{1}(p_1, p_2)\otimes \wei_{10}(q_1, q_2)\bigr)
-\otimes \final'(p_1, q_1) \label{eq:iter-final}
-%\end{array}
-\end{align}
-%
-In both cases of updates of $\wei'_1$~\eqref{eq:iter-wei}
-and $\final'$~\eqref{eq:iter-final} during the iteration, 
-$\wei_{1}(p_1, p_2) \otimes \wei_{10}(q_1, q_2)$ 
-is the weight of an $\varepsilon$-transition.
-It corresponds to the reading, by $A$ and $T$, 
-of a symbol $a$ in the input word $s$ without moving in the output word,
-\ie the synchronization of 
-a transition $\wei_{1}(p_1, a, p_2)$ of $A$ and 
-a transition $\wei_{10}(q_1, a, \varepsilon, q_2)$ of~$T$.
-
-The iteration stops if it does not change the value of $\wei'_1$ and $\final'$.
-By hypothesis and Lemma~\ref{lem:idempotent}, 
-$\Semiring$ is idempotent. 
-Therefore, the construction of $B_{A, T}$ will stop after 
-at most $|P|^2 . |Q|^2$ iterations.
-
-\smallskip
-Let us now show that 
+Let us show that 
 $B_{A, T}(t) = \displaystyle\bigoplus_{s\in \Sigma^*} A(s) \otimes T(s, t)$
 for all $t\in \Delta^+$.
 
 \noindent
-We call \emph{path} from $\< p_0, q_0>$ to $\< p_n, q_n>$ 
+We call \emph{run} from $\< p_0, q_0>$ to $\< p_n, q_n>$ 
 a finite sequence of the form:
-\florent{revise path with seq. of transitions}
-$\pi = \< p_0, q_0>$, $a_1, \< p_1, q_1>$,\ldots, $a_n, \< p_n, q_n>$
+\florent{revise run with seq. of transitions}
+$\rho = \< p_0, q_0>$, $a_1, \< p_1, q_1>$,\ldots, $a_n, \< p_n, q_n>$
 where $\< p_i, q_i> \in Q'$ for all $0 \leq i \leq n$
 and $a_j \in \Sigma$ for all $1 \leq j \leq n$.
-The state $\< p_0, q_0>$ is called source of the path, denoted $\mathit{src}(\pi)$
-and $\< p_n, q_n>$ is called target of the path, denoted $\mathit{trg}(\pi)$;
-the set of paths with source $\< p, q>$ and target $\< p', q'>$ 
-is denoted $\Pi(\< p, q>, \< p', q'>)$.
-The word $a_1\ldots a_n \in \Sigma^*$ is called word of the path $\pi$
-and denoted $\word(\pi)$.
-%The set of all paths
-Moreover, we associate a weight value in $\Semiring$ to every path, 
+The state $\< p_0, q_0>$ is called source of the run, denoted $\mathit{src}(\rho)$
+and $\< p_n, q_n>$ is called target of the run, denoted $\mathit{trg}(\rho)$;
+the set of runs with source $\< p, q>$ and target $\< p', q'>$ 
+is denoted $\Rho(\< p, q>, \< p', q'>)$.
+The word $a_1\ldots a_n \in \Sigma^*$ is called word of the run $\rho$
+and denoted $\word(\rho)$.
+%The set of all runs
+Moreover, we associate a weight value in $\Semiring$ to every run, 
 defined by:
-\begin{equation} \label{def:weight-path}
-\weight(\pi) = \bigotimes_{i = 1}^{n} 
+\begin{equation} \label{def:weight-run}
+\weight(\rho) = \bigotimes_{i = 1}^{n} 
 \wei_1(p_{i-1}, a_i, p_i) \otimes
 \wei_{10}(q_{i-1}, a_i, \varepsilon, q_i)
 \end{equation}
@@ -133,31 +31,31 @@ defined by:
 By definition of the weight functions, and 
 associativity, commutativity, and distributivity of $\oplus$, $\otimes$,  
 it holds that:
-\begin{equation}\label{eq:weight-path}
+\begin{equation}\label{eq:weight-run}
 \weight_A(p, s, p') \otimes \weight_T(q, s, \varepsilon, q') = 
 \bigoplus_{\begin{array}{c}
-		   \scriptstyle\pi \in \Pi(\< p, q>, \< p', q'>)\\[-1ex]
-		   %\scriptstyle\mathit{src}(\pi) = \<p , q>\\[-1ex]
-		   %\scriptstyle\mathit{trg}(\pi) = \<p' , q'>\\[-1ex]
-		   \scriptstyle\word(\pi) = s
+		   \scriptstyle\rho \in \Rho(\< p, q>, \< p', q'>)\\[-1ex]
+		   %\scriptstyle\mathit{src}(\rho) = \<p , q>\\[-1ex]
+		   %\scriptstyle\mathit{trg}(\rho) = \<p' , q'>\\[-1ex]
+		   \scriptstyle\word(\rho) = s
 		   \end{array}} 
-\weight(\pi) 
+\weight(\rho) 
 \end{equation}
 %
-Using \eqref{def:weight-path} 
+Using \eqref{def:weight-run} 
 and Lemma~\ref{lem:label-th} repetively, 
-\eqref{eq:weight-path} implies that:
+\eqref{eq:weight-run} implies that:
 %
-\begin{equation}\label{eq:weight-path-plus}
+\begin{equation}\label{eq:weight-run-plus}
 \begin{array}{l}
 \displaystyle\bigoplus_{s \in \Sigma^*} 
   \weight_A(p, s, p') \otimes \weight_T(q, s, \varepsilon, q') =\\
 \multicolumn{1}{r}{%
 \qquad
 \displaystyle\bigoplus_{\begin{array}{c}
-		   \scriptstyle\pi \in \Pi(\< p, q>, \< p', q'>)\\[-1ex]
-		   \scriptstyle\pi = \< p_0, q_0>, a_1,\< p_1, q_1>,\ldots, a_n, \< p_n, q_n>\\[-1ex]
-%		   \scriptstyle\pi = \< p_0, q_0>, a_1,\\[-1ex]
+		   \scriptstyle\rho \in \Rho(\< p, q>, \< p', q'>)\\[-1ex]
+		   \scriptstyle\rho = \< p_0, q_0>, a_1,\< p_1, q_1>,\ldots, a_n, \< p_n, q_n>\\[-1ex]
+%		   \scriptstyle\rho = \< p_0, q_0>, a_1,\\[-1ex]
 %		   \scriptstyle\< p_1, q_1>,\ldots,\\[-1ex]
 %       	   \scriptstyle a_n, \< p_n, q_n>\\[-1ex]
 %		   \scriptstyle\< p_0, q_0> = \< p, q>\\[-1ex]
@@ -170,26 +68,26 @@ and Lemma~\ref{lem:label-th} repetively,
 \end{array}           %\nonumber
 \end{equation}
 %
-Note that the symbols $a_1, \ldots, a_n \in \Sigma$ in the path $\pi$
-are not significant in \eqref{eq:weight-path-plus}.
+Note that the symbols $a_1, \ldots, a_n \in \Sigma$ in the run $\rho$
+are not significant in \eqref{eq:weight-run-plus}.
 %
-Using a pumping argument, we can show that~\eqref{eq:weight-path-plus}
-still holds when restricting $\pi$ to the set $\Pi_0(\< p, q>, \< p', q'>)$
-of paths without repetition in the state symbols.
+Using a pumping argument, we can show that~\eqref{eq:weight-run-plus}
+still holds when restricting $\rho$ to the set $\Rho_0(\< p, q>, \< p', q'>)$
+of runs without repetition in the state symbols.
 %
 Indeed, assume that in 
-$\pi = \< p_0, q_0>, a_1,\< p_1, q_1>,\ldots, a_n, \< p_n, q_n>$, 
+$\rho = \< p_0, q_0>, a_1,\< p_1, q_1>,\ldots, a_n, \< p_n, q_n>$, 
 $\< p_{i_1}, q_{i_1}> = \< p_{i_2}, q_{i_2}>$
 for $0 \leq i_1 < i_2 \leq n$.
 Then 
-$\pi' = 
+$\rho' = 
  \< p_0, q_0>, \ldots, 
  a_{i_1-1},\< p_{i_1-1}, q_{i_1-1}>,
  a_{i_2},\< p_{i_2}, q_{i_2}>, \ldots,  a_n, \< p_n, q_n>$ 
-also belongs to   $\Pi\bigl(\< p_0, q_0>, \< p_n, q_n>\bigr)$
+also belongs to   $\Rho\bigl(\< p_0, q_0>, \< p_n, q_n>\bigr)$
 and yields a smaller expression (\wrt $\leq_\oplus$) 
-in the right-hand-side of \eqref{eq:weight-path-plus}
-than~$\pi$.
+in the right-hand-side of \eqref{eq:weight-run-plus}
+than~$\rho$.
 It follows, by~\eqref{eq:init-wei} and \eqref{eq:iter-wei}, that
 for all $b \in \Delta$, 
 %
@@ -213,11 +111,12 @@ $\psi_1 = \wei_{01}(q'', q') \oplus
 % lift to $A(s) \otimes T(s, \varepsilon)$
 
 \medskip
+\noindent
 We show now by induction on the length of $t \in \Delta^+$, that
 \[
 \weight_{B_{A, T}}(\<p, q>, t, \<p', q'>) = 
  \displaystyle\bigoplus_{s\in \Sigma^*}
- \weight_{A}(p, s, p') \otimes  \weight_{A}(q, s, t, q')
+ \weight_{A}(p, s, p') \otimes  \weight_{T}(q, s, t, q')
 \]
 This permits to conclude, using 
 the definition of $\init'$ in~\eqref{eq:initprime},

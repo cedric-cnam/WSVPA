@@ -149,6 +149,7 @@
 \newcommand{\R}{\mathcal{R}}
 \newcommand{\T}{\mathcal{T}}
 \newcommand{\W}{\mathbb{W}}
+\newcommand{\Rho}{\mathit{R}}
 \newcommand{\Semiring}{\mathbb{S}}
 \newcommand{\zero}{\mathbb{0}}
 \newcommand{\one}{\mathbb{1}}
@@ -467,7 +468,7 @@ T(s, t)  =
 
 \begin{example}\label{ex:SWT}
 We build a small \SWT over the alphabets $\Sigma$ and $\Deltai$
-(Ex.~\ref{ex:running} and \ref{distance-time}),
+of Ex.~\ref{ex:running} and~\ref{distance-time},
 %weighted transducer model
 with two states $q_0$ and $q_1$, that
 calculates the temporal distance between an input performance in~$\Sigma^*$
@@ -691,23 +692,119 @@ $B_{A, T}(t) = \displaystyle\bigoplus_{s\in \Sigma^*} A(s) \otimes T(s, t)$.
 \end{proposition}
 %
 \begin{proof}
-(sketch, see Appendix~\ref{sec:closure} for details).
-The state set of $B_{A, T}$ is the Cartesian product of
-the state sets of $A$ and $T$ and its transitions simulate,
-while reading an output word $t \in \Delta^*$, the
-synchronized behaviour of $A$ and $T$ on $t$
-and some input word $s \in \Sigma^*$.
-The weight for reading the input $s$ is obtained with
-$\bigoplus^1_\Sigma$.
+%(sketch, see Appendix~\ref{sec:closure} for details).
+Let $T = \< Q, \init_T, \bar{\wei}, \final_T >$,
+where $\bar{\wei}$ contains $\wei_{10}$, $\wei_{01}$, and $\wei_{11}$,
+from $Q \times Q$ into respectively
+$\Phi_{\Sigma}$, $\Phi_{\Delta}$, and $\Phi_{\Sigma, \Delta}$,
+and let $A = \< P, \init_A, \wei_1, \final_A >$
+with $\wei_1: P \times P \to \Phi_{\Sigma}$.
+The state set of $B_{A, T}$ will be %the Cartesian product of the state sets of $A$ and $T$ 
+$Q' = P \times Q$,
+and its entering, leaving and transition functions will
+simulate, while reading an output word $t \in \Delta^*$, 
+the synchronized computations of $A$ and $T$,
+when they read both the output word $t$
+and an input word $s \in \Sigma^*$.
+%The weight for reading the input $s$ is obtained with $\bigoplus^1_\Sigma$.
+
+\noindent
+The main difficulty comes from the transitions of $T$
+of the form $\wei_{10}$, which read in input $s$ and ignore the output $t$.
+Since the automaton $B_{A, T}$ only reads the output word $t$, 
+such transitions would correspond to $\varepsilon$-transitions in $B_{A, T}$.
+But $\varepsilon$-transitions are not defined for $\SWA$.
+Therefore, we shall perform on-the-fly elimination of the $\varepsilon$-transitions
+during the construction of~$B_{A, T}$,
+following an approach of~\cite{LombardySakarovitch12ciaa}, Algorithm~1.
+
+\noindent
+The state entering function of $B_{A, T}$ is defined
+for all $\<p_1, q_1> \in Q'$, %$p_1 \in P$, $q_1 \in Q$
+by:
 %
-The main difficulty comes from the transitions
-of the form $\wei_{10}$, which read in input and ignore the output.
-Such transition shall be simulated by $\varepsilon$-transitions in $B_{A, T}$,
-but $\varepsilon$-transitions are not defined for $\SWA$.
-Therefore, the $\varepsilon$-transitions
-are eliminated on-the-fly during the construction of~$B_{A, T}$,
-following a procedure of~\cite{LombardySakarovitch12ciaa}.
-%\qed
+\begin{equation} \label{eq:initprime}
+\init'\bigl(\< p_1, q_1>\bigr) = \init_A(p_1) \otimes \init_T(q_1).
+\end{equation}
+%
+The transition function $\wei'_1$ of $B_{A, T}$
+will roughly perform a synchronized product of transitions defined by $\wei_1$
+($A$ reading in input word $s$),
+$\wei_{01}$ ($T$ reading in output word $t$ and not in input word $s$),
+and $\wei_{11}$ ($T$ reading both in input word $s$ and in output word $t$).
+%
+Moreover, the $\varepsilon$-transitions to eliminate come from the simulation, 
+by $\wei'_1$, of the transitions defined by $\wei_1$ and $\wei_{10}$ 
+($A$ and $T$ reading in input word $s$ and not in output word $t$).
+%
+% Initialize state leaving functions i
+%and $\final'(p, q) = \final_A(p) \otimes \final_T(q)$.
+%
+%Every transition of $B_{A, T}$ will
+%simulate a sequence of transitions of $T$ performing the following steps:
+%advance in the input word while staying immobile in the output word,
+%and then make one step in the output word (and advance in the input word or not).
+%
+\noindent
+Let us construct the transition function $\wei'_1$ iteratively.
+%
+\noindent
+Initially, for all $p_1, p_2 \in P$, and $q_1, q_2 \in Q$, let
+%
+\begin{align}
+%\begin{array}{rcl}
+\wei'_1\bigl( \< p_1, q_1>, \< p_2, q_2>\bigr) & = 
+\bigl({\displaystyle\bigoplus_{p_1 = p_2}} \wei_{01}(q_1, q_2)\;\bigr)
+\oplus
+{\bigoplus}_\Sigma^1 \bigl(\wei_1(p_1, p_2) \otimes_1 \wei_{11}(q_1, q_2)\bigr)
+\label{eq:init-wei}\\
+%
+\final'\bigl(\<p_1, q_1>\bigr) & =  \final_A(p_1) \otimes \final_T(q_1)
+\label{eq:init-final}
+%\end{array}
+\end{align}
+We recall that by convention, 
+${\displaystyle\bigoplus_{p_1 = p_2}} \wei_{01}(q_1, q_2)$
+is equal to $\zero$ if $p_1 \neq p_2$.
+
+
+\noindent
+Then, we iterate the following updates for all $p_1, p_2, p_3\in P$ 
+and $q_1, q_2, q_3 \in Q$:
+%
+\begin{align}
+%\begin{array}{rcl}
+\wei'_1\bigl( \< p_1, q_1>, \< p_3, q_3>\bigr) & \opluseq 
+%\displaystyle\bigoplus_{\Sigma} 
+{\textstyle\bigoplus_\Sigma} \bigl(\wei_{1}(p_1, p_2) \otimes \wei_{10}(q_1, q_2)\bigr)
+\otimes \wei'_1\bigl( \< p_2, q_2>, \< p_3, q_3>\bigr) \label{eq:iter-wei}\\
+%
+\final'\bigl(\<p_2, q_2>\bigr) & \opluseq 
+%\displaystyle\bigoplus_{\Sigma} 
+{\textstyle\bigoplus_\Sigma} \bigl(\wei_{1}(p_1, p_2)\otimes \wei_{10}(q_1, q_2)\bigr)
+\otimes \final'(p_1, q_1) \label{eq:iter-final}
+%\end{array}
+\end{align}
+%
+In both cases of updates of $\wei'_1$~\eqref{eq:iter-wei}
+and $\final'$~\eqref{eq:iter-final} during the iteration, 
+$\wei_{1}(p_1, p_2) \otimes \wei_{10}(q_1, q_2)$ 
+is the weight of an $\varepsilon$-transition.
+It corresponds to the reading, by~$A$ and~$T$, 
+of a symbol $a$ in the input word $s$ without moving in the output word,
+\ie the synchronization of 
+a transition $\wei_{1}(p_1, a, p_2)$ of $A$ and 
+a transition $\wei_{10}(q_1, a, \varepsilon, q_2)$ of~$T$.
+%
+The iteration stops if it does not change the value of $\wei'_1$ and $\final'$.
+By hypothesis and Lemma~\ref{lem:idempotent}, 
+$\Semiring$ is idempotent. 
+Therefore, the construction of $B_{A, T}$ will stop after 
+at most $|P|^2 . |Q|^2$ iterations.
+%
+The correctness of this construction of $B_{A, T}$
+is proved in Appendix~\ref{sec:closure}.
+\qed
 \end{proof}
 
 %The complexity of construction
@@ -1308,7 +1405,7 @@ $\Phii$, $\Phic$, $\Phir$, $\Phicr$
 (following the notations of Section~\ref{sec:SWVPA-def}).
 %
 \noindent
-We assume the following input to be given:
+We assume to be given the following input:
 \begin{description}
 \item[--] a \SWT $T$ over $\Sigma$, $\Deltai$, $\Semiring$, and $\bar\Phi$,
 defining a measure %between words
@@ -1340,8 +1437,9 @@ d(s, t) \otimes A(t) = \displaystyle\bigoplus_{u \in \Delta^*} d(s, u) \otimes A
 %
 Following the terminology of~\cite{Mohri03ijfcs},
 $\SW$-parsing is the problem of computing
-the distance~\eqref{eq:distance-lang} between the input string ~$s$ and the weighted language over the output alphabet defined by ~$A$,
-and returning a witness $t$.
+the distance~\eqref{eq:distance-lang} between the input string~$s$ 
+and the weighted language over the output alphabet defined by~$A$,
+and returning a witness~$t$.
 
 \begin{example}[Symbolic Weighted Parsing and the transcription problem]
 Applied to the music transcription problem, the above formalism
@@ -1349,10 +1447,10 @@ is interpreted as follows:
 %
 \begin{itemize}
 \item The input word is $I$ of Example~\ref{ex:running}.
-\item The \SWT $T$ evaluates a ``fitness measure''  that expresses
-    a correspondence between a performance and a nested representation of a music score.
-    See Example~\ref{ex:SWT}.
-\item The \SWVPA $A$ expresses a cost related to the music notation.
+\item The \SWT $T$ evaluates a ``fitness measure'' expressing
+    a correspondence between a performance and a nested representation of a music score
+    - Ex.~\ref{ex:SWT}.
+\item The \SWVPA $A$ expresses a cost related to the complexity of music notation.
 \end{itemize}
 %One possibility is to relate this cost to the structural complexity:
 %given a set of equivalent representations,
@@ -1365,9 +1463,9 @@ will be favored on
 \includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex2.pdf}
 %\includegraphics[scale=0.20]{pictures/score4.png}.
 when the weight assigned to an additional second time division with $\ccall{2}$ is less
-than the difference of weight between
-$\mbox{`\footnotesize C$\sharp$5`}$
-and $\mbox{\footnotesize C$\sharp$5}$.
+than the difference of weight between\
+the appogiatura $\mbox{`\footnotesize C$\sharp$5`}$
+and the standard note $\mbox{\footnotesize C$\sharp$5}$.
 
 \noindent
 The SW-parsing framework, applied to the transcription problem,
@@ -1430,11 +1528,11 @@ we compute the \SWVPA $B_{s, T'} \otimes A$,
 using Proposition~\ref{prop:SWVPA-product}.
 %
 \noindent
-It remains to compute a best nested word $t \in {\Delta}^*$
+It remains to compute a best nested word $t \in {\Delta}^*$ for this \SWVPA,
 using the procedure of Proposition~\ref{th:best-search}.
 %and convert it into a best tree in $\T_\Delta$ in order to solve SW parsing
 %for~$T$, $A$ and~$s$.
-%\qed
+\qed
 \end{proof}
 
 The $\SW$-parsing problem generalizes
@@ -1568,8 +1666,8 @@ of\cite{Segoufin06csl,KaminskiFrancez94,NevenSchwentickVianu04FSMinfinite,Bojanc
 %\section{Properties of Label Theory Operators} \label{sec:closure}
 %\input{app-labels}
 
-\section{Proof of Proposition~\ref{prop:epsilon}} \label{sec:closure}
-\input{app-closure}
+\section{End of proof of Proposition~\ref{prop:epsilon}} \label{sec:closure}
+\input{app-Bar-Hillel-Perles-Shamir}
 
 %\section{Proof of Proposition~\ref{prop:SWVPA-product}} \label{sec:product}
 %\input{app-product}

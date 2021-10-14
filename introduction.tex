@@ -29,7 +29,7 @@ each transition accepts a set of such symbols (instead of an individual symbol),
 represented by Boolean Formulas or Binary Decision Diagrams.
 %
 Following a similar idea, % and generalizing,
-in symbolic automata (\SA)~\cite{dAntoniVeanes17CAV,dAntoni21CACM},
+in symbolic automata (\SA)~\cite{Veanes12symbolic,dAntoniVeanes17CAV,dAntoni21CACM},
 transitions are guarded by predicates over infinite  domains.
 With appropriate closure conditions on the sets of such predicates, % (alphabet theories),
 all the good properties enjoyed over finite alphabets are preserved.
@@ -124,7 +124,7 @@ in a semiring $\Semiring$.
 \node (SA) at (1.8,1.7) {%8
   \(
   \begin{array}{c}
-  \mathsf{SA}\,\mbox{\cite{dAntoni21CACM}}: \Sigma_{\mathsf{inf}}^* \to \mathbb{B}\\
+  \mathsf{SA}\,\mbox{\cite{Veanes12symbolic,dAntoni21CACM}}: \Sigma_{\mathsf{inf}}^* \to \mathbb{B}\\
   q \xrightarrow{\phi} q', \phi : \Sigma_\mathsf{inf} \to \mathbb{B}
   \end{array}
   \)
@@ -147,7 +147,7 @@ in a semiring $\Semiring$.
 %
 \node (WVPA) at (4.6,1.7) {%
   \(
-  \mathsf{WVPA}\,\mbox{\cite{Caralp12VPAmult}}
+  \mathsf{WVPA}\,\mbox{\cite{Mathissen08weighted,Caralp12VPAmult}}
   \)
 };
 %
@@ -391,7 +391,7 @@ We will show that $O$ is a solution for the
 parsing of $I$. Note that several other parsings are possible
 like \eg \includegraphics[scale=0.35,trim=0 5mm 0 0]{pictures/ex2.pdf}.
 SW-parsing associates a weight value
-to each solution, and our framework
+to each solution, and our approach
 aims at selecting the best one with respect to this weight.
 \endex
 \end{example}
