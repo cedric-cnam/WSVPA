@@ -43,19 +43,19 @@ We have
 \end{align*}
 with $\pi = (\pi', v_n)$, since we know that $\weight(v_0,\ldots, v_{n-1}) \otimes \eta_A(v_{n-1} \to v_{n}) = \weight(v_0,\ldots, v_n)$ and $\weiei(q'', a, q')$ is indeed a possible edge label $\eta_A$ for the edge $\< q, q''> \to \< q, q'>$ (first line of label definition). Hence in this case the Lemma is true. 
 
-\item Following the same reasoning as before, we find that the Lemma is also true when $a \in \Delta_r$ by using the last equation in \eqref{eq:SWVPA-weight}.
+\item Following the same reasoning as before, we find that the Lemma is also true when $a \in \Delta_r$ by using the last equation in \eqref{eq:SWVPA-weight} which illustrates the case when a return symbol is unmatched.
 %
 \end{itemize}
 \noindent
-Let's now assume that we have a safe path $\pi' = (v_0,\ldots, v_{n-1})$ such that $v_{n-1} = \< q_1, p, q_2>$ and $last(\pi) = \< q_0, q_3>$. The edge $\< q_1, p, q_2> \to \< q_0, q_3>$ exists if we read a return then try to match with the call on top of the stack which then leaves the stack empty. With the 6th equation in~\eqref{eq:SWVPA-weight}, we can compute the $\weight_A$ for $\<q_0, q_3>$ and then replace the first term with the 5th equation in~\eqref{eq:SWVPA-weight}, such as:
+Let's now assume that $v_{n-1} = \< q_1, p, q_2>$ and $last(\pi) = \< q_0, q_3>$. The edge $\< q_1, p, q_2> \to \< q_0, q_3>$ exists if we read a return then try to match with the call on top of the stack which then leaves the stack empty. With the 6th equation in~\eqref{eq:SWVPA-weight}, we can compute the $\weight_A$ for $\<q_0, q_3>$ and then replace the first term with the 5th equation in~\eqref{eq:SWVPA-weight}, such as:
 \begin{align*}
-\weight_A\bigl(\config{q_0}{\bot}, u\,{\return{r}},
-               \config{q_3}{\bot}\bigr) &=
+&\weight_A\bigl(\config{q_0}{\bot}, u\,{\return{r}},
+               \config{q_3}{\bot}\bigr) =
   \weight_A\bigl(\config{q_0}{\bot}, u,
                  \configup{q_2}{\<{\call{c}}, p>\stackup\bot}\bigr)
   \otimes \weir\bigl(q_2, {\call{c}}, p, {\return{r}}, q_3\bigr)\\
   &=
-   \weight_A(\config{q_1}{\bot}, u, \config{q_2}{\bot}\bigr)
+   \weight_A(\configup{q_1}{\<{\call{c}}, p>\stackup\bot}, u, \configup{q_2}{\<{\call{c}}, p>\stackup\bot}\bigr)
  \otimes \weiec(q_0, {\call{c}}, p, q_1)
   \otimes \weir\bigl(q_2, {\call{c}}, p, {\return{r}}, q_3\bigr)\\
   &= \weight_A(\pi')\otimes \weiec(q_0, {\call{c}}, p, q_1)
@@ -64,8 +64,8 @@ Let's now assume that we have a safe path $\pi' = (v_0,\ldots, v_{n-1})$ such th
 \end{align*}
 for $\pi = (\pi', v_n)$. Here the Lemma holds since $\weir\bigl(q_2, {\call{c}}, p, {\return{r}}, q_3\bigr)$ is also part of the edge labels (second line).
 
-Finally, let's assume that $v_{n-1} = \<q_1, p, q_2>$ and $last(\pi) = \<q_0, p, q_3>$ for $p, p' \in Q$. Following the same reasoning as the two previous cases, we can similarly prove that the Lemma is also true.
-
+Finally, let's assume that $v_{n-1} = \<q_1, p, q_2>$ and $last(\pi) = \<q_0, p', q_3>$ for $p, p' \in Q$. Following the same reasoning as the two previous cases, we can similarly prove that the Lemma is also true.
+\qed
 \end{proof}
 
 
@@ -142,5 +142,13 @@ $b_\bot(q, q) = \one$ and $b_\bot(q, q') = \zero$ if $q \neq q'$.
 For $n = n_{q, q'} > 0$, let $\bar\tau$ and~$\bar{w}$
 be the sequences associated to $q$ and $q'$ as above.
 Let us do a case analysis of $w_n$.
-... \qed
+Computing $b_\bot(q, q')$ comes down to running $A$ on a well-matched word $u \in \Delta^*$ for which $|u| = n$. Let's take the case where $w_n  = \weiei$. Then using Equation~\ref{eq:SWVPA-weight}, we decompose $b_\bot(q, q')$ as follows:
+%\config{q}{\gamma}, u\,{\call{c}'},
+%\configup{q'}{\<{\call{c}'}, p'>\stackup \<{\call{c}}, p>\stackup \gamma'}\bigr)
+\begin{align*}
+b_\bot(q, q') &= \weight_A(\config{q}{\bot}, u', \config{q''}{\bot}) \otimes\weiei(q'', a, q') \\
+&= b_\bot(q, q'')\otimes\weiei(q'', a, q')
+\end{align*}
+Since $u=u'a$ is minimal, then $u'$ is minimal, and $\weight_A(\config{q}{\bot}, u', \config{q''}{\bot}) =b_\bot(q, q'')$. Consequently, for this case the Lemma is true. The other cases can be proven similarly,  but only for the $w_n$ that can form a well-matched word. For example, $w_n$ cannot be $\weic$ since this call will never have a matching return.
+\qed
 \end{proof}
