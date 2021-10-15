@@ -1,7 +1,7 @@
 % !TEX root = main.tex
 %
 
-\florent{New Algorithm for best-search}
+%\florent{New Algorithm for best-search}
 We shall compute the values of the functions $b_\bot$ and $b_\top$
 by search of shortest paths in a $\Semiring$-labeled graph $\G_A$
 associated to the \SWVPA $A$. 
@@ -64,16 +64,18 @@ more precisely,
 For all $q, q' \in Q$, 
 $b_\bot(q, q') = \displaystyle\bigoplus_{q_0 \in Q} \mathit{short}\bigl(\< q_0, q_0>, \< q, q'>\bigr)$.
 \end{proposition}
-This proposition is a consequence of Lemmata~\ref{algo-correct} and~\ref{algo-complete} found in~Appendix \ref{app:shortpath}.
+This proposition is a consequence of Lemmata~\ref{algo-correct} and~\ref{algo-complete} 
+found in~Appendix \ref{app:shortpath}.
 
 \medskip\noindent
 Following~\eqref{eq:min} and Proposition~\ref{algo-shortest}, 
 in order to compute the minimum of $t \mapsto A(t)$ \wrt $\leq_\oplus$, 
-it is sufficient to compute one shortest pathes in $\G_{A}$ of source
+it is sufficient to compute one shortest paths in $\G_{A}$ of source
 $\<q_0, q_0>$ and target $\<q, q'>$ for all $q_0, q, q' \in Q$.
-This can be done with~~\cite{Mohri02semiring}~Theorem~?? \florent{completer}
-with a complexity ***. Altogether, the complexity for computing the minimum of $A$
-is in $O(...)$.
+This can be done with~\cite{Mohri02semiring} \florent{completer, Theorem~??}
+with a worst case time complexity in $O\bigl(|Q|^2.|P|)^3\bigr)$. 
+%Altogether, the complexity for computing the minimum of $A$ is in 
+%worst case $O(...)$.
 Moreover, a witness $t \in \Delta^*$ for this minimum can be associated to the appropriate
 shortest path, with no additional cost, like in the proof of Lemma~\ref{algo-correct}.
 

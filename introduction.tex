@@ -105,7 +105,7 @@ using appropriate storage types.
 \begin{figure}
 \centering
 \begin{tikzpicture}
-\node (SWADS) at (3.0,5.0) {%
+\node (SWADS) at (2.8,5.0) {%
   \(
   \begin{array}{c}
   \mathsf{SWADS}\,\mbox{\cite{Herrmann16dlt,Herrmann20phd}}
@@ -252,7 +252,6 @@ and the application of a best-search procedure to this automaton $B$.
 
 %Parsing is the problem of structuring a linear representation
 %(a finite word) according to a language model. % (a formal grammar). % natural language, programming language,
-
 Context-free parsing approaches~\cite{GruneJacobs08parsing}
 generally assume a finite and reasonably small input alphabet. %models and algorithms
 %Such a restriction makes perfect sense in the context of
@@ -271,8 +270,12 @@ or timed execution traces~\cite{Bouyer03algebraic}.
 % algebraic definition of a class of data languages
 % (notion of monoid recognizability, based on registers, comparable to Bojancszik et al. data words)
 
-The latter case is related to a motivation  of  the present work: \florent{idem}
-automated music transcription. Representations capturing music performances
+The latter case is related to a motivation study for the present work:
+automated music transcription, 
+that we shall use as a running example
+thorough the paper, in order to illustrate our results.
+%
+Representations capturing music performances
 are essentially linear~\cite{Selfridge-Field97beyondMIDI};
 %audio files or the widely used MIDI format %\cite{MIDIfile}.
 they ignore the hierarchical structures that frame the
@@ -286,8 +289,8 @@ It follows that written music events do not occur at arbitrary timestamps,
 but respect a discrete partitioning of the timeline incurred by
 these recursive divisions.
 The \emph{transcription problem} takes
-as input a linear performance (audio or MIDI) and aims at re-constructing
-structured notation, 
+as input a linear performance (in audio or MIDI format) 
+and aims at re-constructing structured notation, 
 by mapping input events to this hierarchical rhythmic space.
 It can therefore be stated as a parsing problem
 over an infinite alphabet of timed events~\cite{foscarin:hal-01988990}.
@@ -319,8 +322,8 @@ over an infinite alphabet of timed events~\cite{foscarin:hal-01988990}.
         
 \begin{example}%[Running example]
 \label{ex:running}
-We illustrate our approach with a very simplified %toy
-running example of \emph{music transcription}:
+We consider a very simplified %toy
+example of \emph{music transcription}:
 a given input \emph{timeline} of musical events
 from an infinite alphabet $\Sigma$,
 is parsed into a structured music score.
@@ -329,13 +332,13 @@ are pairs $\mu \tstamp{\tau}$, where $\mu$ is a
 MIDI key number~\cite{Selfridge-Field97beyondMIDI}, %\cite{MIDIfile}
 and $\tau \in \mathbb{Q}$ is a timestamp in seconds.
 Such inputs typically correspond
-to the recording of a live performance, 
-\eg~$I = 69\tstamp{0.07},
-	     71\tstamp{0.72},
-    	 73\tstamp{0.91},
-	     74\tstamp{1.05},
-	     76\tstamp{1.36},
-	     77\tstamp{1.71}$. % over interval $[0,2[$,
+to the recording of a live performance, \eg 
+\[I = 69\tstamp{0.07},
+      71\tstamp{0.72},
+      73\tstamp{0.91},
+	  74\tstamp{1.05},
+	  76\tstamp{1.36},
+	  77\tstamp{1.71}.\] % over interval $[0,2[$,
 
 The output of parsing is a sequence of
 timed symbols $\nu\tstamp{\tau'}$ in an alphabet $\Delta$,
