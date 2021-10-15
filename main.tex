@@ -291,6 +291,7 @@ from Boolean domains to commutative semirings.
 %
 They are particular cases of the very general model of 
 Weighted Symbolic Automata with Data Storage~\cite{Herrmann16dlt}. 
+\florent{review 3: = classical transducers}
 
 %\subsection{Definitions} \label{sec:SWTdef}\label{sec:SWAdef}
 %(SWT)
@@ -1613,30 +1614,33 @@ nested words $t \in \Delta^*$, AST, CF grammars and \SWVPA.
 
 \section*{Conclusion}
 
-We studied 3 properties of Symbolic Weighted language models, %over infinite alphabets,
+We studied properties of three Symbolic Weighted language models, %over infinite alphabets,
 and applied them to the problem of parsing
 with infinitely many possible input symbols (typically timed events).
-Our approach extends conventional parsing and weighted parsing
-by computing a derivation tree modulo
-a distance between words defined by a SW transducer given in input.
+One originality of this approach 
+%extends conventional parsing and weighted parsing
+is to compute derivation trees modulo
+a distance between words defined by a given SW transducer.
 This allows to consider finer word relationships than strict equality.
 
-
 This work can be extended in several directions. 
-First,  the best search algorithm could be generalized from $1$-best to $n$-best~\cite{Huang05kbest},
+The best search algorithm could be generalized from $1$-best to $n$-best~\cite{Huang05kbest},
 and to $k$-\emph{closed} semirings~\cite{Mohri02semiring}
-(instead of \emph{bounded}, which corresponds to $0$-\emph{closed}). Second,
-%we believe that
-the complexity bounds of the algorithms could be more precisely characterized,
-as well as expressiveness of \swM compared to the automata of 
-\eg~\cite{Segoufin06csl,KaminskiFrancez94,NevenSchwentickVianu04FSMinfinite,Bojanczyk11FO2}.
-Finally, the  best search algorithm presented here works offline, whereas
-an on-the-fly automata construction would allow for online parsing,
-a suitable feature in the context of applications such as 
-\eg automatic music transcription.
+(instead of \emph{bounded}, which corresponds to $0$-\emph{closed}). 
+The complexity bounds of the best-search algorithms 
+could also certainly be improved.
+%as well as expressiveness of \swM compared to the automata of 
+%\eg~\cite{Segoufin06csl,KaminskiFrancez94,NevenSchwentickVianu04FSMinfinite,Bojanczyk11FO2}.
+Another possible study could be the existence of best-search algorithms
+for general models like~\cite{Herrmann16dlt}.
+Finally, the  best search algorithm presented here works offline, 
+whereas an on-the-fly approach coupling automata construction and best-search 
+would be interesting \eg for online XML validation or filtering.
+%a suitable feature in the context of applications such as 
+%\eg automatic music transcription.
 
-\florent{comparison of expressiveness with the automata 
-of\cite{Segoufin06csl,KaminskiFrancez94,NevenSchwentickVianu04FSMinfinite,Bojanczyk11FO2}.}
+%\florent{comparison of expressiveness with the automata 
+%of\cite{Segoufin06csl,KaminskiFrancez94,NevenSchwentickVianu04FSMinfinite,Bojanczyk11FO2}.}
 
 \newpage
 
