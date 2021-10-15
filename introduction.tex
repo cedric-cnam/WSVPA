@@ -33,7 +33,7 @@ in symbolic automata (\SA)~\cite{Veanes12symbolic,dAntoniVeanes17CAV,dAntoni21CA
 transitions are guarded by predicates over large or infinite domains.
 With appropriate closure conditions on the sets of such predicates, % (alphabet theories),
 all the good properties enjoyed by automata over finite alphabets are preserved.
-The ability to compare input symbols of \SA is quite restricted compared to the 
+The ability of \SA to compare input symbols is restricted compared to the 
 former automata with memory. 
 It can however be extended with the addition of a stack~\cite{dAntonyAlur14SVPDA}.
 
@@ -43,8 +43,8 @@ assign one weight value to every input~\cite{Droste09handbook}.
 This is useful for the quantitative modelling of
 \eg probabilistic or stochastic recursive programs, %( for pushdown models),
 quantitative database queries, or semi-structured data, % (in infinite domains), 
-as well as for the verification of quantitative properties about 
-\florent{quantitative reasoning/verification on programs}
+as well as for the verification of quantitative properties of systems
+related to %\florent{quantitative reasoning/verification on programs}
 quality measures, resource-consumption, distance metrics, probabilistic guarantees, \etc
 %
 In the context of parsing, when grammars return weight values, 
@@ -93,11 +93,18 @@ generalizing the Boolean guards of~\SA %in transitions
 to functions into an arbitrary semiring, 
 and also the~\WA, by handling infinite alphabets (Figure~\ref{fig:hierarchy}).
 %
-The models considered are also 
+In short, a transition rule $q \xrightarrow{\phi} q'$ of a Symbolic Weighted Automaton, 
+from state $q$ to $q'$,
+%\florent{c'est un résumé de la Fig. \ref{fig:hierarchy}}
+%input symbols are variables, %(parameters)
+is labeled by a function~$\phi$ associating to every input symbol~$a$, a weight value~$\phi(a)$
+in a semiring~$\Semiring$.
+%
+These models are also 
 %\SWA and \SWVPA are both 
 particular cases of the very general class of 
 Weighted Symbolic Automata with Data Storage~\cite{Herrmann16dlt,Herrmann20phd}, 
-using appropriate storage types.
+for appropriate storage types.
 %with special data storage types...
 %\florent{Both WA and SA generalized by \cite{Herrmann16dlt,Herrmann20phd}...}
 %\reviews{cite \cite{Herrmann16dlt,Herrmann20phd}}
@@ -200,13 +207,6 @@ $q \xrightarrow{\dots} q'$ is a transition between states $q$ and $q'$.}
 %but can be an arbitrary commutative semiring (assuming some restrictions).
 
 \noindent
-In short, a transition rule $q \xrightarrow{\phi} q'$ of a SW automaton, 
-from state $q$ to $q'$,
-%\florent{c'est un résumé de la Fig. \ref{fig:hierarchy}}
-%input symbols are variables, %(parameters)
-is labeled by a function~$\phi$ associating to every input symbol~$a$, a weight value~$\phi(a)$
-in a semiring~$\Semiring$.
-%
 The models studied are: 
 symbolic-weighted automata (\SWA),
 defining series over infinite alphabets, 
@@ -224,24 +224,30 @@ The main contributions of this paper are:
 %and visibly pushdown automata \SWVPA (Section~\ref{sec:SWVPA}),
 %generalizing the corresponding classes of symbolic and weighted models,
 %for the weighted computation on (nested) words over infinite alphabets;
-($i$)~the construction à la Bar-Hillel Perles Shamir of a \SWA
-     computing a \SWT-defined distance between a \SWA input language and a word (Section~\ref{section:SWA}), 
-($ii$)~closure results for \SWVPA, 
-($iii$)~a polynomial best-search algorithm for \SWVPA (Section~\ref{sec:SWVPA}). %(Section~\ref{sec:best})
+\begin{description}
+\item[($i$)] a construction à la Bar-Hillel Perles Shamir of a \SWA
+     computing a \SWT-defined distance between a \SWA input language and a word (Proposition~\ref{prop:epsilon}), 
+\item[($ii$)] closure results for \SWVPA (Proposition~\ref{prop:SWVPA-product}), 
+\item[($iii$)] a polynomial best-search algorithm for \SWVPA (Proposition~{th:best-search}. %(Section~\ref{sec:best})
+\end{description}
+%
 % a framework for parsing over infinite alphabets,
 Moreover, we present in Section~\ref{sec:parsing} an 
-($iv$) application to the problem of weighted parsing over infinite input alphabets, 
+\begin{description}
+\item[($iv$)] application to the problem of weighted parsing over infinite input alphabets, 
 called \emph{SW-parsing}. 
+\end{description}
 %
-The goal of this problem is, given an input word~$s$, 
+The goal of the latter problem is, given an input word~$s$, 
 to find~$t$ minimizing the distance, in the sense of~\cite{Mohri03ijfcs}, 
 $T(s, t) \otimes A(t)$, where $T$ is a \SWT and $A$ a \SWVPA.
 The notion of transducer-based distances allows to consider 
 different infinite alphabets for the input $s$ and output $t$.
-Moreover, the use of \SWVPA permits to consider output $t$ in the form of a (nested) word, instead of a tree.
+Moreover, the use of \SWVPA permits to search for an output $t$ in the form of a (nested) word, 
+instead of a tree.
 %technical convenience
 %the SW models are integrated in a uniform framework.
-\emph{SW-parsing} is solved with the Bar-Hillel construction~\cite{NederhofSatta03ParsingIntersection} 
+\emph{SW-parsing} is solved with a Bar-Hillel construction~\cite{NederhofSatta03ParsingIntersection} 
 %\cite{GruneJacobs08parsing}
 of a \SWVPA $B$ such that, for all~$t$, $B(t) = T(s, t) \otimes A(t)$
 and the application of a best-search procedure to this automaton $B$.
@@ -259,18 +265,18 @@ generally assume a finite and reasonably small input alphabet. %models and algor
 %compilers or interpreters for programming languages.
 Considering large or infinite alphabets can however be of
 practical interest when dealing with large characters encodings such as UTF-16~\cite{dAntoni21CACM}.
-\florent{applis à la Fossacs chez Veanes et al?}
 % processing strings in \eg for vulnerability detection in Web-applications~\cite{dAntoni21CACM},
 %We believe that these results could also be useful 
-It is also true in the context of automata-based quantitative verification,  %of systems processing %analysis of 
-\eg when dealing with data streams, 
+It is also true in the context of automata-based quantitative verification techniques~\cite{Kwiatkowska07quantitativeVerif},  %of systems processing %analysis of 
+in particular when dealing with data streams, 
 serialization of structured documents~\cite{Segoufin06csl,NevenSchwentickVianu04FSMinfinite},
 or timed execution traces~\cite{Bouyer03algebraic}.
 
 % algebraic definition of a class of data languages
 % (notion of monoid recognizability, based on registers, comparable to Bojancszik et al. data words)
 
-The latter case is related to a motivation study for the present work:
+The latter case of timed traces 
+is related to a problem that motivated the present work:
 automated music transcription, 
 that we shall use as a running example
 thorough the paper, in order to illustrate our results.
@@ -280,7 +286,7 @@ are essentially linear~\cite{Selfridge-Field97beyondMIDI};
 %audio files or the widely used MIDI format %\cite{MIDIfile}.
 they ignore the hierarchical structures that frame the
 conception of music, at least in the Western area. 
-These structures, on the other hand, are present, either explicitly  or implicitly,
+Hierarchical structures, on the other hand, are present, either explicitly  or implicitly,
 in Common Western Music Notation~\cite{Gould11Notation}:
 %in music notation~\cite{Gould11Notation}:
 Music scores are partitioned in measures,

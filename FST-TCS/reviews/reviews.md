@@ -61,8 +61,8 @@ List of mistakes:
 - [x] 43: skip commas around parentheses; `with' is not an optimal conjuction 
 - [x] Figure 1: do no start sentences with symbols; add an `and' before $S$
 - [x] 47: Boolean Formulas
-- [ ] 51--53: the jump from automata to grammars is uneasy and not really necessary, as the paper mainly deals with automata
-- [ ] 57: weighted automata don't have ASTs, but runs
+- [x] 51--53: the jump from automata to grammars is uneasy and not really necessary, as the paper mainly deals with automata
+- [x] 57: weighted automata don't have ASTs, but runs
 - [x] 60: other approaches use multioperator monoids or valuation monoids, so `at minima a semiring' is wrong
 - [x] 70: the second comma is superfluous
 - [x] 74: missing period and space after $\oplus$
@@ -70,7 +70,7 @@ List of mistakes:
 - [x] 77: missing space after period
 - [x] 84: convenient in this context -> for convenience?
 - [x] 87: superfluous comma
-- [ ] 116: $\oplus$ `combines two values into a single one' as well (in fact, every   binary operation does)
+- [x] 116: $\oplus$ `combines two values into a single one' as well (in fact, every   binary operation does)
 - [x] 118--119: I would say: … $\leq_\oplus$ which is called the natural ordering of $S$ and is, for every …, defined by …
 - [x] Also, you should be consistent with using  'for all' or `for every' in quantifications (I would prefer for every)
 - [x] 122: if it IS; I'd also add a comma after total
@@ -99,15 +99,15 @@ List of mistakes:
 - [x] 196: put respectively after output
 - [x] 199: use \colon rather than : after function names (this also applies to several other places in the paper)
 - [x] 203: THE number
-- [ ] 208: What does $T$ compute?
+- [x] 208: What does $T$ compute?
 - [x] 216: by convention -> by definition
-- [ ] 219: resp.\@
-- [ ] 220--221: you mean that a term CONTAINING $w_{ij}(…)$ equal to 0 is ignored
+- [x] 219: resp.\@
+- [x] 220--221: you mean that a term CONTAINING $w_{ij}(…)$ equal to 0 is ignored
 - [x] 228: three superfluous commas
 - [x] 228--229: with $\oplus/\otimes$ -> in terms of $\oplus/\otimes$
 - [x] 232: over THE alphabets
 - [x] 237: superfluous commas
-- [ ] 238: text in the margin, also it is not clear whether the if refers to the entire line or just the right definition
+- [x] 238: text in the margin, also it is not clear whether the if refers to the entire line or just the right definition
 - [x] 247: I wouldn't define out just inside parentheses
 - [x] 251: based ON
 - [x] 252: for EVERY
@@ -116,8 +116,8 @@ List of mistakes:
 - [x] 284: $x$ is a variable, so it should be typeset in math mode
 - [x] 290: appogGiatura; ornAmental; also, I'd give this explanation already in Example 1 where the appoggiatura is first used
 - [x] 291: I'd at least say once that $\Delta_i$, $\Delta_c$, and $\Delta_r$ are pairwise disjoint (or explain the symbol)
-- [ ] 297: the extension here is not as in Section 3, there, the different function hat at least similar types
-- [ ] 299: every line expands into the margin; moreover, in the rightmost equation of line three, in the application of $w_c$, $p'$ and $q'$ are swapped
+- [x] 297: the extension here is not as in Section 3, there, the different function hat at least similar types
+- [x] 299: every line expands into the margin; moreover, in the rightmost equation of line three, in the application of $w_c$, $p'$ and $q'$ are swapped
 - [x] 310: topupmost -> topmost
 - [ ] 316: equation extends into margin
 - [x] 330--331: as indicated by the stack top: better explain that stack symbols are time intervals
@@ -235,7 +235,7 @@ Example 14 is quite limited in detail in comparison to the earlier examples, whi
 
 - [ ] In fact, it may be a good idea to show a fuller schematic of a few steps of the sw-VPA computation, with relevant connections between various variables highlighted, what equalities need to hold etc.
 
-- [ ] On line 366 of Proposition 16, the "can be" should be "must be", surely, since what you are describing is a computation that should leave the original stack (exactly) untouched?
+- [x] On line 366 of Proposition 16, the "can be" should be "must be", surely, since what you are describing is a computation that should leave the original stack (exactly) untouched?
 
 - [ ] It seems to me that there is a consistent lack of quantification over $P$ in the section starting with the definition of $b_\top$. This is not hugely problematic for the proof, since the algorithm is still defined (mostly) properly, and the complexity should only be impacted by a factor of something like $|P|$.
 
@@ -249,7 +249,7 @@ Example 14 is quite limited in detail in comparison to the earlier examples, whi
 
 - [x] l. 156. The ellipsis between $\Delta$ and $\Sigma^*$ confuses the sentence boundaries for the reader. Better to go "The set of finite sequences (_words_) over $\Sigma$ is denoted $\Sigma^*$, while $\varepsilon$ denotes the empty word[...]".
 
-- [ ] l. 220. The sentence starting here is somewhat confusing (and possibly wrong, depending on if $q'$ and $q''$ are intended to be distinct). I suppose that the point is that one can quit the recursion "early" whenever $w_{ij}$ returns $0$, but the language could be clearer, something like "Since $0$ is absorbing for $\times$, and the identity element for $+$ in $S$, if $w_{ij}(q,a,b,q'')$ is $0$ (meaning there is no transition from $q$ to $q'$ reading $a$ and $b$) that entire term can be ignored in the sum."
+- [x] l. 220. The sentence starting here is somewhat confusing (and possibly wrong, depending on if $q'$ and $q''$ are intended to be distinct). I suppose that the point is that one can quit the recursion "early" whenever $w_{ij}$ returns $0$, but the language could be clearer, something like "Since $0$ is absorbing for $\times$, and the identity element for $+$ in $S$, if $w_{ij}(q,a,b,q'')$ is $0$ (meaning there is no transition from $q$ to $q'$ reading $a$ and $b$) that entire term can be ignored in the sum."
 
 - [x] l. 240: an fixed weight -> a fixed weight
 
@@ -259,7 +259,7 @@ Example 14 is quite limited in detail in comparison to the earlier examples, whi
 
 - [x] l. 281: artitioned -> partitioned
 
-- [ ] l. 288: same as on line 100, measure 1 should maybe end before measure 2
+- [x] l. 288: same as on line 100, measure 1 should maybe end before measure 2
 
 - [x] l. 290: ornemental -> ornamental
 
@@ -291,7 +291,7 @@ Example 14 is quite limited in detail in comparison to the earlier examples, whi
 
 - [x] l. 420: This whole paragraph should be shaped up, writing wise. 
 
-- [ ] l. 434: $swM$??
+- [x] l. 434: $swM$??
 
 - [x] l. 435: "offline" -> "works offline"
 
@@ -316,6 +316,6 @@ Remark: In Def. 6 the meaning of the requirement "moreover, the number of symbol
 
 Further remark:
 
-- [ ] The authors should state that the symbolic-weighted transducers of Def. 7 do not form a new model. They are classical weighted transducers where the alphabets are permitted to be infinite. For this, one could simply replace their weight functions by a single function $$wt: Q \times (\Sigma \cup \{ \epsilon\}) \times (\Delta \cup \{\epsilon\}) \times Q \to S$$. 
+- [x] The authors should state that the symbolic-weighted transducers of Def. 7 do not form a new model. They are classical weighted transducers where the alphabets are permitted to be infinite. For this, one could simply replace their weight functions by a single function $$wt: Q \times (\Sigma \cup \{ \epsilon\}) \times (\Delta \cup \{\epsilon\}) \times Q \to S$$. 
   
   In particular, the swA of Def 9 are classical weighted finite automata.

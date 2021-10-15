@@ -1,5 +1,5 @@
 % !TEX root = main.tex
-Proposition states the correctness of the construction of the graph~$G_A$ for the computation of $b_\bot$
+Proposition~\ref{algo-shortest} states the correctness of the construction of the graph~$G_A$ for the computation of $b_\bot$
 and, by extension, the minimum of $A$.
 Its proof is a consequence of the two following Lemmata~\ref{algo-correct} and~\ref{algo-complete}.
 
@@ -28,28 +28,41 @@ and the first line of \eqref{eq:SWVPA-weight}.
 
 \noindent
 If $\pi = v_0,\ldots, v_n$ with $n \geq 1$, 
-let us do a case analysis on the edge $v_{n-1} \to v_n$.
-%
-We suppose Lemma ~\ref{algo-correct} is true for a safe path $\pi' = v_0,\ldots, v_{n-1}$ and a word $u' \in \Delta^*$. Firstly, let's assume $v_{n-1} = \< q, q''>$ and $last(\pi) = \< q, q'>$. By definition, the edge $\< q, q''> \to \< q, q'>$ is possible only if an internal symbol or a return symbol is read, in order to keep the stack empty:
+we assume that Lemma~\ref{algo-correct} holds for a safe path $\pi' = v_0,\ldots, v_{n-1}$ and a word~$u' \in \Delta^*$, 
+and do a case analysis on the edge~$v_{n-1} \to v_n$.
+
+\smallskip\noindent
+Firstly, let us consider the case where $v_{n-1} = \< q, q''>$ and $v_{n} = \< q, q'>$. 
+By definition, the edge $\< q, q''> \to \< q, q'>$ is possible only if an internal symbol or a return symbol is read, 
+keeping the stack empty:
 
 \begin{itemize}
-\item if we read $a \in \Delta_i$ and have an empty stack, then the new $\weight_A$ is computed with the third case in equation~\eqref{eq:SWVPA-weight}.
+\item if we read $a \in \Delta_i$ and have an empty stack, 
+then the new $\weight_A$ is computed 
+with the third case in equation~\eqref{eq:SWVPA-weight}.
 We have
 \begin{align*}
- \weight_A\bigl(\config{q}{\gamma}, u\, a,
+ \weight_A\bigl(\config{q}{\gamma}, u'\, a,
                \config{q'}{\bot}\bigr) &=
-   \weight_A\bigl(\config{q}{\gamma}, u, \config{q''}{\bot}\bigr)
+   \weight_A\bigl(\config{q}{\gamma}, u', \config{q''}{\bot}\bigr)
    \otimes\weiei(q'', a, q')  \\
  &= \weight(\pi')\otimes\weiei(q'', a, q')\\
  &= \weight(\pi)\nonumber 
 \end{align*}
-with $\pi = (\pi', v_n)$, since we know that $\weight(v_0,\ldots, v_{n-1}) \otimes \eta_A(v_{n-1} \to v_{n}) = \weight(v_0,\ldots, v_n)$ and $\weiei(q'', a, q')$ is indeed a possible edge label $\eta_A$ for the edge $\< q, q''> \to \< q, q'>$ (first line of label definition). Hence in this case the Lemma is true. 
+since we know that $\weight(v_0,\ldots, v_{n-1}) \otimes \eta_A(v_{n-1} \to v_{n}) = \weight(v_0,\ldots, v_n)$ and $\weiei(q'', a, q')$ is indeed a possible label $\eta_A$ for the edge $\< q, q''> \to \< q, q'>$ (first line of label definition). 
+%Hence in this case the Lemma is true. 
 
-\item Following the same reasoning as before, we find that the Lemma is also true when $a \in \Delta_r$ by using the last equation in \eqref{eq:SWVPA-weight} which illustrates the case when a return symbol is unmatched.
+\item Following the same reasoning as above, we find that the Lemma is also true when $a \in \Delta_r$ by using the last equation in \eqref{eq:SWVPA-weight} which corresponds to the case of an unmatched return symbol.
 %
 \end{itemize}
 \noindent
-Let's now assume that $v_{n-1} = \< q_1, p, q_2>$ and $last(\pi) = \< q_0, q_3>$. The edge $\< q_1, p, q_2> \to \< q_0, q_3>$ exists if we read a return then try to match with the call on top of the stack which then leaves the stack empty. With the 6th equation in~\eqref{eq:SWVPA-weight}, we can compute the $\weight_A$ for $\<q_0, q_3>$ and then replace the first term with the 5th equation in~\eqref{eq:SWVPA-weight}, such as:
+let us now consider the case where $v_{n-1} = \< q_1, p, q_2>$ and $v_{n} = \< q_0, q_3>$. 
+The edge $\< q_1, p, q_2> \to \< q_0, q_3>$ exists if we have a return symbol 
+matching a call symbol on the top of the stack, 
+which is pop, leaving the stack empty. 
+With the 6th equation in~\eqref{eq:SWVPA-weight}, 
+we can compute the $\weight_A$ for $\<q_0, q_3>$ 
+and then replace the first term with the 5th equation in~\eqref{eq:SWVPA-weight}, such as:
 \begin{align*}
 &\weight_A\bigl(\config{q_0}{\bot}, u\,{\return{r}},
                \config{q_3}{\bot}\bigr) =
@@ -64,9 +77,12 @@ Let's now assume that $v_{n-1} = \< q_1, p, q_2>$ and $last(\pi) = \< q_0, q_3>$
   \otimes \weir\bigl(q_2, {\call{c}}, p, {\return{r}}, q_3\bigr)\\
   &= \weight_A(\pi)
 \end{align*}
-for $\pi = (\pi', v_n)$. Here the Lemma holds since $\weir\bigl(q_2, {\call{c}}, p, {\return{r}}, q_3\bigr)$ is also part of the edge labels (second line).
+%
+Here the Lemma holds since $\weir\bigl(q_2, {\call{c}}, p, {\return{r}}, q_3\bigr)$ 
+is also part of the edge labels (second line).
 
-Finally, let's assume that $v_{n-1} = \<q_1, p, q_2>$ and $last(\pi) = \<q_0, p', q_3>$ for $p, p' \in Q$. Following the same reasoning as the two previous cases, we can similarly prove that the Lemma is also true.
+Finally, for the case where $v_{n-1} = \<q_1, p, q_2>$ and $v_n = \<q_0, p', q_3>$ for $p, p' \in Q$, 
+we can following the same reasoning as the two previous cases, and complete the proof of Lemma~{algo-correct}.
 \qed
 \end{proof}
 
@@ -143,14 +159,24 @@ $b_\bot(q, q) = \one$ and $b_\bot(q, q') = \zero$ if $q \neq q'$.
 \noindent
 For $n = n_{q, q'} > 0$, let $\bar\tau$ and~$\bar{w}$
 be the sequences associated to $q$ and $q'$ as above.
-Let us do a case analysis of $w_n$.
-Computing $b_\bot(q, q')$ comes down to running $A$ on a well-matched word $u \in \Delta^*$ for which $|u| = n$. Let's take the case where $w_n  = \weiei$. Then using Equation~\ref{eq:SWVPA-weight}, we decompose $b_\bot(q, q')$ as follows:
+%
+We can perform a case analysis of $w_n$.
+Computing $b_\bot(q, q')$ comes down to running $A$ on a word $u \in \Delta^*$, 
+such that $|u| = n$, and $u$ is well-matched except for unmatched return symbols
+read on empty stack.
+%
+Let us consider the case where $w_n  = \weiei$. 
+Then using Equation~\ref{eq:SWVPA-weight}, we can decompose $b_\bot(q, q')$ as follows:
 %\config{q}{\gamma}, u\,{\call{c}'},
 %\configup{q'}{\<{\call{c}'}, p'>\stackup \<{\call{c}}, p>\stackup \gamma'}\bigr)
 \begin{align*}
 b_\bot(q, q') &= \weight_A(\config{q}{\bot}, u', \config{q''}{\bot}) \otimes\weiei(q'', a, q') \\
 &= b_\bot(q, q'')\otimes\weiei(q'', a, q')
 \end{align*}
-Since $u=u'a$ is minimal, then $u'$ is minimal, and $\weight_A(\config{q}{\bot}, u', \config{q''}{\bot}) =b_\bot(q, q'')$. Consequently, for this case the Lemma is true. The other cases can be proven similarly,  but only for the $w_n$ that can form a well-matched word. For example, $w_n$ cannot be $\weic$ since this call will never have a matching return.
+Since $u = u'a$ is minimal in length, then so is $u'$, 
+and $\weight_A(\config{q}{\bot}, u', \config{q''}{\bot}) = b_\bot(q, q'')$. 
+Consequently, for this case the Lemma holds. 
+The other cases can be proven similarly,  but only for the $w_n$ that can form a well-matched word. 
+For example, $w_n$ cannot be $\weic$ since this call would not have a matching return.
 \qed
 \end{proof}

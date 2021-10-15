@@ -30,13 +30,13 @@
 % - inline: place a todonote inside the text instead of in the margin
 % - author=name
 \newcommand{\florent}[1]{\todo[noline,size=\tiny,color=yellow!40]{#1}}
-%\renewcommand{\florent}[1]{} % uncomment for final
+\renewcommand{\florent}[1]{} % uncomment for final
 \newcommand{\lydia}[1]{\todo[noline,size=\tiny,color=red!30]{#1}}
-%\renewcommand{\lydia}[1]{} % uncomment for final
+\renewcommand{\lydia}[1]{} % uncomment for final
 \newcommand{\philippe}[1]{\todo[noline,size=\tiny,color=green!30]{#1}}
-%\renewcommand{\philippe}[1]{} % uncomment for final
+\renewcommand{\philippe}[1]{} % uncomment for final
 \newcommand{\reviews}[1]{\todo[noline,size=\tiny,color=blue!30]{#1}}
-%\renewcommand{\reviews}[1]{} % uncomment for final
+\renewcommand{\reviews}[1]{} % uncomment for final
 
 \usepackage{hyperref}
 %\usepackage[bookmarks,bookmarksnumbered,naturalnames,plainpages=false]{hyperref}
@@ -282,17 +282,18 @@ between words and languages
 and extend it to infinite alphabets.
 % with models of symbolic weighted automata and transducers.
 %
-The models presented in this section generalize weighted automata and transducers~\cite{Droste09handbook}
+The models presented in this section are weighted automata 
+and transducers~\cite{Droste09handbook}
 %over finite alphabets, see \eg~\cite{Mohri03ijfcs},
-by labeling each transition with a weight function
-that takes the input and output symbols as parameters.
+with transitions labeled by weight functions
+that take the input and output symbols as parameters.
 These functions generalize the guards 
 of symbolic automata~\cite{Veanes12symbolic,dAntoniVeanes17CAV,dAntoni21CACM},
 from Boolean domains to commutative semirings.
 %
-They are particular cases of the very general model of 
+These models are also particular cases of the very general model of 
 Weighted Symbolic Automata with Data Storage~\cite{Herrmann16dlt}. 
-\florent{review 3: = classical transducers}
+%\florent{review 3: = classical transducers}
 
 %\subsection{Definitions} \label{sec:SWTdef}\label{sec:SWAdef}
 %(SWT)
@@ -302,8 +303,7 @@ $\Sigma$ and $\Delta$ be alphabets called \emph{input} and \emph{output} respect
 and $\bar\Phi$ be a label theory over $\Semiring$
 containing $\Phi_\Sigma$, $\Phi_\Delta$, $\Phi_{\Sigma, \Delta}$.
 
-\begin{definition}
-\label{def:transducer} \label{def:SWT}
+\begin{definition}\label{def:transducer} \label{def:SWT}
 A \emph{symbolic-weighted transducer} (\SWT)
 over $\Sigma$, $\Delta$, $\Semiring$ and $\bar\Phi$
 %the input and output alphabets~$\Sigma$ and $\Delta$ with label theory $\bar\Phi$, and the semiring $\Semiring$
@@ -324,6 +324,9 @@ $\wei_{11}: Q \times Q \to \Phi_{\Sigma, \Delta}$.
 %We call the \emph{number of transitions} of $T$ the number of pairs of states
 %$q, q' \in Q$ such that $\wei_{10}$ or $\wei_{01}$ or $\wei_{11}$
 %is not the constant $\zero$.
+%
+Note that the SW-transducers of Definition~\ref{def:transducer} %do not form a new model, 
+are actually classical weighted transducers where the alphabets are permitted to be infinite.
 %
 \noindent
 A tuple of $Q \times (\Sigma \cup \{ \varepsilon \}) \times (\Delta \cup \{ \varepsilon \}) \times Q \to \Semiring$
@@ -401,10 +404,12 @@ in the input (resp. output) is not read.
 %order to compare input and output symbols.
 %which cannot be stored in the finite memory of the transducer.
 %
-Since~$\zero$ is absorbing for~$\otimes$ in~$\Semiring$,
-one term $\wei_{ij}(q, a, b, q'')$ equal to $\zero$ in the above expression
-will be ignored in the sum, meaning that there is no possible transition
-from state $q$ into state $q'$ while reading $a$ and $b$.
+Since~$\zero$ is absorbing for~$\otimes$, 
+and neutral for $\oplus$ in~$\Semiring$,
+if $\wei_{ij}(q, a, b, q'')$ is equal to $\zero$
+(meaning that there is no possible transition
+from state $q$ into state $q'$ while reading $a$ and $b$), 
+then the entire term containing this expression can be ignored in the sum.
 This is analogous to the case of a transition's guard not satisfied by $\<a, b>$ for
 symbolic transducers~\cite{Veanes12transducers}.
 
@@ -496,8 +501,9 @@ is  skipped with no cost (transitions $\wei_{01}$).
 \begin{array}{lclclcll}
 \wei_{11}(q_0, \mu\tstamp{\tau}, \nu\tstamp{\tau'}, q_0) & = &
      \delta(\mu\tstamp{\tau}, \nu\tstamp{\tau'}) & \quad & %|\tau' - \tau| & \quad &
+     \mbox{if~} \nu \neq - \\ %|\tau' - \tau| & \quad &
 \wei_{11}(q_1, \mu\tstamp{\tau}, \nu\tstamp{\tau'}, q_0) & = &
-     \delta(\mu\tstamp{\tau}, \nu\tstamp{\tau'}) &
+     \delta(\mu\tstamp{\tau}, \nu\tstamp{\tau'}) & &
      \mbox{if~} \nu \neq - \\ %|\tau' - \tau| & \quad &
 \wei_{01}(q_0, \varepsilon, \mathsf{-}\tstamp{\tau'}, q_0) & = & \one & &
 \wei_{01}(q_1, \varepsilon, \mathsf{-}\tstamp{\tau'}, q_0) & = & \one\\
@@ -616,7 +622,7 @@ all the while ensuring that performance errors are plausible.
 \noindent
  \emph{Symbolic Weighted Automata} %$A = \< Q, \init, \weight, \final >$
 %over $\Sigma$,  $\Semiring$ and $\bar\Phi$
-are defined  as the transducers of Definition~\ref{def:SWT},
+are defined as the transducers of Definition~\ref{def:SWT},
 by simply omitting the output symbols.
 %
 %In this case, the label theory $\bar\Phi$ can be reduced to a singleton $\< \Phi_\Sigma>$.
@@ -678,9 +684,9 @@ A(s)  =
 
 
 %\subsection{Properties}
-\noindent
-The following property will be useful for
-symbolic weighted parsing (Section~\ref{sec:parsing}).
+%\noindent
+%The following property will be useful for
+%symbolic weighted parsing (Section~\ref{sec:parsing}).
 
 \begin{proposition} \label{prop:epsilon}
 Given a \SWT $T$ over $\Sigma$, $\Delta$,
@@ -856,8 +862,8 @@ We consider now a language model generalizing symbolic \VPA
 from Boolean semirings to arbitrary semiring domains.
 It is also a particular case of 
 Weighted Symbolic Automata with Data Storage~\cite{Herrmann16dlt} for a special 
-type of data storage.
-It associates to every nested word over an infinite alphabet a weight value
+type of data storage, and 
+associates to every nested word over an infinite alphabet a weight value
 in a semiring.
 Nested words can describe structures of labeled trees.
 In the context of parsing, they will be useful to
@@ -921,6 +927,7 @@ $-\tstamp{\frac{1}{2}}$,
 $\mbox{\footnotesize B4}\tstamp{\frac{3}{4}}$,
 $\creturn{2}\tstamp{1}$,
 $\creturn{2}\tstamp{1}$,
+$\creturn{\mathsf{m}}\tstamp{1}$,
 $\ccall{\mathsf{m}}\tstamp{[1,2]}$,
 $\ccall{3}\tstamp{[1,2]}$,
 $\mbox{\footnotesize `C$\sharp$5`}\tstamp{1}$,
@@ -928,7 +935,6 @@ $\mbox{\footnotesize D5}\tstamp{1}$,
 $\mbox{\footnotesize E5}\tstamp{\frac{4}{3}}$,
 $\mbox{\footnotesize F5}\tstamp{\frac{5}{3}}$,
 $\creturn{3}\tstamp{2}$,
-$\creturn{\mathsf{m}}\tstamp{2}$,
 $\creturn{\mathsf{m}}\tstamp{2}$
 (see also Fig.~\ref{fig:score-tree}).
 The symbol between quotes $\mbox{\footnotesize `C$\sharp$5`}$
@@ -938,7 +944,7 @@ represents an \emph{appogiatura}, %(grace-note),
 \end{example}
 
 
-\begin{definition}
+\begin{definition} 
 A \emph{Symbolic Weighted Visibly Pushdown Automata} (\SWVPA)
 over  $\Delta = \Deltai \uplus \Deltac \uplus \Deltar$, $\Semiring$ and $\bar\Phi$
 is a tuple $A = \< Q, P, \init, \bar\wei, \final >$,
@@ -960,38 +966,38 @@ $\weier : Q \times Q \to \Phir$.
 %with $\mathsf{x} \in \{ \mathsf{i}, \mathsf{c}, \mathsf{r}\}$.
 \end{definition}
 %
-As in Section~\ref{section:transducer},
-we extend the above transition functions as follows
+%As in Section~\ref{section:transducer},
+We extend the above transition functions as follows
 for every $q, q' \in Q$, $p \in P$,
 $a \in \Deltai$,
 $\call{c} \in \Deltac$,
 $\return{r} \in \Deltar$,
 overloading their names: % for simplicity:
 \[
-\begin{array}{lll}
-\weii: Q \times [\Deltac \times P] \times \Deltai \times Q \to \Semiring &
-\weii(q, c, p, a, q') = \eta_\mathsf{ci}(c, a) &
-\mathrm{where~} \eta_\mathsf{ci} = \weii(q, p, q'),\\
+\begin{array}{lcl}
+\weii: Q \times [\Deltac \times P] \times \Deltai \times Q \to \Semiring & &
+\weii(q, c, p, a, q') = \eta_\mathsf{ci}(c, a)\\ 
+\multicolumn{3}{r}{\mathrm{where~} \eta_\mathsf{ci} = \weii(q, p, q'),}\\
 %
-\weiei: Q \times \Deltai \times Q \to \Semiring &
-\weiei(q, a, q') = \phi_\mathsf{i}(a) &
-\mathrm{where~} \phi_\mathsf{i} = \weiei(q, q').\\
+\weiei: Q \times \Deltai \times Q \to \Semiring & &
+\weiei(q, a, q') = \phi_\mathsf{i}(a)\\
+\multicolumn{3}{r}{\mathrm{where~} \phi_\mathsf{i} = \weiei(q, q'),}\\
 %
-\weic: Q \times [\Deltac \times P] \times  [\Deltac \times P] \times Q \to \Semiring &
-\weic(q, c, p, \call{c'}, p', q') = \eta_\mathsf{cc}(c, \call{c'}) &
-\mathrm{where~} \eta_\mathsf{cc} = \weic(q, p, p', q'),\\
+\weic: Q \times [\Deltac \times P] \times  [\Deltac \times P] \times Q \to \Semiring \  & &
+\weic(q, c, p, \call{c'}, p', q') = \eta_\mathsf{cc}(c, \call{c'})\qquad\\
+\multicolumn{3}{r}{\mathrm{where~} \eta_\mathsf{cc} = \weic(q, p, p', q'),}\\
 %
-\weiec: Q \times [\Deltac \times P] \times Q \to \Semiring &
-\weiec(q, {\call{c}}, p', q') = \phi_\mathsf{c}({\call{c}}) &
-\mathrm{where~} \phi_\mathsf{c} = \weiec(q, p, q').\\
+\weiec: Q \times [\Deltac \times P] \times Q \to \Semiring & &
+\weiec(q, {\call{c}}, p', q') = \phi_\mathsf{c}({\call{c}})\\
+\multicolumn{3}{r}{\mathrm{where~} \phi_\mathsf{c} = \weiec(q, p, q'),}\\
 %
-\weir: Q \times [\Deltac \times P] \times \Deltar \times Q \to \Semiring &
-\weir(q, {\call{c}},  p, {\return{r}}, q') = \eta_\mathsf{cr}({\call{c}},  {\return{r}}) &
-\mathrm{where~} \eta_\mathsf{cr} = \weir(q, p, q'),\\
+\weir: Q \times [\Deltac \times P] \times \Deltar \times Q \to \Semiring & &
+\weir(q, {\call{c}},  p, {\return{r}}, q') = \eta_\mathsf{cr}({\call{c}},  {\return{r}})\\
+\multicolumn{3}{r}{\mathrm{where~} \eta_\mathsf{cr} = \weir(q, p, q'),}\\
 %
-\weier: Q \times \Deltar \times Q \to \Semiring &
-\weier(q, {\return{r}}, q') = \phi_\mathsf{r}({\return{r}}) &
-\mathrm{where~} \phi_\mathsf{r} = \weier(q, q').\\
+\weier: Q \times \Deltar \times Q \to \Semiring & &
+\weier(q, {\return{r}}, q') = \phi_\mathsf{r}({\return{r}})\\
+\multicolumn{3}{r}{\mathrm{where~} \phi_\mathsf{r} = \weier(q, q')}.\\
 \end{array}
 \]
 The tuples in the definition domains of the above functions 
@@ -1139,20 +1145,24 @@ of~$\bar\wei$ are the constant~$\zero$.
 We consider a \SWVPA over the alphabet of Example~\ref{ex:nested-word} and with $P = Q$,
 that expresses a weight related to the music notation,
 or more precisely to its structural complexity.
-Given a set of equivalent representations, we aim at choosing the simpler one, \ie the one with the smallest weight.
+Given a set of equivalent representations, 
+we aim at choosing the simplest one, \ie the one with the smallest weight.
 
 \lydia{We should find a better variable name than j... it does not render well in fractions}
-Let's say the top of the stack is a tuple of the call~$\ccall{n}\tstamp{[\tau, \tau+\ell]}$ and a state $q$. Let's now consider a new call transition starting in state $q_{\frac{j}{n}}$, that is the $j$-th state of the $n$ sub-intervals of duration~$\frac{\ell}{n}$.
+Let us assume that the top of the stack is a tuple 
+made of the call symbol~$\ccall{n}\tstamp{[\tau, \tau+\ell]}$ 
+and the state~$q$. 
+Let us now consider a new call transition starting in state $q_{\frac{j}{n}}$, that is the $j$-th state of the $n$ sub-intervals of duration~$\frac{\ell}{n}$.
 We thus read a new time-division symbol ~$\ccall{d}$ 
 and compute the weight of the transition from $q_{\frac{j}{n}}$ to $q_{\frac{1}{d}}$, 
 the first state after the new~$\ccall{d}$, reading on the top of the stack the pair
 $\<\ccall{n}\tstamp{[\tau, \tau+\ell]}, q>$, 
 and pushing $\<\ccall{d}\tstamp{\iota}, q_{\frac{j+1}{c}}>$ on top, or:
 \(
-\weic\bigl(q_{\frac{j}{n}},
+{\weic\bigl(q_{\frac{j}{n}},
            \ccall{n}\tstamp{[\tau, \tau+\ell]}, q,
            \ccall{d}\tstamp{\iota}, q_{\frac{j+1}{c}},
-           q_{\frac{1}{d}} \bigr) = \alpha_d
+           q_{\frac{1}{d}} \bigr) = \alpha_d}
 \).
 \lydia{is it ok to explain precisely this computation and not the others ? is it redundant with the explaniation before equation (5) ?}
 \noindent
@@ -1164,9 +1174,9 @@ Reading the $k$-th musical event $\mu$ in this current sub-interval is computed 
 \).
 Finally, this sub-interval will end after reading a return symbol $\creturn{d}$ and compute:
 \(
-\weir\bigl(q_{\frac{d}{d}},
+{\weir\bigl(q_{\frac{d}{d}},
            \ccall{d}\tstamp{[\tau, \tau+\ell]}, q_{\frac{i+1}{c}},
-           \,\creturn{d}\tstamp{\tau + \ell}, q_{\frac{i+1}{c}} \bigr) = \one
+           \,\creturn{d}\tstamp{\tau + \ell}, q_{\frac{i+1}{c}} \bigr) = \one}
 \).
 \noindent
 We described earlier the special cases where the stack is empty, which applies for example when reading the first measure 
@@ -1330,11 +1340,11 @@ and ending in state~$q'$ with the same stack~$\gamma'$,
 such that
 the computation does not pop the pair $\<c, p>$ at the top of $\gamma'$
 (\ie~$\gamma'$ is left untouched during the computation).
-However, the computation can read $\<c, p>$ at the top of $\gamma'$,
+However, the computation can read~$\<c, p>$ at the top of~$\gamma'$,
 and can also push another pair $\< c', p'> \in \Gamma$ on top of $\gamma'$,
 following the third case 
 in the definition \eqref{eq:SWVPA-weight} of $\weight_A$ (call symbol).
-The pair $\< c', p'>$ can be popped later, during the computation from $q$ to $q'$,
+The pair $\< c', p'>$ must be popped later, during the computation from $q$ to $q'$,
 following the fifth case of \eqref{eq:SWVPA-weight} (return symbol).
 %However, it cannot apply one of the two last cases (return symbol and empty stack)
 %when the current stack is $\gamma$.
@@ -1494,7 +1504,7 @@ and input word $s$,
 and the computation time of the functions and operators of the label theory.
 \end{proposition}
 %
-\begin{proof} (sketch)
+\begin{proof} %(sketch)
 We follow a \emph{Bar-Hillel} construction for parsing by intersection.
 %
 \noindent
@@ -1539,15 +1549,17 @@ using the procedure of Proposition~\ref{th:best-search}.
 
 The $\SW$-parsing problem generalizes
 the problem of searching for the best derivation (AST) of a weighted CF-grammar $G$
-that yields a given input word $w$, called~\emph{weighted parsing},
-(see~\cite{Goodman99SemiringParsing},
- also the more general framework~\cite{MorbitzVogler19weighted-parsing}),
+that yields a given input word $w$, 
 with an infinite input alphabet instead of a finite one and
-transducer-defined distances instead of equality. 
+transducer-defined distances instead of equality
+(it is however uncomparable to 
+ related problem called~\emph{semiring parsing},
+ \cite{Goodman99SemiringParsing},
+  called~\emph{weighted parsing}~\cite{MorbitzVogler19weighted-parsing}).
 %
-See Appendix~\ref{sec:trees} for more details on the correspondence between 
+The interested reader might find in Appendix~\ref{sec:trees} 
+more details on the correspondence between 
 nested words $t \in \Delta^*$, AST, CF grammars and \SWVPA.
-
 %
 %Indeed, it corresponds to the case where $T$
 %accepts only the pairs $\<s, t>$ such that
@@ -1615,35 +1627,39 @@ nested words $t \in \Delta^*$, AST, CF grammars and \SWVPA.
 
 \section*{Conclusion}
 
-We studied properties of three Symbolic Weighted language models, %over infinite alphabets,
+We presented three properties of three Symbolic Weighted language models
+(automata, transducers and visibly pushdown automata), %over infinite alphabets,
 and applied them to the problem of parsing
 with infinitely many possible input symbols (typically timed events).
 One originality of this approach 
 %extends conventional parsing and weighted parsing
-is to compute derivation trees modulo
+is the comparison of words using 
 a distance between words defined by a given SW transducer.
 This allows to consider finer word relationships than strict equality.
 
 This work can be extended in several directions. 
-The best search algorithm could be generalized from $1$-best to $n$-best~\cite{Huang05kbest},
+The best-search algorithm for \SWVPA
+could be generalized from $1$-best to $n$-best~\cite{Huang05kbest},
 and to $k$-\emph{closed} semirings~\cite{Mohri02semiring}
 (instead of \emph{bounded}, which corresponds to $0$-\emph{closed}). 
-The complexity bounds of the best-search algorithms 
-could also certainly be improved.
+It complexity upper bound could also certainly be improved.
 %as well as expressiveness of \swM compared to the automata of 
 %\eg~\cite{Segoufin06csl,KaminskiFrancez94,NevenSchwentickVianu04FSMinfinite,Bojanczyk11FO2}.
 Another possible study could be the existence of best-search algorithms
 for the more general models of~\cite{Herrmann16dlt}.
-Finally, the  best search algorithm presented here works offline, 
+
+\noindent
+Finally, the  best-search algorithm presented here works offline, 
 whereas an on-the-fly approach coupling automata construction and best-search 
-would be interesting \eg for online XML validation or filtering.
+would be interesting \eg for online XML validation or filtering, 
+or program monitoring~\cite{dAntonyAlur14SVPDA}.
 %a suitable feature in the context of applications such as 
 %\eg automatic music transcription.
 
 %\florent{comparison of expressiveness with the automata 
 %of\cite{Segoufin06csl,KaminskiFrancez94,NevenSchwentickVianu04FSMinfinite,Bojanczyk11FO2}.}
 
-\newpage
+%\newpage
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
