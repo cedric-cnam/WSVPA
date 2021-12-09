@@ -59,6 +59,7 @@ Proposition 1: the PTIME claim is strange. This seems to assume that all operati
 Same remark for Prop. 3
 
 Proof of Prop 1: 
+
 - I think it would be better (easier to understand) to construct a product with
   $\epsilon$-transitions, and to separately state and prove that $\epsilon$-transitions can be removed from swA.
 - in input -> an input (many occurrences)
