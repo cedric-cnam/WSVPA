@@ -5,7 +5,7 @@ Regarding the two first comments in review 1, presented as "major problems in th
 
 1. indeed, there are no edges from $Q\times Q$ to $Q\times P\times Q$.
    It means that the weight, by $\eta_A$, of every such edge is 0 (of the semiring).
-   It is generally the convention for missing edges in weighted graphs or missing transitions in weighted automata. However, we could have staten it explicitly...
+   It is generally the convention for missing edges in weighted graphs or missing transitions in weighted automata. However, we could have stated it explicitly...
 
 2. there is a misplaced parenthesis in the expression for the weight of the edges from $Q\times P\times Q$ to $Q\times P\times Q$:
    It should be: $\bigoplus_{\Delta_c} ( \bigoplus_{\Delta_i} w_i(...) \oplus w_c(...) \otimes_2 \bigoplus_{\Delta_r} w_r(...))$
@@ -13,16 +13,19 @@ Regarding the two first comments in review 1, presented as "major problems in th
    and not $\bigoplus_{\Delta_i} w_i(...) \oplus  \bigoplus_{\Delta_c} ( w_c(...) \otimes_2 \bigoplus_{\Delta_r} w_r(...))$.
    The proofs of Prop.3 (in appendix) actually use the first (correct) formulation.
 
-We agree with reviewer 1 that the statements iii and iv of Lemma 4 are incorrect.
+We agree with reviewer 1 that statements iii and iv of Lemma 4 are incorrect.
 This lemma is only used in an informal remark following Def. 1, and is not used in the proofs of the main results of the paper. Hence it could be removed without harming these results.
 
 Regarding other comments : 
 
-- w^e_r (page 12) allows to deal with unmatched return symbols, following the original definitions of visibly PDA and symbolic VPDA [8], where the input words are not assumed to be well parenthesised.
+- w^e_r (page 12) allows dealing with unmatched return symbols, following the original definitions of visibly PDA and symbolic VPDA [8], where the input words are not assumed to be well parenthesized.
 - also, following the original definitions of symbolic automata and VPDA, the functions of the label theory are supposed to be oracles, and the PTIME complexity assumes a constant time computation for these oracles. 
 
 Considering the above problems identified by reviewers, we prefer to withdraw our submission.
 However, we would be grateful if you could transmit this answer to the reviewers.
+
+Thank you
+Best Regards
 
 
 
