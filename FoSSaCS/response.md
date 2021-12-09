@@ -1,5 +1,5 @@
-We would like to thank the reviewers for their careful reading of the paper and their remarks, 
-and in particular the suggestion of reviewer 2 to consider the related model of Cost Register Automata.
+We would like to thank the reviewers for their careful reading of the paper and for their remarks, 
+in particular the suggestion of reviewer 2 to consider the related model of Cost Register Automata.
 
 Regarding the two first comments in review 1, presented as "major problems in the proof of Prop.3", they are actually simple typos:
 
@@ -21,15 +21,13 @@ Regarding other comments :
 - w^e_r (page 12) allows dealing with unmatched return symbols, following the original definitions of visibly PDA and symbolic VPDA [8], where the input words are not assumed to be well parenthesized.
 - also, following the original definitions of symbolic automata and VPDA, the functions of the label theory are supposed to be oracles, and the PTIME complexity assumes a constant time computation for these oracles. 
 
-Considering the above problems identified by reviewers, we prefer to withdraw our submission.
-However, we would be grateful if you could transmit this answer to the reviewers.
+Although the the above problems identified by reviewers are small mistakes, they are several (hence too many!) mistakes, and we prefer to withdraw our submission.
+Nevertheless, we would be grateful if you could transmit this answer to the reviewers.
+
+
 
 Thank you
 Best Regards
-
-
-
-
 
 The typing is as follows:   
 on the one hand, 
