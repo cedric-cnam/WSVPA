@@ -19,6 +19,9 @@ for $q_0, q_1, q_2, q_3 \in Q$, $p, p' \in P$:
 \< q_0, q_1> & \to & \< q_0, q_2> & \mapsto &
 \bigoplus_{\Deltai} \weiei(q_1, q_2) \oplus \bigoplus_{\Deltar} \weier(q_1, q_2)\\
 %
+\< q_0, q_1> & \to & v & \mapsto & \zero 
+\quad \mathrm{if}\ v \in Q\setminus \{ q_0 \} \times Q\  \mathrm{or}\  v \in Q \times P \times Q\\
+%
 \< q_1, p, q_2> & \to & \<q_0, q_3> & \mapsto &
 \bigoplus_{\Deltac} \bigl[ \weiec(q_0, p, q_1) \otimes \bigoplus^2_{\Deltar} \weir(q_2, p, q_3)\bigr]\\ 
 %
@@ -28,10 +31,14 @@ for $q_0, q_1, q_2, q_3 \in Q$, $p, p' \in P$:
 \< q_1, p', q_2> & \to & \< q_0, p, q_3> & \mapsto &
 {\displaystyle\bigoplus_{q_0=q_1}}
 {\displaystyle\bigoplus_{p=p'}}
- \bigoplus_{\Deltai} \weii(q_2, p, q_3)\\
- & & & & 
-\qquad\quad 
-\oplus \bigoplus^2_{\Deltac} \bigl[ \weic(q_0, p, p', q_1) \otimes_2 {\bigoplus_{\Deltar}} \weir(q_2, p', q_3) \bigr]\\
+{\bigoplus_{\Deltac}}
+ \left[
+ \begin{array}{l}
+ \bigoplus^2_{\Deltai} \weii(q_2, p, q_3) \oplus\\
+ % & & & &  \qquad\quad 
+ \weic(q_0, p, p', q_1) \otimes_2 {\bigoplus^2_{\Deltar}} \weir(q_2, p', q_3) 
+ \end{array}
+ \right]
 %
 \end{array}
 \]

@@ -14,7 +14,6 @@ During this time, you will have access to the current state of your reviews and 
 
 The reviews on your paper are attached to this letter. To submit your response you should log on the EasyChair Web page for FoSSaCS 2022 and select your submission on the menu.
 
-
 ----------------------- REVIEW 1 ---------------------
 SUBMISSION: 55
 TITLE: Symbolic Weighted Language Models, Quantitative Parsing and Verification over Infinite Alphabets
@@ -35,10 +34,7 @@ Major problem in the proof of Prop. 3:
 On page 15, your definition of the weight function $\eta_A$ has two main problems.
 
 1. It is not defined for edges from $Q\times Q$ to $Q\times P\times Q$.
-2. On edges from $Q\times P\times Q$ to $Q\times P\times Q$, the weight you define is not 
-   an element of the semiring $S$ as it is supposed to be. You are summing $w_i$, $w_r$ and 
-   $w_c$ over the second argument $\bigoplus^{2}$ and the first argument remains free. So 
-   you are defining a function from $\Delta_c$ to the semiring and not an element of $S$.
+2. On edges from $Q\times P\times Q$ to $Q\times P\times Q$, the weight you define is not an element of the semiring $S$ as it is supposed to be. You are summing $w_i$, $w_r$ and $w_c$ over the second argument $\bigoplus^{2}$ and the first argument remains free. So you are defining a function from $\Delta_c$ to the semiring and not an element of $S$.
 
 Other detailed comments:
 
@@ -59,16 +55,12 @@ Lemma 4 (v) and (vi): exponents ^{2} or ^{1} are missing on some \bigoplus
 Def 1: How do you represent $\phi$ or $\eta$? What do you mean by 'effectively computed'? 
 Turing machine?
 
-Proposition 1: the PTIME claim is strange. This seems to assume that all operations on 
-functions from the label theory are done in constant time, but def 1 only says they are 
-effectively computable, without complexity bounds.
+Proposition 1: the PTIME claim is strange. This seems to assume that all operations on functions from the label theory are done in constant time, but def 1 only says they are effectively computable, without complexity bounds.
 Same remark for Prop. 3
 
 Proof of Prop 1: 
-
 - I think it would be better (easier to understand) to construct a product with
-  $\epsilon$-transitions, and to separately state and prove that $\epsilon$-transitions can
-  be removed from swA.
+  $\epsilon$-transitions, and to separately state and prove that $\epsilon$-transitions can be removed from swA.
 - in input -> an input (many occurrences)
 
 page 12: 
@@ -103,10 +95,6 @@ Section 5, first para: $\phi_{cc}$ and $\phi_{ci}$ are missing
 ----------- Reviewer's confidence -----------
 SCORE: 5 ((expert))
 
-
-
-
-
 ----------------------- REVIEW 2 ---------------------
 SUBMISSION: 55
 TITLE: Symbolic Weighted Language Models, Quantitative Parsing and Verification over Infinite Alphabets
@@ -123,8 +111,6 @@ The idea of extending automata from small finite alphabets to large or infinite 
 
 > Automata on Guarded Strings and Applications, by D. Kozen (2001)
 
-
-
 The authors claim the following contributions for the symbolic weighted machines that they investigate:
 (1) **Proposition 1**: A construction for an sWA that computes distance of a string, where the notion of distance is given by a sWT, from a weighted language given by a sWA.
 (2) **Proposition 2**: The transductions that are computed by sWVPA are closed under semiring addition and semiring multiplication.
@@ -138,7 +124,6 @@ The paper is well-written and the technical ideas are communicated clearly. Seve
 > StreamQRE: Modular Specification and Efficient Evaluation of Quantitative Queries over Streaming Data, by K. Mamouras et al. (2017) [PLDI]
 
 > Regular Functions and Cost Register Automata, by R. Alur et al. (2013) [LICS]
-
 
 While I find the content of the paper interesting and relevant, I have some reservations regarding how novel the main contributions are. For example, I am wondering whether Proposition 1 is essentially the composition of two well-known constructions. First, the product automaton (A x T) can be constructed using essentially the same idea as the composition of weighted transducers (see Mohri's papers). One would need to allow epsilon-transitions, but these can be eliminated as a second step, given that the authors consider a class of semirings that allows epsilon-elimination. Similarly, Proposition 2 seems to rely on a straightforward adaptation of product constructions.
 
@@ -154,10 +139,6 @@ It would help the reader if you restructure the end of Section 4 so that you can
 
 ----------- Reviewer's confidence -----------
 SCORE: 3 ((medium))
-
-
-
-
 
 ----------------------- REVIEW 3 ---------------------
 SUBMISSION: 55
@@ -189,7 +170,6 @@ Typos:
 
 "constructions are performed on the on-the-fly"
 
-
 ----------- Reviewer's confidence -----------
 SCORE: 3 ((medium))
 
@@ -198,4 +178,3 @@ SCORE: 3 ((medium))
 Best wishes,
 
 Patricia and Lutz 
-

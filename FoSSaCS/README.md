@@ -1,8 +1,4 @@
-
-
 https://etaps.org/2022/fossacs
-
-
 
 ## 25th International Conference on Foundations of Software Science and Computation Structures
 
@@ -48,7 +44,7 @@ Additional material intended for reviewers but not for publication in the final 
 [Carlos Areces](https://carlosareces.github.io/) (Universidad Nacional de Córdoba, Argentina)
 Filippo Bonchi (Università di Pisa, Italy)
 [Michaël Cadilhac](https://michael.cadilhac.name/) (DePaul University, USA)
-  
+
 [Maribel Fernandez](https://nms.kcl.ac.uk/maribel.fernandez/) (King's College London, UK)
 [Santiago Figueira](https://glyc.dc.uba.ar/santiago/) (Universidad de Buenos Aires, Argentina)
 [Hongfei Fu](https://jhc.sjtu.edu.cn/~hongfeifu/) (Shanghai Jiao Tong University, China)
@@ -88,24 +84,14 @@ Filippo Bonchi (Università di Pisa, Italy)
 [Anca Muscholl](http://www.labri.fr/perso/anca/) (LaBRI, Université Bordeaux, France)
 [Alex Simpson](https://www.fmf.uni-lj.si/si/imenik/32646/) (Univerza v Ljubljani, Slovenia)
 
-
-
-
-
 ---
 
 **topics** 
 
-
-
 - https://www.cis.upenn.edu/~alur/nw.html
-
-
 
 ---
 
 **alternatives**
-
-
 
 - http://www.lix.polytechnique.fr/~hermann/conf.html
